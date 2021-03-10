@@ -106,7 +106,7 @@ class Form extends CI_Controller {
             $data_user=array(
                 "akun_id" => $akun["akun_id"],
                 "username"=>$this->input->post("username"),
-                "password"=>$this->input->post("password")
+                "password"=>sha1($this->input->post("password"))
             );
             $this->model_form->insert_user($data_user);
 			$this->session->set_flashdata('status-add-akun', 'Berhasil');
@@ -185,7 +185,7 @@ class Form extends CI_Controller {
             "akun_name" => $this->input->post("akun_name"),
             "akun_role" => $this->input->post("role_update"),
             "username" => $this->input->post("username_update"),
-            "password" => $this->input->post("password_update")
+            "password" => sha1($this->input->post("password_update"))
         );
         $this->model_form->update_akun($data);
 		$this->session->set_flashdata('status-update-akun', 'Berhasil');

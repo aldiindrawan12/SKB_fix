@@ -23,7 +23,7 @@
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Master_Data"
-                    aria-expanded="true" aria-controls="Master_Data">
+                    aria-expanded="true" aria-controls="Master_Data" onclick="aktifasi('Master_Data')">
                     <span>Master Data</span>
                 </a>
                 <div id="Master_Data" class="collapse" aria-labelledby="headingTwo">
@@ -52,7 +52,7 @@
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Perintah_Kerja"
-                    aria-expanded="true" aria-controls="Perintah_Kerja">
+                    aria-expanded="true" aria-controls="Perintah_Kerja" onclick="aktifasi('Perintah_Kerja')">
                     <span>Perintah Kerja</span>
                 </a>
                 <div id="Perintah_Kerja" class="collapse" aria-labelledby="headingTwo">
@@ -73,7 +73,7 @@
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Penggajian"
-                    aria-expanded="true" aria-controls="Penggajian">
+                    aria-expanded="true" aria-controls="Penggajian" onclick="aktifasi('Penggajian')">
                     <span>Penggajian</span>
                 </a>
                 <div id="Penggajian" class="collapse" aria-labelledby="headingTwo">
@@ -94,7 +94,7 @@
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Laporan"
-                    aria-expanded="true" aria-controls="Laporan">
+                    aria-expanded="true" aria-controls="Laporan" onclick="aktifasi('Laporan')">
                     <span>Laporan</span>
                 </a>
                 <div id="Laporan" class="collapse" aria-labelledby="headingTwo">
@@ -116,7 +116,7 @@
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Konfigurasi"
-                        aria-expanded="true" aria-controls="Konfigurasi">
+                        aria-expanded="true" aria-controls="Konfigurasi" onclick="aktifasi('Konfigurasi')">
                         <span>Sistem dan Konfigurasi</span>
                     </a>
                     <div id="Konfigurasi" class="collapse" aria-labelledby="headingTwo">
@@ -176,5 +176,13 @@
         var collapse_group = '<?= $collapse_group?>';
         $("#"+page).addClass("active");
         $("#"+collapse_group).addClass("show");
+    }
+    function aktifasi(x){
+        var collapse_group = ["Master_Data","Perintah_Kerja","Penggajian","Laporan","Konfigurasi"];
+        for(i=0;i<collapse_group.length;i++){
+            if(x!=collapse_group[i]){
+                $("#"+collapse_group[i]).removeClass("show");
+            }
+        }
     }
 </script>

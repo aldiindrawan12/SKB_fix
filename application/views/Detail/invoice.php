@@ -90,7 +90,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan=7>Jumlah</td>
-                                    <td>Rp.<?= number_format(($invoice["tonase"]*$invoice["harga/kg"])+(($invoice["tonase"]*$invoice["harga/kg"]*1000)*0.1),2,',','.')?></td>
+                                    <td>Rp.<?= number_format(($invoice["tonase"]*$invoice["harga/kg"])+(($invoice["tonase"]*$invoice["harga/kg"])*0.1),2,',','.')?></td>
                                 </tr>
                             </tbody>
                         </table>

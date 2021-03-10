@@ -19,7 +19,7 @@ class Login extends CI_Controller {
     
     public function login(){
         $username = $this->input->post("username");
-        $password = $this->input->post("password");
+        $password = sha1($this->input->post("password"));
         $user = $this->model_login->getuserbyusername($username);
         if($user){
             $save_password = $user["password"];

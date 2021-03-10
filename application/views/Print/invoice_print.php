@@ -123,9 +123,9 @@
     var asal = '<?= $asal?>';
     window.print();
     if(asal == "JO"){
-        window.location.replace("<?= base_url("index.php/detail/detail_jo/".$Jo_id)?>");
+        window.location.replace("<?= base_url("index.php/detail/detail_jo/".$Jo_id."/JO")?>");
     }else if(asal == "invoice"){
-        window.location.replace("<?= base_url("index.php/detail/detail_invoice/".$invoice_kode)?>");
+        window.location.replace("<?= base_url("index.php/detail/detail_invoice/".$invoice_kode."/Invoice")?>");
     }
 </script>
 </html>

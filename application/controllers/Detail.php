@@ -90,13 +90,13 @@ class Detail extends CI_Controller {
             );
 
             $this->model_detail->updatestatusjo($data,$supir,$mobil,$data_invoice);
-            redirect(base_url("index.php/detail/detail_jo/").$this->input->post("jo_id"));
+            redirect(base_url("index.php/detail/detail_jo/").$this->input->post("jo_id")."/JO");
         }
 
         public function updateinvoice(){
             $invoice_kode = $this->input->post("invoice-kode");
             $this->model_detail->updateinvoice($invoice_kode);
-            redirect(base_url("index.php/detail/detail_invoice/").$invoice_kode);
+            redirect(base_url("index.php/detail/detail_invoice/").$invoice_kode."/Invoice");
         }
     //end fungsi untuk Detail invoice
 

@@ -23,6 +23,7 @@ class Form extends CI_Controller {
             $data["mobil"] = $this->model_home->gettruck();
             $data["supir"] = $this->model_home->getsupir();
             $data["page"] = "JO_page";
+            $data["collapse_group"] = "Perintah_Kerja";
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('form/joborder');

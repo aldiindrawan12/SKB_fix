@@ -183,12 +183,17 @@ class Form extends CI_Controller {
         }
 
         public function update_akun(){
+            $akun = $this->model_form->getakunbyid($this->input->post("akun_id"));
+            $password = $this->input->post("password_update");
+            if($akun["password"]!=$this->input->post("password_update")){
+                $password = sha1($password);
+            }
             $data = array(
                 "akun_id" => $this->input->post("akun_id"),
                 "akun_name" => $this->input->post("akun_name"),
                 "akun_role" => $this->input->post("role_update"),
                 "username" => $this->input->post("username_update"),
-                "password" => sha1($this->input->post("password_update"))
+                "password" => $password
             );
             $this->model_form->update_akun($data);
             $this->session->set_flashdata('status-update-akun', 'Berhasil');

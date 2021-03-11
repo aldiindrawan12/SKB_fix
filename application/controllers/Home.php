@@ -412,9 +412,6 @@ class Home extends CI_Controller {
     			$this->session->set_flashdata('status-login', 'False');
                 redirect(base_url());
             }
-            if($_SESSION["role"]!="Super User"){
-                redirect(base_url("index.php/home/"));
-            }
             $data["page"] = "Akun_page";
             $data["collapse_group"] = "Konfigurasi";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);

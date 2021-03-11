@@ -65,7 +65,7 @@
                 </a>
             </div>
             <div class="col-md-2">
-                <a href="<?=base_url("index.php/print_berkas/cetaklaporanexcel/x/x/x/x/uang_jalan")?>" class="btn btn-primary btn-icon-split" id="link_cetaklaporanuangjalannexcel">
+                <a href="<?=base_url("index.php/print_berkas/cetaklaporanexcel/x/x/x/x/uang_jalan")?>" class="btn btn-primary btn-icon-split" id="link_cetaklaporanuangjalanexcel">
                     <span class="icon text-white-100">  
                         <i class="fas fa-print"></i>
                     </span>

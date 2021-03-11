@@ -24,6 +24,7 @@ class Form extends CI_Controller {
             $data["supir"] = $this->model_home->getsupir();
             $data["page"] = "JO_page";
             $data["collapse_group"] = "Perintah_Kerja";
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('form/joborder');
@@ -38,6 +39,7 @@ class Form extends CI_Controller {
             $data["supir"] = $this->model_home->getsupir();
             $data["page"] = "Bon_page";
             $data["collapse_group"] = "Penggajian";
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('form/form_bon',$data);
@@ -99,7 +101,8 @@ class Form extends CI_Controller {
         public function insert_akun(){
             $data_akun=array(
                 "akun_name"=>$this->input->post("nama"),
-                "akun_role"=>$this->input->post("role")
+                "akun_role"=>$this->input->post("role"),
+                "akun_akses"=>'["1","1","1","1","1"]'
             );
             $this->model_form->insert_akun($data_akun);
             $akun = $this->model_form->getakunbyname($data_akun["akun_name"]);
@@ -171,126 +174,127 @@ class Form extends CI_Controller {
     // end fungsi insert
     
     // fungsi lain
-    public function update_supir(){
-        $supir_name = $this->input->post("supir_name");
-        $supir_id = $this->input->post("supir_id");
-        $this->model_form->update_supir($supir_id,$supir_name);
-	    $this->session->set_flashdata('status-update-supir', 'Berhasil');
-        redirect(base_url("index.php/home/penggajian"));
-    }
-
-    public function update_akun(){
-        $data = array(
-            "akun_id" => $this->input->post("akun_id"),
-            "akun_name" => $this->input->post("akun_name"),
-            "akun_role" => $this->input->post("role_update"),
-            "username" => $this->input->post("username_update"),
-            "password" => sha1($this->input->post("password_update"))
-        );
-        $this->model_form->update_akun($data);
-		$this->session->set_flashdata('status-update-akun', 'Berhasil');
-        redirect(base_url("index.php/home/akun"));
-    }
-
-    public function deletesupir(){
-        $supir_id = $this->input->get("id");
-        $this->model_form->deletesupir($supir_id);
-		$this->session->set_flashdata('status-delete-supir', 'Berhasil');
-        echo $supir_id;
-    }
-
-    public function deletesatuan(){
-        $satuan_id = $this->input->get("id");
-        $this->model_form->deletesatuan($satuan_id);
-		$this->session->set_flashdata('status-delete-satuan', 'Berhasil');
-        echo $satuan_id;
-    }
-
-    public function deleteakun(){
-        $akun_id = $this->input->get("id");
-        $this->model_form->deleteakun($akun_id);
-		$this->session->set_flashdata('status-delete-akun', 'Berhasil');
-        echo $akun_id;
-    }
-
-    public function deletetruck(){
-        $mobil_no = $this->input->get("id");
-        $this->model_form->deletetruck($mobil_no);
-	    $this->session->set_flashdata('status-delete-kendaraan', 'Berhasil');
-        echo $mobil_no;
-    }
-
-    public function getsupirname(){
-        $supir_id = $this->input->get("id");
-        $supir = $this->model_form->getsupirname($supir_id);
-        echo $supir["supir_name"];
-    }
-
-    public function generate_terbilang($uang){
-        $uang = abs($uang);
-		$huruf = array("", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "sebelas");
-		$temp = "";
-
-		if ($uang < 12) {
-			$temp = " ". $huruf[$uang];
-		} else if ($uang <20) {
-			$temp = $this->generate_terbilang($uang - 10). " Belas";
-		} else if ($uang < 100) {
-			$temp = $this->generate_terbilang($uang/10)." Puluh". $this->generate_terbilang($uang % 10);
-		} else if ($uang < 200) {
-			$temp = " Seratus" . $this->generate_terbilang($uang - 100);
-		} else if ($uang < 1000) {
-			$temp = $this->generate_terbilang($uang/100) . " Ratus" . $this->generate_terbilang($uang % 100);
-		} else if ($uang < 2000) {
-			$temp = " Seribu" . $this->generate_terbilang($uang - 1000);
-		} else if ($uang < 1000000) {
-			$temp = $this->generate_terbilang($uang/1000) . " Ribu" . $this->generate_terbilang($uang % 1000);
-		} else if ($uang < 1000000000) {
-			$temp = $this->generate_terbilang($uang/1000000) . " Juta" . $this->generate_terbilang($uang % 1000000);
-		}     
-		return $temp;
-    }
-
-    public function generate_terbilang_fix($uang){
-        if($uang != "x"){
-            echo $this->generate_terbilang(str_replace(".","",$uang))." Rupiah";
-        }else{
-            echo "";
+        public function update_supir(){
+            $supir_name = $this->input->post("supir_name");
+            $supir_id = $this->input->post("supir_id");
+            $this->model_form->update_supir($supir_id,$supir_name);
+            $this->session->set_flashdata('status-update-supir', 'Berhasil');
+            redirect(base_url("index.php/home/penggajian"));
         }
-    }
 
-    function getbonsupir()
-    {
-        $supir_id = $this->input->get('id');
-        $data = $this->model_form->getbonbysupir($supir_id);
-        echo $data["supir_kasbon"];
-    }
-
-    function getakunbyid()
-    {
-        $akun_id = $this->input->get('id');
-        $data = $this->model_form->getakunbyid($akun_id);
-        echo json_encode($data);
-    }
-
-    public function konfigurasi($akun_id){
-        if(!$_SESSION["user"]){
-            $this->session->set_flashdata('status-login', 'False');
-            redirect(base_url());
+        public function update_akun(){
+            $data = array(
+                "akun_id" => $this->input->post("akun_id"),
+                "akun_name" => $this->input->post("akun_name"),
+                "akun_role" => $this->input->post("role_update"),
+                "username" => $this->input->post("username_update"),
+                "password" => sha1($this->input->post("password_update"))
+            );
+            $this->model_form->update_akun($data);
+            $this->session->set_flashdata('status-update-akun', 'Berhasil');
+            redirect(base_url("index.php/home/akun"));
         }
-        $data["akun"]=$this->model_form->getakunbyid($akun_id);
-        $data["page"] = "Akun_page";
-        $data["collapse_group"] = "Konfigurasi";
-        $this->load->view('header',$data);
-        $this->load->view('sidebar');
-        $this->load->view('form/konfigurasi',$data);
-        $this->load->view('footer');
-    }   
 
-    public function update_konfigurasi($akun_id){
-        $data_konfigurasi = [$this->input->post("cek1"),$this->input->post("cek2"),$this->input->post("cek3"),
-        $this->input->post("cek4"),$this->input->post("cek5")];
-        $this->model_form->update_konfigurasi($akun_id,$data_konfigurasi);
-        redirect(base_url("index.php/home/akun"));
-    }
+        public function deletesupir(){
+            $supir_id = $this->input->get("id");
+            $this->model_form->deletesupir($supir_id);
+            $this->session->set_flashdata('status-delete-supir', 'Berhasil');
+            echo $supir_id;
+        }
+
+        public function deletesatuan(){
+            $satuan_id = $this->input->get("id");
+            $this->model_form->deletesatuan($satuan_id);
+            $this->session->set_flashdata('status-delete-satuan', 'Berhasil');
+            echo $satuan_id;
+        }
+
+        public function deleteakun(){
+            $akun_id = $this->input->get("id");
+            $this->model_form->deleteakun($akun_id);
+            $this->session->set_flashdata('status-delete-akun', 'Berhasil');
+            echo $akun_id;
+        }
+
+        public function deletetruck(){
+            $mobil_no = $this->input->get("id");
+            $this->model_form->deletetruck($mobil_no);
+            $this->session->set_flashdata('status-delete-kendaraan', 'Berhasil');
+            echo $mobil_no;
+        }
+
+        public function getsupirname(){
+            $supir_id = $this->input->get("id");
+            $supir = $this->model_form->getsupirname($supir_id);
+            echo $supir["supir_name"];
+        }
+
+        public function generate_terbilang($uang){
+            $uang = abs($uang);
+            $huruf = array("", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "sebelas");
+            $temp = "";
+
+            if ($uang < 12) {
+                $temp = " ". $huruf[$uang];
+            } else if ($uang <20) {
+                $temp = $this->generate_terbilang($uang - 10). " Belas";
+            } else if ($uang < 100) {
+                $temp = $this->generate_terbilang($uang/10)." Puluh". $this->generate_terbilang($uang % 10);
+            } else if ($uang < 200) {
+                $temp = " Seratus" . $this->generate_terbilang($uang - 100);
+            } else if ($uang < 1000) {
+                $temp = $this->generate_terbilang($uang/100) . " Ratus" . $this->generate_terbilang($uang % 100);
+            } else if ($uang < 2000) {
+                $temp = " Seribu" . $this->generate_terbilang($uang - 1000);
+            } else if ($uang < 1000000) {
+                $temp = $this->generate_terbilang($uang/1000) . " Ribu" . $this->generate_terbilang($uang % 1000);
+            } else if ($uang < 1000000000) {
+                $temp = $this->generate_terbilang($uang/1000000) . " Juta" . $this->generate_terbilang($uang % 1000000);
+            }     
+            return $temp;
+        }
+
+        public function generate_terbilang_fix($uang){
+            if($uang != "x"){
+                echo $this->generate_terbilang(str_replace(".","",$uang))." Rupiah";
+            }else{
+                echo "";
+            }
+        }
+
+        function getbonsupir()
+        {
+            $supir_id = $this->input->get('id');
+            $data = $this->model_form->getbonbysupir($supir_id);
+            echo $data["supir_kasbon"];
+        }
+
+        function getakunbyid()
+        {
+            $akun_id = $this->input->get('id');
+            $data = $this->model_form->getakunbyid($akun_id);
+            echo json_encode($data);
+        }
+
+        public function konfigurasi($akun_id){
+            if(!$_SESSION["user"]){
+                $this->session->set_flashdata('status-login', 'False');
+                redirect(base_url());
+            }
+            $data["akun"]=$this->model_form->getakunbyid($akun_id);
+            $data["page"] = "Akun_page";
+            $data["collapse_group"] = "Konfigurasi";
+            $this->load->view('header',$data);
+            $this->load->view('sidebar');
+            $this->load->view('form/konfigurasi',$data);
+            $this->load->view('footer');
+        }   
+
+        public function update_konfigurasi($akun_id){
+            $data_konfigurasi = [$this->input->post("cek1"),$this->input->post("cek2"),$this->input->post("cek3"),
+            $this->input->post("cek4"),$this->input->post("cek5")];
+            $this->model_form->update_konfigurasi($akun_id,$data_konfigurasi);
+            redirect(base_url("index.php/home/akun"));
+        }
+    //end fungsi lain
 }

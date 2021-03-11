@@ -109,25 +109,23 @@
                     </div>
                 </div>
             </li>
-            <?php if($_SESSION["role"] == "Super User"){?>
-                    <!-- Divider -->
-                    <hr class="sidebar-divider" id="HR_Konfigurasi">
-                    <!-- Nav Item - Pages Collapse Menu -->
-                    <li class="nav-item" id="LI_Konfigurasi">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Konfigurasi"
-                        aria-expanded="true" aria-controls="Konfigurasi" onclick="aktifasi('Konfigurasi')">
-                        <span>Sistem dan Konfigurasi</span>
-                    </a>
-                    <div id="Konfigurasi" class="collapse" aria-labelledby="headingTwo">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" id="Akun_page" href="<?=base_url("index.php/home/akun")?>">
-                                    <i class="fas fa-database"></i>
-                                    <span>Data Akun </span>
-                                </a>
-                        </div>
+            <!-- Divider -->
+            <hr class="sidebar-divider" id="HR_Konfigurasi">
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item" id="LI_Konfigurasi">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Konfigurasi"
+                    aria-expanded="true" aria-controls="Konfigurasi" onclick="aktifasi('Konfigurasi')">
+                    <span>Sistem dan Konfigurasi</span>
+                </a>
+                <div id="Konfigurasi" class="collapse" aria-labelledby="headingTwo">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" id="Akun_page" href="<?=base_url("index.php/home/akun")?>">
+                                <i class="fas fa-database"></i>
+                                <span>Data Akun </span>
+                            </a>
                     </div>
-                </li>
-            <?php }?>
+                </div>
+            </li>
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block my-1">
             <!-- Sidebar Toggler (Sidebar) -->
@@ -178,7 +176,6 @@
         var LI = ["LI_Master_Data","LI_Perintah_Kerja","LI_Penggajian","LI_Laporan","LI_Konfigurasi"];
         $("#"+page).addClass("active");
         $("#"+collapse_group).addClass("show");
-        // alert(konfigurasi.length);
         for(i=0;i<konfigurasi.length;i++){
             if(konfigurasi[i]==0){
                 $("#"+HR[i]).hide();

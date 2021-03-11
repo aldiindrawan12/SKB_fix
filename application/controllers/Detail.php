@@ -8,6 +8,7 @@ class Detail extends CI_Controller {
             parent::__construct();
             $this->load->model('model_home');//load model
             $this->load->model('model_detail');//load model
+            $this->load->model('model_form');//load model
         }
     // end contruck
 
@@ -31,6 +32,10 @@ class Detail extends CI_Controller {
                 $data["page"] = "Laporan_page";
                 $data["collapse_group"] = "Laporan";
             }
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            if(json_decode($data["akun_akses"]["akun_akses"])[1]==0){
+                redirect(base_url());
+            }
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('detail/joborder');
@@ -53,6 +58,10 @@ class Detail extends CI_Controller {
             }else{
                 $data["page"] = "Invoice_page";
                 $data["collapse_group"] = "Perintah_Kerja";
+            }
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            if(json_decode($data["akun_akses"]["akun_akses"])[1]==0){
+                redirect(base_url());
             }
             $this->load->view('header',$data);
             $this->load->view('sidebar');
@@ -111,6 +120,10 @@ class Detail extends CI_Controller {
             $data["customer"] = $this->model_home->getcustomerbyid($customer_id);
             $data["page"] = "Customer_page";
             $data["collapse_group"] = "Master_Data";
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            if(json_decode($data["akun_akses"]["akun_akses"])[0]==0){
+                redirect(base_url());
+            }
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('detail/customer',$data);
@@ -129,12 +142,12 @@ class Detail extends CI_Controller {
     
     
     //fungsi untuk Detail truck
-    function gettruck()
-    {
-        $truck_id = $this->input->get('id');
-        $data = $this->model_detail->gettruckbyid($truck_id);
-        echo json_encode($data);
-    }
+        function gettruck()
+        {
+            $truck_id = $this->input->get('id');
+            $data = $this->model_detail->gettruckbyid($truck_id);
+            echo json_encode($data);
+        }
     //end fungsi untuk Detail ttruckk
 
     //fungsi untuk Detail penggajian
@@ -148,6 +161,10 @@ class Detail extends CI_Controller {
             $data["supir"] = $this->model_home->getsupirbyid($supir_id);
             $data["page"] = "Gaji_page";
             $data["collapse_group"] = "Penggajian";
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            if(json_decode($data["akun_akses"]["akun_akses"])[2]==0){
+                redirect(base_url());
+            }
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('detail/penggajian',$data);
@@ -165,6 +182,10 @@ class Detail extends CI_Controller {
             $data["supir"] = $this->model_home->getsupirbyid($supir_id);
             $data["page"] = "Laporan_Gaji_page";
             $data["collapse_group"] = "Laporan";
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            if(json_decode($data["akun_akses"]["akun_akses"])[3]==0){
+                redirect(base_url());
+            }
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('detail/penggajian_report',$data);

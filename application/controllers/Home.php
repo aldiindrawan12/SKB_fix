@@ -21,6 +21,9 @@ class Home extends CI_Controller {
             $data["page"] = "JO_page";
             $data["collapse_group"] = "Perintah_Kerja";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            if(json_decode($data["akun_akses"]["akun_akses"])[1]==0){
+                redirect(base_url());
+            }
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('home/joborder');
@@ -101,6 +104,9 @@ class Home extends CI_Controller {
             $data["page"] = "Customer_page";
             $data["collapse_group"] = "Master_Data";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            if(json_decode($data["akun_akses"]["akun_akses"])[0]==0){
+                redirect(base_url());
+            }
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('home/customer');
@@ -140,6 +146,9 @@ class Home extends CI_Controller {
             $data["page"] = "Supir_page";
             $data["collapse_group"] = "Master_Data";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            if(json_decode($data["akun_akses"]["akun_akses"])[0]==0){
+                redirect(base_url());
+            }
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('home/penggajian');
@@ -157,6 +166,9 @@ class Home extends CI_Controller {
             $data["page"] = "Gaji_page";
             $data["collapse_group"] = "Penggajian";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            if(json_decode($data["akun_akses"]["akun_akses"])[2]==0){
+                redirect(base_url());
+            }
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('home/gaji');
@@ -164,7 +176,7 @@ class Home extends CI_Controller {
         }      
     //end gaji supir
 
-    //gaji supir
+    //gaji report supir
         public function report_gaji()
         {
             if(!$_SESSION["user"]){
@@ -174,12 +186,15 @@ class Home extends CI_Controller {
             $data["page"] = "Laporan_Gaji_page";
             $data["collapse_group"] = "Laporan";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            if(json_decode($data["akun_akses"]["akun_akses"])[3]==0){
+                redirect(base_url());
+            }
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('home/report_gaji');
             $this->load->view('footer');
         }      
-    //end gaji supir
+    //end gaji report supir
 
     // bon
         public function bon()
@@ -191,6 +206,9 @@ class Home extends CI_Controller {
             $data["page"] = "Bon_page";
             $data["collapse_group"] = "Penggajian";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            if(json_decode($data["akun_akses"]["akun_akses"])[2]==0){
+                redirect(base_url());
+            }
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('home/bon');
@@ -230,6 +248,9 @@ class Home extends CI_Controller {
             $data["page"] = "Kendaraan_page";
             $data["collapse_group"] = "Master_Data";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            if(json_decode($data["akun_akses"]["akun_akses"])[0]==0){
+                redirect(base_url());
+            }
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('home/truck');
@@ -268,6 +289,9 @@ class Home extends CI_Controller {
             $data["page"] = "Laporan_page";
             $data["collapse_group"] = "Laporan";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            if(json_decode($data["akun_akses"]["akun_akses"])[3]==0){
+                redirect(base_url());
+            }
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('home/report');
@@ -351,6 +375,9 @@ class Home extends CI_Controller {
             $data["page"] = "Invoice_page";
             $data["collapse_group"] = "Perintah_Kerja";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            if(json_decode($data["akun_akses"]["akun_akses"])[1]==0){
+                redirect(base_url());
+            }
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('home/invoice');
@@ -371,6 +398,9 @@ class Home extends CI_Controller {
             $data["page"] = "Akun_page";
             $data["collapse_group"] = "Konfigurasi";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            if(json_decode($data["akun_akses"]["akun_akses"])[4]==0){
+                redirect(base_url());
+            }
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('home/akun');
@@ -412,6 +442,9 @@ class Home extends CI_Controller {
             $data["collapse_group"] = "Master_Data";
             $data["satuan"] = $this->model_home->getallsatuan();
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            if(json_decode($data["akun_akses"]["akun_akses"])[0]==0){
+                redirect(base_url());
+            }
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('home/satuan');

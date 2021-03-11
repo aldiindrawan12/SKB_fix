@@ -25,6 +25,7 @@ class Login extends CI_Controller {
             $save_password = $user["password"];
             if($password == $save_password){
                 $this->session->set_flashdata('status-login', 'Berhasil');
+                $_SESSION["user_id"] = $user["akun_id"];
                 $_SESSION["user"] = $user["akun_name"];
                 $_SESSION["role"] = $user["akun_role"];
                 redirect(base_url("index.php/home/"));

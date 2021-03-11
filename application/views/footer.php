@@ -46,7 +46,7 @@
     <!-- <script src="<?=base_url('assets/sweetalert2/sweetalert2.min.js') ?>"></script> -->
     <!-- Core plugin JavaScript-->
     <script src="<?=base_url("assets/vendor/jquery-easing/jquery.easing.min.js")?>"></script>
-    
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
     <!-- Custom scripts for all pages-->
     <script src="<?=base_url("assets/js/sb-admin-2.min.js")?>"></script>
@@ -1005,6 +1005,7 @@
                         "orderable": false,
                         render: function(data, type, row) {
                             let html = "<a class='btn btn-light btn-update-akun' data-toggle='modal' data-target='#popup-update-akun' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
+                            "<a class='btn btn-light btn-update-akun' href='<?= base_url('index.php/form/konfigurasi/"+data+"')?>' data-pk="+data+"><i class='fas fa-user-cog'></i></a> || "+
                             "<a class='btn btn-light btn-delete-akun' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
                             return html;
                         }

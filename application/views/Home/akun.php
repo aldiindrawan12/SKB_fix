@@ -25,7 +25,7 @@
                         <th class="text-center" width="3%" scope="col">ID</th>
                         <th class="text-center" width="20%" scope="col">Nama</th>
                         <th class="text-center" width="5%" scope="col">Role</th>
-                        <th class="text-center" width="5%" scope="col">Aksi</th>
+                        <th class="text-center" width="10%" scope="col">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -125,4 +125,5 @@
     </div>
 </div>
 <!-- end pop up update akun -->
+<!-- <input id="toggle-one" data-toggle="toggle" type="checkbox" data-size="small" data-onstyle="success" data-offstyle="danger" onchange="togglenih()" data-on="Hello<br>World" data-off="Goodbye<br>World"> -->
 </div>

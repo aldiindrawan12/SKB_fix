@@ -272,4 +272,25 @@ class Form extends CI_Controller {
         $data = $this->model_form->getakunbyid($akun_id);
         echo json_encode($data);
     }
+
+    public function konfigurasi($akun_id){
+        if(!$_SESSION["user"]){
+            $this->session->set_flashdata('status-login', 'False');
+            redirect(base_url());
+        }
+        $data["akun"]=$this->model_form->getakunbyid($akun_id);
+        $data["page"] = "Akun_page";
+        $data["collapse_group"] = "Konfigurasi";
+        $this->load->view('header',$data);
+        $this->load->view('sidebar');
+        $this->load->view('form/konfigurasi',$data);
+        $this->load->view('footer');
+    }   
+
+    public function update_konfigurasi($akun_id){
+        $data_konfigurasi = [$this->input->post("cek1"),$this->input->post("cek2"),$this->input->post("cek3"),
+        $this->input->post("cek4"),$this->input->post("cek5")];
+        $this->model_form->update_konfigurasi($akun_id,$data_konfigurasi);
+        redirect(base_url("index.php/home/akun"));
+    }
 }

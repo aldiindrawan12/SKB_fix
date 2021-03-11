@@ -7,6 +7,7 @@ class Home extends CI_Controller {
         {
             parent::__construct();
             $this->load->model('model_home');//load model
+            $this->load->model('model_form');//load model
         }
     //end construck
 
@@ -19,6 +20,7 @@ class Home extends CI_Controller {
             }
             $data["page"] = "JO_page";
             $data["collapse_group"] = "Perintah_Kerja";
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('home/joborder');
@@ -98,6 +100,7 @@ class Home extends CI_Controller {
             }
             $data["page"] = "Customer_page";
             $data["collapse_group"] = "Master_Data";
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('home/customer');
@@ -136,6 +139,7 @@ class Home extends CI_Controller {
             }
             $data["page"] = "Supir_page";
             $data["collapse_group"] = "Master_Data";
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('home/penggajian');
@@ -152,6 +156,7 @@ class Home extends CI_Controller {
             }
             $data["page"] = "Gaji_page";
             $data["collapse_group"] = "Penggajian";
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('home/gaji');
@@ -168,6 +173,7 @@ class Home extends CI_Controller {
             }
             $data["page"] = "Laporan_Gaji_page";
             $data["collapse_group"] = "Laporan";
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('home/report_gaji');
@@ -184,6 +190,7 @@ class Home extends CI_Controller {
             }
             $data["page"] = "Bon_page";
             $data["collapse_group"] = "Penggajian";
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('home/bon');
@@ -222,6 +229,7 @@ class Home extends CI_Controller {
             $data["truck"] = $this->model_home->gettruck();
             $data["page"] = "Kendaraan_page";
             $data["collapse_group"] = "Master_Data";
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('home/truck');
@@ -259,6 +267,7 @@ class Home extends CI_Controller {
             }
             $data["page"] = "Laporan_page";
             $data["collapse_group"] = "Laporan";
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('home/report');
@@ -341,6 +350,7 @@ class Home extends CI_Controller {
             }
             $data["page"] = "Invoice_page";
             $data["collapse_group"] = "Perintah_Kerja";
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('home/invoice');
@@ -360,6 +370,7 @@ class Home extends CI_Controller {
             }
             $data["page"] = "Akun_page";
             $data["collapse_group"] = "Konfigurasi";
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('home/akun');
@@ -400,6 +411,7 @@ class Home extends CI_Controller {
             $data["page"] = "Satuan_page";
             $data["collapse_group"] = "Master_Data";
             $data["satuan"] = $this->model_home->getallsatuan();
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('home/satuan');

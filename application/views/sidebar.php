@@ -1,5 +1,4 @@
 <body id="page-top" onload="asd()">
-
     <!-- Page Wrapper -->
     <div id="wrapper">
         <!-- Sidebar -->
@@ -19,9 +18,9 @@
                 <div class="sidebar-brand-text mx-3 ">TLEMU SKB</div>
             </a>
             <!-- Divider -->
-            <hr class="sidebar-divider">
+            <hr class="sidebar-divider" id="HR_Master_Data">
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            <li class="nav-item" id="LI_Master_Data">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Master_Data"
                     aria-expanded="true" aria-controls="Master_Data" onclick="aktifasi('Master_Data')">
                     <span>Master Data</span>
@@ -48,9 +47,9 @@
                 </div>
             </li>
             <!-- Divider -->
-            <hr class="sidebar-divider">
+            <hr class="sidebar-divider" id="HR_Perintah_Kerja">
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            <li class="nav-item" id="LI_Perintah_Kerja">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Perintah_Kerja"
                     aria-expanded="true" aria-controls="Perintah_Kerja" onclick="aktifasi('Perintah_Kerja')">
                     <span>Perintah Kerja</span>
@@ -69,9 +68,9 @@
                 </div>
             </li>
             <!-- Divider -->
-            <hr class="sidebar-divider">
+            <hr class="sidebar-divider" id="HR_Penggajian">
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            <li class="nav-item" id="LI_Penggajian">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Penggajian"
                     aria-expanded="true" aria-controls="Penggajian" onclick="aktifasi('Penggajian')">
                     <span>Penggajian</span>
@@ -90,9 +89,9 @@
                 </div>
             </li>
             <!-- Divider -->
-            <hr class="sidebar-divider">
+            <hr class="sidebar-divider" id="HR_Laporan">
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            <li class="nav-item" id="LI_Laporan">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Laporan"
                     aria-expanded="true" aria-controls="Laporan" onclick="aktifasi('Laporan')">
                     <span>Laporan</span>
@@ -111,10 +110,10 @@
                 </div>
             </li>
             <?php if($_SESSION["role"] == "Super User"){?>
-                <!-- Divider -->
-            <hr class="sidebar-divider">
-                <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item">
+                    <!-- Divider -->
+                    <hr class="sidebar-divider" id="HR_Konfigurasi">
+                    <!-- Nav Item - Pages Collapse Menu -->
+                    <li class="nav-item" id="LI_Konfigurasi">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Konfigurasi"
                         aria-expanded="true" aria-controls="Konfigurasi" onclick="aktifasi('Konfigurasi')">
                         <span>Sistem dan Konfigurasi</span>
@@ -174,8 +173,18 @@
     function asd(){
         var page = '<?= $page?>';
         var collapse_group = '<?= $collapse_group?>';
+        var konfigurasi = <?= $akun_akses["akun_akses"]?>;
+        var HR = ["HR_Master_Data","HR_Perintah_Kerja","HR_Penggajian","HR_Laporan","HR_Konfigurasi"];
+        var LI = ["LI_Master_Data","LI_Perintah_Kerja","LI_Penggajian","LI_Laporan","LI_Konfigurasi"];
         $("#"+page).addClass("active");
         $("#"+collapse_group).addClass("show");
+        // alert(konfigurasi.length);
+        for(i=0;i<konfigurasi.length;i++){
+            if(konfigurasi[i]==0){
+                $("#"+HR[i]).hide();
+                $("#"+LI[i]).hide();
+            }
+        }
     }
     function aktifasi(x){
         var collapse_group = ["Master_Data","Perintah_Kerja","Penggajian","Laporan","Konfigurasi"];

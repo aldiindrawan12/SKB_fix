@@ -133,6 +133,13 @@ class Model_Form extends CI_model
         $this->db->update("skb_akun");
     }
 
+    public function update_konfigurasi($akun_id,$data_konfigurasi){
+        $data_konfigurasi=json_encode($data_konfigurasi);
+        $this->db->set("akun_akses",$data_konfigurasi);
+        $this->db->where("akun_id",$akun_id);
+        $this->db->update("skb_akun");
+    }
+
     public function insert_truck($data){
         return $this->db->insert("skb_mobil", $data);
     }

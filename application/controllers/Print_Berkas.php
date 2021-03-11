@@ -16,12 +16,16 @@ class Print_Berkas extends CI_Controller {
 		$this->load->model('model_detail');//load model
     }
 
-    public function cetaklaporanpdf($tanggal,$bulan,$tahun,$status_jo){
+    public function cetaklaporanpdf($tanggal,$bulan,$tahun,$status_jo,$asal){
         $data["jo"] = $this->model_print->getjobyperiode($tanggal,$bulan,$tahun,$status_jo);
         $data["tanggal"] = $tanggal."-".$bulan."-".$tahun;
         // $this->load->view("print/report_pdf",$data);
         $dompdf = new Dompdf();
-        $html = $this->load->view("print/report_pdf",$data,true);
+		if($asal=="uangjalan"){
+			$html = $this->load->view("print/report_uang_jalan_pdf",$data,true);
+		}else{
+			$html = $this->load->view("print/report_pdf",$data,true);
+		}
         $dompdf->loadHtml($html);
 
         // Setting ukuran dan orientasi kertas
@@ -34,12 +38,12 @@ class Print_Berkas extends CI_Controller {
         $name_file = "JobOrder_".$data["tanggal"].".pdf";
         $dompdf->stream($name_file);
     }
-    // public function cetaklaporanexcel($tanggal,$bulan,$tahun,$status_jo){
-    //     // echo $tahun."-".$bulan."-".$tanggal;
-    //     $jo = $this->model_print->getjobyperiode($tanggal,$bulan,$tahun,$status_jo);
-    //     $data["tanggal"] = $tanggal."-".$bulan."-".$tahun;
+    // public function cetaklaporanexcel($tanggal,$bulan,$tahun,$status_jo,$asal){
+    //	// echo $tahun."-".$bulan."-".$tanggal;
+    //  $jo = $this->model_print->getjobyperiode($tanggal,$bulan,$tahun,$status_jo);
+    //  $data["tanggal"] = $tanggal."-".$bulan."-".$tahun;
 
-    //     // Panggil class PHPExcel nya
+    //  // Panggil class PHPExcel nya
 	// 	$excel = new PHPExcel();
 
 	// 	//set properti

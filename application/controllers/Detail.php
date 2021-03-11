@@ -28,6 +28,9 @@ class Detail extends CI_Controller {
             if($asal=="JO"){
                 $data["page"] = "JO_page";
                 $data["collapse_group"] = "Perintah_Kerja";
+            }else if($asal=="uang_jalan"){
+                $data["page"] = "Laporan_Uang_Jalan_page";
+                $data["collapse_group"] = "Laporan";
             }else{
                 $data["page"] = "Laporan_page";
                 $data["collapse_group"] = "Laporan";

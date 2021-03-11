@@ -1,7 +1,7 @@
 <div class="container">
     <div class="card shadow mb-4">
         <div class="card-header py-3 mb-3">
-            <h6 class="m-0 font-weight-bold text-primary">Data Job Order(JO)</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Data Uang Jalan</h6>
         </div>
         <!-- select tanggal,bulan,tahun -->
         <div class="row text-center col-md-12">
@@ -48,15 +48,16 @@
                 </select>
             </div>
             <!-- end select tahun -->
-            <div class="col-md-2">
+            <input type="text" name="status-JO" value="x" id="status-JO" hidden>
+            <!-- <div class="col-md-2">
                 <select name="status-JO" id="status-JO" class="form-control">
                     <option value="x">Semua Status</option>
                     <option value="Dalam Perjalanan">Dalam Perjalanan</option>
                     <option value="Sampai Tujuan">Sampai Tujuan</option>
                 </select>
-            </div>
+            </div> -->
             <div class="col-md-2">
-                <a href="<?=base_url("index.php/print_berkas/cetaklaporanpdf/x/x/x/x/report")?>" class="btn btn-primary btn-icon-split" id="link_cetaklaporanpdf">
+                <a href="<?=base_url("index.php/print_berkas/cetaklaporanpdf/x/x/x/x/uang_jalan")?>" class="btn btn-primary btn-icon-split" id="link_cetaklaporanuangjalanpdf">
                     <span class="icon text-white-100">  
                         <i class="fas fa-print"></i>
                     </span>
@@ -64,7 +65,7 @@
                 </a>
             </div>
             <div class="col-md-2">
-                <a href="<?=base_url("index.php/print_berkas/cetaklaporanexcel/x/x/x/x/report")?>" class="btn btn-primary btn-icon-split" id="link_cetaklaporanexcel">
+                <a href="<?=base_url("index.php/print_berkas/cetaklaporanexcel/x/x/x/x/uang_jalan")?>" class="btn btn-primary btn-icon-split" id="link_cetaklaporanuangjalannexcel">
                     <span class="icon text-white-100">  
                         <i class="fas fa-print"></i>
                     </span>
@@ -76,16 +77,16 @@
         <!-- tabel JO -->
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered " id="Table-Job-Order-report" width="100%" cellspacing="0">
+                <table class="table table-bordered " id="Table-Uang-Jalan-report" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th class="text-center" scope="col">No JO</th>
-                            <th class="text-center" scope="col">Customer</th>
                             <th class="text-center" scope="col">Muatan</th>
                             <th class="text-center" scope="col">Asal</th>
                             <th class="text-center" scope="col">Tujuan</th>
-                            <th class="text-center" scope="col">Tanggal</th>
-                            <th width="17%" class="text-center" scope="col">Status</th>
+                            <th class="text-center" scope="col">Supir</th>
+                            <th class="text-center" scope="col">Mobil</th>
+                            <th width="17%" class="text-center" scope="col">Uang Jalan</th>
                             <th class="text-center" scope="col">Detail</th>
                         </tr>
                     </thead>

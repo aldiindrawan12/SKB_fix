@@ -295,30 +295,115 @@
             $("#Tanggal").change(function() {
                 // alert($('#Tanggal').val());   
                 table.ajax.reload();
-                $('#link_cetaklaporanpdf').attr('href','<?=base_url("index.php/print_berkas/cetaklaporanpdf/")?>'+$('#Tanggal').val()+'/'+$('#Bulan').val()+'/'+$('#Tahun').val()+'/'+$('#status-JO').val());
-                $('#link_cetaklaporanexcel').attr('href','<?=base_url("index.php/print_berkas/cetaklaporanexcel/")?>'+$('#Tanggal').val()+'/'+$('#Bulan').val()+'/'+$('#Tahun').val()+'/'+$('#status-JO').val());
+                $('#link_cetaklaporanpdf').attr('href','<?=base_url("index.php/print_berkas/cetaklaporanpdf/")?>'+$('#Tanggal').val()+'/'+$('#Bulan').val()+'/'+$('#Tahun').val()+'/'+$('#status-JO').val()+'/report');
+                $('#link_cetaklaporanexcel').attr('href','<?=base_url("index.php/print_berkas/cetaklaporanexcel/")?>'+$('#Tanggal').val()+'/'+$('#Bulan').val()+'/'+$('#Tahun').val()+'/'+$('#status-JO').val()+'/report');
             });
             $("#Bulan").change(function() {
                 // alert($('#Bulan').val());   
                 table.ajax.reload();
-                $('#link_cetaklaporanpdf').attr('href','<?=base_url("index.php/print_berkas/cetaklaporanpdf/")?>'+$('#Tanggal').val()+'/'+$('#Bulan').val()+'/'+$('#Tahun').val()+'/'+$('#status-JO').val());
-                $('#link_cetaklaporanexcel').attr('href','<?=base_url("index.php/print_berkas/cetaklaporanexcel/")?>'+$('#Tanggal').val()+'/'+$('#Bulan').val()+'/'+$('#Tahun').val()+'/'+$('#status-JO').val());
+                $('#link_cetaklaporanpdf').attr('href','<?=base_url("index.php/print_berkas/cetaklaporanpdf/")?>'+$('#Tanggal').val()+'/'+$('#Bulan').val()+'/'+$('#Tahun').val()+'/'+$('#status-JO').val()+'/report');
+                $('#link_cetaklaporanexcel').attr('href','<?=base_url("index.php/print_berkas/cetaklaporanexcel/")?>'+$('#Tanggal').val()+'/'+$('#Bulan').val()+'/'+$('#Tahun').val()+'/'+$('#status-JO').val()+'/report');
             });
             $("#Tahun").change(function() {
                 // alert($('#Tahun').val());   
                 table.ajax.reload();
-                $('#link_cetaklaporanpdf').attr('href','<?=base_url("index.php/print_berkas/cetaklaporanpdf/")?>'+$('#Tanggal').val()+'/'+$('#Bulan').val()+'/'+$('#Tahun').val()+'/'+$('#status-JO').val());
-                $('#link_cetaklaporanexcel').attr('href','<?=base_url("index.php/print_berkas/cetaklaporanexcel/")?>'+$('#Tanggal').val()+'/'+$('#Bulan').val()+'/'+$('#Tahun').val()+'/'+$('#status-JO').val());
+                $('#link_cetaklaporanpdf').attr('href','<?=base_url("index.php/print_berkas/cetaklaporanpdf/")?>'+$('#Tanggal').val()+'/'+$('#Bulan').val()+'/'+$('#Tahun').val()+'/'+$('#status-JO').val()+'/report');
+                $('#link_cetaklaporanexcel').attr('href','<?=base_url("index.php/print_berkas/cetaklaporanexcel/")?>'+$('#Tanggal').val()+'/'+$('#Bulan').val()+'/'+$('#Tahun').val()+'/'+$('#status-JO').val()+'/report');
             });
             $("#status-JO").change(function() {
                 // alert($("#status-JO").val())
                 table.ajax.reload();
-                $('#link_cetaklaporanpdf').attr('href','<?=base_url("index.php/print_berkas/cetaklaporanpdf/")?>'+$('#Tanggal').val()+'/'+$('#Bulan').val()+'/'+$('#Tahun').val()+'/'+$('#status-JO').val());
-                $('#link_cetaklaporanexcel').attr('href','<?=base_url("index.php/print_berkas/cetaklaporanexcel/")?>'+$('#Tanggal').val()+'/'+$('#Bulan').val()+'/'+$('#Tahun').val()+'/'+$('#status-JO').val());
+                $('#link_cetaklaporanpdf').attr('href','<?=base_url("index.php/print_berkas/cetaklaporanpdf/")?>'+$('#Tanggal').val()+'/'+$('#Bulan').val()+'/'+$('#Tahun').val()+'/'+$('#status-JO').val()+'/report');
+                $('#link_cetaklaporanexcel').attr('href','<?=base_url("index.php/print_berkas/cetaklaporanexcel/")?>'+$('#Tanggal').val()+'/'+$('#Bulan').val()+'/'+$('#Tahun').val()+'/'+$('#status-JO').val()+'/report');
             });
         });
     </script>
     <!-- end JO -->
+
+    <!-- Uang Jalan -->
+    <script> //script datatables laporan Uang Jalan
+        $(document).ready(function() {
+            var table = null;
+            table = $('#Table-Uang-Jalan-report').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ordering": true,
+                "order": [
+                    [0, 'asc']
+                ],
+                "ajax": {
+                    "url": "<?php echo base_url('index.php/home/view_JO_report/') ?>",
+                    "type": "POST",
+                    'data': function(data) {
+                        data.tanggal = $('#Tanggal').val();
+                        data.bulan = $('#Bulan').val();
+                        data.tahun = $('#Tahun').val();
+                        data.status_JO = $('#status-JO').val();
+                    }
+                },
+                "deferRender": true,
+                "paging":false,
+                "searching":false,
+                "columns": [
+                    {
+                        "data": "Jo_id",
+                        className: 'text-center'
+                    },
+                    {
+                        "data": "muatan"
+                    },
+                    {
+                        "data": "asal"
+                    },
+                    {
+                        "data": "tujuan"
+                    },
+                    {
+                        "data": "supir_name"
+                    },
+                    {
+                        "data": "mobil_no"
+                    },
+                    {
+                        "data": "uang_jalan"
+                    },
+                    {
+                        "data": "Jo_id",
+                        "orderable": false,
+                        render: function(data, type, row) {
+                            let html = "<a class='btn btn-light' href='<?= base_url('index.php/detail/detail_jo/"+data+"/uang_jalan')?>'><i class='fas fa-eye'></i></a>";
+                            return html;
+                        }
+                    }
+                ]
+            });
+            $("#Tanggal").change(function() {
+                // alert($('#Tanggal').val());   
+                table.ajax.reload();
+                $('#link_cetaklaporanuangjalanpdf').attr('href','<?=base_url("index.php/print_berkas/cetaklaporanpdf/")?>'+$('#Tanggal').val()+'/'+$('#Bulan').val()+'/'+$('#Tahun').val()+'/'+$('#status-JO').val()+'/uangjalan');
+                $('#link_cetaklaporanuangjalanexcel').attr('href','<?=base_url("index.php/print_berkas/cetaklaporanexcel/")?>'+$('#Tanggal').val()+'/'+$('#Bulan').val()+'/'+$('#Tahun').val()+'/'+$('#status-JO').val()+'/uangjalan');
+            });
+            $("#Bulan").change(function() {
+                // alert($('#Bulan').val());   
+                table.ajax.reload();
+                $('#link_cetaklaporanuangjalanpdf').attr('href','<?=base_url("index.php/print_berkas/cetaklaporanpdf/")?>'+$('#Tanggal').val()+'/'+$('#Bulan').val()+'/'+$('#Tahun').val()+'/'+$('#status-JO').val()+'/uangjalan');
+                $('#link_cetaklaporanuangjalanexcel').attr('href','<?=base_url("index.php/print_berkas/cetaklaporanexcel/")?>'+$('#Tanggal').val()+'/'+$('#Bulan').val()+'/'+$('#Tahun').val()+'/'+$('#status-JO').val()+'/uangjalan');
+            });
+            $("#Tahun").change(function() {
+                // alert($('#Tahun').val());   
+                table.ajax.reload();
+                $('#link_cetaklaporanuangjalanpdf').attr('href','<?=base_url("index.php/print_berkas/cetaklaporanpdf/")?>'+$('#Tanggal').val()+'/'+$('#Bulan').val()+'/'+$('#Tahun').val()+'/'+$('#status-JO').val()+'/uangjalan');
+                $('#link_cetaklaporanuangjalanexcel').attr('href','<?=base_url("index.php/print_berkas/cetaklaporanexcel/")?>'+$('#Tanggal').val()+'/'+$('#Bulan').val()+'/'+$('#Tahun').val()+'/'+$('#status-JO').val()+'/uangjalan');
+            });
+            $("#status-JO").change(function() {
+                // alert($("#status-JO").val())
+                table.ajax.reload();
+                $('#link_cetaklaporanuangjalanpdf').attr('href','<?=base_url("index.php/print_berkas/cetaklaporanpdf/")?>'+$('#Tanggal').val()+'/'+$('#Bulan').val()+'/'+$('#Tahun').val()+'/'+$('#status-JO').val()+'/uangjalan');
+                $('#link_cetaklaporanuangjalanexcel').attr('href','<?=base_url("index.php/print_berkas/cetaklaporanexcel/")?>'+$('#Tanggal').val()+'/'+$('#Bulan').val()+'/'+$('#Tahun').val()+'/'+$('#status-JO').val()+'/uangjalan');
+            });
+        });
+    </script>
+    <!-- end Uang Jalan -->
 
     <!-- bon -->
     <script> //script datatables bon

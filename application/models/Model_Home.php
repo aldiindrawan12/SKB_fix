@@ -144,6 +144,7 @@ class Model_Home extends CI_model
      //function-fiunction datatable JO laporan
         public function count_all_JO_report($tanggal,$bulan,$tahun,$status)
         {
+            $this->db->join("skb_supir", "skb_supir.supir_id = skb_job_order.supir_id", 'left');
             $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
             return $this->db->count_all_results("skb_job_order");
         }
@@ -179,6 +180,7 @@ class Model_Home extends CI_model
             }
             $this->db->order_by($order_field, $order_ascdesc);
             // $this->db->limit($limit, $start);
+            $this->db->join("skb_supir", "skb_supir.supir_id = skb_job_order.supir_id", 'left');
             $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
             return $this->db->get('skb_job_order')->result_array();
         }
@@ -212,6 +214,7 @@ class Model_Home extends CI_model
             if($status!="x"){
                 $this->db->where("status",$status);
             }
+            $this->db->join("skb_supir", "skb_supir.supir_id = skb_job_order.supir_id", 'left');
             $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
             return $this->db->get('skb_job_order')->num_rows();
         }

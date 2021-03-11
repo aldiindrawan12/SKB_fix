@@ -299,6 +299,26 @@ class Home extends CI_Controller {
         }
     // end funngsi report 
 
+    // funngsi report uang jalan 
+    public function report_uang_jalan()
+    {
+        if(!$_SESSION["user"]){
+            $this->session->set_flashdata('status-login', 'False');
+            redirect(base_url());
+        }
+        $data["page"] = "Laporan_Uang_Jalan_page";
+        $data["collapse_group"] = "Laporan";
+        $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+        if(json_decode($data["akun_akses"]["akun_akses"])[3]==0){
+            redirect(base_url());
+        }
+        $this->load->view('header',$data);
+        $this->load->view('sidebar');
+        $this->load->view('home/report_uang_jalan');
+        $this->load->view('footer');
+    }
+// end funngsi report uang jalan 
+
     // Invoice
         public function view_invoice(){
             $search = $_POST['search']['value'];

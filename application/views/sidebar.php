@@ -98,14 +98,18 @@
                 </a>
                 <div id="Laporan" class="collapse" aria-labelledby="headingTwo">
                     <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" id="Laporan_page" href="<?=base_url("index.php/home/report")?>">
-                                <i class="fas fa-mail-bulk"></i>
-                                <span>Laporan Job Order</span>
-                            </a>
-                            <a class="collapse-item" id="Laporan_Gaji_page" href="<?=base_url("index.php/home/report_gaji")?>">
-                                <i class="fas fa-file-invoice-dollar"></i>
-                                <span>Laporan Gaji Supir</span>
-                            </a>
+                        <a class="collapse-item" id="Laporan_page" href="<?=base_url("index.php/home/report")?>">
+                            <i class="fas fa-mail-bulk"></i>
+                            <span>Laporan Job Order</span>
+                        </a>
+                        <a class="collapse-item" id="Laporan_Uang_Jalan_page" href="<?=base_url("index.php/home/report_uang_jalan")?>">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                            <span>Laporan Uang Jalan</span>
+                        </a>
+                        <a class="collapse-item" id="Laporan_Gaji_page" href="<?=base_url("index.php/home/report_gaji")?>">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                            <span>Laporan Gaji Supir</span>
+                        </a>
                     </div>
                 </div>
             </li>

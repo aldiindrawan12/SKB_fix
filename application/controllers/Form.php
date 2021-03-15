@@ -127,10 +127,18 @@ class Form extends CI_Controller {
 
         public function insert_customerMenu(){
             $data=array(
-                "customer_name"=>$this->input->post("Customer")
+                "customer_name"=>$this->input->post("Customer"),
+                "customer_alamat"=>$this->input->post("customer_alamat"),
+                "customer_kontak_person"=>$this->input->post("customer_kontak_person"),
+                "customer_telp"=>$this->input->post("customer_telp"),
+                "customer_keterangan"=>$this->input->post("customer_keterangan"),
+                "customer_bank"=>$this->input->post("customer_bank"),
+                "customer_rekening"=>$this->input->post("customer_rekening"),
+                "customer_AN"=>$this->input->post("customer_AN"),
             );
-            // echo($data["customer_name"]);
+            echo var_dump($data);
             $this->model_form->insert_customer($data);
+			$this->session->set_flashdata('status-add-customer', 'Berhasil');
             redirect(base_url("index.php/home/customer"));
         }
 
@@ -200,6 +208,37 @@ class Form extends CI_Controller {
             redirect(base_url("index.php/home/penggajian"));
         }
 
+        public function update_truck(){
+            $data = array(
+                "mobil_no" => $this->input->post("mobil_no_update"),
+                "mobil_berlaku" => $this->input->post("mobil_berlaku_update"),
+                "mobil_pajak" => $this->input->post("mobil_pajak_update"),
+                "mobil_keterangan" => $this->input->post("mobil_keterangan_update")
+            );
+            // echo var_dump($data);
+            $this->model_form->update_truck($data);
+            $this->session->set_flashdata('status-update-truck', 'Berhasil');
+            redirect(base_url("index.php/home/truck"));
+        }
+
+        public function update_customer(){
+            $data = array(
+                "customer_id" => $this->input->post("customer_id_update"),
+                "customer_name" => $this->input->post("customer_name_update"),
+                "customer_alamat" => $this->input->post("customer_alamat_update"),
+                "customer_kontak_person" => $this->input->post("customer_kontak_person_update"),
+                "customer_telp" => $this->input->post("customer_telp_update"),
+                "customer_bank" => $this->input->post("customer_bank_update"),
+                "customer_rekening" => $this->input->post("customer_rekening_update"),
+                "customer_AN" => $this->input->post("customer_AN_update"),
+                "customer_keterangan" => $this->input->post("customer_keterangan_update"),
+            );
+            // echo var_dump($data);
+            $this->model_form->update_customer($data);
+            $this->session->set_flashdata('status-update-customer', 'Berhasil');
+            redirect(base_url("index.php/home/customer"));
+        }
+
         public function update_akun(){
             $akun = $this->model_form->getakunbyid($this->input->post("akun_id"));
             $password = $this->input->post("password_update");
@@ -223,6 +262,13 @@ class Form extends CI_Controller {
             $this->model_form->deletesupir($supir_id);
             $this->session->set_flashdata('status-delete-supir', 'Berhasil');
             echo $supir_id;
+        }
+
+        public function deletecustomer(){
+            $customer_id = $this->input->get("id");
+            $this->model_form->deletecustomer($customer_id);
+            $this->session->set_flashdata('status-delete-customer', 'Berhasil');
+            echo $customer_id;
         }
 
         public function deletesatuan(){

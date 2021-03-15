@@ -85,11 +85,21 @@
                         "data": "mobil_no"
                     },
                     {
-                        "data": "mobil_jenis"
+                        "data": "mobil_merk"
+                    },
+                    
+                    {
+                        "data": "mobil_type"
                     },
                     {
-                        "data": "mobil_max_load",
-                        className: 'text-center'
+                        "data": "mobil_jenis"
+                    },
+                    
+                    {
+                        "data": "mobil_tahun"
+                    },
+                    {
+                        "data": "mobil_berlaku"
                     },
                     {
                         "data": "mobil_no",
@@ -97,6 +107,7 @@
                         "orderable": false,
                         render: function(data, type, row) {
                             let html = "<a class='btn btn-light btn-detail-truck' href='javascript:void(0)' data-toggle='modal' data-target='#popup-kendaraan' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
+                            "<a class='btn btn-light btn-update-truck' href='javascript:void(0)' data-toggle='modal' data-target='#popup-update-truck' data-pk='"+data+"'><i class='fas fa-pen-square'></i></a> || "+
                             "<a class='btn btn-light btn-delete-truck' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-trash-alt'></i></a>";
                             return html;
                         }
@@ -152,6 +163,24 @@
                             }
                         });
                     });                    
+                    $('.btn-update-truck').click(function() {
+                        let pk = $(this).data('pk');
+                        // alert(pk);
+                        $.ajax({ //ajax ambil data bon
+                            type: "GET",
+                            url: "<?php echo base_url('index.php/detail/gettruck') ?>",
+                            dataType: "JSON",
+                            data: {
+                                id: pk
+                            },
+                            success: function(data) { //jika ambil data sukses
+                                $('#mobil_no_update').val(data["mobil_no"]); //set value
+                                $('#mobil_berlaku_update').val(data["mobil_berlaku"]); //set value
+                                $('#mobil_pajak_update').val(data["mobil_pajak"]); //set value
+                                $('#mobil_keterangan_update').val(data["mobil_keterangan"]); //set value
+                            }
+                        });
+                    });
                 },
                 
             });
@@ -529,23 +558,106 @@
                     [5, 10, 30, 50, 100]
                 ],
                 "columns": [
-                    {
-                        "data": "customer_id",
-                        className: 'text-center'
-                    },
+                    // {
+                    //     "data": "customer_id",
+                    //     className: 'text-center'
+                    // },
                     {
                         "data": "customer_name"
+                    },
+                    {
+                        "data": "customer_alamat"
+                    },
+                    {
+                        "data": "customer_kontak_person"
+                    },
+                    {
+                        "data": "customer_telp"
                     },
                     {
                         "data": "customer_id",
                         className: 'text-center',
                         "orderable": false,
                         render: function(data, type, row) {
-                            let html = "<a class='btn btn-light' href='<?= base_url('index.php/detail/detail_customer/"+data+"')?>'><i class='fas fa-eye'></i></a>";
+                            let html = "<a class='btn btn-light' href='<?= base_url('index.php/detail/detail_customer/"+data+"')?>'><i class='fas fa-file-invoice-dollar'></i></a> || "+
+                            "<a class='btn btn-light btn-detail-customer' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-customer' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
+                            "<a class='btn btn-light btn-update-customer' data-toggle='modal' data-target='#popup-update-customer' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
+                            "<a class='btn btn-light btn-delete-customer' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
                             return html;
                         }
                     }
-                ]
+                ],
+                drawCallback: function() {
+                    $('.btn-update-customer').click(function() {
+                        let pk = $(this).data('pk');
+                        // alert(pk);
+                        $.ajax({
+                            type: "GET",
+                            url: "<?php echo base_url('index.php/detail/getcustomer') ?>",
+                            dataType: "JSON",
+                            data: {
+                                id: pk
+                            },
+                            success: function(data) {
+                                // alert(data);
+                                $("#customer_id_update").val(data["customer_id"]);
+                                $("#customer_name_update").val(data["customer_name"]);
+                                $("#customer_telp_update").val(data["customer_telp"]);
+                                $("#customer_alamat_update").val(data["customer_alamat"]);
+                                $("#customer_kontak_person_update").val(data["customer_kontak_person"]);
+                                $("#customer_telp_update").val(data["customer_telp"]);
+                                $("#customer_bank_update").val(data["customer_bank"]);
+                                $("#customer_rekening_update").val(data["customer_rekening"]);
+                                $("#customer_AN_update").val(data["customer_AN"]);
+                                $("#customer_keterangan_update").val(data["customer_keterangan"]);
+                            }
+                        });
+                    });
+                    $('.btn-detail-customer').click(function() {
+                        let pk = $(this).data('pk');
+                        $.ajax({ //ajax ambil data customer
+                            type: "GET",
+                            url: "<?php echo base_url('index.php/detail/getcustomer') ?>",
+                            dataType: "JSON",
+                            data: {
+                                id: pk
+                            },
+                            success: function(data) { //jika ambil data sukses
+                                $('td[name="customer_name"]').text(data["customer_name"]); //set value
+                                $('td[name="customer_alamat"]').text(data["customer_alamat"]); //set value
+                                $('td[name="customer_kontak_person"]').text(data["customer_kontak_person"]); //set value
+                                $('td[name="customer_telp"]').text(data["customer_telp"]); //set value
+                                $('td[name="customer_bank"]').text(data["customer_bank"]); //set value
+                                $('td[name="customer_rekening"]').text(data["customer_rekening"]); //set value
+                                $('td[name="customer_AN"]').text(data["customer_AN"]); //set value
+                            }
+                        });
+                    }); 
+                    $('.btn-delete-customer').click(function() {
+                        let pk = $(this).data('pk');
+                        // alert(pk);
+                        Swal.fire({
+                            title: 'Yakin Ingin Hapus Customer Ini?',
+                            showDenyButton: true,
+                            denyButtonText: `Batal`,
+                            confirmButtonText: 'Hapus',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/deletecustomer') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        })
+                    });
+                }
             });
         });
     </script>
@@ -643,7 +755,7 @@
                     $('.btn-detail-supir').click(function() {
                         let pk = $(this).data('pk');
                         // alert(pk);
-                        $.ajax({ //ajax ambil data bon
+                        $.ajax({ //ajax ambil data supir
                             type: "GET",
                             url: "<?php echo base_url('index.php/detail/getsupir') ?>",
                             dataType: "JSON",
@@ -1189,7 +1301,11 @@
             var update_supir = '<?= $this->session->flashdata('status-update-supir'); ?>';
             var delete_supir = '<?= $this->session->flashdata('status-delete-supir'); ?>';
             var kendaraan = '<?= $this->session->flashdata('status-add-kendaraan'); ?>';
+            var update_truck = '<?= $this->session->flashdata('status-update-truck'); ?>';
             var delete_kendaraan = '<?= $this->session->flashdata('status-delete-kendaraan'); ?>';
+            var customer = '<?= $this->session->flashdata('status-add-customer'); ?>';
+            var delete_customer = '<?= $this->session->flashdata('status-delete-customer'); ?>';
+            var update_customer = '<?= $this->session->flashdata('status-update-customer'); ?>';
             var satuan = '<?= $this->session->flashdata('status-add-satuan'); ?>';
             var delete_satuan = '<?= $this->session->flashdata('status-delete-satuan'); ?>';
             if(login == "Berhasil"){
@@ -1208,10 +1324,34 @@
                         timer: 2000
                     });
             }
+            if(customer == "Berhasil"){
+                Swal.fire({
+                        title: "Berhasil",
+                        text: "Menambah Customer Baru",
+                        type: "success",
+                        timer: 2000
+                    });
+            }
             if(update_akun == "Berhasil"){
                 Swal.fire({
                         title: "Berhasil",
                         text: "Mengubah Data Akun",
+                        type: "success",
+                        timer: 2000
+                    });
+            }
+            if(update_truck == "Berhasil"){
+                Swal.fire({
+                        title: "Berhasil",
+                        text: "Mengubah Data Truck",
+                        type: "success",
+                        timer: 2000
+                    });
+            }
+            if(update_customer == "Berhasil"){
+                Swal.fire({
+                        title: "Berhasil",
+                        text: "Mengubah Data Customer",
                         type: "success",
                         timer: 2000
                     });
@@ -1276,6 +1416,14 @@
                 Swal.fire({
                         title: "Berhasil",
                         text: "Menghapus Data Satuan",
+                        type: "error",
+                        timer: 2000
+                    });
+            }
+            if(delete_customer == "Berhasil"){
+                Swal.fire({
+                        title: "Berhasil",
+                        text: "Menghapus Data Customer",
                         type: "error",
                         timer: 2000
                     });

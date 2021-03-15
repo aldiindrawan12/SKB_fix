@@ -91,6 +91,12 @@ class Model_Form extends CI_model
         return $this->db->update("skb_mobil");
     }
 
+    public function deletecustomer($customer_id){
+        $this->db->set("status_hapus","YES");
+        $this->db->where("customer_id",$customer_id);
+        return $this->db->update("skb_customer");
+    }
+
     public function deletesatuan($satuan_id){
         $this->db->where("satuan_id",$satuan_id);
         return $this->db->delete("skb_satuan");
@@ -114,6 +120,27 @@ class Model_Form extends CI_model
         $this->db->set("supir_keterangan",$data["supir_keterangan"]);
         $this->db->where("supir_id",$data["supir_id"]);
         $this->db->update("skb_supir");
+    }
+
+    public function update_customer($data){
+        $this->db->set("customer_name",$data["customer_name"]);
+        $this->db->set("customer_alamat",$data["customer_alamat"]);
+        $this->db->set("customer_kontak_person",$data["customer_kontak_person"]);
+        $this->db->set("customer_telp",$data["customer_telp"]);
+        $this->db->set("customer_bank",$data["customer_bank"]);
+        $this->db->set("customer_rekening",$data["customer_rekening"]);
+        $this->db->set("customer_AN",$data["customer_AN"]);
+        $this->db->set("customer_keterangan",$data["customer_keterangan"]);
+        $this->db->where("customer_id",$data["customer_id"]);
+        $this->db->update("skb_customer");
+    }
+
+    public function update_truck($data){
+        $this->db->set("mobil_berlaku",$data["mobil_berlaku"]);
+        $this->db->set("mobil_pajak",$data["mobil_pajak"]);
+        $this->db->set("mobil_keterangan",$data["mobil_keterangan"]);
+        $this->db->where("mobil_no",$data["mobil_no"]);
+        $this->db->update("skb_mobil");
     }
 
     public function update_akun($data){

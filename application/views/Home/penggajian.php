@@ -6,7 +6,7 @@
                 <i class="fas fa-plus"></i> 
             </span>
             <span class="text">
-                 Tambah Supir Baru
+                 Tambah Supir
             </span>
         </a>
     </div>  

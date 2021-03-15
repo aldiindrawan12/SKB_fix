@@ -153,14 +153,23 @@ class Detail extends CI_Controller {
         }
     //end fungsi untuk Detail ttruckk
 
-     //fungsi untuk Detail truck
+    //fungsi untuk Detail customer
+        function getcustomer()
+        {
+            $customer_id = $this->input->get('id');
+            $data = $this->model_home->getcustomerbyid($customer_id);
+            echo json_encode($data);
+        }
+    //end fungsi untuk Detail customer
+
+     //fungsi untuk Detail supir
      function getsupir()
      {
          $supir_id = $this->input->get('id');
          $data = $this->model_home->getsupirbyid($supir_id);
          echo json_encode($data);
      }
- //end fungsi untuk Detail ttruckk
+    //end fungsi untuk Detail supir
 
     //fungsi untuk Detail penggajian
         public function detail_penggajian($supir_id)

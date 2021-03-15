@@ -251,13 +251,15 @@ class Model_Home extends CI_model
     //  Function Customer
         public function count_all_customer()
         {
+            $this->db->where("status_hapus","NO");
             return $this->db->count_all_results("skb_customer");
         }
 
         public function filter_customer($search, $limit, $start, $order_field, $order_ascdesc)
         {
-            $this->db->like('customer_id', $search);
-            $this->db->or_like('customer_name', $search);
+            // $this->db->like('customer_id', $search);
+            $this->db->where("status_hapus","NO");
+            $this->db->like('customer_name', $search);
             $this->db->order_by($order_field, $order_ascdesc);
             $this->db->limit($limit, $start);
             return $this->db->get('skb_customer')->result_array();
@@ -265,8 +267,9 @@ class Model_Home extends CI_model
 
         public function count_filter_customer($search)
         {
-            $this->db->like('customer_id', $search);
-            $this->db->or_like('customer_name', $search);
+            // $this->db->like('customer_id', $search);
+            $this->db->where("status_hapus","NO");
+            $this->db->like('customer_name', $search);
             return $this->db->get('skb_customer')->num_rows();
         }
     //  end Function Customer

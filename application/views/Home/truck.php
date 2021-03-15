@@ -1,5 +1,4 @@
 <div class="container">
-    
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Seluruh Kendaraan</h1>
         <a class="btn btn-primary btn-icon-split" data-toggle='modal' data-target='#popup-truck'>
@@ -21,8 +20,11 @@
                 <thead>
                     <tr>
                         <th class="text-center" scope="col">No Polisi</th>
+                        <th class="text-center" scope="col">Merk</th>
+                        <th class="text-center" scope="col">Type</th>
                         <th class="text-center" scope="col">Jenis Kendaraan</th>
-                        <th class="text-center" scope="col">Maximum Load (Ton)</th>
+                        <th class="text-center" scope="col">Tahun</th>
+                        <th class="text-center" scope="col">Tgl.Berlaku STNK</th>
                         <th class="text-center" scope="col">Aksi</th>
                     </tr>
                 </thead>
@@ -32,6 +34,7 @@
         </div>
     </div>
 </div>
+
 <!-- pop up add truck -->
 <div class="modal fade mt-5 px-5 py-2" id="popup-truck" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
@@ -101,8 +104,43 @@
             </div>
         </div>
     </div>
-    </div>
+</div>
+<!-- end pop up add truck -->
 
+<!-- pop up update truck -->
+<div class="modal fade mt-5 px-5 py-2" id="popup-update-truck" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary-dark">
+                <h5 class="font-weight-bold">Update Truck</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="font-size-sm m-3 text-justify">
+                <form action="<?= base_url("index.php/form/update_truck")?>" method="POST">     
+                    <input autocomplete="off" type="text" class="form-control" id="mobil_no_update" name="mobil_no_update" required hidden>
+                        <div class="form-group">
+                            <label for="mobil_berlaku_update" class="form-label font-weight-bold">Tgl.Berlaku STNK</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_berlaku_update" name="mobil_berlaku_update" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobil_pajak_update" class="form-label font-weight-bold">Tgl.Pajak STNK</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_pajak_update" name="mobil_pajak_update" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobil_keterangan_update" class="form-label font-weight-bold">Keterangan</label>
+                            <textarea class="form-control" id="mobil_keterangan_update" name="mobil_keterangan_update" rows="3"></textarea>
+                        </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success mb-3 float-right">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end pop up update truck -->
 
 <!-- pop up detail kendaraan -->
 <div class="modal fade" id="popup-kendaraan" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
@@ -180,4 +218,4 @@
 
 
 </div>
-<!-- end pop up add kendaraan -->
+<!-- end pop up detail kendaraan -->

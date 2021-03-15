@@ -6,7 +6,7 @@
                 <i class="fas fa-plus"></i> 
             </span>
             <span class="text">
-                 Tambah Customer Baru
+                 Tambah Customer
             </span>
         </a>
 
@@ -40,7 +40,7 @@
 
 
 <!-- pop up add customer -->
-<div class="modal fade mt-5 px-5 py-5" id="popup-customer" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<div class="modal fade  px-5 " id="popup-customer" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
@@ -49,28 +49,40 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="font-size-sm m-3 text-justify">
-                <form action="<?= base_url("index.php/form/insert_customerMenu")?>" method="POST">
-                    <div class="form-group">
-                        <label for="Customer" class="form-label font-weight-bold">Nama Customer</label>
-                        <input autocomplete="off" type="text" class="form-control" id="Customer" name="Customer" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="customer_alamat" class="form-label font-weight-bold">Alamat</label>
-                        <input autocomplete="off" type="text" class="form-control" id="customer_alamat" name="customer_alamat" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="customer_kontak_person" class="form-label font-weight-bold">Contact Person</label>
-                        <input autocomplete="off" type="text" class="form-control" id="customer_kontak_person" name="customer_kontak_person" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="customer_telp" class="form-label font-weight-bold">Telp./HP</label>
-                        <input autocomplete="off" type="text" class="form-control" id="customer_telp" name="customer_telp" required>
-                    </div>
-                    <div class="form-group">
+            
+            <div class="container mt-3">
+                <div class="row">
+                    
+                    <div class="col table-bordered">
+                        <form action="<?= base_url("index.php/form/insert_customerMenu")?>" method="POST">
+                        <input type="text" name="customer_id" id="customer_id" hidden>
+                        <div class="form-group mt-1">
+                            <label for="Customer" class="form-label font-weight-bold">Nama Customer</label>
+                            <input autocomplete="off" type="text" class="form-control" id="Customer" name="Customer" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="customer_alamat" class="form-label font-weight-bold">Alamat</label>
+                            <input autocomplete="off" type="text" class="form-control" id="customer_alamat" name="customer_alamat" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="customer_kontak_person" class="form-label font-weight-bold">Contact Person</label>
+                            <input autocomplete="off" type="text" class="form-control" id="customer_kontak_person" name="customer_kontak_person" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="customer_telp" class="form-label font-weight-bold">Telp./HP</label>
+                            <input autocomplete="off" type="text" class="form-control" id="customer_telp" name="customer_telp" required>
+                        </div>
+                        <div class="form-group">
                         <label for="customer_keterangan" class="form-label font-weight-bold">Keterangan</label>
                         <input autocomplete="off" type="text" class="form-control" id="customer_keterangan" name="customer_keterangan" required>
                     </div>
+
+                        
+                    </div>
+                    
+                <div class="col table-bordered ml-1">
+                <div class="w-100"></div>
+                    <h6 class="font-weight-bold text-center mt-2">Transfer</h6>
                     <div class="form-group">
                         <label for="customer_bank" class="form-label font-weight-bold">Bank</label>
                         <input autocomplete="off" type="text" class="form-control" id="customer_bank" name="customer_bank" required>
@@ -83,15 +95,26 @@
                         <label for="customer_AN" class="form-label font-weight-bold">Atas Nama</label>
                         <input autocomplete="off" type="text" class="form-control" id="customer_AN" name="customer_AN" required>
                     </div>
-                    <div class="form-group">
-                    <button type="submit" class="btn btn-success mb-3 float-right">Simpan</button>
+                    
+
+
                     </div>
-                </form>
+                    </div>
+                    
+                    
+                </div>
+                <div class="form-group mt-3 mr-2 px-1">
+                    <button type="submit" class="btn btn-success float-right">Simpan</button>
+                    </div>
+                    </form>
             </div>
+
         </div>
     </div>
-</div>
+
 <!-- end pop up add customer -->
+
+
 
 <!-- pop up update customer -->
 <div class="modal fade  px-5 " id="popup-update-customer" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">

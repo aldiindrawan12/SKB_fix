@@ -134,7 +134,7 @@
 
 <!-- pop up detail supir -->
 <div class="modal fade mt-5 px-5 py-5 " id="popup-detail-supir" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
                 <h5 class="block-title">Detail Supir</h5>
@@ -142,8 +142,8 @@
                     <span aria-hidden="true">&times</span>
                 </button>
             </div>
-            <div class="font-size-sm m-3 text-justify">
-            <div class="row">
+            <div class="font-size-sm text-justify">
+            <div class="">
                 <div class="">
                     <table class="table table-bordered">
                         <tbody>
@@ -163,12 +163,6 @@
                                 <td class="font-weight-bold" style="width: 30%;">Kasbon</td>
                                 <td name="supir_kasbon"></td>
                             </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="">
-                    <table class="table table-bordered">
-                        <tbody>
                             <tr>
                                 <td class="font-weight-bold" style="width: 20%;">No.KTP</td>
                                 <td name="supir_ktp"></td>
@@ -178,12 +172,13 @@
                                 <td name="supir_sim"></td>
                             </tr>
                             <tr>
-                                <td class="font-weight-bold" style="width: 20%;">Keterangan</td>
+                            <td class="font-weight-bold" style="width: 20%;">Keterangan</td>
                                 <td name="supir_keterangan"></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
+               
             </div>
             </div>
         </div>

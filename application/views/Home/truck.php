@@ -44,24 +44,56 @@
             </div>
             <div class="font-size-sm m-3 text-justify">
                 <form action="<?= base_url("index.php/form/insert_truck")?>" method="POST">
-                    <div class="form-group">
-                        <label for="mobil_no" class="form-label font-weight-bold">Plat No Mobil</label>
-                        <input autocomplete="off" type="text" class="form-control" id="mobil_no" name="mobil_no" required>
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="mobil_no" class="form-label font-weight-bold">Plat No Mobil</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_no" name="mobil_no" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobil_merk" class="form-label font-weight-bold">Merk</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_merk" name="mobil_merk" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobil_type" class="form-label font-weight-bold">Type</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_type" name="mobil_type" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label font-weight-bold" for="mobil_jenis">Jenis Mobil</label>
+                            <select name="mobil_jenis" id="mobil_jenis" class="form-control custom-select" required onchange="nominal()">
+                                <option class="font-w700" disabled="disabled" selected value="">Jenis Mobil</option>
+                                <option value="Sedang(Engkel)">Sedang(Engkel)</option>
+                                <option value="Besar(Tronton)">Besar(Tronton)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label font-weight-bold" for="mobil_dump">Dump</label>
+                            <select name="mobil_dump" id="mobil_dump" class="form-control custom-select" required onchange="nominal()">
+                                <option class="font-w700" disabled="disabled" selected value="">Pilih Ya/Tidak</option>
+                                <option value="Ya">Ya</option>
+                                <option value="Tidak">Tidak</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobil_tahun" class="form-label font-weight-bold">Tahun</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_tahun" name="mobil_tahun" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobil_max_load" class="form-label font-weight-bold">Muatan Maksimal Mobil (Ton)</label>
+                            <input autocomplete="off" type="number" class="form-control" id="mobil_max_load" name="mobil_max_load" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobil_berlaku" class="form-label font-weight-bold">Tgl.Berlaku STNK</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_berlaku" name="mobil_berlaku" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobil_pajak" class="form-label font-weight-bold">Tgl.Pajak STNK</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_pajak" name="mobil_pajak" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobil_keterangan" class="form-label font-weight-bold">Keterangan</label>
+                            <textarea class="form-control" name="mobil_keterangan" rows="3"></textarea>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="mobil_jenis" class="form-label font-weight-bold">Jenis Mobil</label>
-                        <input autocomplete="off" type="text" class="form-control" id="mobil_jenis" name="mobil_jenis" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="mobil_max_load" class="form-label font-weight-bold">Muatan Maksimal Mobil (Ton)</label>
-                        <input autocomplete="off" type="number" class="form-control" id="mobil_max_load" name="mobil_max_load" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="mobil_keterangan" class="form-label font-weight-bold">Keterangan</label>
-                        <textarea class="form-control" name="mobil_keterangan" rows="3"></textarea>
-                    </div>
-
                     <div class="form-group">
                     <button type="submit" class="btn btn-success mb-3 float-right">Simpan</button>
                     </div>
@@ -83,31 +115,64 @@
                 </button>
             </div>
             <div class="font-size-sm m-3 text-justify">
-            <table class="table table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="font-weight-bold" style="width: 20%;">No Polisi</td>
-                        <td name="mobil_no"></td>
-                    </tr>
-                    <tr>
-                        <td class="font-weight-bold" style="width: 20%;">Jenis Kendaraan</td>
-                        <td name="mobil_jenis"></td>
-                    </tr>
-                    <tr>
-                        <td class="font-weight-bold" style="width: 20%;">Status Jalan</td>
-                        <td name="status_jalan"></td>
-                    </tr>
-                    <tr>
-                        <td class="font-weight-bold" style="width: 30%;">Maximum Load (Ton)</td>
-                        <td name="mobil_max_load"></td>
-                    </tr>
-                    <tr>
-                        <td class="font-weight-bold" style="width: 20%;">Keterangan</td>
-                        <td name="mobil_keterangan"></td>
-                    </tr>
-                   
-                </tbody>
-            </table>
+            <div class="row">
+                <div class="">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="font-weight-bold" style="width: 20%;">No Polisi</td>
+                                <td name="mobil_no"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" style="width: 20%;">Jenis Kendaraan</td>
+                                <td name="mobil_jenis"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" style="width: 20%;">Status Jalan</td>
+                                <td name="status_jalan"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" style="width: 30%;">Maximum Load (Ton)</td>
+                                <td name="mobil_max_load"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" style="width: 20%;">Keterangan</td>
+                                <td name="mobil_keterangan"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="font-weight-bold" style="width: 20%;">Merk</td>
+                                <td name="mobil_merk"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" style="width: 20%;">Type</td>
+                                <td name="mobil_type"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" style="width: 20%;">Dump</td>
+                                <td name="mobil_dump"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" style="width: 30%;">Tahun</td>
+                                <td name="mobil_tahun"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" style="width: 20%;">Tgl.Berlaku STNK</td>
+                                <td name="mobil_berlaku"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" style="width: 20%;">Tgl.Pajak STNK</td>
+                                <td name="mobil_pajak"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             </div>
         </div>
     </div>

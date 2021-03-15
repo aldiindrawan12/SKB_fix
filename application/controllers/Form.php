@@ -139,7 +139,12 @@ class Form extends CI_Controller {
                 "supir_name"=>$this->input->post("Supir"),
                 "supir_kasbon"=>0,
                 "status_jalan"=>"Tidak Jalan",
-                "status_hapus"=>"NO"
+                "status_hapus"=>"NO",
+                "supir_alamat"=>$this->input->post("supir_alamat"),
+                "supir_telp"=>$this->input->post("supir_telp"),
+                "supir_ktp"=>$this->input->post("supir_ktp"),
+                "supir_sim"=>$this->input->post("supir_sim"),
+                "supir_keterangan"=>$this->input->post("supir_keterangan")
             );
             // echo($data["customer_name"]);
             $this->model_form->insert_supir($data);
@@ -154,9 +159,15 @@ class Form extends CI_Controller {
                 "mobil_max_load"=>$this->input->post("mobil_max_load"),
                 "status_jalan"=>"Tidak Jalan",
                 "status_hapus"=>"NO",
-                "mobil_keterangan"=>$this->input->post("mobil_keterangan")
+                "mobil_keterangan"=>$this->input->post("mobil_keterangan"),
+                "mobil_merk"=>$this->input->post("mobil_merk"),
+                "mobil_type"=>$this->input->post("mobil_type"),
+                "mobil_dump"=>$this->input->post("mobil_dump"),
+                "mobil_tahun"=>$this->input->post("mobil_tahun"),
+                "mobil_berlaku"=>$this->input->post("mobil_berlaku"),
+                "mobil_pajak"=>$this->input->post("mobil_pajak")
             );
-            // echo($data["customer_name"]);
+            // echo var_dump($data);
             $this->model_form->insert_truck($data);
 			$this->session->set_flashdata('status-add-kendaraan', 'Berhasil');
             redirect(base_url("index.php/home/truck"));
@@ -175,9 +186,16 @@ class Form extends CI_Controller {
     
     // fungsi lain
         public function update_supir(){
-            $supir_name = $this->input->post("supir_name");
-            $supir_id = $this->input->post("supir_id");
-            $this->model_form->update_supir($supir_id,$supir_name);
+            $data = array(
+                "supir_name" => $this->input->post("supir_name"),
+                "supir_id" => $this->input->post("supir_id"),
+                "supir_alamat" => $this->input->post("supir_alamat_update"),
+                "supir_telp" => $this->input->post("supir_telp_update"),
+                "supir_ktp" => $this->input->post("supir_ktp_update"),
+                "supir_sim" => $this->input->post("supir_sim_update"),
+                "supir_keterangan" => $this->input->post("supir_keterangan_update"),
+            );
+            $this->model_form->update_supir($data);
             $this->session->set_flashdata('status-update-supir', 'Berhasil');
             redirect(base_url("index.php/home/penggajian"));
         }
@@ -231,7 +249,7 @@ class Form extends CI_Controller {
         public function getsupirname(){
             $supir_id = $this->input->get("id");
             $supir = $this->model_form->getsupirname($supir_id);
-            echo $supir["supir_name"];
+            echo json_encode($supir);
         }
 
         public function generate_terbilang($uang){

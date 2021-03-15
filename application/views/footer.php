@@ -143,6 +143,12 @@
                                 $('td[name="status_jalan"]').text(data["status_jalan"]); //set value
                                 $('td[name="mobil_max_load"]').text(data["mobil_max_load"]); //set value
                                 $('td[name="mobil_keterangan"]').text(data["mobil_keterangan"]); //set value
+                                $('td[name="mobil_merk"]').text(data["mobil_merk"]); //set value
+                                $('td[name="mobil_type"]').text(data["mobil_type"]); //set value
+                                $('td[name="mobil_dump"]').text(data["mobil_dump"]); //set value
+                                $('td[name="mobil_tahun"]').text(data["mobil_tahun"]); //set value
+                                $('td[name="mobil_berlaku"]').text(data["mobil_berlaku"]); //set value
+                                $('td[name="mobil_pajak"]').text(data["mobil_pajak"]); //set value
                             }
                         });
                     });                    
@@ -605,7 +611,8 @@
                         className: 'text-center font-weight-bold',
                         "orderable": false,
                         render: function(data, type, row) {
-                            let html = "<a class='btn btn-light btn-update-supir' data-toggle='modal' data-target='#popup-update-supir' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
+                            let html = "<a class='btn btn-light btn-detail-supir' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-supir' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
+                            "<a class='btn btn-light btn-update-supir' data-toggle='modal' data-target='#popup-update-supir' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
                             "<a class='btn btn-light btn-delete-supir' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
                             // "<a class='btn btn-light' href='<?= base_url('index.php/detail/detail_penggajian/"+data+"')?>'><i class='fas fa-eye'></i></a> || "+
                             return html;
@@ -619,15 +626,42 @@
                         $.ajax({
                             type: "GET",
                             url: "<?php echo base_url('index.php/form/getsupirname') ?>",
-                            dataType: "text",
+                            dataType: "JSON",
                             data: {
                                 id: pk
                             },
                             success: function(data) {
-                                $("#supir_name").val(data);
+                                $("#supir_name").val(data["supir_name"]);
+                                $("#supir_alamat_update").val(data["supir_alamat"]);
+                                $("#supir_telp_update").val(data["supir_telp"]);
+                                $("#supir_ktp_update").val(data["supir_ktp"]);
+                                $("#supir_sim_update").val(data["supir_sim"]);
+                                $("#supir_keterangan_update").val(data["supir_keterangan"]);
                             }
                         });
                     });
+                    $('.btn-detail-supir').click(function() {
+                        let pk = $(this).data('pk');
+                        // alert(pk);
+                        $.ajax({ //ajax ambil data bon
+                            type: "GET",
+                            url: "<?php echo base_url('index.php/detail/getsupir') ?>",
+                            dataType: "JSON",
+                            data: {
+                                id: pk
+                            },
+                            success: function(data) { //jika ambil data sukses
+                            // alert(data);
+                                $('td[name="supir_name"]').text(data["supir_name"]); //set value
+                                $('td[name="supir_alamat"]').text(data["supir_alamat"]); //set value
+                                $('td[name="supir_telp"]').text(data["supir_telp"]); //set value
+                                $('td[name="supir_ktp"]').text(data["supir_ktp"]); //set value
+                                $('td[name="supir_sim"]').text(data["supir_sim"]); //set value
+                                $('td[name="supir_kasbon"]').text("Rp."+rupiah(data["supir_kasbon"])); //set value
+                                $('td[name="supir_keterangan"]').text(data["supir_keterangan"]); //set value
+                            }
+                        });
+                    }); 
                     $('.btn-delete-supir').click(function() {
                         let pk = $(this).data('pk');
                         Swal.fire({

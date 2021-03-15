@@ -105,9 +105,14 @@ class Model_Form extends CI_model
         return $this->db->get_where("skb_supir",array("supir_id"=>$supir_id))->row_array();
     }
 
-    public function update_supir($supir_id,$supir_name){
-        $this->db->set("supir_name",$supir_name);
-        $this->db->where("supir_id",$supir_id);
+    public function update_supir($data){
+        $this->db->set("supir_name",$data["supir_name"]);
+        $this->db->set("supir_alamat",$data["supir_alamat"]);
+        $this->db->set("supir_telp",$data["supir_telp"]);
+        $this->db->set("supir_ktp",$data["supir_ktp"]);
+        $this->db->set("supir_sim",$data["supir_sim"]);
+        $this->db->set("supir_keterangan",$data["supir_keterangan"]);
+        $this->db->where("supir_id",$data["supir_id"]);
         $this->db->update("skb_supir");
     }
 

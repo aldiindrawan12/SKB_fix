@@ -153,6 +153,15 @@ class Detail extends CI_Controller {
         }
     //end fungsi untuk Detail ttruckk
 
+     //fungsi untuk Detail truck
+     function getsupir()
+     {
+         $supir_id = $this->input->get('id');
+         $data = $this->model_home->getsupirbyid($supir_id);
+         echo json_encode($data);
+     }
+ //end fungsi untuk Detail ttruckk
+
     //fungsi untuk Detail penggajian
         public function detail_penggajian($supir_id)
         {

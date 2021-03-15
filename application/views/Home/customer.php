@@ -6,7 +6,7 @@
                 <i class="fas fa-plus"></i> 
             </span>
             <span class="text">
-                 Tambah Customer
+                 Tambah Customer Baru
             </span>
         </a>
 
@@ -40,7 +40,7 @@
 
 
 <!-- pop up add customer -->
-<div class="modal fade " id="popup-customer" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<div class="modal fade mt-5 px-5 py-5" id="popup-customer" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
@@ -94,7 +94,7 @@
 <!-- end pop up add customer -->
 
 <!-- pop up update customer -->
-<div class="modal fade mt-5 px-5 py-5" id="popup-update-customer" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<div class="modal fade  px-5 " id="popup-update-customer" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
@@ -103,29 +103,40 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="font-size-sm m-3 text-justify">
-                <form action="<?= base_url("index.php/form/update_customer")?>" method="POST">
-                    <input type="text" name="customer_id_update" id="customer_id_update" hidden>
-                    <div class="form-group">
-                        <label for="customer_name_update" class="form-label font-weight-bold">Nama Customer</label>
-                        <input autocomplete="off" type="text" class="form-control" id="customer_name_update" name="customer_name_update" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="customer_alamat_update" class="form-label font-weight-bold">Alamat</label>
-                        <input autocomplete="off" type="text" class="form-control" id="customer_alamat_update" name="customer_alamat_update" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="customer_kontak_person_update" class="form-label font-weight-bold">Contact Person</label>
-                        <input autocomplete="off" type="text" class="form-control" id="customer_kontak_person_update" name="customer_kontak_person_update" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="customer_telp_update" class="form-label font-weight-bold">Telp./HP</label>
-                        <input autocomplete="off" type="text" class="form-control" id="customer_telp_update" name="customer_telp_update" required>
-                    </div>
-                    <div class="form-group">
+            
+            <div class="container mt-3">
+                <div class="row">
+                    
+                    <div class="col">
+                        <form action="<?= base_url("index.php/form/update_customer")?>" method="POST">
+                        <input type="text" name="customer_id_update" id="customer_id_update" hidden>
+                        <div class="form-group">
+                            <label for="customer_name_update" class="form-label font-weight-bold">Nama Customer</label>
+                            <input autocomplete="off" type="text" class="form-control" id="customer_name_update" name="customer_name_update" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="customer_alamat_update" class="form-label font-weight-bold">Alamat</label>
+                            <input autocomplete="off" type="text" class="form-control" id="customer_alamat_update" name="customer_alamat_update" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="customer_kontak_person_update" class="form-label font-weight-bold">Contact Person</label>
+                            <input autocomplete="off" type="text" class="form-control" id="customer_kontak_person_update" name="customer_kontak_person_update" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="customer_telp_update" class="form-label font-weight-bold">Telp./HP</label>
+                            <input autocomplete="off" type="text" class="form-control" id="customer_telp_update" name="customer_telp_update" required>
+                        </div>
+                        <div class="form-group">
                         <label for="customer_keterangan_update" class="form-label font-weight-bold">Keterangan</label>
                         <input autocomplete="off" type="text" class="form-control" id="customer_keterangan_update" name="customer_keterangan_update" required>
                     </div>
+
+                        
+                    </div>
+                    
+                <div class="col table-bordered">
+                <div class="w-100"></div>
+                    <h6 class="font-weight-bold text-center mt-2">Transfer</h6>
                     <div class="form-group">
                         <label for="customer_bank_update" class="form-label font-weight-bold">Bank</label>
                         <input autocomplete="off" type="text" class="form-control" id="customer_bank_update" name="customer_bank_update" required>
@@ -138,18 +149,27 @@
                         <label for="customer_AN_update" class="form-label font-weight-bold">Atas Nama</label>
                         <input autocomplete="off" type="text" class="form-control" id="customer_AN_update" name="customer_AN_update" required>
                     </div>
-                    <div class="form-group">
+                    
+
+
+                    </div>
+                    </div>
+                    
+                    
+                </div>
+                <div class="form-group mt-3 mr-2 px-1">
                     <button type="submit" class="btn btn-success mb-3 float-right">Simpan</button>
                     </div>
-                </form>
+                    </form>
             </div>
+
         </div>
     </div>
 </div>
 <!-- end pop up update customer -->
 
 <!-- pop up detail customer -->
-<div class="modal fade  mt-5" id="popup-detail-customer" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<div class="modal fade mt-5 px-5 py-5 " id="popup-detail-customer" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
@@ -159,7 +179,7 @@
                 </button>
             </div>
             <div class="font-size-sm m-3 text-justify">
-            <div class="">
+            <div class="row">
                 <div class="">
                     <table class="table table-bordered">
                         <tbody>
@@ -186,7 +206,7 @@
                     <table class="table table-bordered">
                         <tbody>
                             <tr>
-                                <td class="font-weight-bold text-md-center" colspan=2 style="width: 20%;">Transfer</td>
+                                <td class="font-weight-bold" colspan=2 style="width: 20%;">Transfer</td>
                             </tr>
                             <tr>
                                 <td class="font-weight-bold" style="width: 20%;">Bank</td>

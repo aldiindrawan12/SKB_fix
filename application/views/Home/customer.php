@@ -107,10 +107,10 @@
             <div class="container mt-3">
                 <div class="row">
                     
-                    <div class="col">
+                    <div class="col table-bordered">
                         <form action="<?= base_url("index.php/form/update_customer")?>" method="POST">
                         <input type="text" name="customer_id_update" id="customer_id_update" hidden>
-                        <div class="form-group">
+                        <div class="form-group mt-1">
                             <label for="customer_name_update" class="form-label font-weight-bold">Nama Customer</label>
                             <input autocomplete="off" type="text" class="form-control" id="customer_name_update" name="customer_name_update" required>
                         </div>
@@ -134,7 +134,7 @@
                         
                     </div>
                     
-                <div class="col table-bordered">
+                <div class="col table-bordered ml-1">
                 <div class="w-100"></div>
                     <h6 class="font-weight-bold text-center mt-2">Transfer</h6>
                     <div class="form-group">
@@ -158,7 +158,7 @@
                     
                 </div>
                 <div class="form-group mt-3 mr-2 px-1">
-                    <button type="submit" class="btn btn-success mb-3 float-right">Simpan</button>
+                    <button type="submit" class="btn btn-success float-right">Simpan</button>
                     </div>
                     </form>
             </div>

@@ -40,7 +40,7 @@
 
 
 <!-- pop up add customer -->
-<div class="modal fade mt-5 px-5 py-5" id="popup-customer" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<div class="modal fade " id="popup-customer" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
@@ -149,7 +149,7 @@
 <!-- end pop up update customer -->
 
 <!-- pop up detail customer -->
-<div class="modal fade mt-5 px-5 py-5 " id="popup-detail-customer" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<div class="modal fade  mt-5" id="popup-detail-customer" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
@@ -159,7 +159,7 @@
                 </button>
             </div>
             <div class="font-size-sm m-3 text-justify">
-            <div class="row">
+            <div class="">
                 <div class="">
                     <table class="table table-bordered">
                         <tbody>
@@ -186,7 +186,7 @@
                     <table class="table table-bordered">
                         <tbody>
                             <tr>
-                                <td class="font-weight-bold" colspan=2 style="width: 20%;">Transfer</td>
+                                <td class="font-weight-bold text-md-center" colspan=2 style="width: 20%;">Transfer</td>
                             </tr>
                             <tr>
                                 <td class="font-weight-bold" style="width: 20%;">Bank</td>

@@ -41,7 +41,7 @@
                         </a>
                         <a class="collapse-item" id="Satuan_page"href="<?=base_url("index.php/home/satuan")?>">  
                             <i class="fas fa-weight"></i>
-                            <span>Satuan Muatan</span>
+                            <span>Rute dan Muatan</span>
                         </a>
                     </div>
                 </div>

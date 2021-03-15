@@ -36,18 +36,20 @@
 </div>
 
 <!-- pop up add supir -->
-<div class="modal fade mt-5 px-5 py-5" id="popup-supir" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<div class="modal fade mt-5" id="popup-supir" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
-                <h5 class="font-weight-bold">Menambah Supir Baru</h5>
+                <h5 class="font-weight-bold">Menambah Supir</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="font-size-sm m-3 text-justify">
-                <form action="<?= base_url("index.php/form/insert_supir")?>" method="POST">
-                    <div class="row">
+           
+            <div class="container mt-3">
+                <div class="row">
+                    <div class="col">
+                    <form action="<?= base_url("index.php/form/insert_supir")?>" method="POST">
                         <div class="form-group">
                             <label for="Supir" class="form-label font-weight-bold">Nama Supir</label>
                             <input autocomplete="off" type="text" class="form-control" id="Supir" name="Supir" required>
@@ -60,6 +62,9 @@
                             <label for="supir_telp" class="form-label font-weight-bold">Telp./HP</label>
                             <input autocomplete="off" type="text" class="form-control" id="supir_telp" name="supir_telp" required>
                         </div>
+                    </div>
+                    <div class="col">
+
                         <div class="form-group">
                             <label for="supir_ktp" class="form-label font-weight-bold">No.KTP</label>
                             <input autocomplete="off" type="text" class="form-control" id="supir_ktp" name="supir_ktp" required>
@@ -72,68 +77,81 @@
                             <label for="supir_keterangan" class="form-label font-weight-bold">Keterangan</label>
                             <textarea class="form-control" name="supir_keterangan" id="supir_keterangan" rows="3"></textarea>
                         </div>
+                        <div class="form-group">
+                        <button type="submit" class="btn btn-success mb-3 float-right">Simpan</button>
+                        </div>
+                        </form>
                     </div>
-                    <div class="form-group">
-                    <button type="submit" class="btn btn-success mb-3 float-right">Simpan</button>
-                    </div>
-                </form>
+                </div>
             </div>
+
+
+
         </div>
     </div>
 </div>
 <!-- end pop up add supir -->
 
-<!-- pop up update supir -->
-<div class="modal fade" id="popup-update-supir" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<!-- pop up add supir -->
+<div class="modal fade mt-5" id="popup-update-supir" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
-                <h5 class="font-weight-bold">Update data Supir</h5>
+                <h5 class="font-weight-bold">Update Data Supir</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="font-size-sm m-3 text-justify">
-                <form action="<?= base_url("index.php/form/update_supir")?>" method="POST">
+           
+            <div class="container mt-3">
+                <div class="row">
+                    <div class="col">
+                    <form action="<?= base_url("index.php/form/update_supir")?>" method="POST">
                     <input type="text" name=supir_id id=supir_id hidden>
-                    <div class="row">
                         <div class="form-group">
-                            <label for="supir_name" class="form-label font-weight-bold">Nama Supir</label>
+                        <label for="supir_name" class="form-label font-weight-bold">Nama Supir</label>
                             <input autocomplete="off" type="text" class="form-control" id="supir_name" name="supir_name" required>
                         </div>
                         <div class="form-group">
-                            <label for="supir_alamat_update" class="form-label font-weight-bold">Alamat</label>
+                        <label for="supir_alamat_update" class="form-label font-weight-bold">Alamat</label>
                             <input autocomplete="off" type="text" class="form-control" id="supir_alamat_update" name="supir_alamat_update" required>
                         </div>
                         <div class="form-group">
-                            <label for="supir_telp_update" class="form-label font-weight-bold">Telp./HP</label>
+                        <label for="supir_telp_update" class="form-label font-weight-bold">Telp./HP</label>
                             <input autocomplete="off" type="text" class="form-control" id="supir_telp_update" name="supir_telp_update" required>
                         </div>
+                    </div>
+                    <div class="col">
+
                         <div class="form-group">
-                            <label for="supir_ktp_update" class="form-label font-weight-bold">No.KTP</label>
+                        <label for="supir_ktp_update" class="form-label font-weight-bold">No.KTP</label>
                             <input autocomplete="off" type="text" class="form-control" id="supir_ktp_update" name="supir_ktp_update" required>
                         </div>
                         <div class="form-group">
-                            <label for="supir_sim_update" class="form-label font-weight-bold">No.SIM</label>
+                        <label for="supir_sim_update" class="form-label font-weight-bold">No.SIM</label>
                             <input autocomplete="off" type="text" class="form-control" id="supir_sim_update" name="supir_sim_update" required>
                         </div>
                         <div class="form-group">
-                            <label for="supir_keterangan_update" class="form-label font-weight-bold">Keterangan</label>
+                        <label for="supir_keterangan_update" class="form-label font-weight-bold">Keterangan</label>
                             <textarea class="form-control" name="supir_keterangan_update" id="supir_keterangan_update" rows="3"></textarea>
                         </div>
+                        <div class="form-group">
+                        <button type="submit" class="btn btn-success mb-3 float-right">Simpan</button>
+                        </div>
+                        </form>
                     </div>
-                    <div class="form-group">
-                    <button type="submit" class="btn btn-success mb-3 float-right">Simpan</button>
-                    </div>
-                </form>
+                </div>
             </div>
+
+
+
         </div>
     </div>
 </div>
-<!-- end pop up update supir -->
+<!-- end pop up add supir -->
 
 <!-- pop up detail supir -->
-<div class="modal fade mt-5 px-5 py-5 " id="popup-detail-supir" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<div class="modal fade mt-5" id="popup-detail-supir" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">

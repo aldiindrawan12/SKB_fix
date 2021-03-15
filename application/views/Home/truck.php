@@ -6,7 +6,7 @@
                 <i class="fas fa-plus"></i> 
             </span>
             <span class="text">
-                 Tambah Truck
+                 Tambah Kendaraan
             </span>
         </a>
     </div>
@@ -36,32 +36,35 @@
 </div>
 
 <!-- pop up add truck -->
-<div class="modal fade mt-5 px-5 py-2" id="popup-truck" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<div class="modal fade  px-5 " id="popup-truck" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
-                <h5 class="font-weight-bold">Menambah Truck Baru</h5>
+                <h5 class="font-weight-bold">Menambah Kendaraan</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="font-size-sm m-3 text-justify">
-                <form action="<?= base_url("index.php/form/insert_truck")?>" method="POST">
-                    <div class="row">
-                        <div class="form-group">
-                            <label for="mobil_no" class="form-label font-weight-bold">Plat No Mobil</label>
+            
+            <div class="container mt-3">
+                <div class="row">
+                    
+                    <div class="col">
+                        <form action="<?= base_url("index.php/form/insert_truck")?>" method="POST">
+                        <div class="form-group mt-1">
+                        <label for="mobil_no" class="form-label font-weight-bold">Plat No Mobil</label>
                             <input autocomplete="off" type="text" class="form-control" id="mobil_no" name="mobil_no" required>
                         </div>
                         <div class="form-group">
-                            <label for="mobil_merk" class="form-label font-weight-bold">Merk</label>
+                        <label for="mobil_merk" class="form-label font-weight-bold">Merk</label>
                             <input autocomplete="off" type="text" class="form-control" id="mobil_merk" name="mobil_merk" required>
                         </div>
                         <div class="form-group">
-                            <label for="mobil_type" class="form-label font-weight-bold">Type</label>
+                        <label for="mobil_type" class="form-label font-weight-bold">Type</label>
                             <input autocomplete="off" type="text" class="form-control" id="mobil_type" name="mobil_type" required>
                         </div>
                         <div class="form-group">
-                            <label class="form-label font-weight-bold" for="mobil_jenis">Jenis Mobil</label>
+                        <label class="form-label font-weight-bold" for="mobil_jenis">Jenis Mobil</label>
                             <select name="mobil_jenis" id="mobil_jenis" class="form-control custom-select" required onchange="nominal()">
                                 <option class="font-w700" disabled="disabled" selected value="">Jenis Mobil</option>
                                 <option value="Sedang(Engkel)">Sedang(Engkel)</option>
@@ -69,39 +72,54 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label class="form-label font-weight-bold" for="mobil_dump">Dump</label>
+                        <label class="form-label font-weight-bold" for="mobil_dump">Dump</label>
                             <select name="mobil_dump" id="mobil_dump" class="form-control custom-select" required onchange="nominal()">
                                 <option class="font-w700" disabled="disabled" selected value="">Pilih Ya/Tidak</option>
                                 <option value="Ya">Ya</option>
                                 <option value="Tidak">Tidak</option>
                             </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="mobil_tahun" class="form-label font-weight-bold">Tahun</label>
+                    </div>
+
+                        
+                    </div>
+                    
+                <div class="col ml-1">
+                <!-- <div class="w-100"></div>
+                    <h6 class="font-weight-bold text-center mt-2">Transfer</h6> -->
+                    <div class="form-group">
+                    <label for="mobil_tahun" class="form-label font-weight-bold">Tahun</label>
                             <input autocomplete="off" type="text" class="form-control" id="mobil_tahun" name="mobil_tahun" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="mobil_max_load" class="form-label font-weight-bold">Muatan Maksimal Mobil (Ton)</label>
-                            <input autocomplete="off" type="number" class="form-control" id="mobil_max_load" name="mobil_max_load" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="mobil_berlaku" class="form-label font-weight-bold">Tgl.Berlaku STNK</label>
-                            <input autocomplete="off" type="text" class="form-control" id="mobil_berlaku" name="mobil_berlaku" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="mobil_pajak" class="form-label font-weight-bold">Tgl.Pajak STNK</label>
-                            <input autocomplete="off" type="text" class="form-control" id="mobil_pajak" name="mobil_pajak" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="mobil_keterangan" class="form-label font-weight-bold">Keterangan</label>
-                            <textarea class="form-control" name="mobil_keterangan" rows="3"></textarea>
-                        </div>
                     </div>
                     <div class="form-group">
-                    <button type="submit" class="btn btn-success mb-3 float-right">Simpan</button>
+                    <label for="mobil_max_load" class="form-label font-weight-bold">Muatan Maksimal Mobil (Ton)</label>
+                            <input autocomplete="off" type="number" class="form-control" id="mobil_max_load" name="mobil_max_load" required>
                     </div>
-                </form>
+                    <div class="form-group">
+                    <label for="mobil_berlaku" class="form-label font-weight-bold">Tgl.Berlaku STNK</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_berlaku" name="mobil_berlaku" required>
+                    </div>
+                    <div class="form-group">
+                    <label for="mobil_pajak" class="form-label font-weight-bold">Tgl.Pajak STNK</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_pajak" name="mobil_pajak" required>
+                    </div>
+                    <div class="form-group">
+                    <label for="mobil_keterangan" class="form-label font-weight-bold">Keterangan</label>
+                            <textarea class="form-control" name="mobil_keterangan" rows="3"></textarea>
+                    </div>
+                    
+
+
+                    </div>
+                    </div>
+                    
+                    
+                </div>
+                <div class="form-group mt-1 mr-4 ">
+                    <button type="submit" class="btn btn-success float-right">Simpan</button>
+                    </div>
+                    </form>
             </div>
+
         </div>
     </div>
 </div>
@@ -112,7 +130,7 @@
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
-                <h5 class="font-weight-bold">Update Truck</h5>
+                <h5 class="font-weight-bold">Update Kendaraan</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

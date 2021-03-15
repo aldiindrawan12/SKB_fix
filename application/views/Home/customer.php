@@ -202,7 +202,7 @@
                 </button>
             </div>
             <div class="font-size-sm m-3 text-justify">
-            <div class="row">
+            <div class="">
                 <div class="">
                     <table class="table table-bordered">
                         <tbody>
@@ -229,7 +229,7 @@
                     <table class="table table-bordered">
                         <tbody>
                             <tr>
-                                <td class="font-weight-bold" colspan=2 style="width: 20%;">Transfer</td>
+                                <td class="font-weight-bold text-center" colspan=2 style="width: 20%;">Transfer</td>
                             </tr>
                             <tr>
                                 <td class="font-weight-bold" style="width: 20%;">Bank</td>

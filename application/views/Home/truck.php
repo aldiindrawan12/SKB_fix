@@ -105,7 +105,7 @@
 
 
 <!-- pop up detail kendaraan -->
-<div class="modal fade mt-5 px-5 py-5 " id="popup-kendaraan" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<div class="modal fade" id="popup-kendaraan" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
@@ -115,7 +115,7 @@
                 </button>
             </div>
             <div class="font-size-sm m-3 text-justify">
-            <div class="row">
+            <div class="">
                 <div class="">
                     <table class="table table-bordered">
                         <tbody>

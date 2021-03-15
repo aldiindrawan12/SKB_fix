@@ -1,13 +1,13 @@
 <div class="container">
     
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Data Satuan Muatan</h1>
+        <h1 class="h3 mb-0 text-gray-800">Data Rute dan Muatan</h1>
         <a class="btn btn-primary btn-icon-split" data-toggle='modal' data-target='#popup-satuan'>
             <span class="icon text-white-100">
                 <i class="fas fa-plus"></i> 
             </span>
             <span class="text">
-                 Tambah Satuan Baru
+                 Tambah Rute & Muatan
             </span>
         </a>
     </div>

@@ -6,7 +6,7 @@
                 <i class="fas fa-plus"></i> 
             </span>
             <span class="text">
-                 Tambah Truck Baru
+                 Tambah Truck
             </span>
         </a>
     </div>

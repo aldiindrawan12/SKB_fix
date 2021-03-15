@@ -192,7 +192,7 @@
 <!-- end pop up update customer -->
 
 <!-- pop up detail customer -->
-<div class="modal fade mt-5 px-5 py-5 " id="popup-detail-customer" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<div class="modal fade  " id="popup-detail-customer" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">

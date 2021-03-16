@@ -43,6 +43,7 @@
     <script src="<?=base_url("assets/vendor/jquery/jquery.mask.min.js")?>"></script>
     <script src="<?=base_url("assets/vendor/bootstrap/js/bootstrap.bundle.min.js")?>"></script>    
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    
     <!-- <script src="<?=base_url('assets/sweetalert2/sweetalert2.min.js') ?>"></script> -->
     <!-- Core plugin JavaScript-->
     <script src="<?=base_url("assets/vendor/jquery-easing/jquery.easing.min.js")?>"></script>
@@ -1473,7 +1474,8 @@
             if(login == "Berhasil"){
                 Swal.fire({
                         title: "Berhasil Login",
-                        text: "Selamat Datang",
+                        icon: "success",
+                        text: "Selamat datang",
                         type: "success",
                         timer: 1500
                     });
@@ -1481,7 +1483,8 @@
             if(akun == "Berhasil"){
                 Swal.fire({
                         title: "Berhasil",
-                        text: "Menambah Akun Baru",
+                        icon: "success",
+                        text: "Menambahkan akun baru",
                         type: "success",
                         timer: 2000
                     });
@@ -1489,7 +1492,8 @@
             if(customer == "Berhasil"){
                 Swal.fire({
                         title: "Berhasil",
-                        text: "Menambah Customer Baru",
+                        icon: "success",
+                        text: "Menambahkan customer baru",
                         type: "success",
                         timer: 2000
                     });
@@ -1497,7 +1501,8 @@
             if(update_akun == "Berhasil"){
                 Swal.fire({
                         title: "Berhasil",
-                        text: "Mengubah Data Akun",
+                        icon: "success",
+                        text: "Mengubah data akun",
                         type: "success",
                         timer: 2000
                     });
@@ -1505,7 +1510,8 @@
             if(update_truck == "Berhasil"){
                 Swal.fire({
                         title: "Berhasil",
-                        text: "Mengubah Data Truck",
+                        icon: "success",
+                        text: "Mengubah data kendaraan",
                         type: "success",
                         timer: 2000
                     });
@@ -1513,7 +1519,8 @@
             if(update_customer == "Berhasil"){
                 Swal.fire({
                         title: "Berhasil",
-                        text: "Mengubah Data Customer",
+                        icon: "success",
+                        text: "Mengubah data customer",
                         type: "success",
                         timer: 2000
                     });
@@ -1521,7 +1528,8 @@
             if(delete_akun == "Berhasil"){
                 Swal.fire({
                         title: "Berhasil",
-                        text: "Menghapus Data Akun",
+                        icon: "success",
+                        text: "Menghapus akun",
                         type: "error",
                         timer: 2000
                     });
@@ -1529,7 +1537,8 @@
             if(supir == "Berhasil"){
                 Swal.fire({
                         title: "Berhasil",
-                        text: "Menambah Supir Baru",
+                        icon: "success",
+                        text: "Menambahkan data supir",
                         type: "success",
                         timer: 2000
                     });
@@ -1537,7 +1546,8 @@
             if(update_supir == "Berhasil"){
                 Swal.fire({
                         title: "Berhasil",
-                        text: "Mengubah Data Supir",
+                        icon: "success",
+                        text: "Mengubah data supir",
                         type: "success",
                         timer: 2000
                     });
@@ -1545,7 +1555,8 @@
             if(delete_supir == "Berhasil"){
                 Swal.fire({
                         title: "Berhasil",
-                        text: "Menghapus Data Supir",
+                        icon: "success",
+                        text: "Menghapus data supir",
                         type: "error",
                         timer: 2000
                     });
@@ -1553,7 +1564,8 @@
             if(kendaraan == "Berhasil"){
                 Swal.fire({
                         title: "Berhasil",
-                        text: "Menambah Data kendaraan",
+                        icon: "success",
+                        text: "Menambah data kendaraan",
                         type: "success",
                         timer: 2000
                     });
@@ -1561,7 +1573,8 @@
             if(delete_kendaraan == "Berhasil"){
                 Swal.fire({
                         title: "Berhasil",
-                        text: "Menghapus Data Kendaraan",
+                        icon: "success",
+                        text: "Menghapus data kendaraan",
                         type: "error",
                         timer: 2000
                     });
@@ -1569,7 +1582,8 @@
             if(satuan == "Berhasil"){
                 Swal.fire({
                         title: "Berhasil",
-                        text: "Menambah Data Rute dan Muatan",
+                        icon: "success",
+                        text: "Menambahkan data rute dan muatan",
                         type: "success",
                         timer: 2000
                     });
@@ -1577,7 +1591,8 @@
             if(update_rute == "Berhasil"){
                 Swal.fire({
                         title: "Berhasil",
-                        text: "Mengubah Data Rute dan Satuan",
+                        icon: "success",
+                        text: "Mengubah data rute dan satuan",
                         type: "success",
                         timer: 2000
                     });
@@ -1585,7 +1600,8 @@
             if(delete_satuan == "Berhasil"){
                 Swal.fire({
                         title: "Berhasil",
-                        text: "Menghapus Data Rute dan Muatan",
+                        icon: "success",
+                        text: "Menghapus data rute dan muatan",
                         type: "error",
                         timer: 2000
                     });
@@ -1593,7 +1609,8 @@
             if(delete_customer == "Berhasil"){
                 Swal.fire({
                         title: "Berhasil",
-                        text: "Menghapus Data Customer",
+                        icon: "success",
+                        text: "Menghapus data customer",
                         type: "error",
                         timer: 2000
                     });

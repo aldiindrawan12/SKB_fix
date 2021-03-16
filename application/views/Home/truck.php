@@ -149,7 +149,7 @@
 <!-- end pop up update truck -->
 
 <!-- pop up detail kendaraan -->
-<div class="modal fade" id="popup-kendaraan" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<div class="modal fade mt-4" id="popup-kendaraan" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">

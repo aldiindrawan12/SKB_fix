@@ -120,7 +120,8 @@
                     $('.btn-delete-truck').click(function() {
                         let pk = $(this).data('pk');
                         Swal.fire({
-                            title: 'Hapus Kendaraan Ini?',
+                            title: 'Hapus Kendaraan',
+                            text:'Anda akan menghapus data kendaraan ini?',
                             showDenyButton: true,
                             denyButtonText: `Batal`,
                             denyButtonColor: '#808080',

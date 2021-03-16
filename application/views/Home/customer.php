@@ -40,8 +40,8 @@
 
 
 <!-- pop up add customer -->
-<div class="modal fade" id="popup-customer" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
-    <div class="modal-dialog modal-md" role="document">
+<div class="modal fade mt-4" id="popup-customer" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
                 <h5 class="font-weight-bold">Menambah Customer Baru</h5>
@@ -76,7 +76,7 @@
                                 <input autocomplete="off" type="text" class="form-control" id="customer_keterangan" name="customer_keterangan" required>
                             </div>
                         </div>
-                        <div class="col table-bordered ml-1">
+                        <div class="col table-bordered ml-2">
                             <div class="w-100"></div>
                             <h6 class="font-weight-bold text-center mt-2">Transfer</h6>
                             <div class="form-group">
@@ -107,8 +107,8 @@
 
 
 <!-- pop up update customer -->
-<div class="modal fade" id="popup-update-customer" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
-    <div class="modal-dialog modal-md" role="document">
+<div class="modal fade mt-4" id="popup-update-customer" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
                 <h5 class="font-weight-bold">Update Customer</h5>
@@ -172,7 +172,7 @@
 <!-- end pop up update customer -->
 
 <!-- pop up detail customer -->
-<div class="modal fade" id="popup-detail-customer" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<div class="modal fade mt-5" id="popup-detail-customer" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">

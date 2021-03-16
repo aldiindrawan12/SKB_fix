@@ -42,9 +42,8 @@
     <script src="<?=base_url("assets/vendor/jquery/jquery.min.js")?>"></script>
     <script src="<?=base_url("assets/vendor/jquery/jquery.mask.min.js")?>"></script>
     <script src="<?=base_url("assets/vendor/bootstrap/js/bootstrap.bundle.min.js")?>"></script>    
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     
-    <!-- <script src="<?=base_url('assets/sweetalert2/sweetalert2.min.js') ?>"></script> -->
     <!-- Core plugin JavaScript-->
     <script src="<?=base_url("assets/vendor/jquery-easing/jquery.easing.min.js")?>"></script>
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
@@ -785,6 +784,7 @@
                         let pk = $(this).data('pk');
                         Swal.fire({
                             title: 'Hapus Supir',
+                            icon: "warning",
                             text: 'Yakin anda ingin menghapus supir ini?',
                             showDenyButton: true,
                             denyButtonText: `Batal`,

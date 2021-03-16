@@ -121,12 +121,13 @@
                         let pk = $(this).data('pk');
                         Swal.fire({
                             title: 'Hapus Kendaraan',
-                            text:'Anda akan menghapus data kendaraan ini?',
+                            text:'Yakin anda akan menghapus data kendaraan ini?',
                             showDenyButton: true,
                             denyButtonText: `Batal`,
                             denyButtonColor: '#808080',
                             confirmButtonText: 'Hapus',
                             confirmButtonColor: '#FF0000',
+                            icon: "warning"
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 $.ajax({
@@ -1278,10 +1279,14 @@
                     $('.btn-delete-akun').click(function() {
                         let pk = $(this).data('pk');
                         Swal.fire({
-                            title: 'Yakin Ingin Hapus Akun Ini?',
+                            title: 'Hapus Akun',
+                            text:'Yakin anda akan menghapus akun ini?',
                             showDenyButton: true,
                             denyButtonText: `Batal`,
                             confirmButtonText: 'Hapus',
+                            denyButtonColor: '#808080',
+                            confirmButtonColor: '#FF0000',
+                            icon: "warning",
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 $.ajax({

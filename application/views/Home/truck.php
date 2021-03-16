@@ -19,13 +19,13 @@
             <table class="table table-bordered" id="Table-Truck" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th class="text-center" scope="col">No Polisi</th>
-                        <th class="text-center" scope="col">Merk</th>
-                        <th class="text-center" scope="col">Type</th>
-                        <th class="text-center" scope="col">Jenis Kendaraan</th>
-                        <th class="text-center" scope="col">Tahun</th>
-                        <th class="text-center" scope="col">Tgl.Berlaku STNK</th>
-                        <th class="text-center" scope="col">Aksi</th>
+                        <th class="text-center" width="11%" scope="col">No Polisi</th>
+                        <th class="text-center" width="14%" scope="col">Merk</th>
+                        <th class="text-center" width="12%" scope="col">Type</th>
+                        <th class="text-center" width="15%" scope="col">Jenis Kendaraan</th>
+                        <th class="text-center" width="10%" scope="col">Tahun</th>
+                        <th class="text-center" width="17%" scope="col">Tgl.Berlaku STNK</th>
+                        <th class="text-center" width="18%" scope="col">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>

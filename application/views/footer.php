@@ -97,10 +97,12 @@
                     },
                     
                     {
-                        "data": "mobil_tahun"
+                        "data": "mobil_tahun",
+                        className: 'text-center'
                     },
                     {
-                        "data": "mobil_berlaku"
+                        "data": "mobil_berlaku",
+                        className: 'text-center'
                     },
                     {
                         "data": "mobil_no",
@@ -1614,8 +1616,10 @@
         function tanggal_berlaku(a){
             // alert(a.id);
             Swal.fire({
-                title: "Wait",
-                timer: 1000
+                title: "Loading",
+                text: "Mohon Tunggu Sebentar",
+                type: "success",
+                timer: 500
             });
             $("#mobil_berlaku_update").datepicker({
                 format: 'yyyy-mm-dd',
@@ -1626,8 +1630,10 @@
         function tanggal_pajak(a){
             // alert(a.id);
             Swal.fire({
-                title: "Wait",
-                timer: 1000
+                title: "Loading",
+                text: "Mohon Tunggu Sebentar",
+                type: "success",
+                timer: 500
             });
             $("#mobil_pajak_update").datepicker({
                 format: 'yyyy-mm-dd',

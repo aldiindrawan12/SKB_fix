@@ -56,6 +56,7 @@
     <script src="<?=base_url("assets/vendor/datatables/jquery.dataTables.min.js")?>"></script>
     <script src="<?=base_url("assets/vendor/datatables/dataTables.bootstrap4.min.js")?>"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
+    <script src="<?php echo base_url('assets/datepicker/js/bootstrap-datepicker.js')?>"></script>
     
     <!-- kendaraan -->
     <script> //script datatables kendaraan
@@ -1595,7 +1596,46 @@
         });
     </script>
     <!-- end script alert -->
-
+    <script type="text/javascript">
+        $(function(){
+            $("#mobil_berlaku").datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true,
+            });
+            $("#mobil_pajak").datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true,
+            });
+        });
+    </script>
+    <script>
+        function tanggal_berlaku(a){
+            // alert(a.id);
+            Swal.fire({
+                title: "Wait",
+                timer: 1000
+            });
+            $("#mobil_berlaku_update").datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true,
+            });
+        }
+        function tanggal_pajak(a){
+            // alert(a.id);
+            Swal.fire({
+                title: "Wait",
+                timer: 1000
+            });
+            $("#mobil_pajak_update").datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true,
+            });
+        }
+    </script>
 </body>
 
 </html>

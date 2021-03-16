@@ -36,7 +36,7 @@
 </div>
 
 <!-- pop up add truck -->
-<div class="modal fade  px-3 " id="popup-truck" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<div class="modal fade  px-3 " id="popup-truck" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
@@ -113,7 +113,7 @@
 <!-- end pop up add truck -->
 
 <!-- pop up update truck -->
-<div class="modal fade mt-5 px-5 py-2" id="popup-update-truck" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<div class="modal fade mt-5 px-5 py-2" id="popup-update-truck" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
@@ -127,11 +127,11 @@
                     <input autocomplete="off" type="text" class="form-control" id="mobil_no_update" name="mobil_no_update" required hidden>
                         <div class="form-group">
                             <label for="mobil_berlaku_update" class="form-label font-weight-bold">Tgl.Berlaku STNK</label>
-                            <input autocomplete="off" type="text" class="form-control" id="mobil_berlaku_update" name="mobil_berlaku_update" required>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_berlaku_update" name="mobil_berlaku_update" required onclick="tanggal_berlaku(this)">
                         </div>
                         <div class="form-group">
                             <label for="mobil_pajak_update" class="form-label font-weight-bold">Tgl.Pajak STNK</label>
-                            <input autocomplete="off" type="text" class="form-control" id="mobil_pajak_update" name="mobil_pajak_update" required>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_pajak_update" name="mobil_pajak_update" required onclick="tanggal_pajak(this)">
                         </div>
                         <div class="form-group">
                             <label for="mobil_keterangan_update" class="form-label font-weight-bold">Keterangan</label>
@@ -148,7 +148,7 @@
 <!-- end pop up update truck -->
 
 <!-- pop up detail kendaraan -->
-<div class="modal fade" id="popup-kendaraan" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<div class="modal fade" id="popup-kendaraan" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
@@ -209,8 +209,5 @@
             </div>
         </div>
     </div>
-
-
-
 </div>
 <!-- end pop up detail kendaraan -->

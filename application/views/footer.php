@@ -1433,10 +1433,14 @@
                         let pk = $(this).data('pk');
                         // alert(pk);
                         Swal.fire({
-                            title: 'Yakin Ingin Hapus Rute dan Muatan Ini?',
+                            title: 'Hapus Rute dan Muatan',
+                            text:'Yakin anda ingin menghapus Rute dan Muatan ini?',
                             showDenyButton: true,
                             denyButtonText: `Batal`,
                             confirmButtonText: 'Hapus',
+                            denyButtonColor: '#808080',
+                            confirmButtonColor: '#FF0000',
+                            icon: "warning",
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 $.ajax({

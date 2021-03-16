@@ -7,10 +7,10 @@ class Model_Home extends CI_model
         return $this->db->get_where("skb_mobil",array("status_hapus"=>"NO"))->result_array();
     }
 
-    public function getallsatuan() //all satuan
-    {
-        return $this->db->get("skb_satuan")->result_array();
-    }
+    // public function getallsatuan() //all satuan
+    // {
+    //     return $this->db->get("skb_satuan")->result_array();
+    // }
 
     public function getmobilbyid($mobil_no) //mobil by ID
     {
@@ -467,4 +467,55 @@ class Model_Home extends CI_model
             return $this->db->get('skb_akun')->num_rows();
         }
     //  end Function Akun
+
+    // Function Invoice
+        public function count_all_rute()
+        {
+            $this->db->where("skb_rute.rute_status_hapus","No");
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_rute.customer_id", 'left');
+            return $this->db->count_all_results("skb_rute");
+        }
+
+        public function filter_rute($search, $order_field, $order_ascdesc)
+        {
+            if($search!=""){
+                $this->db->like('rute_id', $search);
+                $this->db->or_like('customer_name', $search);
+                $this->db->or_like('rute_dari', $search);
+                $this->db->or_like('rute_ke', $search);
+                $this->db->or_like('rute_muatan', $search);
+            }
+            $this->db->order_by($order_field, $order_ascdesc);
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_rute.customer_id", 'left');
+            $hasil = $this->db->get('skb_rute')->result_array();
+            $hasil_fix = [];
+            for($i=0;$i<count($hasil);$i++){
+                if($hasil[$i]["rute_status_hapus"]=="NO"){
+                    $hasil_fix[] = $hasil[$i];
+                }
+            }
+            return $hasil_fix;
+        }
+
+        public function count_filter_rute($search)
+        {
+            if($search!=""){
+                $this->db->like('rute_id', $search);
+                $this->db->or_like('customer_name', $search);
+                $this->db->or_like('rute_dari', $search);
+                $this->db->or_like('rute_ke', $search);
+                $this->db->or_like('rute_muatan', $search);
+            }
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_rute.customer_id", 'left');
+            $hasil_data = $this->db->get('skb_rute')->result_array();
+                $hasil_fix = 0;
+                for($i=0;$i<count($hasil_data);$i++){
+                    if($hasil_data[$i]["rute_status_hapus"]=="NO"){
+                        $hasil_fix +=1;
+                    }
+                }
+                return $hasil_fix;           
+        }
+    // end Function Invoice
+
 }

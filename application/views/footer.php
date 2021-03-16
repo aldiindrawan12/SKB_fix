@@ -1290,6 +1290,161 @@
     </script>
     <!-- end Akun --> 
     
+    <!-- rute -->
+    <script> //script datatables rute
+        $(document).ready(function() {
+            var table = null;
+            table = $('#Table-rute').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ordering": true,
+                "order": [
+                    [0, 'asc']
+                ],
+                "ajax": {
+                    "url": "<?php echo base_url('index.php/home/view_rute')?>",
+                    "type": "POST"
+                },
+                "deferRender": true,
+                "paging":false,
+                // "aLengthMenu": [
+                //     [5, 10, 30, 50, 100],
+                //     [5, 10, 30, 50, 100]
+                // ],
+                "columns": [
+                    {
+                        "data": "customer_name",
+                        className: 'text-center'
+                    },
+                    {
+                        "data": "rute_dari",
+                        className: 'text-center'
+                    },
+                    {
+                        "data": "rute_ke",
+                        className: 'text-center'
+                    },
+                    {
+                        "data": "rute_muatan",
+                        className: 'text-center'
+                    },
+                    {
+                        "data": "rute_uj_engkel",
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            let html = 'Rp.'+rupiah(data);
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "rute_uj_tronton",
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            let html = 'Rp.'+rupiah(data);
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "rute_tagihan",
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            let html = 'Rp.'+rupiah(data);
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "rute_gaji_engkel",
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            let html = 'Rp.'+rupiah(data);
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "rute_gaji_tronton",
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            let html = 'Rp.'+rupiah(data);
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "rute_gaji_rumusan",
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            let html = 'Rp.'+rupiah(data);
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "rute_id",
+                        className: 'text-center',
+                        "orderable": false,
+                        render: function(data, type, row) {
+                            let html = "<a class='btn btn-light btn-update-rute' data-toggle='modal' data-target='#popup-update-rute' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a>"+
+                            "<a class='btn btn-light btn-delete-rute' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
+                            return html;
+                        }
+                    }
+                ],
+                drawCallback: function() {
+                    $('.btn-update-rute').click(function() {
+                        let pk = $(this).data('pk');
+                        // alert(pk);
+                        $.ajax({
+                            type: "GET",
+                            url: "<?php echo base_url('index.php/form/getrutebyid') ?>",
+                            dataType: "JSON",
+                            data: {
+                                id: pk
+                            },
+                            success: function(data) {
+                                // alert(data["customer_name"]);
+                                $("#rute_id_update").val(data["rute_id"]);
+                                $("#customer_id_update").val(data["customer_id"]);
+                                $("#customer_name_update").val(data["customer_name"]);
+                                $("#rute_dari_update").val(data["rute_dari"]);
+                                $("#rute_ke_update").val(data["rute_ke"]);
+                                $("#rute_muatan_update").val(data["rute_muatan"]);
+                                $("#rute_uj_engkel_update").val(data["rute_uj_engkel"]);
+                                $("#rute_uj_tronton_update").val(data["rute_uj_tronton"]);
+                                $("#rute_tagihan_update").val(data["rute_tagihan"]);
+                                $("#rute_gaji_engkel_update").val(data["rute_gaji_engkel"]);
+                                $("#rute_gaji_tronton_update").val(data["rute_gaji_tronton"]);
+                                $("#rute_gaji_rumusan_update").val(data["rute_gaji_rumusan"]);
+                            }
+                        });
+                    });
+                    $('.btn-delete-rute').click(function() {
+                        let pk = $(this).data('pk');
+                        // alert(pk);
+                        Swal.fire({
+                            title: 'Yakin Ingin Hapus Rute dan Muatan Ini?',
+                            showDenyButton: true,
+                            denyButtonText: `Batal`,
+                            confirmButtonText: 'Hapus',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/deleterute') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        })
+                    });
+                }
+            });
+        });
+    </script>
+    <!-- End rute -->
+
     <!-- script alert-alert -->
     <script>
         $(document).ready(function() {
@@ -1307,6 +1462,7 @@
             var delete_customer = '<?= $this->session->flashdata('status-delete-customer'); ?>';
             var update_customer = '<?= $this->session->flashdata('status-update-customer'); ?>';
             var satuan = '<?= $this->session->flashdata('status-add-satuan'); ?>';
+            var update_rute = '<?= $this->session->flashdata('status-update-satuan'); ?>';
             var delete_satuan = '<?= $this->session->flashdata('status-delete-satuan'); ?>';
             if(login == "Berhasil"){
                 Swal.fire({
@@ -1407,7 +1563,15 @@
             if(satuan == "Berhasil"){
                 Swal.fire({
                         title: "Berhasil",
-                        text: "Menambah Data Satuan",
+                        text: "Menambah Data Rute dan Muatan",
+                        type: "success",
+                        timer: 2000
+                    });
+            }
+            if(update_rute == "Berhasil"){
+                Swal.fire({
+                        title: "Berhasil",
+                        text: "Mengubah Data Rute dan Satuan",
                         type: "success",
                         timer: 2000
                     });
@@ -1415,7 +1579,7 @@
             if(delete_satuan == "Berhasil"){
                 Swal.fire({
                         title: "Berhasil",
-                        text: "Menghapus Data Satuan",
+                        text: "Menghapus Data Rute dan Muatan",
                         type: "error",
                         timer: 2000
                     });

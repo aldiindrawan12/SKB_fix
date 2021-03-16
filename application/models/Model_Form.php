@@ -15,6 +15,11 @@ class Model_Form extends CI_model
         return $this->db->get_where("skb_akun",array("skb_akun.akun_id"=>$akun_id))->row_array();
     }
 
+    public function getrutebyid($rute_id){
+        $this->db->join("skb_customer", "skb_customer.customer_id = skb_rute.customer_id", 'left');
+        return $this->db->get_where("skb_rute",array("skb_rute.rute_id"=>$rute_id))->row_array();
+    }
+
     public function getjoid(){
         $this->db->select("Jo_id");
         return $this->db->get("skb_job_order")->result_array();
@@ -75,8 +80,8 @@ class Model_Form extends CI_model
         return $this->db->insert("skb_supir", $data);
     }
 
-    public function insert_satuan($data){
-        return $this->db->insert("skb_satuan", $data);
+    public function insert_rute($data){
+        return $this->db->insert("skb_rute", $data);
     }
 
     public function deletesupir($supir_id){
@@ -97,9 +102,10 @@ class Model_Form extends CI_model
         return $this->db->update("skb_customer");
     }
 
-    public function deletesatuan($satuan_id){
-        $this->db->where("satuan_id",$satuan_id);
-        return $this->db->delete("skb_satuan");
+    public function deleterute($rute_id){
+        $this->db->set("rute_status_hapus","YES");
+        $this->db->where("rute_id",$rute_id);
+        return $this->db->update("skb_rute");
     }
 
     public function deleteakun($akun_id){
@@ -120,6 +126,11 @@ class Model_Form extends CI_model
         $this->db->set("supir_keterangan",$data["supir_keterangan"]);
         $this->db->where("supir_id",$data["supir_id"]);
         $this->db->update("skb_supir");
+    }
+
+    public function update_rute($data,$rute_id){
+        $this->db->where("rute_id",$rute_id);
+        $this->db->update("skb_rute",$data);
     }
 
     public function update_customer($data){

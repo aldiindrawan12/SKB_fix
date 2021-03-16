@@ -36,8 +36,8 @@
 </div>
 
 <!-- pop up add truck -->
-<div class="modal fade  px-5 " id="popup-truck" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
-    <div class="modal-dialog modal-md" role="document">
+<div class="modal fade  px-3 " id="popup-truck" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
                 <h5 class="font-weight-bold">Menambah Kendaraan</h5>
@@ -46,25 +46,24 @@
                 </button>
             </div>
             
-            <div class="container mt-3">
+            <div class="container">
                 <div class="row">
-                    
                     <div class="col">
                         <form action="<?= base_url("index.php/form/insert_truck")?>" method="POST">
                         <div class="form-group mt-1">
-                        <label for="mobil_no" class="form-label font-weight-bold">Plat No Mobil</label>
+                            <label for="mobil_no" class="form-label font-weight-bold">Plat No Mobil</label>
                             <input autocomplete="off" type="text" class="form-control" id="mobil_no" name="mobil_no" required>
                         </div>
                         <div class="form-group">
-                        <label for="mobil_merk" class="form-label font-weight-bold">Merk</label>
+                            <label for="mobil_merk" class="form-label font-weight-bold">Merk</label>
                             <input autocomplete="off" type="text" class="form-control" id="mobil_merk" name="mobil_merk" required>
                         </div>
                         <div class="form-group">
-                        <label for="mobil_type" class="form-label font-weight-bold">Type</label>
+                            <label for="mobil_type" class="form-label font-weight-bold">Type</label>
                             <input autocomplete="off" type="text" class="form-control" id="mobil_type" name="mobil_type" required>
                         </div>
                         <div class="form-group">
-                        <label class="form-label font-weight-bold" for="mobil_jenis">Jenis Mobil</label>
+                            <label class="form-label font-weight-bold" for="mobil_jenis">Jenis Mobil</label>
                             <select name="mobil_jenis" id="mobil_jenis" class="form-control custom-select" required onchange="nominal()">
                                 <option class="font-w700" disabled="disabled" selected value="">Jenis Mobil</option>
                                 <option value="Sedang(Engkel)">Sedang(Engkel)</option>
@@ -72,54 +71,42 @@
                             </select>
                         </div>
                         <div class="form-group">
-                        <label class="form-label font-weight-bold" for="mobil_dump">Dump</label>
+                            <label class="form-label font-weight-bold" for="mobil_dump">Dump</label>
                             <select name="mobil_dump" id="mobil_dump" class="form-control custom-select" required onchange="nominal()">
                                 <option class="font-w700" disabled="disabled" selected value="">Pilih Ya/Tidak</option>
                                 <option value="Ya">Ya</option>
                                 <option value="Tidak">Tidak</option>
                             </select>
-                    </div>
-
-                        
-                    </div>
-                    
-                <div class="col ml-1">
-                <!-- <div class="w-100"></div>
-                    <h6 class="font-weight-bold text-center mt-2">Transfer</h6> -->
-                    <div class="form-group">
-                    <label for="mobil_tahun" class="form-label font-weight-bold">Tahun</label>
+                        </div>
+                    </div>    
+                    <div class="col ml-1">
+                        <div class="form-group">
+                            <label for="mobil_tahun" class="form-label font-weight-bold">Tahun</label>
                             <input autocomplete="off" type="text" class="form-control" id="mobil_tahun" name="mobil_tahun" required>
-                    </div>
-                    <div class="form-group">
-                    <label for="mobil_max_load" class="form-label font-weight-bold">Muatan Maksimal Mobil (Ton)</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobil_max_load" class="form-label font-weight-bold">Muatan Maksimal Mobil (Ton)</label>
                             <input autocomplete="off" type="number" class="form-control" id="mobil_max_load" name="mobil_max_load" required>
-                    </div>
-                    <div class="form-group">
-                    <label for="mobil_berlaku" class="form-label font-weight-bold">Tgl.Berlaku STNK</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobil_berlaku" class="form-label font-weight-bold">Tgl.Berlaku STNK</label>
                             <input autocomplete="off" type="text" class="form-control" id="mobil_berlaku" name="mobil_berlaku" required>
-                    </div>
-                    <div class="form-group">
-                    <label for="mobil_pajak" class="form-label font-weight-bold">Tgl.Pajak STNK</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobil_pajak" class="form-label font-weight-bold">Tgl.Pajak STNK</label>
                             <input autocomplete="off" type="text" class="form-control" id="mobil_pajak" name="mobil_pajak" required>
-                    </div>
-                    <div class="form-group">
-                    <label for="mobil_keterangan" class="form-label font-weight-bold">Keterangan</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobil_keterangan" class="form-label font-weight-bold">Keterangan</label>
                             <textarea class="form-control" name="mobil_keterangan" rows="3"></textarea>
+                        </div>
                     </div>
-                    
-
-
-                    </div>
-                    </div>
-                    
-                    
-                </div>
-                <div class="form-group mt-1 mr-4 ">
-                    <button type="submit" class="btn btn-success float-right">Simpan</button>
-                    </div>
-                    </form>
+                </div>  
             </div>
-
+                    <div class="form-group mt-1 mr-4 ">
+                        <button type="submit" class="btn btn-success float-right">Simpan</button>
+                    </div>
+                </form>
         </div>
     </div>
 </div>
@@ -171,8 +158,6 @@
                 </button>
             </div>
             <div class="font-size-sm m-3 text-justify">
-            <div class="">
-                <div class="">
                     <table class="table table-bordered">
                         <tbody>
                             <tr>
@@ -187,20 +172,14 @@
                                 <td class="font-weight-bold" style="width: 20%;">Status Jalan</td>
                                 <td name="status_jalan"></td>
                             </tr>
-                            <tr>
+                            <!-- <tr>
                                 <td class="font-weight-bold" style="width: 30%;">Maximum Load (Ton)</td>
                                 <td name="mobil_max_load"></td>
-                            </tr>
+                            </tr> -->
                             <tr>
                                 <td class="font-weight-bold" style="width: 20%;">Keterangan</td>
                                 <td name="mobil_keterangan"></td>
                             </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="">
-                    <table class="table table-bordered">
-                        <tbody>
                             <tr>
                                 <td class="font-weight-bold" style="width: 20%;">Merk</td>
                                 <td name="mobil_merk"></td>
@@ -227,8 +206,6 @@
                             </tr>
                         </tbody>
                     </table>
-                </div>
-            </div>
             </div>
         </div>
     </div>

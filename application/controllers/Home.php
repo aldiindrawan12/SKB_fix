@@ -448,7 +448,7 @@ class Home extends CI_Controller {
         }
     //end Akun
 
-    //satuan muatan
+    //rute dan muatan
         public function satuan()
         {
             if(!$_SESSION["user"]){
@@ -457,15 +457,35 @@ class Home extends CI_Controller {
             }
             $data["page"] = "Satuan_page";
             $data["collapse_group"] = "Master_Data";
-            $data["satuan"] = $this->model_home->getallsatuan();
+            // $data["satuan"] = $this->model_home->getallsatuan();
+            $data["customer"] = $this->model_home->getcustomer();
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             if(json_decode($data["akun_akses"]["akun_akses"])[0]==0){
                 redirect(base_url());
             }
             $this->load->view('header',$data);
             $this->load->view('sidebar');
-            $this->load->view('home/satuan');
+            $this->load->view('home/rute_muatan');
             $this->load->view('footer');
         }
-    // end satuan muatan
+        public function view_rute(){
+            $search = $_POST['search']['value'];
+            // $status = $this->input->post('status_bayar');
+            $order_index = $_POST['order'][0]['column'];
+            $order_field = $_POST['columns'][$order_index]['data'];
+            $order_ascdesc = $_POST['order'][0]['dir'];
+            $sql_total = $this->model_home->count_all_rute();
+            $sql_data = $this->model_home->filter_rute($search,$order_field, $order_ascdesc);
+            $sql_filter = $this->model_home->count_filter_rute($search);
+            $callback = array(
+                'draw' => $_POST['draw'],
+                'recordsTotal' => $sql_total,
+                'recordsFiltered' => $sql_filter,
+                'data' => $sql_data
+            );
+
+            header('Content-Type: application/json');
+            echo json_encode($callback);
+        }
+    // end rute dan muatan
 }

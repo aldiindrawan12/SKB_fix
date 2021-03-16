@@ -40,7 +40,7 @@
 
 
 <!-- pop up add customer -->
-<div class="modal fade mt-5" id="popup-customer" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<div class="modal fade" id="popup-customer" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
@@ -52,63 +52,53 @@
             
             <div class="container mt-3">
                 <div class="row">
-                    
                     <div class="col table-bordered">
                         <form action="<?= base_url("index.php/form/insert_customerMenu")?>" method="POST">
-                        <input type="text" name="customer_id" id="customer_id" hidden>
-                        <div class="form-group mt-1">
-                            <label for="Customer" class="form-label font-weight-bold">Nama Customer</label>
-                            <input autocomplete="off" type="text" class="form-control" id="Customer" name="Customer" required>
+                            <input type="text" name="customer_id" id="customer_id" hidden>
+                            <div class="form-group mt-1">
+                                <label for="Customer" class="form-label font-weight-bold">Nama Customer</label>
+                                <input autocomplete="off" type="text" class="form-control" id="Customer" name="Customer" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="customer_alamat" class="form-label font-weight-bold">Alamat</label>
+                                <input autocomplete="off" type="text" class="form-control" id="customer_alamat" name="customer_alamat" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="customer_kontak_person" class="form-label font-weight-bold">Contact Person</label>
+                                <input autocomplete="off" type="text" class="form-control" id="customer_kontak_person" name="customer_kontak_person" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="customer_telp" class="form-label font-weight-bold">Telp./HP</label>
+                                <input autocomplete="off" type="text" class="form-control" id="customer_telp" name="customer_telp" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="customer_keterangan" class="form-label font-weight-bold">Keterangan</label>
+                                <input autocomplete="off" type="text" class="form-control" id="customer_keterangan" name="customer_keterangan" required>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="customer_alamat" class="form-label font-weight-bold">Alamat</label>
-                            <input autocomplete="off" type="text" class="form-control" id="customer_alamat" name="customer_alamat" required>
+                        <div class="col table-bordered ml-1">
+                            <div class="w-100"></div>
+                            <h6 class="font-weight-bold text-center mt-2">Transfer</h6>
+                            <div class="form-group">
+                                <label for="customer_bank" class="form-label font-weight-bold">Bank</label>
+                                <input autocomplete="off" type="text" class="form-control" id="customer_bank" name="customer_bank" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="customer_rekening" class="form-label font-weight-bold">No Rekening</label>
+                                <input autocomplete="off" type="text" class="form-control" id="customer_rekening" name="customer_rekening" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="customer_AN" class="form-label font-weight-bold">Atas Nama</label>
+                                <input autocomplete="off" type="text" class="form-control" id="customer_AN" name="customer_AN" required>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="customer_kontak_person" class="form-label font-weight-bold">Contact Person</label>
-                            <input autocomplete="off" type="text" class="form-control" id="customer_kontak_person" name="customer_kontak_person" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="customer_telp" class="form-label font-weight-bold">Telp./HP</label>
-                            <input autocomplete="off" type="text" class="form-control" id="customer_telp" name="customer_telp" required>
-                        </div>
-                        <div class="form-group">
-                        <label for="customer_keterangan" class="form-label font-weight-bold">Keterangan</label>
-                        <input autocomplete="off" type="text" class="form-control" id="customer_keterangan" name="customer_keterangan" required>
                     </div>
-
-                        
-                    </div>
-                    
-                <div class="col table-bordered ml-1">
-                <div class="w-100"></div>
-                    <h6 class="font-weight-bold text-center mt-2">Transfer</h6>
-                    <div class="form-group">
-                        <label for="customer_bank" class="form-label font-weight-bold">Bank</label>
-                        <input autocomplete="off" type="text" class="form-control" id="customer_bank" name="customer_bank" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="customer_rekening" class="form-label font-weight-bold">No Rekening</label>
-                        <input autocomplete="off" type="text" class="form-control" id="customer_rekening" name="customer_rekening" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="customer_AN" class="form-label font-weight-bold">Atas Nama</label>
-                        <input autocomplete="off" type="text" class="form-control" id="customer_AN" name="customer_AN" required>
-                    </div>
-                    
-
-
-                    </div>
-                    </div>
-                    
-                    
                 </div>
                 <div class="form-group mt-3 mr-2 px-1">
                     <button type="submit" class="btn btn-success float-right">Simpan</button>
-                    </div>
-                    </form>
+                </div>
+                </form>
             </div>
-
         </div>
     </div>
 
@@ -117,7 +107,7 @@
 
 
 <!-- pop up update customer -->
-<div class="modal fade mt-5 " id="popup-update-customer" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<div class="modal fade" id="popup-update-customer" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
@@ -129,70 +119,60 @@
             
             <div class="container mt-3">
                 <div class="row">
-                    
                     <div class="col table-bordered">
                         <form action="<?= base_url("index.php/form/update_customer")?>" method="POST">
-                        <input type="text" name="customer_id_update" id="customer_id_update" hidden>
-                        <div class="form-group mt-1">
-                            <label for="customer_name_update" class="form-label font-weight-bold">Nama Customer</label>
-                            <input autocomplete="off" type="text" class="form-control" id="customer_name_update" name="customer_name_update" required>
+                            <input type="text" name="customer_id_update" id="customer_id_update" hidden>
+                            <div class="form-group mt-1">
+                                <label for="customer_name_update" class="form-label font-weight-bold">Nama Customer</label>
+                                <input autocomplete="off" type="text" class="form-control" id="customer_name_update" name="customer_name_update" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="customer_alamat_update" class="form-label font-weight-bold">Alamat</label>
+                                <input autocomplete="off" type="text" class="form-control" id="customer_alamat_update" name="customer_alamat_update" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="customer_kontak_person_update" class="form-label font-weight-bold">Contact Person</label>
+                                <input autocomplete="off" type="text" class="form-control" id="customer_kontak_person_update" name="customer_kontak_person_update" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="customer_telp_update" class="form-label font-weight-bold">Telp./HP</label>
+                                <input autocomplete="off" type="text" class="form-control" id="customer_telp_update" name="customer_telp_update" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="customer_keterangan_update" class="form-label font-weight-bold">Keterangan</label>
+                                <input autocomplete="off" type="text" class="form-control" id="customer_keterangan_update" name="customer_keterangan_update" required>
+                            </div>
+                    </div>
+                    <div class="col table-bordered ml-1">
+                        <div class="w-100"></div>
+                        <h6 class="font-weight-bold text-center mt-2">Transfer</h6>
+                        <div class="form-group">
+                            <label for="customer_bank_update" class="form-label font-weight-bold">Bank</label>
+                            <input autocomplete="off" type="text" class="form-control" id="customer_bank_update" name="customer_bank_update" required>
                         </div>
                         <div class="form-group">
-                            <label for="customer_alamat_update" class="form-label font-weight-bold">Alamat</label>
-                            <input autocomplete="off" type="text" class="form-control" id="customer_alamat_update" name="customer_alamat_update" required>
+                            <label for="customer_rekening_update" class="form-label font-weight-bold">No Rekening</label>
+                            <input autocomplete="off" type="text" class="form-control" id="customer_rekening_update" name="customer_rekening_update" required>
                         </div>
                         <div class="form-group">
-                            <label for="customer_kontak_person_update" class="form-label font-weight-bold">Contact Person</label>
-                            <input autocomplete="off" type="text" class="form-control" id="customer_kontak_person_update" name="customer_kontak_person_update" required>
+                            <label for="customer_AN_update" class="form-label font-weight-bold">Atas Nama</label>
+                            <input autocomplete="off" type="text" class="form-control" id="customer_AN_update" name="customer_AN_update" required>
                         </div>
-                        <div class="form-group">
-                            <label for="customer_telp_update" class="form-label font-weight-bold">Telp./HP</label>
-                            <input autocomplete="off" type="text" class="form-control" id="customer_telp_update" name="customer_telp_update" required>
-                        </div>
-                        <div class="form-group">
-                        <label for="customer_keterangan_update" class="form-label font-weight-bold">Keterangan</label>
-                        <input autocomplete="off" type="text" class="form-control" id="customer_keterangan_update" name="customer_keterangan_update" required>
                     </div>
-
-                        
-                    </div>
-                    
-                <div class="col table-bordered ml-1">
-                <div class="w-100"></div>
-                    <h6 class="font-weight-bold text-center mt-2">Transfer</h6>
-                    <div class="form-group">
-                        <label for="customer_bank_update" class="form-label font-weight-bold">Bank</label>
-                        <input autocomplete="off" type="text" class="form-control" id="customer_bank_update" name="customer_bank_update" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="customer_rekening_update" class="form-label font-weight-bold">No Rekening</label>
-                        <input autocomplete="off" type="text" class="form-control" id="customer_rekening_update" name="customer_rekening_update" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="customer_AN_update" class="form-label font-weight-bold">Atas Nama</label>
-                        <input autocomplete="off" type="text" class="form-control" id="customer_AN_update" name="customer_AN_update" required>
-                    </div>
-                    
-
-
-                    </div>
-                    </div>
-                    
-                    
+                </div>
                 </div>
                 <div class="form-group mt-3 mr-2 px-1">
                     <button type="submit" class="btn btn-success float-right">Simpan</button>
-                    </div>
-                    </form>
+                </div>
+                </form>
             </div>
-
         </div>
     </div>
 </div>
 <!-- end pop up update customer -->
 
 <!-- pop up detail customer -->
-<div class="modal fade mt-5 " id="popup-detail-customer" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<div class="modal fade" id="popup-detail-customer" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">

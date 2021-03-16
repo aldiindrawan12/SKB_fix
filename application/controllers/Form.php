@@ -135,6 +135,7 @@ class Form extends CI_Controller {
                 "customer_bank"=>$this->input->post("customer_bank"),
                 "customer_rekening"=>$this->input->post("customer_rekening"),
                 "customer_AN"=>$this->input->post("customer_AN"),
+                "status_hapus"=>"No"
             );
             echo var_dump($data);
             $this->model_form->insert_customer($data);
@@ -181,18 +182,46 @@ class Form extends CI_Controller {
             redirect(base_url("index.php/home/truck"));
         }
 
-        public function insert_satuan(){
+        public function insert_rute(){
             $data=array(
-                "satuan_name"=>$this->input->post("satuan_name"),
-                "satuan_simbol"=>$this->input->post("satuan_simbol"),
+                "customer_id"=>$this->input->post("customer_id"),
+                "rute_dari"=>$this->input->post("rute_dari"),
+                "rute_ke"=>$this->input->post("rute_ke"),
+                "rute_muatan"=>$this->input->post("rute_muatan"),
+                "rute_uj_engkel"=>str_replace(".","",$this->input->post("rute_uj_engkel")),
+                "rute_uj_tronton"=>str_replace(".","",$this->input->post("rute_uj_tronton")),
+                "rute_tagihan"=>str_replace(".","",$this->input->post("rute_tagihan")),
+                "rute_gaji_engkel"=>str_replace(".","",$this->input->post("rute_gaji_engkel")),
+                "rute_gaji_tronton"=>str_replace(".","",$this->input->post("rute_gaji_tronton")),
+                "rute_gaji_rumusan"=>str_replace(".","",$this->input->post("rute_gaji_rumusan")),
+                "status_hapus"=>"NO"
             );
-            $this->model_form->insert_satuan($data);
+            // echo var_dump($data);
+            $this->model_form->insert_rute($data);
 			$this->session->set_flashdata('status-add-satuan', 'Berhasil');
             redirect(base_url("index.php/home/satuan"));
         }
     // end fungsi insert
     
     // fungsi lain
+        public function update_rute(){
+            $data=array(
+                "customer_id"=>$this->input->post("customer_id_update"),
+                "rute_dari"=>$this->input->post("rute_dari_update"),
+                "rute_ke"=>$this->input->post("rute_ke_update"),
+                "rute_muatan"=>$this->input->post("rute_muatan_update"),
+                "rute_uj_engkel"=>str_replace(".","",$this->input->post("rute_uj_engkel_update")),
+                "rute_uj_tronton"=>str_replace(".","",$this->input->post("rute_uj_tronton_update")),
+                "rute_tagihan"=>str_replace(".","",$this->input->post("rute_tagihan_update")),
+                "rute_gaji_engkel"=>str_replace(".","",$this->input->post("rute_gaji_engkel_update")),
+                "rute_gaji_tronton"=>str_replace(".","",$this->input->post("rute_gaji_tronton_update")),
+                "rute_gaji_rumusan"=>str_replace(".","",$this->input->post("rute_gaji_rumusan_update")),
+            );
+            // echo var_dump($data);
+            $this->model_form->update_rute($data,$this->input->post("rute_id_update"));
+            $this->session->set_flashdata('status-update-satuan', 'Berhasil');
+            redirect(base_url("index.php/home/satuan"));
+        }
         public function update_supir(){
             $data = array(
                 "supir_name" => $this->input->post("supir_name"),
@@ -271,11 +300,11 @@ class Form extends CI_Controller {
             echo $customer_id;
         }
 
-        public function deletesatuan(){
-            $satuan_id = $this->input->get("id");
-            $this->model_form->deletesatuan($satuan_id);
+        public function deleterute(){
+            $rute_id = $this->input->get("id");
+            $this->model_form->deleterute($rute_id);
             $this->session->set_flashdata('status-delete-satuan', 'Berhasil');
-            echo $satuan_id;
+            echo $rute_id;
         }
 
         public function deleteakun(){
@@ -296,6 +325,12 @@ class Form extends CI_Controller {
             $supir_id = $this->input->get("id");
             $supir = $this->model_form->getsupirname($supir_id);
             echo json_encode($supir);
+        }
+
+        public function getrutebyid(){
+            $rute_id = $this->input->get("id");
+            $rute = $this->model_form->getrutebyid($rute_id);
+            echo json_encode($rute);
         }
 
         public function generate_terbilang($uang){

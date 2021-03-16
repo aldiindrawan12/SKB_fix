@@ -162,15 +162,15 @@
                     <table class="table table-bordered">
                         <tbody>
                             <tr>
-                                <td class="font-weight-bold" style="width: 20%;">No Polisi</td>
+                                <td class="font-weight-bold" width= "35%">No Polisi</td>
                                 <td name="mobil_no"></td>
                             </tr>
                             <tr>
-                                <td class="font-weight-bold" style="width: 20%;">Jenis Kendaraan</td>
+                                <td class="font-weight-bold">Jenis Kendaraan</td>
                                 <td name="mobil_jenis"></td>
                             </tr>
                             <tr>
-                                <td class="font-weight-bold" style="width: 20%;">Status Jalan</td>
+                                <td class="font-weight-bold">Status Jalan</td>
                                 <td name="status_jalan"></td>
                             </tr>
                             <!-- <tr>
@@ -178,31 +178,31 @@
                                 <td name="mobil_max_load"></td>
                             </tr> -->
                             <tr>
-                                <td class="font-weight-bold" style="width: 20%;">Keterangan</td>
+                                <td class="font-weight-bold">Keterangan</td>
                                 <td name="mobil_keterangan"></td>
                             </tr>
                             <tr>
-                                <td class="font-weight-bold" style="width: 20%;">Merk</td>
+                                <td class="font-weight-bold">Merk</td>
                                 <td name="mobil_merk"></td>
                             </tr>
                             <tr>
-                                <td class="font-weight-bold" style="width: 20%;">Type</td>
+                                <td class="font-weight-bold">Type</td>
                                 <td name="mobil_type"></td>
                             </tr>
                             <tr>
-                                <td class="font-weight-bold" style="width: 20%;">Dump</td>
+                                <td class="font-weight-bold">Dump</td>
                                 <td name="mobil_dump"></td>
                             </tr>
                             <tr>
-                                <td class="font-weight-bold" style="width: 30%;">Tahun</td>
+                                <td class="font-weight-bold">Tahun</td>
                                 <td name="mobil_tahun"></td>
                             </tr>
                             <tr>
-                                <td class="font-weight-bold" style="width: 20%;">Tgl.Berlaku STNK</td>
+                                <td class="font-weight-bold">Tgl.Berlaku STNK</td>
                                 <td name="mobil_berlaku"></td>
                             </tr>
                             <tr>
-                                <td class="font-weight-bold" style="width: 20%;">Tgl.Pajak STNK</td>
+                                <td class="font-weight-bold">Tgl.Pajak STNK</td>
                                 <td name="mobil_pajak"></td>
                             </tr>
                         </tbody>

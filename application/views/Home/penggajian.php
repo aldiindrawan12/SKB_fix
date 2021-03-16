@@ -37,7 +37,7 @@
 
 <!-- pop up add supir -->
 <div class="modal fade mt-5" id="popup-supir" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
-    <div class="modal-dialog modal-md" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
                 <h5 class="font-weight-bold">Menambah Supir</h5>
@@ -94,7 +94,7 @@
 
 <!-- pop up add supir -->
 <div class="modal fade mt-5" id="popup-update-supir" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
-    <div class="modal-dialog modal-md" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
                 <h5 class="font-weight-bold">Update Data Supir</h5>
@@ -152,7 +152,7 @@
 
 <!-- pop up detail supir -->
 <div class="modal fade mt-5" id="popup-detail-supir" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
-    <div class="modal-dialog modal-md" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
                 <h5 class="block-title">Detail Supir</h5>

@@ -75,7 +75,7 @@
                 ],
                 "ajax": {
                     "url": "<?php echo base_url('index.php/home/view_truck/') ?>",
-                    "type": "POST"
+                    "type": "POST",
                 },
                 "deferRender": true,
                 "aLengthMenu": [
@@ -784,10 +784,13 @@
                     $('.btn-delete-supir').click(function() {
                         let pk = $(this).data('pk');
                         Swal.fire({
-                            title: 'Yakin Ingin Hapus Supir Ini?',
+                            title: 'Hapus Supir',
+                            text: 'Yakin anda ingin menghapus supir ini?',
                             showDenyButton: true,
                             denyButtonText: `Batal`,
                             confirmButtonText: 'Hapus',
+                            denyButtonColor: '#808080',
+                            confirmButtonColor: '#FF0000',
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 $.ajax({
@@ -1547,7 +1550,7 @@
                 Swal.fire({
                         title: "Berhasil",
                         icon: "success",
-                        text: "Mengubah data supir",
+                        text: "Update data supir",
                         type: "success",
                         timer: 2000
                     });

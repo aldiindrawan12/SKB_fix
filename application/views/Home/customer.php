@@ -96,7 +96,9 @@
                 </div>
                 <div class="form-group mt-3 mr-2 px-1">
                     <button type="submit" class="btn btn-success float-right">Simpan</button>
+                    <button type="reset" class="btn btn-outline-danger mr-3 float-md-right" onclick="reset_form()">Reset</button>
                 </div>
+                
                 </form>
             </div>
         </div>

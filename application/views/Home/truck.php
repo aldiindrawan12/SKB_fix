@@ -36,8 +36,8 @@
 </div>
 
 <!-- pop up add truck -->
-<div class="modal fade  px-3 " id="popup-truck" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
+<div class="modal fade mt-4 px-3 " id="popup-truck" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
                 <h5 class="font-weight-bold">Menambah Kendaraan</h5>
@@ -46,11 +46,11 @@
                 </button>
             </div>
             
-            <div class="container">
+            <div class="container mt-4">
                 <div class="row">
                     <div class="col">
                         <form action="<?= base_url("index.php/form/insert_truck")?>" method="POST">
-                        <div class="form-group mt-1">
+                        <div class="form-group ">
                             <label for="mobil_no" class="form-label font-weight-bold">Plat No Mobil</label>
                             <input autocomplete="off" type="text" class="form-control" id="mobil_no" name="mobil_no" required>
                         </div>
@@ -79,7 +79,7 @@
                             </select>
                         </div>
                     </div>    
-                    <div class="col ml-1">
+                    <div class="col">
                         <div class="form-group">
                             <label for="mobil_tahun" class="form-label font-weight-bold">Tahun</label>
                             <input autocomplete="off" type="text" class="form-control" id="mobil_tahun" name="mobil_tahun" required>
@@ -149,7 +149,7 @@
 
 <!-- pop up detail kendaraan -->
 <div class="modal fade" id="popup-kendaraan" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
                 <h5 class="block-title">Detail Kendaraan</h5>

@@ -25,11 +25,13 @@
         <div class="modal-dialog mt-5 py-5" role="document">
             <div class="modal-content ">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Anda yakin ingin keluar?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Keluar <i class="fa fa-lock"></i></h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times</span>
                     </button>
                 </div>
+
+                <div class="modal-body"><i class="fa fa-question-circle"></i> Anda yakin ingin keluar?</div>
                 <div class="modal-footer">
                     <button class="btn btn-outline-secondary" type="button" data-dismiss="modal">Batal</button>
                     <a class="btn btn-danger" href="<?= base_url("index.php/login/logout")?>">Keluar</a>

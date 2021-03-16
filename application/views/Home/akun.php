@@ -36,8 +36,8 @@
     <!-- end tabel data cutomer -->
 </div>
 <!-- pop up tambah akun -->
-<div class="modal fade" id="popup-tambah-akun" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+<div class="modal fade mt-5" id="popup-tambah-akun" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="block-title font-weight-bold">Tambah Akun</h5>
@@ -68,13 +68,13 @@
                     </div>
                     <div class="mb-3 row">
                         <label class="col-sm-5 col-form-label" for="role">Role Akun</label>
-                        <select name="role" id="role" class="form-control custom-select col-sm-6" required>
+                        <select name="role" id="role" class="form-control custom-select col-sm-5 ml-4" required>
                             <option class="font-w700" disabled="disabled" selected value="">Jenis Role</option>
                             <option value="Super User">Super User</option>
                             <option value="Operator">Operator</option>
                         </select>
                     </div>
-                    <div style="float:right;margin-bottom:3%" class="mr-5 px-3">
+                    <div class="mr-4 px-3 float-right">
                         <button type="submit" class="btn btn-success">Simpan</button>
                     </div>
                 </form>

@@ -36,7 +36,7 @@
 </div>
 
 <!-- pop up add truck -->
-<div class="modal fade mt-4 px-3 " id="popup-truck" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<div class="modal fade mt-3 px-3 " id="popup-truck" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
@@ -105,6 +105,7 @@
             </div>
                     <div class="form-group mt-1 mr-4 ">
                         <button type="submit" class="btn btn-success float-right">Simpan</button>
+                        <button type="reset" class="btn btn-outline-danger mr-3 float-md-right" onclick="reset_form()">Reset</button>
                     </div>
                 </form>
         </div>

@@ -80,6 +80,7 @@
                         <div class="form-group">
                         <button type="submit" class="btn btn-success mb-3 float-right">Simpan</button>
                         </div>
+                        <button type="reset" class="btn btn-outline-danger mr-3 float-md-right" onclick="reset_form()">Reset</button>
                         </form>
                     </div>
                 </div>

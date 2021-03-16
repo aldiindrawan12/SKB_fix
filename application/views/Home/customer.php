@@ -145,7 +145,7 @@
                                 <input autocomplete="off" type="text" class="form-control" id="customer_keterangan_update" name="customer_keterangan_update" required>
                             </div>
                     </div>
-                    <div class="col table-bordered ml-1">
+                    <div class="col table-bordered ml-2">
                         <div class="w-100"></div>
                         <h6 class="font-weight-bold text-center mt-2">Transfer</h6>
                         <div class="form-group">

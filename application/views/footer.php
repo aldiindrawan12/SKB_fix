@@ -643,10 +643,14 @@
                         let pk = $(this).data('pk');
                         // alert(pk);
                         Swal.fire({
-                            title: 'Yakin Ingin Hapus Customer Ini?',
+                            title: 'Hapus Customer',
+                            text:'Yakin anda ingin menghapus customer ini?',
                             showDenyButton: true,
                             denyButtonText: `Batal`,
                             confirmButtonText: 'Hapus',
+                            denyButtonColor: '#808080',
+                            confirmButtonColor: '#FF0000',
+                            icon: "warning",
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 $.ajax({

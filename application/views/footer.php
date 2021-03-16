@@ -123,7 +123,9 @@
                             title: 'Hapus Kendaraan Ini?',
                             showDenyButton: true,
                             denyButtonText: `Batal`,
+                            denyButtonColor: '#808080',
                             confirmButtonText: 'Hapus',
+                            confirmButtonColor: '#FF0000',
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 $.ajax({

@@ -1493,7 +1493,7 @@
                 Swal.fire({
                         title: "Berhasil Login",
                         icon: "success",
-                        text: "Selamat datang",
+                        text: "Selamat Datang",
                         type: "success",
                         timer: 1500
                     });

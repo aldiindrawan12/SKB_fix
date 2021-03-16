@@ -66,25 +66,25 @@
         if(username == "Username"){
             Swal.fire({
                     title: "Gagal Login",
-                    text: "Username Tidak Ditemukan",
-                    type: "error",
-                    timer: 1500
+                    icon:"error",
+                    text: "Username tidak ditemukan",
+                    timer: 2000
                 });
         }
         if(password == "Password"){
             Swal.fire({
                     title: "Gagal Login",
-                    text: "Password Salah",
-                    type: "error",
-                    timer: 1500
+                    text: "Password salah",
+                    icon: "error",
+                    timer: 2000
                 });
         }
         if(false_login == "False"){
             Swal.fire({
-                    title: "Gagal",
-                    text: "Silakan Login Terlebih Dahulu",
-                    type: "error",
-                    timer: 1500
+                    title: "Gagal Masuk",
+                    text: "Silakan login terlebih dahulu",
+                    icon: "error",
+                    timer: 2000
                 });
         }
     </script>

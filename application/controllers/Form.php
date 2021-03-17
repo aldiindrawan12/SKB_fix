@@ -194,7 +194,7 @@ class Form extends CI_Controller {
                 "rute_gaji_engkel"=>str_replace(".","",$this->input->post("rute_gaji_engkel")),
                 "rute_gaji_tronton"=>str_replace(".","",$this->input->post("rute_gaji_tronton")),
                 "rute_gaji_rumusan"=>str_replace(".","",$this->input->post("rute_gaji_rumusan")),
-                "status_hapus"=>"NO"
+                "rute_status_hapus"=>"NO"
             );
             // echo var_dump($data);
             $this->model_form->insert_rute($data);

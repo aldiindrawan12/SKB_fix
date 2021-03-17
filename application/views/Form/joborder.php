@@ -20,7 +20,7 @@
                 <form action="<?=base_url("index.php/form/insert_JO")?>" method="POST" class="row">
                     <div class="col-md-4 col-md-offset-4">
                         <label class="form-label font-weight-bold " for="Customer">Customer</label>
-                        <select name="Customer" id="Customer" class="form-control selectpicker mb-4" data-live-search="true" required>
+                        <select name="Customer" id="Customer" class="form-control selectpicker mb-4" data-live-search="true" required onchange="customer()">
                             <?php if(count($customer_by_name)==0){?>
                                 <option class="font-w700" disabled="disabled" selected value="">Customer</option>
                             <?php }else{?>
@@ -33,7 +33,10 @@
                     </div>
                     <div class="col-md-4 col-md-offset-4">
                         <label for="Muatan" class="form-label font-weight-bold ">Muatan</label> 
-                        <input autocomplete="off" type="text" class="form-control mb-4" id="Muatan" name="Muatan" required>
+                        <select name="Muatan" id="Muatan" class="form-control mb-4" required onchange="muatan()">
+                            <option class="font-w700" disabled="disabled" selected value="">Muatan</option>
+                        </select>
+                        <!-- <input autocomplete="off" type="text" class="form-control mb-4" id="Muatan" name="Muatan" required> -->
                     </div>
                     <div class="col-md-4 col-md-offset-4">
                         <label class="form-label font-weight-bold" for="Supir">Supir</label>
@@ -131,5 +134,28 @@
     }
     function reset_form(){
         location.reload();
+    }
+    function customer(){
+        var customer_id = $("#Customer").val();
+        $('#Muatan').find('option').remove().end(); //reset option select
+        var isi_muatan = [];
+        $.ajax({
+            type: "GET",
+            url: "<?php echo base_url('index.php/form/getrutebycustomer/') ?>"+customer_id,
+            dataType: "JSON",
+            success: function(data) {
+                if(data.length==0){
+                    $('#Muatan').append('<option class="font-w700" disabled="disabled" selected value="">Kosong</option>'); 
+                }else{
+                    for(i=0;i<data.length;i++){
+                        if(!isi_muatan.includes(data[i]["rute_muatan"])){
+                            $('#Muatan').append('<option value="'+data[i]["rute_muatan"]+'">'+data[i]["rute_muatan"]+'</option>'); 
+                            isi_muatan.push(data[i]["rute_muatan"]);
+                        }
+                    }
+                }
+                alert(isi_muatan);
+            }
+        });
     }
 </script>

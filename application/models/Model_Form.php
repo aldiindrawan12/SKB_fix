@@ -187,5 +187,10 @@ class Model_Form extends CI_model
         return $this->db->insert("skb_mobil", $data);
     }
 
-
+    // fungsi untuk form joborder
+    public function getrutebycustomer($customer_id){
+        $this->db->select("rute_muatan");
+        return $this->db->get_where("skb_rute",array("customer_id"=>$customer_id))->result_array();
+    }
+    // end fungsi untuk form joborder
 }

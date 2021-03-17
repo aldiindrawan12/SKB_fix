@@ -18,7 +18,7 @@
             <div class="card-body">
                 <!-- form Job Order Baru -->
                 <form action="<?=base_url("index.php/form/insert_JO")?>" method="POST" class="row">
-                    <div class="col-md-4 col-md-offset-4">
+                    <div class="col-md-3 col-md-offset-4">
                         <label class="form-label font-weight-bold " for="Customer">Customer</label>
                         <select name="Customer" id="Customer" class="form-control selectpicker mb-4" data-live-search="true" required onchange="customer()">
                             <?php if(count($customer_by_name)==0){?>
@@ -31,16 +31,31 @@
                             <?php } ?>
                         </select>
                     </div>
-                    <div class="col-md-4 col-md-offset-4">
+                    <div class="col-md-3 col-md-offset-4">
                         <label for="Muatan" class="form-label font-weight-bold ">Muatan</label> 
                         <select name="Muatan" id="Muatan" class="form-control mb-4" required onchange="muatan()">
                             <option class="font-w700" disabled="disabled" selected value="">Muatan</option>
                         </select>
                         <!-- <input autocomplete="off" type="text" class="form-control mb-4" id="Muatan" name="Muatan" required> -->
                     </div>
-                    <div class="col-md-4 col-md-offset-4">
+                    
+                    <div class="col-md-3 col-md-offset-4 mb-4">
+                        <label class="form-label font-weight-bold" for="Asal ">Asal</label>
+                        <select name="Asal" id="Asal" class="form-control mb-4" required onchange="asal()">
+                            <option class="font-w700" disabled="disabled" selected value="">Asal</option>
+                        </select>
+                        <!-- <input autocomplete="off" type="text" class="form-control" id="Asal" name="Asal" required> -->
+                    </div>
+                    <div class="col-md-3 col-md-offset-4 mb-4">
+                        <label class="form-label font-weight-bold" for="Tujuan">Tujuan</label>
+                        <select name="Tujuan" id="Tujuan" class="form-control mb-4" required onchange="tujuan()">
+                            <option class="font-w700" disabled="disabled" selected value="">Tujuan</option>
+                        </select>
+                        <!-- <input autocomplete="off" type="text" class="form-control" id="Tujuan" name="Tujuan" required> -->
+                    </div>
+                    <div class="col-md-4 col-md-offset-4 mb-4">
                         <label class="form-label font-weight-bold" for="Supir">Supir</label>
-                        <select name="Supir" id="Supir" class="form-control selectpicker" data-live-search="true" required>
+                        <select name="Supir" id="Supir" class="form-control selectpicker mb-4" data-live-search="true" required>
                             <option class="font-w700 mb-4" disabled="disabled" selected value="">Supir Pengiriman</option>
                             <?php foreach($supir as $value){
                                 if($value["status_jalan"]!="Jalan"){?>
@@ -49,28 +64,28 @@
                             } ?>
                         </select>
                     </div>
-                    <div class="col-md-4 col-md-offset-4">
-                        <label class="form-label font-weight-bold " for="Kendaraan">Kendaraan</label>
-                        <select name="Kendaraan" id="Kendaraan" class="form-control selectpicker" data-live-search="true" required>
-                            <option class="font-w700 font-weight-bold mb-4" disabled="disabled" selected value="">Kendaraan Pengiriman</option>
-                            <?php foreach($mobil as $value){
-                                if($value["status_jalan"]!="Jalan"){?>
-                                <option value="<?=$value["mobil_no"]?>"><?=$value["mobil_no"]."  ||  ".$value["mobil_max_load"]." Ton  ||  ".$value["mobil_jenis"]?></option>
-                            <?php }
-                            } ?>
+                    <div class="col-md-4 col-md-offset-4 mb-4">
+                        <label class="form-label font-weight-bold" for="Jenis">Jenis Mobil</label>
+                        <select name="Jenis" id="Jenis" class="form-control selectpicker mb-4" data-live-search="true" required onchange="jenis()">
+                            <option class="font-w700 mb-4" disabled="disabled" selected value="">Jenis Mobil</option>
+                            <option value="Sedang(Engkel)">Sedang(Engkel)</option>
+                            <option value="Besar(Tronton)">Besar(Tronton)</option>
                         </select>
                     </div>
                     <div class="col-md-4 col-md-offset-4 mb-4">
-                        <label class="form-label font-weight-bold" for="Asal ">Asal</label>
-                        <input autocomplete="off" type="text" class="form-control" id="Asal" name="Asal" required>
-                    </div>
-                    <div class="col-md-4 col-md-offset-4 mb-4">
-                        <label class="form-label font-weight-bold" for="Tujuan">Tujuan</label>
-                        <input autocomplete="off" type="text" class="form-control" id="Tujuan" name="Tujuan" required>
+                        <label class="form-label font-weight-bold " for="Kendaraan">Kendaraan</label>
+                        <select name="Kendaraan" id="Kendaraan" class="form-control mb-4" required>
+                            <option class="font-w700 font-weight-bold mb-4" disabled="disabled" selected value="">Kendaraan Pengiriman</option>
+                            <!-- <?php foreach($mobil as $value){
+                                if($value["status_jalan"]!="Jalan"){?>
+                                <option value="<?=$value["mobil_no"]?>"><?=$value["mobil_no"]."  ||  ".$value["mobil_max_load"]." Ton  ||  ".$value["mobil_jenis"]?></option>
+                            <?php }
+                            } ?> -->
+                        </select>
                     </div>
                     <div class="col-md-4 col-md-offset-4 mb-4">
                         <label for="Uang" class="form-label font-weight-bold">Uang Jalan</label>
-                        <input autocomplete="off" type="text" class="form-control" id="Uang" name="Uang" required onkeyup="terbilang()">
+                        <input autocomplete="off" type="text" class="form-control" id="Uang" name="Uang" required readonly>
                     </div>
                     <div class="col-md-4 col-md-offset-4 mb-4">
                         <label for="Terbilang" class="form-label font-weight-bold">Terbilang</label>
@@ -117,25 +132,11 @@
 <!-- end pop up add cutomer -->
 
 <script>
-    function terbilang(){
-        var uang = $('#Uang').val();
-        if(uang == ""){
-            uang = "x";
-        }
-        $( '#Uang' ).mask('000.000.000', {reverse: true});
-        $.ajax({
-            type: "GET",
-            url: "<?php echo base_url('index.php/form/generate_terbilang_fix/') ?>"+uang,
-            dataType: "text",
-            success: function(data) {
-                $('#Terbilang').val(data);
-            }
-        });
-    }
     function reset_form(){
         location.reload();
     }
-    function customer(){
+
+    function customer(){ //ketika customer dipilih
         var customer_id = $("#Customer").val();
         $('#Muatan').find('option').remove().end(); //reset option select
         var isi_muatan = [];
@@ -147,6 +148,7 @@
                 if(data.length==0){
                     $('#Muatan').append('<option class="font-w700" disabled="disabled" selected value="">Kosong</option>'); 
                 }else{
+                    $('#Muatan').append('<option class="font-w700" disabled="disabled" selected value="">Muatan</option>'); 
                     for(i=0;i<data.length;i++){
                         if(!isi_muatan.includes(data[i]["rute_muatan"])){
                             $('#Muatan').append('<option value="'+data[i]["rute_muatan"]+'">'+data[i]["rute_muatan"]+'</option>'); 
@@ -154,7 +156,124 @@
                         }
                     }
                 }
-                alert(isi_muatan);
+            }
+        });
+    }
+
+    function muatan(){ //ketika customer dipilih
+        var customer_id = $("#Customer").val();
+        var muatan = $("#Muatan").val();
+        $('#Asal').find('option').remove().end(); //reset option select
+        var isi_asal = [];
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('index.php/form/getrutebymuatan') ?>",
+            dataType: "JSON",
+            data: {
+                customer_id: customer_id,
+                rute_muatan: muatan
+            },
+            success: function(data) {
+                // alert(data);
+                if(data.length==0){
+                    $('#Asal').append('<option class="font-w700" disabled="disabled" selected value="">Kosong</option>'); 
+                }else{
+                    $('#Asal').append('<option class="font-w700" disabled="disabled" selected value="">Asal</option>'); 
+                    for(i=0;i<data.length;i++){
+                        if(!isi_asal.includes(data[i]["rute_dari"])){
+                            $('#Asal').append('<option value="'+data[i]["rute_dari"]+'">'+data[i]["rute_dari"]+'</option>'); 
+                            isi_asal.push(data[i]["rute_dari"]);
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    function asal(){ //ketika customer dipilih
+        var customer_id = $("#Customer").val();
+        var muatan = $("#Muatan").val();
+        var asal = $("#Asal").val();
+        $('#Tujuan').find('option').remove().end(); //reset option select
+        var isi_tujuan = [];
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('index.php/form/getrutebyasal') ?>",
+            dataType: "JSON",
+            data: {
+                customer_id: customer_id,
+                rute_muatan: muatan,
+                rute_asal:asal
+            },
+            success: function(data) {
+                // alert(data);
+                if(data.length==0){
+                    $('#Tujuan').append('<option class="font-w700" disabled="disabled" selected value="">Kosong</option>'); 
+                }else{
+                    $('#Tujuan').append('<option class="font-w700" disabled="disabled" selected value="">Tujuan</option>'); 
+                    for(i=0;i<data.length;i++){
+                        if(!isi_tujuan.includes(data[i]["rute_ke"])){
+                            $('#Tujuan').append('<option value="'+data[i]["rute_ke"]+'">'+data[i]["rute_ke"]+'</option>'); 
+                            isi_tujuan.push(data[i]["rute_ke"]);
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    function jenis(){ //ketika customer dipilih
+        var mobil_jenis = $("#Jenis").val();
+        var customer_id = $("#Customer").val();
+        var muatan = $("#Muatan").val();
+        var asal = $("#Asal").val();
+        var ke = $("#Tujuan").val();
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('index.php/form/getmobilbyjenis') ?>",
+            dataType: "JSON",
+            data: {
+                mobil_jenis: mobil_jenis,
+            },
+            success: function(data) {
+                if(data.length==0){
+                    $('#Kendaraan').append('<option class="font-w700" disabled="disabled" selected value="">Kosong</option>'); 
+                }else{
+                    // $('#Kendaraan').append('<option class="font-w700" disabled="disabled" selected value="">Kendaraan Pengiriman</option>'); 
+                    for(i=0;i<data.length;i++){
+                            $('#Kendaraan').append('<option value="'+data[i]["mobil_no"]+'">'+data[i]["mobil_no"]+'  ||  '+data[i]["mobil_max_load"]+' Ton  ||  '+data[i]["mobil_jenis"]+'</option>'); 
+                    }
+                }
+            }
+        });
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('index.php/form/getrutefix') ?>",
+            dataType: "JSON",
+            data: {
+                customer_id: customer_id,
+                rute_muatan: muatan,
+                rute_asal:asal,
+                rute_ke:ke,
+                mobil_jenis:mobil_jenis
+            },
+            success: function(data) {
+                var uang = "";
+                if(mobil_jenis=="Sedang(Engkel)"){
+                    $("#Uang").val(rupiah(data["rute_uj_engkel"]));
+                    uang = rupiah(data["rute_uj_engkel"]);
+                }else{
+                    $("#Uang").val(rupiah(data["rute_uj_tronton"]));
+                    uang = rupiah(data["rute_uj_tronton"]);
+                }
+                $.ajax({
+                    type: "GET",
+                    url: "<?php echo base_url('index.php/form/generate_terbilang_fix/') ?>"+uang,
+                    dataType: "text",
+                    success: function(data) {
+                        $('#Terbilang').val(data);
+                    }
+                });
             }
         });
     }

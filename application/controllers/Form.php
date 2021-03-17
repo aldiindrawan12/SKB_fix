@@ -407,5 +407,34 @@ class Form extends CI_Controller {
         $rute = $this->model_form->getrutebycustomer($customer_id);
         echo json_encode($rute);        
     }
+    public function getrutebymuatan(){
+        $customer_id = $this->input->post("customer_id");
+        $muatan = $this->input->post("rute_muatan");
+        $rute = $this->model_form->getrutebymuatan($customer_id,$muatan);
+        echo json_encode($rute);        
+    }
+    public function getrutebyasal(){
+        $customer_id = $this->input->post("customer_id");
+        $muatan = $this->input->post("rute_muatan");
+        $rute_dari = $this->input->post("rute_asal");
+        $rute = $this->model_form->getrutebydari($customer_id,$muatan,$rute_dari);
+        echo json_encode($rute);        
+    }
+    public function getmobilbyjenis(){
+        $mobil_jenis = $this->input->post("mobil_jenis");
+        $mobil = $this->model_form->getmobilbyjenis($mobil_jenis);
+        echo json_encode($mobil);        
+    }
+    public function getrutefix(){
+        $data = array(
+            "customer_id" => $this->input->post("customer_id"),
+            "muatan" => $this->input->post("rute_muatan"),
+            "rute_dari" => $this->input->post("rute_asal"),
+            "rute_ke" => $this->input->post("rute_ke"),
+            "mobil_jenis" => $this->input->post("mobil_jenis")
+        );   
+        $rute = $this->model_form->getrutefix($data);
+        echo json_encode($rute);        
+    }
     // end fungsi form joborder
 }

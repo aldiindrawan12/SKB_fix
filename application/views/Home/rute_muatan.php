@@ -98,15 +98,15 @@
                             <small class="font-weight-bold">Detail Gaji</small>
                             <hr>
                             <div class="form-group">
-                                <label for="rute_gaji_engkel" class="form-label font-weight-bold">Gaji Engkel</label>
+                                <label for="rute_gaji_engkel" class="form-label font-weight-bold">Gaji Engkel(FIX)</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_gaji_engkel" name="rute_gaji_engkel" required onkeyup="uang(this)">
                             </div>
                             <div class="form-group">
-                                <label for="rute_gaji_tronton" class="form-label font-weight-bold">Gaji Tronton</label>
+                                <label for="rute_gaji_tronton" class="form-label font-weight-bold">Gaji Tronton(FIX)</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_gaji_tronton" name="rute_gaji_tronton" required onkeyup="uang(this)">
                             </div>
                             <div class="form-group">
-                                <label for="rute_gaji_rumusan" class="form-label font-weight-bold">Rumusan</label>
+                                <label for="rute_gaji_rumusan" class="form-label font-weight-bold">Gaji Non-FIX</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_gaji_rumusan" name="rute_gaji_rumusan" required onkeyup="uang(this)">
                             </div>
                         </div>

@@ -66,21 +66,14 @@
                     </div>
                     <div class="col-md-4 col-md-offset-4 mb-4">
                         <label class="form-label font-weight-bold" for="Jenis">Jenis Mobil</label>
-                        <select name="Jenis" id="Jenis" class="form-control selectpicker mb-4" data-live-search="true" required onchange="jenis()">
+                        <select name="Jenis" id="Jenis" class="form-control mb-4" required onchange="jenis()">
                             <option class="font-w700 mb-4" disabled="disabled" selected value="">Jenis Mobil</option>
-                            <option value="Sedang(Engkel)">Sedang(Engkel)</option>
-                            <option value="Besar(Tronton)">Besar(Tronton)</option>
                         </select>
                     </div>
                     <div class="col-md-4 col-md-offset-4 mb-4">
                         <label class="form-label font-weight-bold " for="Kendaraan">Kendaraan</label>
                         <select name="Kendaraan" id="Kendaraan" class="form-control mb-4" required>
                             <option class="font-w700 font-weight-bold mb-4" disabled="disabled" selected value="">Kendaraan Pengiriman</option>
-                            <!-- <?php foreach($mobil as $value){
-                                if($value["status_jalan"]!="Jalan"){?>
-                                <option value="<?=$value["mobil_no"]?>"><?=$value["mobil_no"]."  ||  ".$value["mobil_max_load"]." Ton  ||  ".$value["mobil_jenis"]?></option>
-                            <?php }
-                            } ?> -->
                         </select>
                     </div>
                     <div class="col-md-4 col-md-offset-4 mb-4">
@@ -222,6 +215,10 @@
         });
     }
 
+    function tujuan(){
+        $("#Jenis").append('<option value="Sedang(Engkel)">Sedang(Engkel)</option>'+
+                            '<option value="Besar(Tronton)">Besar(Tronton)</option>');
+    }
     function jenis(){ //ketika customer dipilih
         var mobil_jenis = $("#Jenis").val();
         var customer_id = $("#Customer").val();

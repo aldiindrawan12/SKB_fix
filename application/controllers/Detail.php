@@ -24,7 +24,7 @@ class Detail extends CI_Controller {
             $data["customer"] = $this->model_home->getcustomerbyid($data["jo"]["customer_id"]);
             $data["mobil"] = $this->model_home->getmobilbyid($data["jo"]["mobil_no"]);
             $data["supir"] = $this->model_home->getsupirbyid($data["jo"]["supir_id"]);
-            $data["satuan"] = $this->model_home->getallsatuan();
+            // $data["satuan"] = $this->model_home->getallsatuan();
             if($asal=="JO"){
                 $data["page"] = "JO_page";
                 $data["collapse_group"] = "Perintah_Kerja";

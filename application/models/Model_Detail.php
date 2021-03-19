@@ -5,7 +5,6 @@ class Model_Detail extends CI_model
     public function updatestatusjo($data,$supir,$mobil,$data_invoice){ //update status jo saat sampai tujuan
         $this->db->set("tonase",$data["tonase"]);
         $this->db->set("satuan",$data["satuan"]);
-        $this->db->set("upah",$data["upah"]);
         $this->db->set("harga/kg",$data["harga/kg"]);
         $this->db->set("bonus",$data["bonus"]);
         $this->db->set("keterangan",$data["keterangan"]);

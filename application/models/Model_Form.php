@@ -214,7 +214,7 @@ class Model_Form extends CI_model
         return $this->db->get("skb_rute")->result_array();
     }
     public function getmobilbyjenis($mobil_jenis){
-        return $this->db->get_where("skb_mobil",array("mobil_jenis"=>$mobil_jenis))->result_array();
+        return $this->db->get_where("skb_mobil",array("mobil_jenis"=>$mobil_jenis,"status_jalan"=>"Tidak Jalan"))->result_array();
     }
     public function getrutefix($data){
         $data_where = array(

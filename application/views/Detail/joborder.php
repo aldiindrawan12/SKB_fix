@@ -52,7 +52,7 @@
                     </tr>
                     <tr>
                         <td>Muatan : <?= $jo["tonase"]." ".$jo["satuan"]?></td>
-                        <td>Harga : <?= $jo["harga/kg"]?> / <?= $jo["satuan"]?></td>
+                        <td>Harga : <?= number_format($jo["harga/kg"],2,',','.')?></td>
                         <td>Jumlah : Rp.<?= number_format($jo["tonase"]*$jo["harga/kg"],2,',','.')?></td>
                     </tr>
                     <tr class="text-center">
@@ -109,17 +109,17 @@
                     <input type="text" name="jo_id" id="jo_id" hidden>
                     <div class="mb-3 row">
                         <label for="tonase" class="col-sm-5 col-form-label">Muatan akhir</label>
-                        <div class="col-sm-3">
+                        <div class="col-sm-6">
                             <input autocomplete="off" class="form-control" type="text" name="tonase" id="tonase" onkeyup="uang()" required>    
                         </div>
-                        <div class="col-sm-3">
+                        <!-- <div class="col-sm-3">
                             <select name="satuan" id="satuan" class="form-control custom-select" required>
                                 <option class="font-w700" disabled="disabled" selected value="">Jenis Satuan</option>
                                 <?php foreach($satuan as $value){?>
                                     <option value="<?= $value["satuan_simbol"]?>"><?= $value["satuan_name"]?></option>
                                 <?php }?>
                             </select>
-                        </div>
+                        </div> -->
                     </div>
                      <div class="mb-3 row">
                         <label class="col-sm-5 col-form-label" for="harga">Harga / Satuan</label>
@@ -127,12 +127,12 @@
                             <input autocomplete="off" class="form-control" type="text" name="harga" id="harga" onkeyup="uang()" required>
                         </div>
                     </div>
-                     <div class="mb-3 row">
+                     <!-- <div class="mb-3 row">
                         <label class="col-sm-5 col-form-label" for="upah">Upah Supir</label>
                         <div class="col-sm-6">
                             <input autocomplete="off" class="form-control" type="text" name="upah" id="upah" onkeyup="uang()" required>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="mb-3 row">
                         <label class="col-sm-5 col-form-label" for="bonus">Bonus Supir</label>
                         <div class="col-sm-6">

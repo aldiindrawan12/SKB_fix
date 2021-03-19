@@ -80,6 +80,7 @@
                         <label for="Uang" class="form-label font-weight-bold">Uang Jalan</label>
                         <input autocomplete="off" type="text" class="form-control" id="Uang" name="Uang" required readonly>
                     </div>
+                        <input autocomplete="off" type="text" class="form-control" id="Upah" name="Upah" required hidden>
                     <div class="col-md-4 col-md-offset-4 mb-4">
                         <label for="Terbilang" class="form-label font-weight-bold">Terbilang</label>
                         <input autocomplete="off" type="text" class="form-control" id="Terbilang" name="Terbilang" required readonly>
@@ -225,6 +226,7 @@
         var muatan = $("#Muatan").val();
         var asal = $("#Asal").val();
         var ke = $("#Tujuan").val();
+        $('#Kendaraan').find('option').remove().end(); //reset option select
         $.ajax({
             type: "POST",
             url: "<?php echo base_url('index.php/form/getmobilbyjenis') ?>",
@@ -236,7 +238,7 @@
                 if(data.length==0){
                     $('#Kendaraan').append('<option class="font-w700" disabled="disabled" selected value="">Kosong</option>'); 
                 }else{
-                    // $('#Kendaraan').append('<option class="font-w700" disabled="disabled" selected value="">Kendaraan Pengiriman</option>'); 
+                    $('#Kendaraan').append('<option class="font-w700" disabled="disabled" selected value="">Kendaraan Pengiriman</option>'); 
                     for(i=0;i<data.length;i++){
                             $('#Kendaraan').append('<option value="'+data[i]["mobil_no"]+'">'+data[i]["mobil_no"]+'  ||  '+data[i]["mobil_max_load"]+' Ton  ||  '+data[i]["mobil_jenis"]+'</option>'); 
                     }
@@ -258,9 +260,11 @@
                 var uang = "";
                 if(mobil_jenis=="Sedang(Engkel)"){
                     $("#Uang").val(rupiah(data["rute_uj_engkel"]));
+                    $("#Upah").val(rupiah(data["rute_gaji_engkel"]));
                     uang = rupiah(data["rute_uj_engkel"]);
                 }else{
                     $("#Uang").val(rupiah(data["rute_uj_tronton"]));
+                    $("#Upah").val(rupiah(data["rute_gaji_tronton"]));
                     uang = rupiah(data["rute_uj_tronton"]);
                 }
                 $.ajax({

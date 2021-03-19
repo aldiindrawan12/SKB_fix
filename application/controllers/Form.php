@@ -67,7 +67,8 @@ class Form extends CI_Controller {
                 "keterangan"=>$this->input->post("Keterangan"),
                 "customer_id"=>$this->input->post("Customer"),
                 "status"=>"Dalam Perjalanan",
-                "status_upah"=>"Belum Dibayar"
+                "status_upah"=>"Belum Dibayar",
+                "upah"=>str_replace(".","",$this->input->post("Upah")),
             );
             $this->model_form->insert_JO($data["data"]);
             $data["jo_id"] = max($isi_jo_id)+1;

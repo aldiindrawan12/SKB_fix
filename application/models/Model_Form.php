@@ -217,20 +217,44 @@ class Model_Form extends CI_model
         return $this->db->get_where("skb_mobil",array("mobil_jenis"=>$mobil_jenis,"status_jalan"=>"Tidak Jalan"))->result_array();
     }
     public function getrutefix($data){
+        if($data["rute_tonase"]!=0){
+            $data_where = array(
+                "customer_id"=>$data["customer_id"],
+                "rute_muatan"=>$data["muatan"],
+                "rute_dari"=>$data["rute_dari"],
+                "rute_ke"=>$data["rute_ke"],
+                "rute_status_hapus"=>"NO",
+                "rute_tonase"=>$data["rute_tonase"]
+            );
+        }else{
+            $data_where = array(
+                "customer_id"=>$data["customer_id"],
+                "rute_muatan"=>$data["muatan"],
+                "rute_dari"=>$data["rute_dari"],
+                "rute_ke"=>$data["rute_ke"],
+                "rute_status_hapus"=>"NO",
+                "rute_tonase"=>""
+            );
+        }
+        if($data["mobil_jenis"]=="Sedang(Engkel)"){
+            $this->db->select("rute_uj_engkel,rute_gaji_engkel,rute_tonase,rute_gaji_engkel_rumusan");
+        }else{
+            $this->db->select("rute_uj_tronton,rute_gaji_tronton,rute_tonase,rute_gaji_tronton_rumusan");
+        }
+        $this->db->where($data_where);
+        return $this->db->get("skb_rute")->row_array();
+    }
+    public function getrutetonase($data){
         $data_where = array(
             "customer_id"=>$data["customer_id"],
             "rute_muatan"=>$data["muatan"],
             "rute_dari"=>$data["rute_dari"],
             "rute_ke"=>$data["rute_ke"],
-            "rute_status_hapus"=>"NO"
+            "rute_status_hapus"=>"NO",
+            "rute_tonase!="=>""
         );
-        if($data["mobil_jenis"]=="Sedang(Engkel)"){
-            $this->db->select("rute_uj_engkel,rute_gaji_engkel");
-        }else{
-            $this->db->select("rute_uj_tronton,rute_gaji_tronton");
-        }
         $this->db->where($data_where);
-        return $this->db->get("skb_rute")->row_array();
+        return $this->db->get("skb_rute")->result_array();
     }
     // end fungsi untuk form joborder
 }

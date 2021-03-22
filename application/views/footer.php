@@ -1390,7 +1390,7 @@
                         }
                     },
                     {
-                        "data": "rute_gaji_rumusan",
+                        "data": "rute_gaji_engkel_rumusan",
                         className: 'text-center',
                         render: function(data, type, row) {
                             let html = 'Rp.'+rupiah(data);

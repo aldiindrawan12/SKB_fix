@@ -1,5 +1,4 @@
-<div class="container">
-    
+<div class="container">    
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Data Rute dan Muatan</h1>
         <a class="btn btn-primary btn-icon-split" data-toggle='modal' data-target='#popup-rute'>
@@ -99,36 +98,38 @@
                             <hr>
                             <div class="form-group">
                                 <label class="form-label font-weight-bold" for="Gaji">Gaji</label>
-                                <select name="Gaji" id="Gaji" class="form-control selectpicker mb-4" data-live-search="true" required onchange="gaji()">
-                                    <option class="font-w700 mb-4" disabled="disabled" selected value="">Tipe Gaji</option>
-                                    <option class="font-w700 mb-4" value="Fix">Fix</option>
-                                    <option class="font-w700 mb-4" value="Non-Fix">Non-Fix</option>
+                                <select name="Gaji" id="Gaji" class="form-control" required onchange="gaji()">
+                                    <option class="font-w700" disabled="disabled" selected value="">Tipe Gaji</option>
+                                    <option class="font-w700" value="Fix">Fix</option>
+                                    <option class="font-w700" value="Non-Fix">Non-Fix</option>
                                 </select>
                             </div>
-                            <div class="Fix">
+                            <div class="Tonase" style="display:none">
+                                <div class="form-group">
+                                    <label for="Tonase" class="form-label font-weight-bold">Tonase</label>  
+                                    <input autocomplete="off" type="text" class="form-control" id="Tonase" name="Tonase" required>
+                                </div>
+                            </div>
+                            <div class="Fix" style="display:none">
                                 <div class="form-group">
                                     <label for="rute_gaji_engkel" class="form-label font-weight-bold">Gaji Engkel(FIX)</label>
-                                    <input autocomplete="off" type="text" class="form-control" id="rute_gaji_engkel" name="rute_gaji_engkel" required onkeyup="uang(this)">
+                                    <input autocomplete="off" type="text" class="form-control" id="rute_gaji_engkel" name="rute_gaji_engkel" required onkeyup="uang(this)" value='0'>
                                 </div>
                                 <div class="form-group">
                                     <label for="rute_gaji_tronton" class="form-label font-weight-bold">Gaji Tronton(FIX)</label>
-                                    <input autocomplete="off" type="text" class="form-control" id="rute_gaji_tronton" name="rute_gaji_tronton" required onkeyup="uang(this)">
+                                    <input autocomplete="off" type="text" class="form-control" id="rute_gaji_tronton" name="rute_gaji_tronton" required onkeyup="uang(this)" value='0'>
                                 </div>
                             </div>
-                            <div class="Non-Fix">
+                            <div class="Non-Fix" style="display:none">
                                 <div class="form-group">
-                                    <label for="rute_gaji_engkel" class="form-label font-weight-bold">Gaji Engkel(Non-FIX)</label>
-                                    <input autocomplete="off" type="text" class="form-control" id="rute_gaji_engkel" name="rute_gaji_engkel" required onkeyup="uang(this)">
+                                    <label for="rute_gaji_engkel_rumusan" class="form-label font-weight-bold">Gaji Engkel(Non-FIX)</label>
+                                    <input autocomplete="off" type="text" class="form-control" id="rute_gaji_engkel_rumusan" name="rute_gaji_engkel_rumusan" required onkeyup="uang(this)" value='0'>
                                 </div>
                                 <div class="form-group">
-                                    <label for="rute_gaji_tronton" class="form-label font-weight-bold">Gaji Tronton(Non-FIX)</label>
-                                    <input autocomplete="off" type="text" class="form-control" id="rute_gaji_tronton" name="rute_gaji_tronton" required onkeyup="uang(this)">
+                                    <label for="rute_gaji_tronton_rumusan" class="form-label font-weight-bold">Gaji Tronton(Non-FIX)</label>
+                                    <input autocomplete="off" type="text" class="form-control" id="rute_gaji_tronton_rumusan" name="rute_gaji_tronton_rumusan" required onkeyup="uang(this)" value='0'>
                                 </div>
                             </div>
-                            <!-- <div class="form-group">
-                                <label for="rute_gaji_rumusan" class="form-label font-weight-bold">Gaji Non-FIX</label>
-                                <input autocomplete="off" type="text" class="form-control" id="rute_gaji_rumusan" name="rute_gaji_rumusan" required onkeyup="uang(this)">
-                            </div> -->
                         </div>
                     </div>
                     <div class="form-group">
@@ -229,5 +230,8 @@
         $(".Fix").hide();
         $(".Non-Fix").hide();
         $("."+$("#Gaji").val()).show();
+        if($("#Gaji").val()=="Non-Fix"){
+            $(".Tonase").show();
+        }
     }
 </script>

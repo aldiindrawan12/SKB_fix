@@ -101,6 +101,11 @@
 </body>
 <script>
     window.print();
-    window.location.replace("<?= base_url("index.php/home/bon")?>");
+    var asal = '<?= $asal?>';
+    if(asal=="insert"){ 
+        window.location.replace("<?= base_url("index.php/home/bon")?>");
+    }else{
+        window.location.replace("<?= base_url("index.php/detail/detail_jo/").$data_jo["Jo_id"]."/JO"?>");
+    }
 </script>
 </html>

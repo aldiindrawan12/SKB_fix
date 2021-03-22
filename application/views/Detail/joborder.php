@@ -9,7 +9,7 @@
             <table class="table table-bordered">
                 <tbody>
                     <tr>
-                        <td class="d-none d-sm-table-cell text-center " rowspan="15" style="width: 15%;">
+                        <td class="d-none d-sm-table-cell text-center " rowspan="16" style="width: 15%;">
                             <p class="badge badge-info">Customer</p>
                             <p class="font-size-sm font-weight-bold"><?= $customer["customer_name"] ?></p>
                             <hr>
@@ -51,9 +51,7 @@
                         <td colspan=3><strong>Detail Muatan</strong></td>
                     </tr>
                     <tr>
-                        <td>Muatan : <?= $jo["tonase"]." ".$jo["satuan"]?></td>
-                        <td>Harga : <?= number_format($jo["harga/kg"],2,',','.')?></td>
-                        <td>Jumlah : Rp.<?= number_format($jo["tonase"]*$jo["harga/kg"],2,',','.')?></td>
+                        <td colspan=3>Muatan Tonase : <?= $jo["tonase"]?></td>
                     </tr>
                     <tr class="text-center">
                         <td colspan=3><strong>Upah Supir</strong></td>
@@ -70,17 +68,15 @@
                     <?php if($jo["status"]=="Dalam Perjalanan"){?>
                     <tr>
                         <td colspan=3>
-                            <button class='btn-sm btn-block btn-warning text-dark' data-toggle='modal' data-target='#popup-status-jo' href='' id="<?php echo $jo["Jo_id"] ?>" onclick="datajo(this,<?php echo $jo['supir_id'] ?>,'<?php echo $jo['mobil_no'] ?>')">
-                            Konfirmasi Sampai
-                            </button>
-                        </td>
-                    </tr>
-                    <?php }else{?>
-                    <tr>
-                        <td colspan=3>
-                            <button class='btn-sm btn-block btn-success text-light' href='' id="" onclick="cetak_invoice()">
-                            Cetak Invoice
-                            </button>
+                            <a class='btn btn-primary text-light' data-toggle='modal' data-target='#popup-status-jo' href='' id="<?php echo $jo["Jo_id"] ?>" onclick="datajo(this,<?php echo $jo['supir_id'] ?>,'<?php echo $jo['mobil_no'] ?>')">
+                                <span>Konfirmasi Sampai</span>
+                            </a>
+                            <a class='btn btn-primary text-light' href='<?= base_url("index.php/detail/updatejobatal/").$jo["Jo_id"]?>' id="">
+                                <span>Batalkan Perjalanan JO</span>
+                            </a>
+                            <a class='btn btn-primary text-light' href='<?= base_url("index.php/print_berkas/uang_jalan/").$jo["Jo_id"]?>' id="">
+                                <span>Cetak Bukti Uang Jalan</span>
+                            </a>
                         </td>
                     </tr>
                     <?php }?>

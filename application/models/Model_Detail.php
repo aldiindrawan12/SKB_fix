@@ -2,10 +2,8 @@
 // error_reporting(0);
 class Model_Detail extends CI_model
 {
-    public function updatestatusjo($data,$supir,$mobil,$data_invoice){ //update status jo saat sampai tujuan
+    public function updatestatusjo($data,$supir,$mobil){ //update status jo saat sampai tujuan
         $this->db->set("tonase",$data["tonase"]);
-        $this->db->set("satuan",$data["satuan"]);
-        $this->db->set("harga/kg",$data["harga/kg"]);
         $this->db->set("bonus",$data["bonus"]);
         $this->db->set("keterangan",$data["keterangan"]);
         $this->db->set("status","Sampai Tujuan");
@@ -20,8 +18,6 @@ class Model_Detail extends CI_model
         $this->db->set("status_jalan","Tidak Jalan");
         $this->db->where("mobil_no",str_replace("%20"," ",$mobil));
         $this->db->update("skb_mobil");
-
-        $this->db->insert("skb_invoice",$data_invoice);
     }
 
     public function getbonbyid($bon_id){ //bon by ID
@@ -95,5 +91,19 @@ class Model_Detail extends CI_model
         $this->db->set("status_bayar","Lunas");
         $this->db->where("invoice_kode",$invoice_kode);
         $this->db->update("skb_invoice");
+    }
+
+    public function update_jo_dibatalkan($Jo_id,$supir_id,$mobil_no,$uj){
+        $this->db->set("status","Dibatalkan");
+        $this->db->where("Jo_id",$Jo_id);
+        $this->db->update("skb_job_order");
+
+        $this->db->set("status_jalan","Tidak Jalan");
+        $this->db->where("supir_id",$supir_id);
+        $this->db->update("skb_supir");
+
+        $this->db->set("status_jalan","Tidak Jalan");
+        $this->db->where("mobil_no",str_replace("%20"," ",$mobil_no));
+        $this->db->update("skb_mobil");
     }
 }

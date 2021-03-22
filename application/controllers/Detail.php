@@ -77,28 +77,27 @@ class Detail extends CI_Controller {
             $TOD = $this->input->post("TOD");
             $data = array(
                 "tonase"=>$this->input->post("tonase"),
-                "harga/kg"=>str_replace(".","",$this->input->post("harga")),
                 "bonus"=>str_replace(".","",$this->input->post("bonus")),
                 "keterangan"=>$keterangan,
                 "tanggal_bongkar"=>date('Y-m-d'),
                 "Jo_id"=>$this->input->post("jo_id")
             );
 
-            $total = $data["tonase"]*$data["harga/kg"];
-            $ppn = $total * 0.1;
-            $grand_total = $total + $ppn;
-            $data_invoice = array(
-                "jo_id"=>$this->input->post("jo_id"),
-                "customer_id"=>$data_jo["customer_id"],
-                "tanggal_invoice"=>date("Y-m-d"),
-                "batas_pembayaran"=>date("Y-m-d",strtotime('+'.$TOD.' days', strtotime(date("Y-m-d")))),
-                "total"=>$total,
-                "ppn"=>$ppn,
-                "grand_total"=>$grand_total,
-                "status_bayar"=>"Belum Lunas"
-            );
+            // $total = 0;//$data["tonase"]*$data["harga/kg"];
+            // $ppn = $total * 0.1;
+            // $grand_total = $total + $ppn;
+            // $data_invoice = array(
+            //     "jo_id"=>$this->input->post("jo_id"),
+            //     "customer_id"=>$data_jo["customer_id"],
+            //     "tanggal_invoice"=>date("Y-m-d"),
+            //     "batas_pembayaran"=>date("Y-m-d",strtotime('+'.$TOD.' days', strtotime(date("Y-m-d")))),
+            //     "total"=>$total,
+            //     "ppn"=>$ppn,
+            //     "grand_total"=>$grand_total,
+            //     "status_bayar"=>"Belum Lunas"
+            // );
 
-            $this->model_detail->updatestatusjo($data,$supir,$mobil,$data_invoice);
+            $this->model_detail->updatestatusjo($data,$supir,$mobil);
             redirect(base_url("index.php/detail/detail_jo/").$this->input->post("jo_id")."/JO");
         }
 
@@ -106,6 +105,31 @@ class Detail extends CI_Controller {
             $invoice_kode = $this->input->post("invoice-kode");
             $this->model_detail->updateinvoice($invoice_kode);
             redirect(base_url("index.php/detail/detail_invoice/").$invoice_kode."/Invoice");
+        }
+
+        public function updatejobatal($Jo_id){
+            $data_jo = $this->model_home->getjobyid($Jo_id);
+            $data["data_jo"]=$data_jo;
+            $bon_id = $this->model_form->getbonid();
+            $isi_bon_id = [];
+            for($i=0;$i<count($bon_id);$i++){
+                $isi_bon_id[] = $bon_id[$i]["bon_id"];
+            }
+            date_default_timezone_set('Asia/Jakarta');
+            $data["data"]=array(
+                "bon_id"=>max($isi_bon_id)+1,
+                "supir_id"=>$data_jo["supir_id"],
+                "bon_jenis"=>"Pembatalan JO",
+                "bon_nominal"=>$data_jo["uang_jalan"],
+                "bon_keterangan"=>"Pembatalan JO",
+                "bon_tanggal"=>date("Y-m-d H:i:s")
+            );
+            $data["bon_id"] = max($isi_bon_id)+1;
+            $this->model_form->insert_bon($data["data"]);
+            $this->model_detail->update_jo_dibatalkan($data_jo["Jo_id"],$data_jo["supir_id"],$data_jo["mobil_no"],$data_jo["uang_jalan"]);
+            $data["supir"] = $this->model_home->getsupirbyid($data["data"]["supir_id"]);
+            $data["asal"] = "batal JO";
+            $this->load->view("print/bon_print",$data);
         }
     //end fungsi untuk Detail invoice
 

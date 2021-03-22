@@ -213,6 +213,18 @@ class Print_Berkas extends CI_Controller {
 			$data["supir"] = $this->model_home->getsupirbyid($supir_id);
 			$this->load->view("print/memo_tf_print",$data);
 		}
+		public function uang_jalan($jo_id){
+            if(!$_SESSION["user"]){
+    			$this->session->set_flashdata('status-login', 'False');
+                redirect(base_url());
+            }
+			$data["data"] = $this->model_home->getjobyid($jo_id);
+			$data["jo_id"] = $data["data"]["Jo_id"];
+			$data["asal"] = "detail";
+            $data["supir"] = $this->model_home->getsupirbyid($data["data"]["supir_id"]);
+            $data["mobil"] = $this->model_home->getmobilbyid($data["data"]["mobil_no"]);
+			$this->load->view("print/jo_print",$data);
+		}
 	// end fungsi cetak invoice,gaji,memo
 
 }

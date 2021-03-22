@@ -244,8 +244,11 @@
                                 if (data == "Sampai Tujuan") {
                                     let html = "<span class='btn-sm btn-block btn-success'><i class='fa fa-fw fa-check mr-2'></i>" + data + "</span>";
                                     return html;
-                                } else {
+                                } else if(data == "Dalam Perjalanan"){
                                     let html = "<span class='btn-sm btn-block btn-warning'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>" + data + "</span>";
+                                    return html;
+                                }else{
+                                    let html = "<span class='btn-sm btn-block btn-danger'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>" + data + "</span>";
                                     return html;
                                 }
                             }
@@ -1427,12 +1430,14 @@
                                 $("#rute_dari_update").val(data["rute_dari"]);
                                 $("#rute_ke_update").val(data["rute_ke"]);
                                 $("#rute_muatan_update").val(data["rute_muatan"]);
-                                $("#rute_uj_engkel_update").val(data["rute_uj_engkel"]);
-                                $("#rute_uj_tronton_update").val(data["rute_uj_tronton"]);
-                                $("#rute_tagihan_update").val(data["rute_tagihan"]);
-                                $("#rute_gaji_engkel_update").val(data["rute_gaji_engkel"]);
-                                $("#rute_gaji_tronton_update").val(data["rute_gaji_tronton"]);
-                                $("#rute_gaji_rumusan_update").val(data["rute_gaji_rumusan"]);
+                                $("#rute_uj_engkel_update").val(rupiah(data["rute_uj_engkel"]));
+                                $("#rute_uj_tronton_update").val(rupiah(data["rute_uj_tronton"]));
+                                $("#rute_tagihan_update").val(rupiah(data["rute_tagihan"]));
+                                $("#rute_gaji_engkel_update").val(rupiah(data["rute_gaji_engkel"]));
+                                $("#rute_gaji_tronton_update").val(rupiah(data["rute_gaji_tronton"]));
+                                $("#rute_gaji_engkel_rumusan_update").val(rupiah(data["rute_gaji_engkel_rumusan"]));
+                                $("#rute_gaji_tronton_rumusan_update").val(rupiah(data["rute_gaji_tronton_rumusan"]));
+                                $("#rute_tonase_update").val(rupiah(data["rute_tonase"]));
                             }
                         });
                     });

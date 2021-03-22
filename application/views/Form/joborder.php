@@ -1,14 +1,6 @@
 <div class="container">
     <div class="d-sm-flex align-items-center justify-content-between mb-5">
         <h1 class="h3 mb-0 text-gray-800 mt-3 mb-3">Formulir Job Order</h1>
-            <a href="<?=base_url("index.php/form/joborder/x")?>" class="btn btn-secondary btn-icon-split" data-toggle='modal' data-target='#popup-customer'>
-            <span class="icon text-white-100">
-                <i class="fas fa-plus"></i> 
-            </span>
-                <span class="text">
-                     Tambah Customer Baru
-                </span>
-            </a>
     </div> 
         <!-- Card Formulir JO -->
         <div class="card shadow mb-4">
@@ -105,42 +97,14 @@
                         <button type="reset" class="btn btn-outline-danger mb-3 mt-5  float-md-right" onclick="reset_form()">Reset</button>
                     </div>
                 </form>
-            <!-- end form Job Order Baru -->
+                <!-- end form Job Order Baru -->
             </div>
         </div>
     </div>
-
-<!-- pop up add cutomer -->
-<div class="modal fade mt-5 px-5 py-5" id="popup-customer" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
-    <div class="modal-dialog modal-md" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-primary-dark">
-                <h5 class="font-weight-bold mt-2">Menambah Customer Baru</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="font-size-sm m-3 text-justify">
-                <form action="<?= base_url("index.php/form/insert_customer")?>" method="POST">
-                    <div class="form-group">
-                        <label for="Customer" class="form-label">Nama Customer</label>
-                        <input autocomplete="off" type="text" class="form-control" id="Customer" name="Customer" required>
-                    </div>
-                    <div class="form-group">
-                    <button type="submit" class="btn btn-success mb-3 float-right">Simpan</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- end pop up add cutomer -->
-
 <script>
     function reset_form(){
         location.reload();
     }
-
     function customer(){ //ketika customer dipilih
         var customer_id = $("#Customer").val();
         $('#Muatan').find('option').remove().end(); //reset option select
@@ -164,7 +128,6 @@
             }
         });
     }
-
     function muatan(){ //ketika customer dipilih
         var customer_id = $("#Customer").val();
         var muatan = $("#Muatan").val();
@@ -179,7 +142,6 @@
                 rute_muatan: muatan
             },
             success: function(data) {
-                // alert(data);
                 if(data.length==0){
                     $('#Asal').append('<option class="font-w700" disabled="disabled" selected value="">Kosong</option>'); 
                 }else{
@@ -194,7 +156,6 @@
             }
         });
     }
-
     function asal(){ //ketika customer dipilih
         var customer_id = $("#Customer").val();
         var muatan = $("#Muatan").val();
@@ -226,14 +187,13 @@
             }
         });
     }
-
     function tujuan(){
         $('#Jenis').find('option').remove().end(); //reset option select
         $('#Jenis').append('<option class="font-w700" disabled="disabled" selected value="">Jenis Mobil</option>'); 
         $("#Jenis").append('<option value="Sedang(Engkel)">Sedang(Engkel)</option>'+
                             '<option value="Besar(Tronton)">Besar(Tronton)</option>');
     }
-    function jenis(){ //ketika customer dipilih
+    function jenis(){ //ketika jenis mobil dipilih
         var mobil_jenis = $("#Jenis").val();
         var customer_id = $("#Customer").val();
         var muatan = $("#Muatan").val();
@@ -245,7 +205,7 @@
             tonase=$("#Tonase").val();
         }
         $('#Kendaraan').find('option').remove().end(); //reset option select
-        $.ajax({
+        $.ajax({ //ajax set option kendaraan
             type: "POST",
             url: "<?php echo base_url('index.php/form/getmobilbyjenis') ?>",
             dataType: "JSON",
@@ -263,7 +223,7 @@
                 }
             }
         });
-        $.ajax({
+        $.ajax({ // ajax set uang jalan
             type: "POST",
             url: "<?php echo base_url('index.php/form/getrutefix') ?>",
             dataType: "JSON",
@@ -299,13 +259,14 @@
         $("#Type_Tonase").append('<option value="Fix">Fix</option>'+
                             '<option value="Non-Fix">Non-Fix</option>');
     }
-    function tonase(){ //ketika customer dipilih
+    function tonase(){ //ketika jenis tonase dipilih
         var mobil_jenis = $("#Jenis").val();
         var customer_id = $("#Customer").val();
         var muatan = $("#Muatan").val();
         var asal = $("#Asal").val();
         var ke = $("#Tujuan").val();
         var tonase = 0;
+        $("#Upah").val("");
         if($("#Type_Tonase").val()=="Non-Fix"){
             $('.Tonase').show();//find('option').remove().end(); //reset option select
             $('.Tonase').find('option').remove().end(); //reset option select
@@ -320,6 +281,7 @@
                     rute_ke:ke
                 },
                 success: function(data) {
+                    $('.Tonase').attr('required','true');
                     if(data.length==0){
                         $('#Tonase').append('<option class="font-w700" disabled="disabled" selected value="">Kosong</option>'); 
                     }else{

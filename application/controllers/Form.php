@@ -70,11 +70,12 @@ class Form extends CI_Controller {
                 "status_upah"=>"Belum Dibayar",
                 "upah"=>str_replace(".","",$this->input->post("Upah")),
             );
-            // $this->model_form->insert_JO($data["data"]);
-            // $data["jo_id"] = max($isi_jo_id)+1;
-            // $data["supir"] = $this->model_home->getsupirbyid($data["data"]["supir_id"]);
-            // $data["mobil"] = $this->model_home->getmobilbyid($data["data"]["mobil_no"]);
-            // $this->load->view("print/jo_print",$data);
+            $this->model_form->insert_JO($data["data"]);
+            $data["jo_id"] = max($isi_jo_id)+1;
+            $data["asal"] = "insert";
+            $data["supir"] = $this->model_home->getsupirbyid($data["data"]["supir_id"]);
+            $data["mobil"] = $this->model_home->getmobilbyid($data["data"]["mobil_no"]);
+            $this->load->view("print/jo_print",$data);
         }
 
         public function insert_bon(){
@@ -96,6 +97,7 @@ class Form extends CI_Controller {
             $data["bon_id"] = max($isi_bon_id)+1;
             $this->model_form->insert_bon($data["data"]);
             $data["supir"] = $this->model_home->getsupirbyid($data["data"]["supir_id"]);
+            $data["asal"] = "insert";
             $this->load->view("print/bon_print",$data);
         }
 
@@ -115,15 +117,6 @@ class Form extends CI_Controller {
             $this->model_form->insert_user($data_user);
 			$this->session->set_flashdata('status-add-akun', 'Berhasil');
             redirect(base_url("index.php/home/akun"));
-        }
-
-        public function insert_customer(){
-            $data=array(
-                "customer_name"=>$this->input->post("Customer")
-            );
-            // echo($data["customer_name"]);
-            $this->model_form->insert_customer($data);
-            redirect(base_url("index.php/form/joborder/").$data["customer_name"]);
         }
 
         public function insert_customerMenu(){
@@ -184,6 +177,19 @@ class Form extends CI_Controller {
         }
 
         public function insert_rute(){
+            if($this->input->post("Tonase")==""){
+                $rute_gaji_engkel = str_replace(".","",$this->input->post("rute_gaji_engkel"));
+                $rute_gaji_tronton = str_replace(".","",$this->input->post("rute_gaji_tronton"));
+                $rute_gaji_engkel_rumusan = 0;
+                $rute_gaji_tronton_rumusan = 0;
+                $tonase = 0;
+            }else{
+                $rute_gaji_engkel = 0;
+                $rute_gaji_tronton = 0;
+                $rute_gaji_engkel_rumusan = str_replace(".","",$this->input->post("rute_gaji_engkel_rumusan"));
+                $rute_gaji_tronton_rumusan = str_replace(".","",$this->input->post("rute_gaji_tronton_rumusan"))     ;
+                $tonase = str_replace(".","",$this->input->post("Tonase"));
+            }
             $data=array(
                 "customer_id"=>$this->input->post("customer_id"),
                 "rute_dari"=>$this->input->post("rute_dari"),
@@ -192,11 +198,11 @@ class Form extends CI_Controller {
                 "rute_uj_engkel"=>str_replace(".","",$this->input->post("rute_uj_engkel")),
                 "rute_uj_tronton"=>str_replace(".","",$this->input->post("rute_uj_tronton")),
                 "rute_tagihan"=>str_replace(".","",$this->input->post("rute_tagihan")),
-                "rute_gaji_engkel"=>str_replace(".","",$this->input->post("rute_gaji_engkel")),
-                "rute_gaji_tronton"=>str_replace(".","",$this->input->post("rute_gaji_tronton")),
-                "rute_tonase"=>str_replace(".","",$this->input->post("Tonase")),
-                "rute_gaji_engkel_rumusan"=>str_replace(".","",$this->input->post("rute_gaji_engkel_rumusan")),
-                "rute_gaji_tronton_rumusan"=>str_replace(".","",$this->input->post("rute_gaji_tronton_rumusan")),
+                "rute_gaji_engkel"=>$rute_gaji_engkel,
+                "rute_gaji_tronton"=>$rute_gaji_tronton,
+                "rute_tonase"=>$tonase,
+                "rute_gaji_engkel_rumusan"=>$rute_gaji_engkel_rumusan,
+                "rute_gaji_tronton_rumusan"=>$rute_gaji_tronton_rumusan,
                 "rute_status_hapus"=>"NO"
             );
             // echo var_dump($data);
@@ -218,7 +224,9 @@ class Form extends CI_Controller {
                 "rute_tagihan"=>str_replace(".","",$this->input->post("rute_tagihan_update")),
                 "rute_gaji_engkel"=>str_replace(".","",$this->input->post("rute_gaji_engkel_update")),
                 "rute_gaji_tronton"=>str_replace(".","",$this->input->post("rute_gaji_tronton_update")),
-                "rute_gaji_rumusan"=>str_replace(".","",$this->input->post("rute_gaji_rumusan_update")),
+                "rute_gaji_engkel_rumusan"=>str_replace(".","",$this->input->post("rute_gaji_engkel_rumusan_update")),
+                "rute_gaji_tronton_rumusan"=>str_replace(".","",$this->input->post("rute_gaji_tronton_rumusan_update")),
+                "rute_tonase"=>str_replace(".","",$this->input->post("rute_tonase_update")),
             );
             // echo var_dump($data);
             $this->model_form->update_rute($data,$this->input->post("rute_id_update"));
@@ -239,7 +247,6 @@ class Form extends CI_Controller {
             $this->session->set_flashdata('status-update-supir', 'Berhasil');
             redirect(base_url("index.php/home/penggajian"));
         }
-
         public function update_truck(){
             $data = array(
                 "mobil_no" => $this->input->post("mobil_no_update"),

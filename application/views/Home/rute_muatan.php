@@ -107,27 +107,27 @@
                             <div class="Tonase" style="display:none">
                                 <div class="form-group">
                                     <label for="Tonase" class="form-label font-weight-bold">Tonase</label>  
-                                    <input autocomplete="off" type="text" class="form-control" id="Tonase" name="Tonase" required>
+                                    <input autocomplete="off" type="text" class="form-control" id="Tonase" name="Tonase">
                                 </div>
                             </div>
                             <div class="Fix" style="display:none">
                                 <div class="form-group">
                                     <label for="rute_gaji_engkel" class="form-label font-weight-bold">Gaji Engkel(FIX)</label>
-                                    <input autocomplete="off" type="text" class="form-control" id="rute_gaji_engkel" name="rute_gaji_engkel" required onkeyup="uang(this)" value='0'>
+                                    <input autocomplete="off" type="text" class="form-control" id="rute_gaji_engkel" name="rute_gaji_engkel" onkeyup="uang(this)">
                                 </div>
                                 <div class="form-group">
                                     <label for="rute_gaji_tronton" class="form-label font-weight-bold">Gaji Tronton(FIX)</label>
-                                    <input autocomplete="off" type="text" class="form-control" id="rute_gaji_tronton" name="rute_gaji_tronton" required onkeyup="uang(this)" value='0'>
+                                    <input autocomplete="off" type="text" class="form-control" id="rute_gaji_tronton" name="rute_gaji_tronton" onkeyup="uang(this)">
                                 </div>
                             </div>
                             <div class="Non-Fix" style="display:none">
                                 <div class="form-group">
                                     <label for="rute_gaji_engkel_rumusan" class="form-label font-weight-bold">Gaji Engkel(Non-FIX)</label>
-                                    <input autocomplete="off" type="text" class="form-control" id="rute_gaji_engkel_rumusan" name="rute_gaji_engkel_rumusan" required onkeyup="uang(this)" value='0'>
+                                    <input autocomplete="off" type="text" class="form-control" id="rute_gaji_engkel_rumusan" name="rute_gaji_engkel_rumusan" onkeyup="uang(this)">
                                 </div>
                                 <div class="form-group">
                                     <label for="rute_gaji_tronton_rumusan" class="form-label font-weight-bold">Gaji Tronton(Non-FIX)</label>
-                                    <input autocomplete="off" type="text" class="form-control" id="rute_gaji_tronton_rumusan" name="rute_gaji_tronton_rumusan" required onkeyup="uang(this)" value='0'>
+                                    <input autocomplete="off" type="text" class="form-control" id="rute_gaji_tronton_rumusan" name="rute_gaji_tronton_rumusan" onkeyup="uang(this)">
                                 </div>
                             </div>
                         </div>
@@ -176,6 +176,12 @@
                                 <label for="rute_muatan_update" class="form-label font-weight-bold ">Muatan</label> 
                                 <input autocomplete="off" type="text" class="form-control" id="rute_muatan_update" name="rute_muatan_update" required>
                             </div>
+                            <div class="rute_tonase_update">
+                                <div class="form-group">
+                                    <label for="rute_tonase_update" class="form-label font-weight-bold">Tonase</label>  
+                                    <input autocomplete="off" type="text" class="form-control" id="rute_tonase_update" name="rute_tonase_update">
+                                </div>
+                            </div>
                         </div>
                         <div class="col border rounded border-secondary mr-3">
                             <small class="font-weight-bold">Detail Uang Jalan (Uj)</small>
@@ -196,19 +202,23 @@
                             </div>
                         </div>
                         <div class="col border rounded border-secondary">
-                            <small class="font-weight-bold">Detail Gaji</small>
+                            <small class="font-weight-bold">Detail Gaji Supir</small>
                             <hr>
                             <div class="form-group">
-                                <label for="rute_gaji_engkel_update" class="form-label font-weight-bold">Gaji Engkel</label>
+                                <label for="rute_gaji_engkel_update" class="form-label font-weight-bold">Gaji Engkel(Fix)</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_gaji_engkel_update" name="rute_gaji_engkel_update" required onkeyup="uang(this)">
                             </div>
                             <div class="form-group">
-                                <label for="rute_gaji_tronton_update" class="form-label font-weight-bold">Gaji Tronton</label>
+                                <label for="rute_gaji_tronton_update" class="form-label font-weight-bold">Gaji Tronton(Fix)</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_gaji_tronton_update" name="rute_gaji_tronton_update" required onkeyup="uang(this)">
                             </div>
                             <div class="form-group">
-                                <label for="rute_gaji_rumusan_update" class="form-label font-weight-bold">Rumusan</label>
-                                <input autocomplete="off" type="text" class="form-control" id="rute_gaji_rumusan_update" name="rute_gaji_rumusan_update" required onkeyup="uang(this)">
+                                <label for="rute_gaji_engkel_rumusan_update" class="form-label font-weight-bold">Gaji Engkel(Non-Fix)</label>
+                                <input autocomplete="off" type="text" class="form-control" id="rute_gaji_engkel_rumusan_update" name="rute_gaji_engkel_rumusan_update" required onkeyup="uang(this)">
+                            </div>
+                            <div class="form-group">
+                                <label for="rute_gaji_tronton_rumusan_update" class="form-label font-weight-bold">Gaji Tronton(Non-Fix)</label>
+                                <input autocomplete="off" type="text" class="form-control" id="rute_gaji_tronton_rumusan_update" name="rute_gaji_tronton_rumusan_update" required onkeyup="uang(this)">
                             </div>
                         </div>
                     </div>
@@ -232,6 +242,8 @@
         $("."+$("#Gaji").val()).show();
         if($("#Gaji").val()=="Non-Fix"){
             $(".Tonase").show();
+        }else{
+            $(".Tonase").hide();
         }
     }
 </script>

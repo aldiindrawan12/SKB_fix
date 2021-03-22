@@ -121,12 +121,12 @@
                             </select>
                         </div> -->
                     </div>
-                     <div class="mb-3 row">
+                     <!-- <div class="mb-3 row">
                         <label class="col-sm-5 col-form-label" for="harga">Harga / Satuan</label>
                         <div class="col-sm-6">
                             <input autocomplete="off" class="form-control" type="text" name="harga" id="harga" onkeyup="uang()" required>
                         </div>
-                    </div>
+                    </div> -->
                      <!-- <div class="mb-3 row">
                         <label class="col-sm-5 col-form-label" for="upah">Upah Supir</label>
                         <div class="col-sm-6">
@@ -134,7 +134,7 @@
                         </div>
                     </div> -->
                     <div class="mb-3 row">
-                        <label class="col-sm-5 col-form-label" for="bonus">Bonus Supir</label>
+                        <label class="col-sm-5 col-form-label" for="bonus">Biaya Lain</label>
                         <div class="col-sm-6">
                             <input autocomplete="off" class="form-control" type="text" name="bonus" id="bonus" onkeyup="uang()" required>
                         </div>
@@ -145,12 +145,12 @@
                             <textarea class="form-control" name="Keterangan" rows="3"></textarea>
                         </div>
                     </div>
-                    <div class="mb-3 row">
+                    <!-- <div class="mb-3 row">
                         <label class="col-sm-5 col-form-label" for="TOD">Batas Waktu Pembayaran Invoice (hari)</label>
                         <div class="col-sm-6">
                             <input autocomplete="off" class="form-control" type="text" name="TOD" id="TOD" required>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="float-right mr-5 px-3 mt-2">
                         <button type="submit" class="btn btn-success">Simpan</button>
                     </div>

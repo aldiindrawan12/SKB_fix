@@ -1653,6 +1653,18 @@
                 autoclose: true,
                 todayHighlight: true,
             });
+            $("#invoice_tgl").datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true
+            });
+            //proses tanggal
+            var date = new Date();
+            if(date.getMonth()<10){
+                $("#invoice_tgl").val(date.getFullYear()+"-0"+date.getMonth()+"-"+date.getDate());
+            }else{
+                $("#invoice_tgl").val(date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate());
+            }
         });
     </script>
     <script>

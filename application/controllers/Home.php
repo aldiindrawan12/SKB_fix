@@ -395,6 +395,7 @@ class Home extends CI_Controller {
             $data["page"] = "Invoice_page";
             $data["collapse_group"] = "Perintah_Kerja";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            $data["customer"] = $this->model_home->getcustomer();
             if(json_decode($data["akun_akses"]["akun_akses"])[1]==0){
                 redirect(base_url());
             }

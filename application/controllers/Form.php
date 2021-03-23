@@ -98,6 +98,7 @@ class Form extends CI_Controller {
             $this->model_form->insert_bon($data["data"]);
             $data["supir"] = $this->model_home->getsupirbyid($data["data"]["supir_id"]);
             $data["asal"] = "insert";
+            $data["data_jo"] = array("Jo_id"=>"0");
             $this->load->view("print/bon_print",$data);
         }
 

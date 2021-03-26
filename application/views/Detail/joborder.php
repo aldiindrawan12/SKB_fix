@@ -4,10 +4,33 @@
         <h6 class="m-0 font-weight-bold text-primary">Detail Job Order</h6>
     </div>
     <div class="card-body">
+            <div class="container ">
+            <div class="float-right mb-3">
+            <?php if($jo["status"]=="Dalam Perjalanan"){?>                    
+                        <a class='btn btn-outline-danger btn-sm mr-2 ' href='<?= base_url("index.php/detail/updatejobatal/").$jo["Jo_id"]?>' id="">
+                            <span>Batalkan Perjalanan JO</span>
+                        </a>
+                        <a class='btn btn-success btn-sm ' data-toggle='modal' data-target='#popup-status-jo' href='' id="<?php echo $jo["Jo_id"] ?>" onclick="datajo(this,<?php echo $jo['supir_id'] ?>,'<?php echo $jo['mobil_no'] ?>')">
+                            <span class>Konfirmasi Sampai</span>
+                        </a>
+                        
+                <?php }?></div>
+
+                <div class="float-left mb-3">
+                <?php if($jo["status"]=="Dalam Perjalanan"){?>                    
+                            <a class='btn btn-outline-primary btn-sm ' href='<?= base_url("index.php/print_berkas/uang_jalan/").$jo["Jo_id"]?>' id="">
+                                <span>Cetak Bukti Uang Jalan</span>
+                            </a>
+                    <?php }?></div>
+
+                
+            </div>
+                    
+
         <!-- tampilan detail jo -->
         <div class="container" id="detail-jo">
             <table class="table table-bordered">
-                <tbody>
+                <tbody>         
                     <tr>
                         <td class="d-none d-sm-table-cell text-center " rowspan="16" style="width: 15%;">
                             <p class="badge badge-info">Customer</p>
@@ -65,21 +88,9 @@
                         <td class="font-weight-bold" style="width: 20%;">Catatan/Keterangan</td>
                         <td colspan=3><?= $jo["keterangan"]?></td>
                     </tr>
-                    <?php if($jo["status"]=="Dalam Perjalanan"){?>
-                    <tr>
-                        <td colspan=3>
-                            <a class='btn btn-primary text-light' data-toggle='modal' data-target='#popup-status-jo' href='' id="<?php echo $jo["Jo_id"] ?>" onclick="datajo(this,<?php echo $jo['supir_id'] ?>,'<?php echo $jo['mobil_no'] ?>')">
-                                <span>Konfirmasi Sampai</span>
-                            </a>
-                            <a class='btn btn-primary text-light' href='<?= base_url("index.php/detail/updatejobatal/").$jo["Jo_id"]?>' id="">
-                                <span>Batalkan Perjalanan JO</span>
-                            </a>
-                            <a class='btn btn-primary text-light' href='<?= base_url("index.php/print_berkas/uang_jalan/").$jo["Jo_id"]?>' id="">
-                                <span>Cetak Bukti Uang Jalan</span>
-                            </a>
-                        </td>
-                    </tr>
-                    <?php }?>
+
+                    
+
                 </tbody>
             </table>
         </div>
@@ -90,7 +101,7 @@
 
 
 <!-- pop up update status jo -->
-<div class="modal fade" id="popup-status-jo" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<div class="modal fade mt-4 py-5" id="popup-status-jo" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">

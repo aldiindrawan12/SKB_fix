@@ -30,6 +30,43 @@ class Home extends CI_Controller {
             $this->load->view('footer');
         }
 
+        public function konfirmasi_jo()
+        {
+            if(!$_SESSION["user"]){
+    			$this->session->set_flashdata('status-login', 'False');
+                redirect(base_url());
+            }
+            $data["page"] = "Konfirmasi_JO_page";
+            $data["collapse_group"] = "Perintah_Kerja";
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            if(json_decode($data["akun_akses"]["akun_akses"])[1]==0){
+                redirect(base_url());
+            }
+            $this->load->view('header',$data);
+            $this->load->view('sidebar');
+            $this->load->view('home/konfirmasi_jo');
+            $this->load->view('footer');
+        }
+
+        public function view_konfirmasi_JO(){
+            $search = $_POST['search']['value'];
+            $order_index = $_POST['order'][0]['column'];
+            $order_field = $_POST['columns'][$order_index]['data'];
+            $order_ascdesc = $_POST['order'][0]['dir'];
+            $sql_total = $this->model_home->count_all_konfirmasi_JO();
+            $sql_data = $this->model_home->filter_konfirmasi_JO($search,$order_field, $order_ascdesc);
+            $sql_filter = $this->model_home->count_filter_konfirmasi_JO($search);
+            $callback = array(
+                'draw' => $_POST['draw'],
+                'recordsTotal' => $sql_total,
+                'recordsFiltered' => $sql_filter,
+                'data' => $sql_data
+            );
+
+            header('Content-Type: application/json');
+            echo json_encode($callback);
+        }
+
         public function view_JO(){
             $search = $_POST['search']['value'];
             $status = $this->input->post('status_JO');

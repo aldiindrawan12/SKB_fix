@@ -108,25 +108,11 @@
                         <div class="col-sm-6">
                             <input autocomplete="off" class="form-control" type="text" name="tonase" id="tonase" onkeyup="uang()" required>    
                         </div>
-                        <!-- <div class="col-sm-3">
-                            <select name="satuan" id="satuan" class="form-control custom-select" required>
-                                <option class="font-w700" disabled="disabled" selected value="">Jenis Satuan</option>
-                                <?php foreach($satuan as $value){?>
-                                    <option value="<?= $value["satuan_simbol"]?>"><?= $value["satuan_name"]?></option>
-                                <?php }?>
-                            </select>
-                        </div> -->
                     </div>
                      <!-- <div class="mb-3 row">
                         <label class="col-sm-5 col-form-label" for="harga">Harga / Satuan</label>
                         <div class="col-sm-6">
                             <input autocomplete="off" class="form-control" type="text" name="harga" id="harga" onkeyup="uang()" required>
-                        </div>
-                    </div> -->
-                     <!-- <div class="mb-3 row">
-                        <label class="col-sm-5 col-form-label" for="upah">Upah Supir</label>
-                        <div class="col-sm-6">
-                            <input autocomplete="off" class="form-control" type="text" name="upah" id="upah" onkeyup="uang()" required>
                         </div>
                     </div> -->
                     <div class="mb-3 row">
@@ -141,12 +127,6 @@
                             <textarea class="form-control" name="Keterangan" rows="3"></textarea>
                         </div>
                     </div>
-                    <!-- <div class="mb-3 row">
-                        <label class="col-sm-5 col-form-label" for="TOD">Batas Waktu Pembayaran Invoice (hari)</label>
-                        <div class="col-sm-6">
-                            <input autocomplete="off" class="form-control" type="text" name="TOD" id="TOD" required>
-                        </div>
-                    </div> -->
                     <div class="float-right mr-5 px-3 mt-2">
                         <button type="submit" class="btn btn-success">Simpan</button>
                     </div>

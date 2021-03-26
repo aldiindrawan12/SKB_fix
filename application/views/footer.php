@@ -273,6 +273,74 @@
     <!-- end JO -->
 
     <!-- JO -->
+    <script> //script datatables job order
+        $(document).ready(function() {
+            var table = null;
+            table = $('#Table-Konfirmasi-Job-Order').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ordering": true,
+                "order": [
+                    [0, 'asc']
+                ],
+                "ajax": {
+                    "url": "<?php echo base_url('index.php/home/view_konfirmasi_JO/') ?>",
+                    "type": "POST"
+                },
+                "deferRender": true,
+                "paging":false,
+                "columns": [
+                    {
+                        "data": "Jo_id",
+                        className: 'text-center'
+                    },
+                    {
+                        "data": "customer_name"
+                    },
+                    {
+                        "data": "muatan"
+                    },
+                    {
+                        "data": "asal"
+                    },
+                    {
+                        "data": "tujuan"
+                    },
+                    {
+                        "data": "tanggal_surat"
+                    },
+                    {
+                        "data": "status",
+                        className: 'text-center',
+                            render: function(data, type, row) {
+                                    let html = "<a class='btn btn-warning btn-update-jo' data-pk='"+row['Jo_id']+"' data-toggle='modal' data-target='#update_jo' ><i class='fa fa-fw fa-exclamation-circle mr-2'></i>" + data + "</a>";
+                                    return html;
+                            }
+                    },
+                ],
+                drawCallback: function() {
+                    $('.btn-update-jo').click(function() {
+                        let pk = $(this).data('pk');
+                        $('#jo_id').val(pk); //set value
+                        $.ajax({ //ajax ambil data bon
+                            type: "GET",
+                            url: "<?php echo base_url('index.php/detail/getjo') ?>",
+                            dataType: "JSON",
+                            data: {
+                                id: pk
+                            },
+                            success: function(data) { //jika ambil data sukses
+                                $("#form_update_jo").attr('action','<?php echo base_url("index.php/form/update_jo_status/")?>'+data['supir_id']+'/'+data['mobil_no'])
+                            }
+                        });
+                    });
+                },
+            });
+        });
+    </script>
+    <!-- end JO -->
+
+    <!-- JO -->
     <script> //script datatables laporan job order
         $(document).ready(function() {
             var table = null;

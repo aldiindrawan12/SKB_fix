@@ -447,6 +447,22 @@ class Form extends CI_Controller {
             $this->model_form->update_konfigurasi($akun_id,$data_konfigurasi);
             redirect(base_url("index.php/home/akun"));
         }
+
+        public function update_jo_status($supir,$mobil){
+            $data_jo = $this->model_home->getjobyid($this->input->post("jo_id"));
+            $keterangan = "<strong>Catatan JO : </strong>".$data_jo["keterangan"]."<br><strong>Catatan Konfirmasi : </strong>".$this->input->post("Keterangan");
+            $data = array(
+                "jo_id" => $this->input->post("jo_id"),
+                "status" => $this->input->post("status"),
+                "tonase"=>$this->input->post("tonase"),
+                "bonus"=>str_replace(".","",$this->input->post("bonus")),
+                "keterangan"=>$keterangan,
+                "tanggal_bongkar"=>date('Y-m-d'),
+            );
+            // echo var_dump($data);
+            $this->model_form->update_jo_status($data,$supir,$mobil);
+            redirect(base_url("index.php/home/konfirmasi_jo"));
+        }
     //end fungsi lain
 
     // fungsi form joborder

@@ -50,6 +50,24 @@ class Model_Form extends CI_model
         return $this->db->insert("skb_job_order", $data);
     }
 
+    public function update_jo_status($data,$supir,$mobil){
+        $this->db->set("tonase",$data["tonase"]);
+        $this->db->set("bonus",$data["bonus"]);
+        $this->db->set("keterangan",$data["keterangan"]);
+        $this->db->set("status",$data["status"]);
+        $this->db->set("tanggal_bongkar",$data["tanggal_bongkar"]);
+        $this->db->where("Jo_id",$data["jo_id"]);
+        $this->db->update("skb_job_order");
+
+        $this->db->set("status_jalan","Tidak Jalan");
+        $this->db->where("supir_id",$supir);
+        $this->db->update("skb_supir");
+
+        $this->db->set("status_jalan","Tidak Jalan");
+        $this->db->where("mobil_no",str_replace("%20"," ",$mobil));
+        $this->db->update("skb_mobil");
+    }
+
     public function insert_invoice($data,$data_jo){
         for($i=0;$i<count($data_jo);$i++){
             $this->db->set("invoice_id",$data["invoice_kode"]);

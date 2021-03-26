@@ -60,6 +60,10 @@
                             <i class="fas fa-envelope-open-text "></i>
                             <span id="coba">Job Order</span>
                         </a>
+                        <a class="collapse-item" id="Konfirmasi_JO_page" href="<?=base_url("index.php/home/konfirmasi_jo")?>">
+                            <i class="fas fa-envelope-open-text "></i>
+                            <span id="coba">Konfirmasi Job Order</span>
+                        </a>
                         <a class="collapse-item" id="Invoice_page" href="<?=base_url("index.php/home/invoice")?>">   
                             <i class="fas fa-receipt mr-2"></i>
                             <span>Invoice</span>

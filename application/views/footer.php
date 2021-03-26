@@ -1672,6 +1672,7 @@
             // alert(a.id);
             Swal.fire({
                 title: "Loading",
+                icon: "success",
                 text: "Mohon Tunggu Sebentar",
                 type: "success",
                 timer: 500
@@ -1686,6 +1687,7 @@
             // alert(a.id);
             Swal.fire({
                 title: "Loading",
+                icon: "success",
                 text: "Mohon Tunggu Sebentar",
                 type: "success",
                 timer: 500

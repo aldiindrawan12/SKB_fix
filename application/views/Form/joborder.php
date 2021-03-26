@@ -10,7 +10,7 @@
             <div class="card-body">
                 <!-- form Job Order Baru -->
                 <form action="<?=base_url("index.php/form/insert_JO")?>" method="POST" class="row">
-                    <div class="col-md-3 col-md-offset-4">
+                    <div class="col-md-4 col-md-offset-4 mb-4">
                         <label class="form-label font-weight-bold " for="Customer">Customer</label>
                         <select name="Customer" id="Customer" class="form-control selectpicker mb-4" data-live-search="true" required onchange="customer()">
                             <?php if(count($customer_by_name)==0){?>
@@ -23,20 +23,20 @@
                             <?php } ?>
                         </select>
                     </div>
-                    <div class="col-md-3 col-md-offset-4">
+                    <div class="col-md-4 col-md-offset-4 mb-4">
                         <label for="Muatan" class="form-label font-weight-bold ">Muatan</label> 
                         <select name="Muatan" id="Muatan" class="form-control mb-4" required onchange="muatan()">
                             <option class="font-w700" disabled="disabled" selected value="">Muatan</option>
                         </select>
                     </div>
                     
-                    <div class="col-md-3 col-md-offset-4 mb-4">
+                    <div class="col-md-4 col-md-offset-4 mb-4 mb-4">
                         <label class="form-label font-weight-bold" for="Asal ">Asal</label>
                         <select name="Asal" id="Asal" class="form-control mb-4" required onchange="asal()">
                             <option class="font-w700" disabled="disabled" selected value="">Asal</option>
                         </select>
                     </div>
-                    <div class="col-md-3 col-md-offset-4 mb-4">
+                    <div class="col-md-4 col-md-offset-4 mb-4 mb-4">
                         <label class="form-label font-weight-bold" for="Tujuan">Tujuan</label>
                         <select name="Tujuan" id="Tujuan" class="form-control mb-4" required onchange="tujuan()">
                             <option class="font-w700" disabled="disabled" selected value="">Tujuan</option>
@@ -53,31 +53,22 @@
                             } ?>
                         </select>
                     </div>
+
                     <div class="col-md-4 col-md-offset-4 mb-4">
                         <label class="form-label font-weight-bold" for="Jenis">Jenis Mobil</label>
                         <select name="Jenis" id="Jenis" class="form-control mb-4" required onchange="jenis()">
                             <option class="font-w700 mb-4" disabled="disabled" selected value="">Jenis Mobil</option>
                         </select>
                     </div>
+
                     <div class="col-md-4 col-md-offset-4 mb-4">
                         <label class="form-label font-weight-bold " for="Kendaraan">Kendaraan</label>
                         <select name="Kendaraan" id="Kendaraan" class="form-control mb-4" required>
                             <option class="font-w700 font-weight-bold mb-4" disabled="disabled" selected value="">Kendaraan Pengiriman</option>
                         </select>
                     </div>
+                    
                     <div class="col-md-4 col-md-offset-4 mb-4">
-                        <label for="Uang" class="form-label font-weight-bold">Uang Jalan</label>
-                        <input autocomplete="off" type="text" class="form-control" id="Uang" name="Uang" required readonly>
-                    </div>
-                    <div class="col-md-4 col-md-offset-4 mb-4">
-                        <label for="Terbilang" class="form-label font-weight-bold">Terbilang</label>
-                        <input autocomplete="off" type="text" class="form-control" id="Terbilang" name="Terbilang" required readonly>
-                    </div>
-                    <div class="col-md-4 col-md-offset-4">
-                        <label for="Keterangan" class="form-label font-weight-bold">Keterangan/Catatan</label>
-                        <textarea class="form-control" name="Keterangan" id="Keterangan" rows="3"></textarea>
-                    </div>
-                    <div class="col-md-5 col-md-offset-4 mb-4">
                         <label class="form-label font-weight-bold" for="Type_Tonase">Tipe Tonase</label>
                         <select name="Type_Tonase" id="Type_Tonase" class="form-control" required onchange="tonase()">
                             <option class="font-w700" disabled="disabled" selected value="">Tipe Tonase</option>
@@ -85,14 +76,32 @@
                             <option class="font-w700" value="Non-Fix">Non-Fix</option>
                         </select>
                     </div>
-                    <div class="col-md-5 col-md-offset-4 mb-4 Tonase" style="display:none">
+
+                    <div class="col-md-4 col-md-offset-4 mb-4 Tonase" style="display:none">
                         <label class="form-label font-weight-bold" for="Tonase">Tonase</label>
                         <select name="Tonase" id="Tonase" class="form-control mb-4" onchange="tonase_non_fix()">
                             <option class="font-w700" disabled="disabled" selected value="">Tonase</option>
                         </select>
                     </div>
+
+                   
+                    <div class="col-md-4 col-md-offset-4 mb-4">
+                        <label for="Uang" class="form-label font-weight-bold">Uang Jalan</label>
+                        <input autocomplete="off" type="text" class="form-control" id="Uang" name="Uang" required readonly>
+                    </div>
+
+                    <div class="col-md-4 col-md-offset-4 ">
+                        <label for="Terbilang" class="form-label font-weight-bold">Terbilang</label>
+                        <input autocomplete="off" type="text" class="form-control" id="Terbilang" name="Terbilang" required readonly>
+                    </div>
+
+                    <div class="col-md-4 col-md-offset-4 ">
+                        <label for="Keterangan" class="form-label font-weight-bold">Keterangan/Catatan</label>
+                        <textarea class="form-control" name="Keterangan" id="Keterangan" rows="3"></textarea>
+                    </div>
+
                     <input autocomplete="off" type="text" class="form-control" id="Upah" name="Upah" required hidden>
-                    <div class="col-md-12 col-md-offset-4 mt-5">
+                    <div class="col-md-12 col-md-offset-4 ">
                         <button type="submit" class="btn btn-success ml-3 mt-5 float-md-right">Simpan dan Cetak</button>
                         <button type="reset" class="btn btn-outline-danger mb-3 mt-5  float-md-right" onclick="reset_form()">Reset</button>
                     </div>

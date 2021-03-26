@@ -5,7 +5,7 @@
     </div>
     <div class="card-body">
             <div class="container ">
-            <div class="float-right mb-3">
+            <!-- <div class="float-right mb-3">
             <?php if($jo["status"]=="Dalam Perjalanan"){?>                    
                         <a class='btn btn-outline-danger btn-sm mr-2 ' href='<?= base_url("index.php/detail/updatejobatal/").$jo["Jo_id"]?>' id="">
                             <span>Batalkan Perjalanan JO</span>
@@ -14,11 +14,11 @@
                             <span class>Konfirmasi Sampai</span>
                         </a>
                         
-                <?php }?></div>
+                <?php }?></div> -->
 
-                <div class="float-left mb-3">
+                <div class="float-right mb-3">
                 <?php if($jo["status"]=="Dalam Perjalanan"){?>                    
-                            <a class='btn btn-outline-primary btn-sm ' href='<?= base_url("index.php/print_berkas/uang_jalan/").$jo["Jo_id"]?>' id="">
+                            <a class='btn btn-primary btn-sm ' href='<?= base_url("index.php/print_berkas/uang_jalan/").$jo["Jo_id"]?>' id="">
                                 <span>Cetak Bukti Uang Jalan</span>
                             </a>
                     <?php }?></div>

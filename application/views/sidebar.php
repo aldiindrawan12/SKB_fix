@@ -61,7 +61,7 @@
                             <span id="coba">Job Order</span>
                         </a>
                         <a class="collapse-item" id="Konfirmasi_JO_page" href="<?=base_url("index.php/home/konfirmasi_jo")?>">
-                            <i class="fas fa-envelope-open-text "></i>
+                            <i class="fas fa-info-circle "></i>
                             <span id="coba">Konfirmasi Job Order</span>
                         </a>
                         <a class="collapse-item" id="Invoice_page" href="<?=base_url("index.php/home/invoice")?>">   

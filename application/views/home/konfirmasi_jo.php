@@ -45,7 +45,7 @@
                     <div class="col ">
                         <form id="form_update_jo" method="POST">
                             <input type="text" name="jo_id" id="jo_id" hidden>
-                            <div class="form-group">
+                            <div class="form-group font-weight-bold">
                                 <label for="tonase" class="form-label">Muatan akhir</label>
                                 <input autocomplete="off" class="form-control" type="text" name="tonase" id="tonase" onkeyup="uang()" required>    
                             </div>
@@ -53,25 +53,28 @@
                                 <label class="form-label" for="harga">Harga / Satuan</label>
                                 <input autocomplete="off" class="form-control" type="text" name="harga" id="harga" onkeyup="uang()" required>
                             </div> -->
-                            <div class="form-group">
+                            <div class="form-group font-weight-bold">
                                 <label class="form-label" for="bonus">Biaya Lain</label>
                                 <input autocomplete="off" class="form-control" type="text" name="bonus" id="bonus" onkeyup="uang()" required>
                             </div>
-                            <div class="form-group">
-                                <label class="form-label" for="Keterangan" class="form-label">Keterangan/Catatan Tambahan</label>
-                                <textarea class="form-control" name="Keterangan" rows="3"></textarea>
-                            </div>
-                            <div class="form-group">
+                            
+                            <div class="form-group font-weight-bold">
+                            <label class="form-label" for="Keterangan" class="form-label">Status Job Order</label>
                                 <select name="status" id="status" class="form-control custom-select " required>
-                                    <option class="font-w700" disabled="disabled" selected value="">Status JO</option>
+                                    <option class="font-w700" disabled="disabled" selected value="">Pilih Status</option>
                                     <option value="Sampai Tujuan">Sampai Tujuan</option>
                                     <option value="Dibatalkan">Dibatalkan</option>
                                 </select>
                             </div>
+                            <div class="form-group font-weight-bold">
+                                <label class="form-label" for="Keterangan" class="form-label">Keterangan/Catatan Tambahan</label>
+                                <textarea class="form-control" name="Keterangan" rows="3"></textarea>
+                            </div>
                     </div>
                 </div>
-                <div class="form-group mt-3 mr-2 px-1">
+                <div class="form-group mb-2 ">
                     <button type="submit" class="btn btn-success float-right mb-3">Simpan</button>
+                    <button type="reset" class="btn btn-outline-danger mr-3 float-md-right" onclick="reset_form()">Reset</button>
                 </div>
                 </form>
             </div>

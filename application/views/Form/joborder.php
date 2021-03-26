@@ -1,6 +1,6 @@
 <div class="container">
-    <div class="d-sm-flex align-items-center justify-content-between mb-5">
-        <h1 class="h3 mb-0 text-gray-800 mt-3 mb-3">Formulir Job Order</h1>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800 mt-3 ">Buat Job Order</h1>
     </div> 
         <!-- Card Formulir JO -->
         <div class="card shadow mb-4">

@@ -45,9 +45,45 @@ class Form extends CI_Controller {
             $this->load->view('form/form_bon',$data);
             $this->load->view('footer');
         }
+
+        public function view_pilih_jo(){
+            $customer_id = $this->input->post("customer");
+            $order_index = $_POST['order'][0]['column'];
+            $order_field = $_POST['columns'][$order_index]['data'];
+            $order_ascdesc = $_POST['order'][0]['dir'];
+            $sql_total = $this->model_form->count_all_jo($customer_id);
+            $sql_data = $this->model_form->filter_jo($order_field, $order_ascdesc,$customer_id);
+            $sql_filter = $this->model_form->count_filter_jo($customer_id);
+            $callback = array(
+                'draw' => $_POST['draw'],
+                'recordsTotal' => $sql_total,
+                'recordsFiltered' => $sql_filter,
+                'data' => $sql_data
+            );
+
+            header('Content-Type: application/json');
+            echo json_encode($callback);
+        }
     // end fungsi view form
 
     // fungsi insert
+        public function insert_invoice(){
+            $data=array(
+                "customer_id"=>$this->input->post("customer_id"),
+                "invoice_kode"=>$this->input->post("invoice_id1").$this->input->post("invoice_id2").$this->input->post("invoice_id3"),
+                "tanggal_invoice"=>$this->input->post("invoice_tgl"),
+                "total_tonase"=>$this->input->post("invoice_tonase"),
+                "total"=>$this->input->post("invoice_total"),
+                "ppn"=>$this->input->post("invoice_ppn_nilai"),
+                "grand_total"=>$this->input->post("invoice_grand_total"),
+                "batas_pembayaran"=>$this->input->post("invoice_payment"),
+                "invoice_keterangan"=>$this->input->post("invoice_keterangan"),
+                "status_bayar"=>"Belum Lunas"
+            );
+            $data_jo = explode(",",$this->input->post("data_jo"));
+            $this->model_form->insert_invoice($data,$data_jo);
+            redirect(base_url());
+        }
         public function insert_JO(){
             $jo_id = $this->model_form->getjoid();
             $isi_jo_id = [];

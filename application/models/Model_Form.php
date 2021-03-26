@@ -50,6 +50,16 @@ class Model_Form extends CI_model
         return $this->db->insert("skb_job_order", $data);
     }
 
+    public function insert_invoice($data,$data_jo){
+        for($i=0;$i<count($data_jo);$i++){
+            $this->db->set("invoice_id",$data["invoice_kode"]);
+            $this->db->where("Jo_id",$data_jo[$i]);
+            $this->db->update("skb_job_order");
+        }
+
+        return $this->db->insert("skb_invoice", $data);
+    }
+
     public function insert_bon($data){
         $supir=$this->db->get_where("skb_supir",array("supir_id"=>$data["supir_id"]))->row_array();
         if($data["bon_jenis"]=="Pengajuan"){
@@ -255,4 +265,29 @@ class Model_Form extends CI_model
             return $this->db->get("skb_rute")->result_array();
         }
     // end fungsi untuk form joborder
+
+    public function count_all_jo($customer_id)
+    {
+        $this->db->where("customer_id",$customer_id);
+        $this->db->where("status","Sampai Tujuan");
+        $this->db->where("invoice_id","");
+        return $this->db->count_all_results("skb_job_order");
+    }
+
+    public function filter_jo($order_field, $order_ascdesc,$customer_id)
+    {
+        $this->db->where("customer_id",$customer_id);
+        $this->db->where("status","Sampai Tujuan");
+        $this->db->where("invoice_id","");
+        $this->db->order_by($order_field, $order_ascdesc);
+        return $this->db->get('skb_job_order')->result_array();
+    }
+
+    public function count_filter_jo($customer_id)
+    {
+        $this->db->where("customer_id",$customer_id);
+        $this->db->where("status","Sampai Tujuan");
+        $this->db->where("invoice_id","");
+        return $this->db->get('skb_job_order')->num_rows();
+    }
 }

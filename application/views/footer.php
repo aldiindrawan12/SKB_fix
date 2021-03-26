@@ -1697,6 +1697,135 @@
             });
         }
     </script>
+    <script>
+        $(document).ready(function() {
+            var table = null;
+            table = $('#pilih-jo').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ordering": true,
+                "order": [
+                    [0, 'asc']
+                ],
+                "ajax": {
+                    "url": "<?php echo base_url('index.php/form/view_pilih_jo') ?>",
+                    "type": "POST",
+                    'data': function(data) {
+                        data.customer = $('#customer_id').val();
+                    }
+                },
+                "searching":false,
+                "paging":false,
+                "deferRender": true,
+                "columns": [
+                    {
+                        "data": "asal"
+                    },
+                    {
+                        "data": "tujuan"
+                    },
+                    {
+                        "data": "muatan"
+                    },{
+                        "data": "tanggal_surat"
+                    },{
+                        "data": "tanggal_bongkar"
+                    },{
+                        "data": "tonase"
+                    },{
+                        "data": "harga",
+                    },{
+                        "data": "tonase",
+                        render: function(data, type, row) {
+                            var total = data*row["harga"];
+                            let html = "Rp."+rupiah(total);
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "Jo_id",
+                        className: 'text-center font-weight-bold',
+                        "orderable": false,
+                        render: function(data, type, row) {
+                            let html = "<input class='btn-check-invoice' data-pk='"+data+"' data-toggle='toggle' type='checkbox' data-size='medium' data-onstyle='success' data-offstyle='danger'>";
+                            return html;
+                        }
+                    }
+                ],   
+                drawCallback: function() {
+                    var data_jo = [];
+                    $(".btn-check-invoice").click(function() {
+                        let pk = $(this).data('pk');
+                        if(data_jo.includes(pk)!=true){
+                            data_jo.push(pk);
+                        }else{
+                            data_jo.splice(data_jo.indexOf(pk), 1 );
+                        }
+                        // alert(data_jo);
+                        $("#data_jo").val(data_jo);
+                        $.ajax({
+                            type: "GET",
+                            url: "<?php echo base_url('index.php/detail/getjo') ?>",
+                            dataType: "JSON",
+                            data: {
+                                id: pk
+                            },
+                            success: function(data) { //jika ambil data sukses
+                                if(data_jo.includes(pk)==true){
+                                    if($("#invoice_tonase").val()=="" || $("#invoice_tonase").val()=="0"){
+                                        var tonase = parseInt(data["tonase"]);
+                                        var total = parseInt(data["tonase"])*parseInt(data["harga"]);
+                                    }else{
+                                        var tonase = parseInt($("#invoice_tonase").val())+parseInt(data["tonase"]);
+                                        var total = parseInt($("#invoice_total").val())+(parseInt(data["tonase"])*parseInt(data["harga"]));
+                                    }
+                                    if($("#invoice_ppn").val()=="Ya"){
+                                        var ppn = total*0.1;
+                                    }else{
+                                        var ppn = 0;
+                                    }
+                                    var grand_total=total+ppn;
+                                    $("#invoice_tonase").val(tonase);
+                                    $("#invoice_total").val(total);
+                                    $("#invoice_ppn_nilai").val(ppn);
+                                    $("#invoice_grand_total").val(grand_total);
+                                }else{
+                                    var tonase = parseInt($("#invoice_tonase").val())-parseInt(data["tonase"]);
+                                    var total = parseInt($("#invoice_total").val())-(parseInt(data["tonase"])*parseInt(data["harga"]));
+                                    $("#invoice_tonase").val(tonase);
+                                    $("#invoice_total").val(total);
+                                    if($("#invoice_ppn").val()=="Ya"){
+                                        var ppn = total*0.1;
+                                    }else{
+                                        var ppn = 0;
+                                    }
+                                    var grand_total=total+ppn;
+                                    $("#invoice_ppn_nilai").val(ppn);
+                                    $("#invoice_grand_total").val(grand_total);
+                                }
+                            }
+                        });
+                    });
+                }
+            });
+            $("#customer_id").change(function() {
+                table.ajax.reload();
+            });
+            $("#invoice_ppn").change(function() {
+                var total = $("#invoice_total").val();
+                if(total!=""){
+                    if($("#invoice_ppn").val()=="Ya"){
+                        var ppn=total*0.1;
+                    }else{
+                        var ppn=0;
+                    }
+                    var grand_total=parseInt(total)+parseInt(ppn);
+                    $("#invoice_ppn_nilai").val(ppn);
+                    $("#invoice_grand_total").val(grand_total);
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

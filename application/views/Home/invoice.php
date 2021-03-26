@@ -2,10 +2,10 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800 mt-3 mb-3">Tambah Invoice</h1>
     </div> 
-    <div class="card shadow mb-4">
-    <!-- tabel invoice -->
+    <div class="card shadow">
+    <!-- form invoice -->
     <div class="card-body">
-        <form action="<?=base_url("index.php/form/insert_JO")?>" method="POST">
+        <form action="<?=base_url("index.php/form/insert_invoice")?>" method="POST">
             <div class="row">
                 <div class="col-md-5 border rounded border-secondary">
                     <div class="form-group">
@@ -41,7 +41,7 @@
                 <div class="col-md-4 border rounded border-secondary">
                     <div class="form-group">
                         <label for="invoice_keterangan" class="form-label font-weight-bold">Keterangan</label>
-                        <textarea class="form-control" name="invoice_keterangan" id="invoice_keterangan" rows="1"></textarea>
+                        <textarea class="form-control" name="invoice_keterangan" id="invoice_keterangan" rows="1" required></textarea>
                     </div>
                     <div class="form-group row">
                         <label for="invoice_tonase" class="col-form-label col-sm-5 font-weight-bold">Total Tonase</label>
@@ -58,7 +58,7 @@
                     <div class="form-group row">
                         <label for="invoice_ppn" class="col-form-label col-sm-5 font-weight-bold">PPN</label>
                         <div class="col-sm-7">
-                            <input autocomplete="off" type="text" class="form-control" id="invoice_ppn" name="invoice_ppn" required readonly>
+                            <input autocomplete="off" type="text" class="form-control" id="invoice_ppn_nilai" name="invoice_ppn_nilai" required readonly>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -73,15 +73,35 @@
                         <label class="form-label font-weight-bold " for="invoice_payment">Payment (hari)</label>
                         <input autocomplete="off" type="text" class="form-control" id="invoice_payment" name="invoice_payment" required>
                     </div>
+                    <input type="text" id="data_jo" name="data_jo" readonly hidden>
                 </div>
             </div>
-            <div class="col-md-12 col-md-offset-4 mt-5">
-                <button type="submit" class="btn btn-success ml-3 mt-5 float-md-right">Simpan dan Cetak</button>
-                <button type="reset" class="btn btn-outline-danger mb-3 mt-5  float-md-right" onclick="reset_form()">Reset</button>
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-success ml-3 mt-5 float-md-right">Simpan</button>
             </div>
         </form>
+    
+        <div class="table-responsive">
+            <table class="table table-bordered" id="pilih-jo" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th class="text-center" width="" scope="col">Dari</th>
+                        <th class="text-center" width="" scope="col">Ke</th>
+                        <th class="text-center" width="" scope="col">Muatan</th>
+                        <th class="text-center" width="" scope="col">Tgl.Brgkt</th>
+                        <th class="text-center" width="" scope="col">Tgl.Plng</th>
+                        <th class="text-center" width="" scope="col">Tonase</th>
+                        <th class="text-center" width="" scope="col">Harga</th>
+                        <th class="text-center" width="" scope="col">Total</th>
+                        <th class="text-center" width="" scope="col">Pilih</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <!-- end tabel invoice -->
+    <!-- end form invoice -->
 </div>
 
 </div>
@@ -90,6 +110,10 @@
         var nama_customer = $("#customer_id option:selected").text();
         var date = new Date();
         $("#invoice_id2").val("/"+nama_customer);
-        $("#invoice_id3").val("/"+date.getMonth()+"/"+date.getFullYear());
+        if(date.getMonth()<10){
+            $("#invoice_id3").val("/0"+date.getMonth()+"/"+date.getFullYear());
+        }else{
+            $("#invoice_id3").val("/"+date.getMonth()+"/"+date.getFullYear());
+        }
     }
 </script>

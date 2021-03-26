@@ -52,8 +52,9 @@ class Detail extends CI_Controller {
     			$this->session->set_flashdata('status-login', 'False');
                 redirect(base_url());
             }
-            $data["invoice"] = $this->model_detail->getinvoicebyid($invoice_id);
-            $data["customer"] = $this->model_home->getcustomerbyid($data["invoice"]["customer_id"]);
+            $data["invoice"] = $this->model_detail->getinvoicebyid(str_replace("%20"," ",$invoice_id));
+            // echo var_dump($data["invoice"][0]);
+            $data["customer"] = $this->model_home->getcustomerbyid($data["invoice"][0]["customer_id"]);
             if($asal=="Customer"){
                 $data["page"] = "Customer_page";
                 $data["collapse_group"] = "Master_Data";

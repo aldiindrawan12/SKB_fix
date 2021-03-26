@@ -109,11 +109,11 @@
     function customer(){
         var nama_customer = $("#customer_id option:selected").text();
         var date = new Date();
-        $("#invoice_id2").val("/"+nama_customer);
+        $("#invoice_id2").val("-"+nama_customer);
         if(date.getMonth()<10){
-            $("#invoice_id3").val("/0"+date.getMonth()+"/"+date.getFullYear());
+            $("#invoice_id3").val("-0"+date.getMonth()+"-"+date.getFullYear());
         }else{
-            $("#invoice_id3").val("/"+date.getMonth()+"/"+date.getFullYear());
+            $("#invoice_id3").val("-"+date.getMonth()+"-"+date.getFullYear());
         }
     }
 </script>

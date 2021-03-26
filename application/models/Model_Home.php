@@ -518,4 +518,53 @@ class Model_Home extends CI_model
         }
     // end Function Invoice
 
+    //function-fiunction datatable JO
+        public function count_all_konfirmasi_JO()
+        {
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
+            return $this->db->count_all_results("skb_job_order");
+        }
+
+        public function filter_konfirmasi_JO($search, $order_field, $order_ascdesc)
+        {
+            if($search!=""){
+                $this->db->like('JO_id', $search);
+                $this->db->or_like('customer_name', $search);
+                $this->db->or_like('muatan', $search);
+                $this->db->or_like('asal', $search);
+                $this->db->or_like('tujuan', $search);
+            }
+            $this->db->order_by($order_field, $order_ascdesc);
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
+            $hasil = $this->db->get('skb_job_order')->result_array();
+            $hasil_fix = [];
+            for($i=0;$i<count($hasil);$i++){
+                if($hasil[$i]["status"]=="Dalam Perjalanan"){
+                    $hasil_fix[] = $hasil[$i];
+                }
+            }
+            return $hasil_fix;
+        }
+
+        public function count_filter_konfirmasi_JO($search)
+        {   
+            if($search!=""){
+                $this->db->like('JO_id', $search);
+                $this->db->or_like('customer_name', $search);
+                $this->db->or_like('muatan', $search);
+                $this->db->or_like('asal', $search);
+                $this->db->or_like('tujuan', $search);
+            }
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
+            $hasil_data = $this->db->get('skb_job_order')->result_array();
+            $hasil_fix = 0;
+            for($i=0;$i<count($hasil_data);$i++){
+                if($hasil_data[$i]["status"]=="Dalam Perjalanan"){
+                    $hasil_fix +=1;
+                }
+            }
+            return $hasil_fix;
+
+        }
+    //akhir function-fiunction datatable JO
 }

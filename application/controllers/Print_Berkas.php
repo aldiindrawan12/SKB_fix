@@ -161,15 +161,15 @@ class Print_Berkas extends CI_Controller {
 	// 	$write->save('php://output');
     // }
 	// fungsi cetak invoice,gaji,memo
-		public function invoice($Jo_id,$asal){
+		public function invoice($invoice_id,$asal){
             if(!$_SESSION["user"]){
     			$this->session->set_flashdata('status-login', 'False');
                 redirect(base_url());
             }
-			$data["invoice"] = $this->model_detail->getinvoicebyjo($Jo_id);
-			$data["customer"] = $this->model_home->getcustomerbyid($data["invoice"]["customer_id"]);
-			$data["Jo_id"] = $Jo_id;
-			$data["invoice_kode"] = $data["invoice"]["invoice_kode"];
+			$data["invoice"] = $this->model_detail->getinvoicebyid(str_replace("%20"," ",$invoice_id));
+			$data["customer"] = $this->model_home->getcustomerbyid($data["invoice"][0]["customer_id"]);
+			// $data["Jo_id"] = $Jo_id;
+			$data["invoice_kode"] = $data["invoice"][0]["invoice_kode"];
 			$data["asal"] = $asal;
 			$this->load->view("print/invoice_print",$data);
 		}

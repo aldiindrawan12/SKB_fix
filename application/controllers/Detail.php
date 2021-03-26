@@ -20,7 +20,7 @@ class Detail extends CI_Controller {
                 redirect(base_url());
             }
             $data["jo"] = $this->model_home->getjobyid($Jo_id);
-            $data["invoice"] = $this->model_detail->getinvoicebyjo($Jo_id);
+            // $data["invoice"] = $this->model_detail->getinvoicebyjo($Jo_id);
             $data["customer"] = $this->model_home->getcustomerbyid($data["jo"]["customer_id"]);
             $data["mobil"] = $this->model_home->getmobilbyid($data["jo"]["mobil_no"]);
             $data["supir"] = $this->model_home->getsupirbyid($data["jo"]["supir_id"]);
@@ -245,5 +245,9 @@ class Detail extends CI_Controller {
             echo $data["supir_id"];
         }
     //end fungsi untuk Detail penggajian
-
+    public function getjo(){
+        $jo_id = $this->input->get('id');
+        $data = $this->model_home->getjobyid($jo_id);
+        echo json_encode($data);       
+    }
 }

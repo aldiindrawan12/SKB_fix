@@ -30,8 +30,8 @@ class Model_Detail extends CI_model
     }
     
     public function getinvoicebyid($invoice_id){ //invoice by ID
-        $this->db->join("skb_job_order","skb_job_order.Jo_id=skb_invoice.jo_id","left");
-        return $this->db->get_where("skb_invoice",array("invoice_kode"=>$invoice_id))->row_array();
+        $this->db->join("skb_invoice","skb_invoice.invoice_kode=skb_job_order.invoice_id","left");
+        return $this->db->get_where("skb_job_order",array("invoice_id"=>$invoice_id))->result_array();
     }
 
     public function getjobbysupir($supir_id){ //JO by supir

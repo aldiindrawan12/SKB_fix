@@ -10,8 +10,8 @@
                 </div>
                 <div class="card-body">
                     <a class="btn btn-primary" onclick="cetak_invoice()"><span class="small">Cetak Invoice</span></a>
-                    <?php if($invoice["status_bayar"] == "Belum Lunas"){?>
-                        <a class="btn btn-warning" data-toggle="modal" data-target="#popup-konfirmasi-status" href="" id="<?= $invoice["invoice_kode"]?>" onclick="update_status(this)"><span class="small">Tandai Lunas</span></a>
+                    <?php if($invoice[0]["status_bayar"] == "Belum Lunas"){?>
+                        <a class="btn btn-warning" data-toggle="modal" data-target="#popup-konfirmasi-status" href="" id="<?= $invoice[0]["invoice_kode"]?>" onclick="update_status(this)"><span class="small">Tandai Lunas</span></a>
                     <?php }?>
                     <table class="w-50 mt-4">
                         <tbody>
@@ -23,33 +23,33 @@
                             <tr>
                                 <td width="35%">Invoice No</td>
                                 <td width="5%">:</td>
-                                <td><?= $invoice["invoice_kode"]?></td>
+                                <td><?= $invoice[0]["invoice_kode"]?></td>
                             </tr>
                             <tr>
                                 <td width="35%">Tanggal</td>
                                 <td width="5%">:</td>
-                                <td><?= $invoice["tanggal_invoice"]?></td>
+                                <td><?= $invoice[0]["tanggal_invoice"]?></td>
                             </tr>
                             <tr>
                                 <td width="35%">Batas Pembayaran</td>
                                 <td width="5%">:</td>
-                                <td><?= $invoice["batas_pembayaran"]?></td>
+                                <td><?= $invoice[0]["batas_pembayaran"]?></td>
                             </tr>
                             <tr>
                                 <td width="35%">Status Pembayaran</td>
                                 <td width="5%">:</td>
                                 <td >
-                                    <?php if($invoice["status_bayar"] == "Belum Lunas"){?>
-                                        <span class="text-danger"><?= $invoice["status_bayar"]?></span>
+                                    <?php if($invoice[0]["status_bayar"] == "Belum Lunas"){?>
+                                        <span class="text-danger"><?= $invoice[0]["status_bayar"]?></span>
                                     <?php }else{?>
-                                        <span class="text-success"><?= $invoice["status_bayar"]?></span>
+                                        <span class="text-success"><?= $invoice[0]["status_bayar"]?></span>
                                     <?php }?>
                                 </td>
                             </tr>
                             <tr>
                                 <td width="35%">Muatan</td>
                                 <td width="5%">:</td>
-                                <td><?= $invoice["muatan"]?></td>
+                                <td><?= $invoice[0]["invoice_keterangan"]?></td>
                             </tr>
                         </tbody>
                     </table>
@@ -70,27 +70,29 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            <?php foreach($invoice as $value){?>
                                 <tr>
-                                    <td><?= $invoice["tanggal_surat"]?></td>
-                                    <td><?= $invoice["tanggal_bongkar"]?></td>
-                                    <td><?= $invoice["mobil_no"]?></td>
-                                    <td><?= $invoice["asal"]?></td>
-                                    <td><?= $invoice["tujuan"]?></td>
-                                    <td><?= $invoice["tonase"]." ".$invoice["satuan"]?></td>
-                                    <td>Rp.<?= number_format($invoice["harga/kg"],2,',','.')?></td>
-                                    <td>Rp.<?= number_format($invoice["tonase"]*$invoice["harga/kg"],2,',','.')?></td>
+                                    <td><?= $value["tanggal_surat"]?></td>
+                                    <td><?= $value["tanggal_bongkar"]?></td>
+                                    <td><?= $value["mobil_no"]?></td>
+                                    <td><?= $value["asal"]?></td>
+                                    <td><?= $value["tujuan"]?></td>
+                                    <td><?= $value["tonase"]?></td>
+                                    <td>Rp.<?= number_format(10000,2,',','.')?></td>
+                                    <td>Rp.<?= number_format($value["tonase"]*10000,2,',','.')?></td>
                                 </tr>
+                            <?php }?>
                                 <tr>
                                     <td colspan=7>Total</td>
-                                    <td>Rp.<?= number_format($invoice["tonase"]*$invoice["harga/kg"],2,',','.')?></td>
+                                    <td>Rp.<?= number_format($invoice[0]["total"],2,',','.')?></td>
                                 </tr>
                                 <tr>
                                     <td colspan=7>PPN 10%</td>
-                                    <td>Rp.<?= number_format(($invoice["tonase"]*$invoice["harga/kg"])*0.1,2,',','.')?></td>
+                                    <td>Rp.<?= number_format($invoice[0]["ppn"],2,',','.')?></td>
                                 </tr>
                                 <tr>
                                     <td colspan=7>Jumlah</td>
-                                    <td>Rp.<?= number_format(($invoice["tonase"]*$invoice["harga/kg"])+(($invoice["tonase"]*$invoice["harga/kg"])*0.1),2,',','.')?></td>
+                                    <td>Rp.<?= number_format($invoice[0]["grand_total"],2,',','.')?></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -130,7 +132,7 @@
 
 <script>
     function cetak_invoice(){
-        window.location.replace("<?= base_url("index.php/print_berkas/invoice/".$invoice["Jo_id"]."/invoice")?>");    
+        window.location.replace("<?= base_url("index.php/print_berkas/invoice/".$invoice[0]["invoice_kode"]."/invoice")?>");    
     }
     function update_status(a){
         var invoice_kode = a.id;

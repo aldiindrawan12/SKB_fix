@@ -25,24 +25,24 @@
                         <td><?= $customer["customer_name"]?></td>
                     </tr>
                     <tr>
-                        <td width="35%">Invoice No</td>
+                        <td width="35%">Invoice Kode</td>
                         <td width="5%">:</td>
-                        <td><?= $invoice["invoice_kode"]?></td>
+                        <td><?= $invoice[0]["invoice_kode"]?></td>
                     </tr>
                     <tr>
                         <td width="35%">Tanggal</td>
                         <td width="5%">:</td>
-                        <td><?= $invoice["tanggal_invoice"]?></td>
+                        <td><?= $invoice[0]["tanggal_invoice"]?></td>
                     </tr>
                     <tr>
                         <td width="35%">Batas Pembayaran</td>
                         <td width="5%">:</td>
-                        <td><?= $invoice["batas_pembayaran"]?></td>
+                        <td><?= $invoice[0]["batas_pembayaran"]?></td>
                     </tr>
                     <tr>
                         <td width="35%">Muatan</td>
                         <td width="5%">:</td>
-                        <td><?= $invoice["muatan"]?></td>
+                        <td><?= $invoice[0]["invoice_keterangan"]?></td>
                     </tr>
                 </tbody>
             </table>
@@ -63,27 +63,29 @@
                         </tr>
                     </thead>
                     <tbody>
+                    <?php foreach($invoice as $value){?>
                         <tr>
-                            <td><?= $invoice["tanggal_surat"]?></td>
-                            <td><?= $invoice["tanggal_bongkar"]?></td>
-                            <td><?= $invoice["mobil_no"]?></td>
-                            <td><?= $invoice["asal"]?></td>
-                            <td><?= $invoice["tujuan"]?></td>
-                            <td><?= $invoice["tonase"]." ".$invoice["satuan"]?></td>
-                            <td>Rp.<?= number_format($invoice["harga/kg"],2,',','.')?></td>
-                            <td>Rp.<?= number_format($invoice["tonase"]*$invoice["harga/kg"],2,',','.')?></td>
+                            <td><?= $value["tanggal_surat"]?></td>
+                            <td><?= $value["tanggal_bongkar"]?></td>
+                            <td><?= $value["mobil_no"]?></td>
+                            <td><?= $value["asal"]?></td>
+                            <td><?= $value["tujuan"]?></td>
+                            <td><?= $value["tonase"]?></td>
+                            <td>Rp.<?= number_format(10000,2,',','.')?></td>
+                            <td>Rp.<?= number_format($value["tonase"]*10000,2,',','.')?></td>
                         </tr>
+                    <?php }?>
                         <tr>
                             <td colspan=7>Total</td>
-                            <td>Rp.<?= number_format($invoice["tonase"]*$invoice["harga/kg"],2,',','.')?></td>
+                            <td>Rp.<?= number_format($invoice[0]["total"],2,',','.')?></td>
                         </tr>
                         <tr>
                             <td colspan=7>PPN 10%</td>
-                            <td>Rp.<?= number_format(($invoice["tonase"]*$invoice["harga/kg"])*0.1,2,',','.')?></td>
+                            <td>Rp.<?= number_format($invoice[0]["ppn"],2,',','.')?></td>
                         </tr>
                         <tr>
                             <td colspan=7>Jumlah</td>
-                            <td>Rp.<?= number_format(($invoice["tonase"]*$invoice["harga/kg"])+(($invoice["tonase"]*$invoice["harga/kg"])*0.1),2,',','.')?></td>
+                            <td>Rp.<?= number_format($invoice[0]["grand_total"],2,',','.')?></td>
                         </tr>
                     </tbody>
                 </table>
@@ -122,10 +124,6 @@
 <script>
     var asal = '<?= $asal?>';
     window.print();
-    if(asal == "JO"){
-        window.location.replace("<?= base_url("index.php/detail/detail_jo/".$Jo_id."/JO")?>");
-    }else if(asal == "invoice"){
         window.location.replace("<?= base_url("index.php/detail/detail_invoice/".$invoice_kode."/Invoice")?>");
-    }
 </script>
 </html>

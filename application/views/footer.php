@@ -472,8 +472,8 @@
                 },
                 "deferRender": true,
                 "aLengthMenu": [
-                    [5, 10, 30, 50, 100],
-                    [5, 10, 30, 50, 100]
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
                 ],
                 "columns": [
                     {
@@ -482,6 +482,17 @@
                     },
                     {
                         "data": "supir_name"
+                    },
+                    {
+                        "data": "bon_nominal",
+                        render: function(data, type, row) {
+                            let html = 'Rp.'+rupiah(data);
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "bon_tanggal",
+                        className: 'text-center'    
                     },
                     {
                         "data": "bon_jenis",
@@ -498,17 +509,6 @@
                                     return html;
                                 }
                             }
-                    },
-                    {
-                        "data": "bon_nominal",
-                        render: function(data, type, row) {
-                            let html = 'Rp.'+rupiah(data);
-                            return html;
-                        }
-                    },
-                    {
-                        "data": "bon_tanggal",
-                        className: 'text-center'    
                     },
                     {
                         "data": "bon_id",

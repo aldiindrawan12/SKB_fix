@@ -18,7 +18,7 @@
                         <th width ="16%" class="text-center" scope="col">Asal</th>
                         <th width ="16%" class="text-center" scope="col">Tujuan</th>
                         <th width ="1%" class="text-center" scope="col">Tanggal</th>
-                        <th width ="25%" scope="col">Konfirmasi JO</th>
+                        <th width ="25%" scope="col">Konfirmasi Job Order</th>
                     </tr>
                 </thead>
                 <tbody>

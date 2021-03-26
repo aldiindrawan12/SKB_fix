@@ -82,7 +82,7 @@ class Form extends CI_Controller {
             );
             $data_jo = explode(",",$this->input->post("data_jo"));
             $this->model_form->insert_invoice($data,$data_jo);
-            redirect(base_url());
+            redirect(base_url("index.php/home/invoice"));
         }
         public function insert_JO(){
             $jo_id = $this->model_form->getjoid();

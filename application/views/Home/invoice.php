@@ -73,7 +73,7 @@
                         <label class="form-label font-weight-bold " for="invoice_payment">Payment (hari)</label>
                         <input autocomplete="off" type="text" class="form-control" id="invoice_payment" name="invoice_payment" required>
                     </div>
-                    <input type="text" id="data_jo" name="data_jo" readonly hidden>
+                    <input type="text" id="data_jo" name="data_jo" required hidden>
                 </div>
             </div>
             <div class="col-md-12">

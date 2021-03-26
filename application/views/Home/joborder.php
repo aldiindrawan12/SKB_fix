@@ -19,6 +19,7 @@
         <div class="float-right mt-2 mb-2 ">
             <select name="status-JO" id="status-JO" class="form-control">
                 <option class="" value="x">Semua Status</option>
+                <option value="Dibatalkan">Dibatalkan</option>
                 <option value="Dalam Perjalanan">Dalam Perjalanan</option>
                 <option value="Sampai Tujuan">Sampai Tujuan</option>
             </select>

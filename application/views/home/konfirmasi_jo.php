@@ -18,7 +18,7 @@
                         <th width ="16%" class="text-center" scope="col">Asal</th>
                         <th width ="16%" class="text-center" scope="col">Tujuan</th>
                         <th width ="1%" class="text-center" scope="col">Tanggal</th>
-                        <th width ="25%" scope="col">Konfirmasi</th>
+                        <th width ="25%" scope="col">Konfirmasi JO</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,11 +30,11 @@
 </div>
 
 </div>
-<div class="modal fade mt-4" id="update_jo" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+<div class="modal fade mt-4 py-3" id="update_jo" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
-                <h5 class="font-weight-bold">Pilih Status JO</h5>
+                <h5 class="font-weight-bold">Konfirmasi Job Order</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -42,7 +42,7 @@
             
             <div class="container mt-3">
                 <div class="row">
-                    <div class="col table-bordered">
+                    <div class="col ">
                         <form id="form_update_jo" method="POST">
                             <input type="text" name="jo_id" id="jo_id" hidden>
                             <div class="form-group">
@@ -76,6 +76,8 @@
                 </form>
             </div>
         </div>
+        </div>
+        
     </div>
 </div>
 

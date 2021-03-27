@@ -25,6 +25,11 @@ class Model_Detail extends CI_model
         return $this->db->get_where("skb_bon",array("bon_id"=>$bon_id))->row_array();
     }
 
+    public function getbonbysupir($supir_id){ //bon by Supir
+        $this->db->join("skb_supir","skb_supir.supir_id=skb_bon.supir_id","left");
+        return $this->db->get_where("skb_bon",array("skb_bon.supir_id"=>$supir_id))->result_array();
+    }
+
     public function gettruckbyid($truck_id){ //truck by ID
         return $this->db->get_where("skb_mobil",array("mobil_no"=>$truck_id))->row_array();
     }

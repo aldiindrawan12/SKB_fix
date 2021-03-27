@@ -116,7 +116,7 @@
                             <td><?= $value["asal"]?></td>
                             <td><?= $value["tujuan"]?></td>
                             <td>Rp.<?= number_format($value["uang_jalan"],2,',','.') ?></td>
-                            <td><?= $value["tonase"]." ".$value["satuan"]?></td>
+                            <td><?= $value["tonase"]?></td>
                             <td>Rp.<?= number_format($value["upah"]+$value["bonus"],2,',','.')?></td>
                         </tr>
                     <?php } ?>

@@ -118,6 +118,10 @@
                             <i class="fas fa-file-invoice-dollar"></i>
                             <span>Laporan Gaji Supir</span>
                         </a>
+                        <a class="collapse-item" id="Laporan_Bon_page" href="<?=base_url("index.php/home/report_bon")?>">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                            <span>Laporan Bon Supir</span>
+                        </a>
                     </div>
                 </div>
             </li>

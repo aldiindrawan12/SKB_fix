@@ -20,7 +20,6 @@ class Detail extends CI_Controller {
                 redirect(base_url());
             }
             $data["jo"] = $this->model_home->getjobyid($Jo_id);
-            // $data["invoice"] = $this->model_detail->getinvoicebyjo($Jo_id);
             $data["customer"] = $this->model_home->getcustomerbyid($data["jo"]["customer_id"]);
             $data["mobil"] = $this->model_home->getmobilbyid($data["jo"]["mobil_no"]);
             $data["supir"] = $this->model_home->getsupirbyid($data["jo"]["supir_id"]);
@@ -46,22 +45,16 @@ class Detail extends CI_Controller {
     //end fungsi untuk Detail JO
 
     //fungsi untuk Detail invoice
-        public function detail_invoice($invoice_id,$asal)
+        public function detail_invoice($invoice_id)
         {
             if(!$_SESSION["user"]){
     			$this->session->set_flashdata('status-login', 'False');
                 redirect(base_url());
             }
             $data["invoice"] = $this->model_detail->getinvoicebyid(str_replace("%20"," ",$invoice_id));
-            // echo var_dump($data["invoice"][0]);
             $data["customer"] = $this->model_home->getcustomerbyid($data["invoice"][0]["customer_id"]);
-            if($asal=="Customer"){
-                $data["page"] = "Customer_page";
-                $data["collapse_group"] = "Master_Data";
-            }else{
-                $data["page"] = "Invoice_page";
-                $data["collapse_group"] = "Perintah_Kerja";
-            }
+            $data["page"] = "Invoice_Customer_page";
+            $data["collapse_group"] = "Perintah_Kerja";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             if(json_decode($data["akun_akses"]["akun_akses"])[1]==0){
                 redirect(base_url());
@@ -83,21 +76,6 @@ class Detail extends CI_Controller {
                 "tanggal_bongkar"=>date('Y-m-d'),
                 "Jo_id"=>$this->input->post("jo_id")
             );
-
-            // $total = 0;//$data["tonase"]*$data["harga/kg"];
-            // $ppn = $total * 0.1;
-            // $grand_total = $total + $ppn;
-            // $data_invoice = array(
-            //     "jo_id"=>$this->input->post("jo_id"),
-            //     "customer_id"=>$data_jo["customer_id"],
-            //     "tanggal_invoice"=>date("Y-m-d"),
-            //     "batas_pembayaran"=>date("Y-m-d",strtotime('+'.$TOD.' days', strtotime(date("Y-m-d")))),
-            //     "total"=>$total,
-            //     "ppn"=>$ppn,
-            //     "grand_total"=>$grand_total,
-            //     "status_bayar"=>"Belum Lunas"
-            // );
-
             $this->model_detail->updatestatusjo($data,$supir,$mobil);
             redirect(base_url("index.php/detail/detail_jo/").$this->input->post("jo_id")."/JO");
         }
@@ -143,8 +121,8 @@ class Detail extends CI_Controller {
                 redirect(base_url());
             }
             $data["customer"] = $this->model_home->getcustomerbyid($customer_id);
-            $data["page"] = "Customer_page";
-            $data["collapse_group"] = "Master_Data";
+            $data["page"] = "Invoice_Customer_page";
+            $data["collapse_group"] = "Perintah_Kerja";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             if(json_decode($data["akun_akses"]["akun_akses"])[0]==0){
                 redirect(base_url());
@@ -165,6 +143,27 @@ class Detail extends CI_Controller {
         }
     //end fungsi untuk Detail bon
     
+    //fungsi untuk Detail report bon
+        function detail_report_bon($supir_id)
+        {
+            if(!$_SESSION["user"]){
+    			$this->session->set_flashdata('status-login', 'False');
+                redirect(base_url());
+            }
+            $data["transaksi_bon"] = $this->model_detail->getbonbysupir($supir_id);
+            $data["supir"] = $this->model_home->getsupirbyid($supir_id)["supir_name"];
+            $data["page"] = "Laporan_Bon_page";
+            $data["collapse_group"] = "Laporan";
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            if(json_decode($data["akun_akses"]["akun_akses"])[1]==0){
+                redirect(base_url());
+            }
+            $this->load->view('header',$data);
+            $this->load->view('sidebar');
+            $this->load->view('detail/laporan_bon');
+            $this->load->view('footer');
+        }
+    //end fungsi untuk Detail report bon
     
     //fungsi untuk Detail truck
         function gettruck()
@@ -184,13 +183,13 @@ class Detail extends CI_Controller {
         }
     //end fungsi untuk Detail customer
 
-     //fungsi untuk Detail supir
-     function getsupir()
-     {
-         $supir_id = $this->input->get('id');
-         $data = $this->model_home->getsupirbyid($supir_id);
-         echo json_encode($data);
-     }
+    //fungsi untuk Detail supir
+        function getsupir()
+        {
+            $supir_id = $this->input->get('id');
+            $data = $this->model_home->getsupirbyid($supir_id);
+            echo json_encode($data);
+        }
     //end fungsi untuk Detail supir
 
     //fungsi untuk Detail penggajian
@@ -246,6 +245,7 @@ class Detail extends CI_Controller {
             echo $data["supir_id"];
         }
     //end fungsi untuk Detail penggajian
+
     public function getjo(){
         $jo_id = $this->input->get('id');
         $data = $this->model_home->getjobyid($jo_id);

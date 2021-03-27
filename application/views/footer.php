@@ -533,7 +533,7 @@
                 "serverSide": true,
                 "ordering": true,
                 "order": [
-                    [0, 'asc']
+                    [3, 'desc']
                 ],
                 "ajax": {
                     "url": "<?php echo base_url('index.php/home/view_bon/') ?>",
@@ -948,6 +948,76 @@
     </script>
     <!-- End Supir -->
 
+    <!-- Report Bon Supir -->
+    <script> //script datatables report bon Supir
+        $(document).ready(function() {
+            var table = null;
+            table = $('#Table-Report-Bon-Supir').DataTable({
+                language: {
+                    searchPlaceholder: "Nama Supir"
+                },
+                "processing": true,
+                "serverSide": true,
+                "ordering": true,
+                "order": [
+                    [0, 'desc']
+                ],
+                "ajax": {
+                    "url": "<?php echo base_url('index.php/home/view_Supir/') ?>",
+                    "type": "POST",
+                    
+                },
+                "deferRender": true,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
+                "columns": [
+                    {
+                        "data": "supir_id",
+                        className: 'text-center'
+                    },
+                    {
+                        "data": "supir_name",
+                        
+                    },
+                    {
+                        "data": "supir_kasbon",
+                        render: function(data, type, row) {
+                            let html = 'Rp.'+rupiah(data);
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "status_jalan",
+                        className: 'text-center',
+                        "orderable": false,
+                            render: function(data, type, row) {
+                                if (data == "Jalan") {
+                                    let html = "<span class='btn-sm btn-block btn-success'><i class='fa fa-fw fa-check mr-2'></i>" + data + "</span>";
+                                    return html;
+                                } else {
+                                    let html = "<span class='btn-sm btn-block btn-warning'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>" + data + "</span>";
+                                    return html;
+                                }
+                            }
+
+                    },
+                    {
+                        "data": "supir_id",
+                        className: 'text-center font-weight-bold',
+                        "orderable": false,
+                        render: function(data, type, row) {
+                            let html = "<a class='btn btn-light' href='<?= base_url('index.php/detail/detail_report_bon/"+data+"')?>'><i class='fas fa-eye'></i></a>";
+                            return html;
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+    <!-- End Report Bon Supir -->
+
     <!-- Gaji Supir -->
     <script> //script datatables Gaji Supir
         $(document).ready(function() {
@@ -1230,7 +1300,7 @@
                         className: 'text-center',
                         "orderable": false,
                         render: function(data, type, row) {
-                            let html = "<a class='btn btn-light' href='<?= base_url('index.php/detail/detail_invoice/"+data+"/Customer')?>'><i class='fas fa-eye'></i></a>";
+                            let html = "<a class='btn btn-light' href='<?= base_url('index.php/detail/detail_invoice/"+data+"')?>'><i class='fas fa-eye'></i></a>";
                             return html;
                         }
                     }
@@ -1304,7 +1374,7 @@
                         className: 'text-center',
                         "orderable": false,
                         render: function(data, type, row) {
-                            let html = "<a class='btn btn-light' href='<?= base_url('index.php/detail/detail_invoice/"+data+"/Customer')?>'><i class='fas fa-eye'></i></a>";
+                            let html = "<a class='btn btn-light' href='<?= base_url('index.php/detail/detail_invoice/"+data+"')?>'><i class='fas fa-eye'></i></a>";
                             return html;
                         }
                     }

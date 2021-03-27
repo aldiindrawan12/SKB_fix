@@ -233,6 +233,26 @@ class Home extends CI_Controller {
         }      
     //end gaji report supir
 
+    //report bon supir
+        public function report_bon()
+        {
+            if(!$_SESSION["user"]){
+    			$this->session->set_flashdata('status-login', 'False');
+                redirect(base_url());
+            }
+            $data["page"] = "Laporan_Bon_page";
+            $data["collapse_group"] = "Laporan";
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            if(json_decode($data["akun_akses"]["akun_akses"])[0]==0){
+                redirect(base_url());
+            }
+            $this->load->view('header',$data);
+            $this->load->view('sidebar');
+            $this->load->view('home/report_bon');
+            $this->load->view('footer');
+        }
+    //report bon supir
+
     // bon
         public function bon()
         {

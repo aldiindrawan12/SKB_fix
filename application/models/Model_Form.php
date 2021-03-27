@@ -56,6 +56,7 @@ class Model_Form extends CI_model
         $this->db->set("keterangan",$data["keterangan"]);
         $this->db->set("status",$data["status"]);
         $this->db->set("tanggal_bongkar",$data["tanggal_bongkar"]);
+        $this->db->set("harga",$data["harga"]);
         $this->db->where("Jo_id",$data["jo_id"]);
         $this->db->update("skb_job_order");
 

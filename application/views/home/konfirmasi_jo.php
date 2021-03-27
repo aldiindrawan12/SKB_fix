@@ -46,27 +46,29 @@
                         <form id="form_update_jo" method="POST">
                             <input type="text" name="jo_id" id="jo_id" hidden>
                             <div class="form-group">
-                                <label for="tonase" class="form-label">Muatan akhir</label>
-                                <input autocomplete="off" class="form-control" type="text" name="tonase" id="tonase" onkeyup="uang()" required>    
-                            </div>
-                            <!-- <div class="form-group">
-                                <label class="form-label" for="harga">Harga / Satuan</label>
-                                <input autocomplete="off" class="form-control" type="text" name="harga" id="harga" onkeyup="uang()" required>
-                            </div> -->
-                            <div class="form-group">
-                                <label class="form-label" for="bonus">Biaya Lain</label>
-                                <input autocomplete="off" class="form-control" type="text" name="bonus" id="bonus" onkeyup="uang()" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="Keterangan" class="form-label">Keterangan/Catatan Tambahan</label>
-                                <textarea class="form-control" name="Keterangan" rows="3"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <select name="status" id="status" class="form-control custom-select " required>
+                                <select name="status" id="status" class="form-control custom-select " required onchange="status_jenis()">
                                     <option class="font-w700" disabled="disabled" selected value="">Status JO</option>
                                     <option value="Sampai Tujuan">Sampai Tujuan</option>
                                     <option value="Dibatalkan">Dibatalkan</option>
                                 </select>
+                            </div>
+                            <div class="konfirmasi" style="display:none">
+                                <div class="form-group">
+                                    <label for="tonase" class="form-label">Muatan akhir</label>
+                                    <input autocomplete="off" class="form-control" type="text" name="tonase" id="tonase" onkeyup="uang()">    
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="harga">Harga / Tonase</label>
+                                    <input autocomplete="off" class="form-control" type="text" name="harga" id="harga" onkeyup="uang()">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="bonus">Biaya Lain</label>
+                                    <input autocomplete="off" class="form-control" type="text" name="bonus" id="bonus" onkeyup="uang()">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="Keterangan" class="form-label">Keterangan/Catatan Tambahan</label>
+                                    <textarea class="form-control" name="Keterangan" rows="3"></textarea>
+                                </div>
                             </div>
                     </div>
                 </div>
@@ -82,8 +84,22 @@
 <script>
     function uang(){
         $( '#tonase' ).mask('000.000.000', {reverse: true});
-        // $( '#harga' ).mask('000.000.000', {reverse: true});
+        $( '#harga' ).mask('000.000.000', {reverse: true});
         // $( '#upah' ).mask('000.000.000', {reverse: true});
         $( '#bonus' ).mask('000.000.000', {reverse: true});
+    }
+    function status_jenis(){
+        var status = $("#status").val();
+        if(status=="Dibatalkan"){
+            $(".konfirmasi").hide();
+            $("#tonase").removeAttr('required');
+            $("#harga").removeAttr('required');
+            $("#bonus").removeAttr('required');
+        }else{
+            $(".konfirmasi").show();
+            $("#tonase").attr('required','true');
+            $("#harga").attr('required','true');
+            $("#bonus").attr('required','true');
+        }
     }
 </script>

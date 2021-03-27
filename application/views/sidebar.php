@@ -65,8 +65,12 @@
                             <span id="coba">Konfirmasi Job Order</span>
                         </a>
                         <a class="collapse-item" id="Invoice_page" href="<?=base_url("index.php/home/invoice")?>">   
+                            <i class="fas fa-plus-square"></i>
+                            <span>Buat Invoice</span>
+                        </a>
+                        <a class="collapse-item" id="Invoice_Customer_page" href="<?=base_url("index.php/home/invoice_customer")?>">   
                             <i class="fas fa-receipt mr-2"></i>
-                            <span>Invoice</span>
+                            <span>Data Invoice</span>
                         </a>
                     </div>
                 </div>

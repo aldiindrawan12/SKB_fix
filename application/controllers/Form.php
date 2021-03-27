@@ -106,6 +106,7 @@ class Form extends CI_Controller {
                 "status"=>"Dalam Perjalanan",
                 "status_upah"=>"Belum Dibayar",
                 "upah"=>str_replace(".","",$this->input->post("Upah")),
+                "tagihan"=>str_replace(".","",$this->input->post("Tagihan"))
             );
             $this->model_form->insert_JO($data["data"]);
             $data["jo_id"] = max($isi_jo_id)+1;
@@ -458,7 +459,6 @@ class Form extends CI_Controller {
                     "status" => $this->input->post("status"),
                     "tonase"=>$this->input->post("tonase"),
                     "bonus"=>str_replace(".","",$this->input->post("bonus")),
-                    "harga"=>str_replace(".","",$this->input->post("harga")),
                     "keterangan"=>$keterangan,
                     "tanggal_bongkar"=>date('Y-m-d'),
                 );

@@ -20,7 +20,7 @@
             <table class="table table-bordered" id="Table-Customer" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <!-- <th class="text-center" width="3%" scope="col">ID Customer</th> -->
+                        <th class="text-center" scope="col">ID</th>
                         <th class="text-center" scope="col">Nama Customer</th>
                         <th class="text-center" scope="col">Alamat</th>
                         <th class="text-center" scope="col">Contact Person</th>

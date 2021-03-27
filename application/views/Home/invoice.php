@@ -91,8 +91,8 @@
                         <th class="text-center" width="" scope="col">Tgl.Brgkt</th>
                         <th class="text-center" width="" scope="col">Tgl.Plng</th>
                         <th class="text-center" width="" scope="col">Tonase</th>
-                        <th class="text-center" width="" scope="col">Harga</th>
-                        <th class="text-center" width="" scope="col">Total</th>
+                        <!-- <th class="text-center" width="" scope="col">Harga</th> -->
+                        <th class="text-center" width="" scope="col">Inv./Tagihan</th>
                         <th class="text-center" width="" scope="col">Pilih</th>
                     </tr>
                 </thead>

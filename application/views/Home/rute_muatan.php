@@ -19,6 +19,7 @@
             <table class="table table-bordered" id="Table-rute" width="100%" cellspacing="0">
                 <thead>
                     <tr>
+                        <th class="text-center" scope="col">ID Rute</th>
                         <th class="text-center" scope="col">Nama Customer</th>
                         <th class="text-center" scope="col">Dari</th>
                         <th class="text-center" scope="col">Ke</th>
@@ -26,10 +27,7 @@
                         <th class="text-center" scope="col">UJ.Engkel</th>
                         <th class="text-center" scope="col">UJ.Tronton</th>
                         <th class="text-center" scope="col">Inv./Tagihan</th>
-                        <th class="text-center" scope="col">Gj.Engkel</th>
-                        <th class="text-center" scope="col">Gj.Tronton</th>
-                        <th class="text-center" scope="col">Gj.Rumusan</th>
-                        <th class="text-center" scope="col">Aksi</th>
+                        <th class="text-center" width="20%" scope="col">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -231,6 +229,88 @@
     </div>
 </div>
 <!-- end pop up update rute dan muatan -->
+
+<!-- pop up detail rute -->
+<div class="modal fade mt-5" id="popup-detail-rute" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary-dark">
+                <h5 class="block-title">Detail Rute</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times</span>
+                </button>
+            </div>
+            <div class="font-size-sm m-3 text-justify">
+                <div class="row">
+                        <div class="col border rounded border-secondary mr-3">
+                            <div class="form-group">
+                                <label class="form-label font-weight-bold " for="customer_name_detail">Nama Customer</label>
+                                <input autocomplete="off" type="text" class="form-control" id="customer_name_detail" name="customer_name_detail" readonly>
+                            </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label font-weight-bold" for="rute_dari_detail">Dari</label>
+                                <input autocomplete="off" type="text" class="form-control" id="rute_dari_detail" name="rute_dari_detail" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label font-weight-bold" for="rute_ke_detail">Ke</label>
+                                <input autocomplete="off" type="text" class="form-control" id="rute_ke_detail" name="rute_ke_detail" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="rute_muatan_detail" class="form-label font-weight-bold ">Muatan</label> 
+                                <input autocomplete="off" type="text" class="form-control" id="rute_muatan_detail" name="rute_muatan_detail" readonly>
+                            </div>
+                            <div class="rute_tonase_detail">
+                                <div class="form-group">
+                                    <label for="rute_tonase_detail" class="form-label font-weight-bold">Tonase</label>  
+                                    <input autocomplete="off" type="text" class="form-control" id="rute_tonase_detail" name="rute_tonase_detail" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col border rounded border-secondary mr-3">
+                            <small class="font-weight-bold">Detail Uang Jalan (Uj)</small>
+                            <hr>
+                            <div class="form-group">
+                                <label for="rute_uj_engkel_detail" class="form-label font-weight-bold">Uj.Engkel</label>
+                                <input autocomplete="off" type="text" class="form-control" id="rute_uj_engkel_detail" name="rute_uj_engkel_detail" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="rute_uj_tronton_detail" class="form-label font-weight-bold">Uj.Tronton</label>
+                                <input autocomplete="off" type="text" class="form-control" id="rute_uj_tronton_detail" name="rute_uj_tronton_detail" readonly>
+                            </div>
+                            <small class="font-weight-bold">Detail Keuangan</small>
+                            <hr>
+                            <div class="form-group">
+                                <label for="rute_tagihan_detail" class="form-label font-weight-bold">Inv./Tagihan</label>
+                                <input autocomplete="off" type="text" class="form-control" id="rute_tagihan_detail" name="rute_tagihan_detail" readonly>
+                            </div>
+                        </div>
+                        <div class="col border rounded border-secondary">
+                            <small class="font-weight-bold">Detail Gaji Supir</small>
+                            <hr>
+                            <div class="form-group">
+                                <label for="rute_gaji_engkel_detail" class="form-label font-weight-bold">Gaji Engkel(Fix)</label>
+                                <input autocomplete="off" type="text" class="form-control" id="rute_gaji_engkel_detail" name="rute_gaji_engkel_detail" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="rute_gaji_tronton_detail" class="form-label font-weight-bold">Gaji Tronton(Fix)</label>
+                                <input autocomplete="off" type="text" class="form-control" id="rute_gaji_tronton_detail" name="rute_gaji_tronton_detail" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="rute_gaji_engkel_rumusan_detail" class="form-label font-weight-bold">Gaji Engkel(Non-Fix)</label>
+                                <input autocomplete="off" type="text" class="form-control" id="rute_gaji_engkel_rumusan_detail" name="rute_gaji_engkel_rumusan_detail" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="rute_gaji_tronton_rumusan_detail" class="form-label font-weight-bold">Gaji Tronton(Non-Fix)</label>
+                                <input autocomplete="off" type="text" class="form-control" id="rute_gaji_tronton_rumusan_detail" name="rute_gaji_tronton_rumusan_detail" readonly>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end pop up detail rute -->
 
 <script>
     function uang(a){

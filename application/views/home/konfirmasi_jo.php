@@ -57,10 +57,10 @@
                                     <label for="tonase" class="form-label">Muatan akhir</label>
                                     <input autocomplete="off" class="form-control" type="text" name="tonase" id="tonase" onkeyup="uang()">    
                                 </div>
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label class="form-label" for="harga">Harga / Tonase</label>
                                     <input autocomplete="off" class="form-control" type="text" name="harga" id="harga" onkeyup="uang()">
-                                </div>
+                                </div> -->
                                 <div class="form-group">
                                     <label class="form-label" for="bonus">Biaya Lain</label>
                                     <input autocomplete="off" class="form-control" type="text" name="bonus" id="bonus" onkeyup="uang()">
@@ -84,7 +84,7 @@
 <script>
     function uang(){
         $( '#tonase' ).mask('000.000.000', {reverse: true});
-        $( '#harga' ).mask('000.000.000', {reverse: true});
+        // $( '#harga' ).mask('000.000.000', {reverse: true});
         // $( '#upah' ).mask('000.000.000', {reverse: true});
         $( '#bonus' ).mask('000.000.000', {reverse: true});
     }
@@ -93,12 +93,12 @@
         if(status=="Dibatalkan"){
             $(".konfirmasi").hide();
             $("#tonase").removeAttr('required');
-            $("#harga").removeAttr('required');
+            // $("#harga").removeAttr('required');
             $("#bonus").removeAttr('required');
         }else{
             $(".konfirmasi").show();
             $("#tonase").attr('required','true');
-            $("#harga").attr('required','true');
+            // $("#harga").attr('required','true');
             $("#bonus").attr('required','true');
         }
     }

@@ -8,7 +8,6 @@ class Model_Detail extends CI_model
         $this->db->set("keterangan",$data["keterangan"]);
         $this->db->set("status","Sampai Tujuan");
         $this->db->set("tanggal_bongkar",$data["tanggal_bongkar"]);
-        $this->db->set("harga",str_replace(".","",$data["harga"]));
         $this->db->where("Jo_id",$data["Jo_id"]);
         $this->db->update("skb_job_order");
 

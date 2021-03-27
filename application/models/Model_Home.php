@@ -468,7 +468,7 @@ class Model_Home extends CI_model
         }
     //  end Function Akun
 
-    // Function Invoice
+    // Function rute
         public function count_all_rute()
         {
             $this->db->where("skb_rute.rute_status_hapus","No");
@@ -516,11 +516,12 @@ class Model_Home extends CI_model
                 }
                 return $hasil_fix;           
         }
-    // end Function Invoice
+    // end Function rute
 
     //function-fiunction datatable JO
         public function count_all_konfirmasi_JO()
         {
+            $this->db->where("status","Dalam Perjalanan");
             $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
             return $this->db->count_all_results("skb_job_order");
         }

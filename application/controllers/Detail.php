@@ -81,8 +81,7 @@ class Detail extends CI_Controller {
                 "bonus"=>str_replace(".","",$this->input->post("bonus")),
                 "keterangan"=>$keterangan,
                 "tanggal_bongkar"=>date('Y-m-d'),
-                "Jo_id"=>$this->input->post("jo_id"),
-                "harga"=>$this->input->post("harga"),
+                "Jo_id"=>$this->input->post("jo_id")
             );
 
             // $total = 0;//$data["tonase"]*$data["harga/kg"];

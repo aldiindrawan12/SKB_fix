@@ -56,7 +56,6 @@ class Model_Form extends CI_model
         $this->db->set("keterangan",$data["keterangan"]);
         $this->db->set("status",$data["status"]);
         $this->db->set("tanggal_bongkar",$data["tanggal_bongkar"]);
-        $this->db->set("harga",$data["harga"]);
         $this->db->where("Jo_id",$data["jo_id"]);
         $this->db->update("skb_job_order");
 
@@ -264,9 +263,9 @@ class Model_Form extends CI_model
                 );
             }
             if($data["mobil_jenis"]=="Sedang(Engkel)"){
-                $this->db->select("rute_uj_engkel,rute_gaji_engkel,rute_tonase,rute_gaji_engkel_rumusan");
+                $this->db->select("rute_uj_engkel,rute_gaji_engkel,rute_tonase,rute_gaji_engkel_rumusan,rute_tagihan");
             }else{
-                $this->db->select("rute_uj_tronton,rute_gaji_tronton,rute_tonase,rute_gaji_tronton_rumusan");
+                $this->db->select("rute_uj_tronton,rute_gaji_tronton,rute_tonase,rute_gaji_tronton_rumusan,rute_tagihan");
             }
             $this->db->where($data_where);
             return $this->db->get("skb_rute")->row_array();

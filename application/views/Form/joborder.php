@@ -67,7 +67,6 @@
                             <option class="font-w700 font-weight-bold mb-4" disabled="disabled" selected value="">Kendaraan Pengiriman</option>
                         </select>
                     </div>
-                    
                     <div class="col-md-4 col-md-offset-4 mb-4">
                         <label class="form-label font-weight-bold" for="Type_Tonase">Tipe Tonase</label>
                         <select name="Type_Tonase" id="Type_Tonase" class="form-control" required onchange="tonase()">
@@ -76,15 +75,12 @@
                             <option class="font-w700" value="Non-Fix">Non-Fix</option>
                         </select>
                     </div>
-
-                    <div class="col-md-4 col-md-offset-4 mb-4 Tonase" style="display:none">
+                    <div class="col-md-4 col-md-offset-4 mb-4 Tonase">
                         <label class="form-label font-weight-bold" for="Tonase">Tonase</label>
-                        <select name="Tonase" id="Tonase" class="form-control mb-4" onchange="tonase_non_fix()">
+                        <select name="Tonase" id="Tonase" class="form-control mb-4" onchange="tonase_non_fix()" disabled>
                             <option class="font-w700" disabled="disabled" selected value="">Tonase</option>
                         </select>
                     </div>
-
-                   
                     <div class="col-md-4 col-md-offset-4 mb-4">
                         <label for="Uang" class="form-label font-weight-bold">Uang Jalan</label>
                         <input autocomplete="off" type="text" class="form-control" id="Uang" name="Uang" required readonly>
@@ -99,8 +95,8 @@
                         <label for="Keterangan" class="form-label font-weight-bold">Keterangan/Catatan</label>
                         <textarea class="form-control" name="Keterangan" id="Keterangan" rows="3"></textarea>
                     </div>
-
                     <input autocomplete="off" type="text" class="form-control" id="Upah" name="Upah" required hidden>
+                    <input autocomplete="off" type="text" class="form-control" id="Tagihan" name="Tagihan" required hidden>
                     <div class="col-md-12 col-md-offset-4 ">
                         <button type="submit" class="btn btn-success ml-3 mt-5 float-md-right">Simpan dan Cetak</button>
                         <button type="reset" class="btn btn-outline-danger mb-3 mt-5  float-md-right" onclick="reset_form()">Reset</button>
@@ -117,6 +113,13 @@
     function customer(){ //ketika customer dipilih
         var customer_id = $("#Customer").val();
         $('#Muatan').find('option').remove().end(); //reset option select
+        $('#Asal').find('option').remove().end(); //reset option select
+        $('#Tujuan').find('option').remove().end(); //reset option select
+        $('#Jenis').find('option').remove().end(); //reset option select
+        $('#Kendaraan').find('option').remove().end(); //reset option select
+        $('#Type_Tonase').find('option').remove().end(); //reset option select
+        $('#Uang').val("");
+        $('#Terbilang').val("");
         var isi_muatan = [];
         $.ajax({
             type: "GET",
@@ -141,6 +144,12 @@
         var customer_id = $("#Customer").val();
         var muatan = $("#Muatan").val();
         $('#Asal').find('option').remove().end(); //reset option select
+        $('#Tujuan').find('option').remove().end(); //reset option select
+        $('#Jenis').find('option').remove().end(); //reset option select
+        $('#Kendaraan').find('option').remove().end(); //reset option select
+        $('#Type_Tonase').find('option').remove().end(); //reset option select
+        $('#Uang').val("");
+        $('#Terbilang').val("");
         var isi_asal = [];
         $.ajax({
             type: "POST",
@@ -170,6 +179,11 @@
         var muatan = $("#Muatan").val();
         var asal = $("#Asal").val();
         $('#Tujuan').find('option').remove().end(); //reset option select
+        $('#Jenis').find('option').remove().end(); //reset option select
+        $('#Kendaraan').find('option').remove().end(); //reset option select
+        $('#Type_Tonase').find('option').remove().end(); //reset option select
+        $('#Uang').val("");
+        $('#Terbilang').val("");
         var isi_tujuan = [];
         $.ajax({
             type: "POST",
@@ -198,6 +212,10 @@
     }
     function tujuan(){
         $('#Jenis').find('option').remove().end(); //reset option select
+        $('#Kendaraan').find('option').remove().end(); //reset option select
+        $('#Type_Tonase').find('option').remove().end(); //reset option select
+        $('#Uang').val("");
+        $('#Terbilang').val("");
         $('#Jenis').append('<option class="font-w700" disabled="disabled" selected value="">Jenis Mobil</option>'); 
         $("#Jenis").append('<option value="Sedang(Engkel)">Sedang(Engkel)</option>'+
                             '<option value="Besar(Tronton)">Besar(Tronton)</option>');
@@ -214,6 +232,9 @@
             tonase=$("#Tonase").val();
         }
         $('#Kendaraan').find('option').remove().end(); //reset option select
+        $('#Type_Tonase').find('option').remove().end(); //reset option select
+        $("#Uang").val("");
+        $("#Terbilang").val("");
         $.ajax({ //ajax set option kendaraan
             type: "POST",
             url: "<?php echo base_url('index.php/form/getmobilbyjenis') ?>",
@@ -232,37 +253,6 @@
                 }
             }
         });
-        $.ajax({ // ajax set uang jalan
-            type: "POST",
-            url: "<?php echo base_url('index.php/form/getrutefix') ?>",
-            dataType: "JSON",
-            data: {
-                customer_id: customer_id,
-                rute_muatan: muatan,
-                rute_asal:asal,
-                rute_ke:ke,
-                mobil_jenis:mobil_jenis,
-                rute_tonase:tonase
-            },
-            success: function(data) {
-                var uang = "";
-                if(mobil_jenis=="Sedang(Engkel)"){
-                    $("#Uang").val(rupiah(data["rute_uj_engkel"]));
-                    uang = rupiah(data["rute_uj_engkel"]);
-                }else{
-                    $("#Uang").val(rupiah(data["rute_uj_tronton"]));
-                    uang = rupiah(data["rute_uj_tronton"]);
-                }
-                $.ajax({
-                    type: "GET",
-                    url: "<?php echo base_url('index.php/form/generate_terbilang_fix/') ?>"+uang,
-                    dataType: "text",
-                    success: function(data) {
-                        $('#Terbilang').val(data);
-                    }
-                });
-            }
-        });
         $('#Type_Tonase').find('option').remove().end(); //reset option select
         $('#Type_Tonase').append('<option class="font-w700" disabled="disabled" selected value="">Tipe Tonase</option>'); 
         $("#Type_Tonase").append('<option value="Fix">Fix</option>'+
@@ -276,9 +266,13 @@
         var ke = $("#Tujuan").val();
         var tonase = 0;
         $("#Upah").val("");
+        $("#Uang").val("");
+        $("#Terbilang").val("");
         if($("#Type_Tonase").val()=="Non-Fix"){
-            $('.Tonase').show();//find('option').remove().end(); //reset option select
             $('.Tonase').find('option').remove().end(); //reset option select
+            $('#Tonase').removeAttr("disabled");
+            $('#Uang').val("");
+            $('#Terbilang').val("");
             $.ajax({
                 type: "POST",
                 url: "<?php echo base_url('index.php/form/getrutetonase') ?>",
@@ -302,7 +296,8 @@
                 }
             });
         }else if($("#Type_Tonase").val()=="Fix"){
-            $('.Tonase').hide();//find('option').remove().end(); //reset option select
+            $('.Tonase').find('option').remove().end(); //reset option select
+            $('#Tonase').attr("disabled","true");
             $.ajax({
                 type: "POST",
                 url: "<?php echo base_url('index.php/form/getrutefix') ?>",
@@ -316,11 +311,26 @@
                     rute_tonase:tonase
                 },
                 success: function(data) {
+                    var uang = "";
                     if(mobil_jenis=="Sedang(Engkel)"){
                         $("#Upah").val(rupiah(data["rute_gaji_engkel"]));
+                        $("#Uang").val(rupiah(data["rute_uj_engkel"]));
+                        $("#Tagihan").val(rupiah(data["rute_tagihan"]));
+                        uang = rupiah(data["rute_uj_engkel"]);
                     }else{
                         $("#Upah").val(rupiah(data["rute_gaji_tronton"]));
+                        $("#Uang").val(rupiah(data["rute_uj_tronton"]));
+                        $("#Tagihan").val(rupiah(data["rute_tagihan"]));
+                        uang = rupiah(data["rute_uj_tronton"]);
                     }
+                    $.ajax({
+                        type: "GET",
+                        url: "<?php echo base_url('index.php/form/generate_terbilang_fix/') ?>"+uang,
+                        dataType: "text",
+                        success: function(data) {
+                            $('#Terbilang').val(data);
+                        }
+                    });
                 }
             });
         }
@@ -345,11 +355,26 @@
                     rute_tonase:tonase
                 },
                 success: function(data) {
+                    var uang = "";
                     if(mobil_jenis=="Sedang(Engkel)"){
                         $("#Upah").val(rupiah(data["rute_gaji_engkel_rumusan"]));
+                        $("#Uang").val(rupiah(data["rute_uj_engkel"]));
+                        $("#Tagihan").val(rupiah(data["rute_tagihan"]));
+                        uang = rupiah(data["rute_uj_engkel"]);
                     }else{
                         $("#Upah").val(rupiah(data["rute_gaji_tronton_rumusan"]));
+                        $("#Uang").val(rupiah(data["rute_uj_tronton"]));
+                        $("#Tagihan").val(rupiah(data["rute_tagihan"]));
+                        uang = rupiah(data["rute_uj_tronton"]);
                     }
+                    $.ajax({
+                        type: "GET",
+                        url: "<?php echo base_url('index.php/form/generate_terbilang_fix/') ?>"+uang,
+                        dataType: "text",
+                        success: function(data) {
+                            $('#Terbilang').val(data);
+                        }
+                    });
                 }
             });
     }

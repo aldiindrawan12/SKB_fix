@@ -206,7 +206,7 @@
                 "serverSide": true,
                 "ordering": true,
                 "order": [
-                    [0, 'asc']
+                    [0, 'desc']
                 ],
                 "ajax": {
                     "url": "<?php echo base_url('index.php/home/view_JO/') ?>",
@@ -272,8 +272,8 @@
     </script>
     <!-- end JO -->
 
-    <!-- JO -->
-    <script> //script datatables job order
+    <!-- konfirmasi JO -->
+    <script> //script datatables konfirmasi job order
         $(document).ready(function() {
             var table = null;
             table = $('#Table-Konfirmasi-Job-Order').DataTable({
@@ -339,10 +339,10 @@
             });
         });
     </script>
-    <!-- end JO -->
+    <!-- end konfirmasi JO -->
 
-    <!-- JO -->
-    <script> //script datatables laporan job order
+    <!-- report JO -->
+    <script> //script datatables laporan report job order
         $(document).ready(function() {
             var table = null;
             table = $('#Table-Job-Order-report').DataTable({
@@ -434,7 +434,7 @@
             });
         });
     </script>
-    <!-- end JO -->
+    <!-- end report JO -->
 
     <!-- Uang Jalan -->
     <script> //script datatables laporan Uang Jalan
@@ -629,7 +629,7 @@
                 "serverSide": true,
                 "ordering": true,
                 "order": [
-                    [0, 'asc']
+                    [0, 'desc']
                 ],
                 "ajax": {
                     "url": "<?php echo base_url('index.php/home/view_Customer/') ?>",
@@ -642,10 +642,9 @@
                     [10, 30, 50, 100]
                 ],
                 "columns": [
-                    // {
-                    //     "data": "customer_id",
-                    //     className: 'text-center'
-                    // },
+                    {
+                        "data": "customer_id"
+                    },
                     {
                         "data": "customer_name"
                     },
@@ -663,8 +662,7 @@
                         className: 'text-center',
                         "orderable": false,
                         render: function(data, type, row) {
-                            let html = "<a class='btn btn-light' href='<?= base_url('index.php/detail/detail_customer/"+data+"')?>'><i class='fas fa-file-invoice-dollar'></i></a> || "+
-                            "<a class='btn btn-light btn-detail-customer' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-customer' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
+                            let html = "<a class='btn btn-light btn-detail-customer' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-customer' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
                             "<a class='btn btn-light btn-update-customer' data-toggle='modal' data-target='#popup-update-customer' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
                             "<a class='btn btn-light btn-delete-customer' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
                             return html;
@@ -751,6 +749,61 @@
     </script>
     <!-- end Customer -->   
 
+    <!-- invoice Customer -->
+    <script> //script datatables invoice customer
+        $(document).ready(function() {
+            var table = null;
+            table = $('#Table-Invoice-Customer').DataTable({
+                language: {
+                    searchPlaceholder: "Nama Customer"
+                },
+                "processing": true,
+                "serverSide": true,
+                "ordering": true,
+                "order": [
+                    [0, 'desc']
+                ],
+                "ajax": {
+                    "url": "<?php echo base_url('index.php/home/view_Customer/') ?>",
+                    "type": "POST",
+                    
+                },
+                "deferRender": true,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
+                "columns": [
+                    {
+                        "data": "customer_id"
+                    },
+                    {
+                        "data": "customer_name"
+                    },
+                    {
+                        "data": "customer_alamat"
+                    },
+                    {
+                        "data": "customer_kontak_person"
+                    },
+                    {
+                        "data": "customer_telp"
+                    },
+                    {
+                        "data": "customer_id",
+                        className: 'text-center',
+                        "orderable": false,
+                        render: function(data, type, row) {
+                            let html = "<a class='btn btn-light' href='<?= base_url('index.php/detail/detail_customer/"+data+"')?>'><i class='fas fa-file-invoice-dollar'></i></a>"
+                            return html;
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+    <!-- end invoice Customer -->   
+
     <!-- Supir -->
     <script> //script datatables Supir
         $(document).ready(function() {
@@ -763,7 +816,7 @@
                 "serverSide": true,
                 "ordering": true,
                 "order": [
-                    [0, 'asc']
+                    [0, 'desc']
                 ],
                 "ajax": {
                     "url": "<?php echo base_url('index.php/home/view_Supir/') ?>",
@@ -1395,7 +1448,7 @@
                 "serverSide": true,
                 "ordering": true,
                 "order": [
-                    [0, 'asc']
+                    [0, 'desc']
                 ],
                 "ajax": {
                     "url": "<?php echo base_url('index.php/home/view_rute')?>",
@@ -1408,6 +1461,10 @@
                 //     [5, 10, 30, 50, 100]
                 // ],
                 "columns": [
+                    {
+                        "data": "rute_id",
+                        className: 'text-center'
+                    },
                     {
                         "data": "customer_name",
                         className: 'text-center'
@@ -1449,35 +1506,12 @@
                         }
                     },
                     {
-                        "data": "rute_gaji_engkel",
-                        className: 'text-center',
-                        render: function(data, type, row) {
-                            let html = 'Rp.'+rupiah(data);
-                            return html;
-                        }
-                    },
-                    {
-                        "data": "rute_gaji_tronton",
-                        className: 'text-center',
-                        render: function(data, type, row) {
-                            let html = 'Rp.'+rupiah(data);
-                            return html;
-                        }
-                    },
-                    {
-                        "data": "rute_gaji_engkel_rumusan",
-                        className: 'text-center',
-                        render: function(data, type, row) {
-                            let html = 'Rp.'+rupiah(data);
-                            return html;
-                        }
-                    },
-                    {
                         "data": "rute_id",
                         className: 'text-center',
                         "orderable": false,
                         render: function(data, type, row) {
-                            let html = "<a class='btn btn-light btn-update-rute' data-toggle='modal' data-target='#popup-update-rute' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a>"+
+                            let html = "<a class='btn btn-light btn-detail-rute' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
+                            "<a class='btn btn-light btn-update-rute' data-toggle='modal' data-target='#popup-update-rute' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
                             "<a class='btn btn-light btn-delete-rute' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
                             return html;
                         }
@@ -1540,6 +1574,33 @@
                                 });
                             }
                         })
+                    });
+                    $('.btn-detail-rute').click(function() {
+                        let pk = $(this).data('pk');
+                        $.ajax({ //ajax ambil data customer
+                            type: "GET",
+                            url: "<?php echo base_url('index.php/form/getrutebyid') ?>",
+                            dataType: "JSON",
+                            data: {
+                                id: pk
+                            },
+                            success: function(data) { //jika ambil data sukses
+                                $("#rute_id_detail").val(data["rute_id"]);
+                                $("#customer_id_detail").val(data["customer_id"]);
+                                $("#customer_name_detail").val(data["customer_name"]);
+                                $("#rute_dari_detail").val(data["rute_dari"]);
+                                $("#rute_ke_detail").val(data["rute_ke"]);
+                                $("#rute_muatan_detail").val(data["rute_muatan"]);
+                                $("#rute_uj_engkel_detail").val(rupiah(data["rute_uj_engkel"]));
+                                $("#rute_uj_tronton_detail").val(rupiah(data["rute_uj_tronton"]));
+                                $("#rute_tagihan_detail").val(rupiah(data["rute_tagihan"]));
+                                $("#rute_gaji_engkel_detail").val(rupiah(data["rute_gaji_engkel"]));
+                                $("#rute_gaji_tronton_detail").val(rupiah(data["rute_gaji_tronton"]));
+                                $("#rute_gaji_engkel_rumusan_detail").val(rupiah(data["rute_gaji_engkel_rumusan"]));
+                                $("#rute_gaji_tronton_rumusan_detail").val(rupiah(data["rute_gaji_tronton_rumusan"]));
+                                $("#rute_tonase_detail").val(rupiah(data["rute_tonase"]));
+                            }
+                        });
                     });
                 }
             });
@@ -1807,12 +1868,9 @@
                     },{
                         "data": "tonase"
                     },{
-                        "data": "harga",
-                    },{
-                        "data": "tonase",
+                        "data": "tagihan",
                         render: function(data, type, row) {
-                            var total = data*row["harga"];
-                            let html = "Rp."+rupiah(total);
+                            let html = "Rp."+rupiah(data);
                             return html;
                         }
                     },
@@ -1848,10 +1906,10 @@
                                 if(data_jo.includes(pk)==true){
                                     if($("#invoice_tonase").val()=="" || $("#invoice_tonase").val()=="0"){
                                         var tonase = parseInt(data["tonase"]);
-                                        var total = parseInt(data["tonase"])*parseInt(data["harga"]);
+                                        var total = parseInt(data["tagihan"]);
                                     }else{
                                         var tonase = parseInt($("#invoice_tonase").val())+parseInt(data["tonase"]);
-                                        var total = parseInt($("#invoice_total").val())+(parseInt(data["tonase"])*parseInt(data["harga"]));
+                                        var total = parseInt($("#invoice_total").val())+parseInt(data["tagihan"]);
                                     }
                                     if($("#invoice_ppn").val()=="Ya"){
                                         var ppn = total*0.1;
@@ -1865,7 +1923,7 @@
                                     $("#invoice_grand_total").val(grand_total);
                                 }else{
                                     var tonase = parseInt($("#invoice_tonase").val())-parseInt(data["tonase"]);
-                                    var total = parseInt($("#invoice_total").val())-(parseInt(data["tonase"])*parseInt(data["harga"]));
+                                    var total = parseInt($("#invoice_total").val())-parseInt(data["tagihan"]);
                                     $("#invoice_tonase").val(tonase);
                                     $("#invoice_total").val(total);
                                     if($("#invoice_ppn").val()=="Ya"){

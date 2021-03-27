@@ -9,8 +9,6 @@
                  Tambah Customer
             </span>
         </a>
-
-
     </div> 
     <div class="card shadow mb-4">
     <div class="card-header py-3">
@@ -234,5 +232,3 @@
     </div>
 </div>
 <!-- end pop up detail customer -->
-
-</div>

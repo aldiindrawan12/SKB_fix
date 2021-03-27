@@ -44,7 +44,7 @@
     <div class="modal-dialog modal-xl"  role="document"  >
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
-                <h5 class="font-weight-bold">Menambah Rute dan Muatan Baru</h5>
+                <h5 class="font-weight-bold">Tambah Rute dan Muatan Baru</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

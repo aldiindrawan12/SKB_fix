@@ -22,9 +22,9 @@
                         <tr>
                             <th width="10%" class="text-center" scope="col">ID Transaksi</th>
                             <th width="16%" class="text-center" scope="col">Nama Supir</th>
-                            <th width="16%" class="text-center"  scope="col">Jenis Transaksi</th>
                             <th width="12%" class="text-center" scope="col">Nominal</th>
                             <th width="16%" class="text-center" scope="col">Tanggal Transaksi</th>
+                            <th width="16%" class="text-center"  scope="col">Jenis Transaksi</th>
                             <th width="5%" class="text-center" scope="col">Detail</th>
                         </tr>
                     </thead>

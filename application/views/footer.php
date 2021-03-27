@@ -80,8 +80,8 @@
                 },
                 "deferRender": true,
                 "aLengthMenu": [
-                    [5, 10, 30, 50, 100],
-                    [5, 10, 30, 50, 100]
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
                 ],
                 "columns": [
                     {
@@ -312,8 +312,9 @@
                     {
                         "data": "status",
                         className: 'text-center',
+                        "orderable": false,
                             render: function(data, type, row) {
-                                    let html = "<a class='btn btn-warning btn-update-jo' data-pk='"+row['Jo_id']+"' data-toggle='modal' data-target='#update_jo' ><i class='fa fa-fw fa-exclamation-circle mr-2'></i>" + data + "</a>";
+                                    let html = "<a class='btn btn-block btn-sm btn-outline-warning btn-update-jo' data-pk='"+row['Jo_id']+"' data-toggle='modal' data-target='#update_jo' ><i class='fa fa-fw fa-exclamation-circle mr-2'></i>" + data + "</a>";
                                     return html;
                             }
                     },
@@ -540,8 +541,8 @@
                 },
                 "deferRender": true,
                 "aLengthMenu": [
-                    [5, 10, 30, 50, 100],
-                    [5, 10, 30, 50, 100]
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
                 ],
                 "columns": [
                     {
@@ -550,19 +551,6 @@
                     },
                     {
                         "data": "supir_name"
-                    },
-                    {
-                        "data": "bon_jenis",
-                        "orderable": true,
-                            render: function(data, type, row) {
-                                if (data == "Pembayaran") {
-                                    let html = "<span class='btn-sm btn-block btn btn-outline-success'><i class='fa fa-fw fa-check mr-2'></i>" + data + "</span>";
-                                    return html;
-                                } else {
-                                    let html = "<span class='btn-sm btn-block btn btn-outline-warning'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>" + data + "</span>";
-                                    return html;
-                                }
-                            }
                     },
                     {
                         "data": "bon_nominal",
@@ -574,6 +562,22 @@
                     {
                         "data": "bon_tanggal",
                         className: 'text-center'    
+                    },
+                    {
+                        "data": "bon_jenis",
+                        "orderable": true,
+                            render: function(data, type, row) {
+                                if (data == "Pembayaran") {
+                                    let html = "<span class='btn-sm btn-block btn btn-success'><i class='fa fa-fw fa-check mr-2'></i>" + data + "</span>";
+                                    return html;
+                                } else if (data == "Pengajuan"){
+                                    let html = "<span class='btn-sm btn-block btn btn-warning'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>" + data + "</span>";
+                                    return html;
+                                }else {
+                                    let html = "<span class='btn-sm btn-block btn btn-danger'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>" + data + "</span>";
+                                    return html;
+                                }
+                            }
                     },
                     {
                         "data": "bon_id",
@@ -634,8 +638,8 @@
                 },
                 "deferRender": true,
                 "aLengthMenu": [
-                    [5, 10, 30, 50, 100],
-                    [5, 10, 30, 50, 100]
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
                 ],
                 "columns": [
                     // {
@@ -768,8 +772,8 @@
                 },
                 "deferRender": true,
                 "aLengthMenu": [
-                    [5, 10, 30, 50, 100],
-                    [5, 10, 30, 50, 100]
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
                 ],
                 "columns": [
                     {
@@ -912,8 +916,8 @@
                 },
                 "deferRender": true,
                 "aLengthMenu": [
-                    [5, 10, 30, 50, 100],
-                    [5, 10, 30, 50, 100]
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
                 ],
                 "columns": [
                     {
@@ -982,8 +986,8 @@
                 },
                 "deferRender": true,
                 "aLengthMenu": [
-                    [5, 10, 30, 50, 100],
-                    [5, 10, 30, 50, 100]
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
                 ],
                 "columns": [
                     {
@@ -1129,8 +1133,8 @@
                 },
                 "deferRender": true,
                 "aLengthMenu": [
-                    [5, 10, 30, 50, 100],
-                    [5, 10, 30, 50, 100]
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
                 ],
                 "columns": [
                     {
@@ -1203,8 +1207,8 @@
                 },
                 "deferRender": true,
                 "aLengthMenu": [
-                    [5, 10, 30, 50, 100],
-                    [5, 10, 30, 50, 100]
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
                 ],
                 "columns": [
                     {
@@ -1294,8 +1298,8 @@
                 },
                 "deferRender": true,
                 "aLengthMenu": [
-                    [5, 10, 30, 50, 100],
-                    [5, 10, 30, 50, 100]
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
                 ],
                 "columns": [
                     {

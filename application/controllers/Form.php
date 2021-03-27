@@ -7,6 +7,7 @@ class Form extends CI_Controller {
 		parent::__construct();
 		$this->load->model('model_form');//load model
         $this->load->model('model_home');//load model
+        $this->load->model('model_detail');//load model
     }
 
     // fungsi view form
@@ -449,19 +450,48 @@ class Form extends CI_Controller {
         }
 
         public function update_jo_status($supir,$mobil){
-            $data_jo = $this->model_home->getjobyid($this->input->post("jo_id"));
-            $keterangan = "<strong>Catatan JO : </strong>".$data_jo["keterangan"]."<br><strong>Catatan Konfirmasi : </strong>".$this->input->post("Keterangan");
-            $data = array(
-                "jo_id" => $this->input->post("jo_id"),
-                "status" => $this->input->post("status"),
-                "tonase"=>$this->input->post("tonase"),
-                "bonus"=>str_replace(".","",$this->input->post("bonus")),
-                "keterangan"=>$keterangan,
-                "tanggal_bongkar"=>date('Y-m-d'),
+            if($this->input->post("status")!="Dibatalkan"){
+                $data_jo = $this->model_home->getjobyid($this->input->post("jo_id"));
+                $keterangan = "<strong>Catatan JO : </strong>".$data_jo["keterangan"]."<br><strong>Catatan Konfirmasi : </strong>".$this->input->post("Keterangan");
+                $data = array(
+                    "jo_id" => $this->input->post("jo_id"),
+                    "status" => $this->input->post("status"),
+                    "tonase"=>$this->input->post("tonase"),
+                    "bonus"=>str_replace(".","",$this->input->post("bonus")),
+                    "harga"=>str_replace(".","",$this->input->post("harga")),
+                    "keterangan"=>$keterangan,
+                    "tanggal_bongkar"=>date('Y-m-d'),
+                );
+                // echo var_dump($data);
+                $this->model_form->update_jo_status($data,$supir,$mobil);
+                redirect(base_url("index.php/home/konfirmasi_jo"));
+            }else{
+                $this->updatejobatal($this->input->post("jo_id"));
+            }
+        }
+        public function updatejobatal($Jo_id){
+            $data_jo = $this->model_home->getjobyid($Jo_id);
+            $data["data_jo"]=$data_jo;
+            $bon_id = $this->model_form->getbonid();
+            $isi_bon_id = [];
+            for($i=0;$i<count($bon_id);$i++){
+                $isi_bon_id[] = $bon_id[$i]["bon_id"];
+            }
+            date_default_timezone_set('Asia/Jakarta');
+            $data["data"]=array(
+                "bon_id"=>max($isi_bon_id)+1,
+                "supir_id"=>$data_jo["supir_id"],
+                "bon_jenis"=>"Pembatalan JO",
+                "bon_nominal"=>$data_jo["uang_jalan"],
+                "bon_keterangan"=>"Pembatalan JO",
+                "bon_tanggal"=>date("Y-m-d H:i:s")
             );
-            // echo var_dump($data);
-            $this->model_form->update_jo_status($data,$supir,$mobil);
-            redirect(base_url("index.php/home/konfirmasi_jo"));
+            $data["bon_id"] = max($isi_bon_id)+1;
+            $this->model_form->insert_bon($data["data"]);
+            $this->model_detail->update_jo_dibatalkan($data_jo["Jo_id"],$data_jo["supir_id"],$data_jo["mobil_no"],$data_jo["uang_jalan"]);
+            $data["supir"] = $this->model_home->getsupirbyid($data["data"]["supir_id"]);
+            $data["asal"] = "batal JO";
+            $this->load->view("print/bon_print",$data);
         }
     //end fungsi lain
 

@@ -120,12 +120,12 @@
                             <input autocomplete="off" class="form-control" type="text" name="tonase" id="tonase" onkeyup="uang()" required>    
                         </div>
                     </div>
-                     <!-- <div class="mb-3 row">
-                        <label class="col-sm-5 col-form-label" for="harga">Harga / Satuan</label>
+                     <div class="mb-3 row">
+                        <label class="col-sm-5 col-form-label" for="harga">Harga / Tonase</label>
                         <div class="col-sm-6">
                             <input autocomplete="off" class="form-control" type="text" name="harga" id="harga" onkeyup="uang()" required>
                         </div>
-                    </div> -->
+                    </div>
                     <div class="mb-3 row">
                         <label class="col-sm-5 col-form-label" for="bonus">Biaya Lain</label>
                         <div class="col-sm-6">

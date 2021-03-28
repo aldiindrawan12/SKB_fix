@@ -50,7 +50,7 @@
             
             <div class="container mt-3">
                 <div class="row">
-                    <div class="col table-bordered">
+                    <div class="col table-bordered rounded">
                         <form action="<?= base_url("index.php/form/insert_customerMenu")?>" method="POST">
                             <input type="text" name="customer_id" id="customer_id" hidden>
                             <div class="form-group mt-1">
@@ -74,7 +74,7 @@
                                 <input autocomplete="off" type="text" class="form-control" id="customer_keterangan" name="customer_keterangan" required>
                             </div>
                         </div>
-                        <div class="col table-bordered ml-2">
+                        <div class="col table-bordered ml-2 rounded">
                             <div class="w-100"></div>
                             <h6 class="font-weight-bold text-center mt-2">Transfer</h6>
                             <div class="form-group">

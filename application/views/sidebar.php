@@ -55,13 +55,13 @@
                     <span>Perintah Kerja</span>
                 </a>
                 <div id="Perintah_Kerja" class="collapse" aria-labelledby="headingTwo">
-                    <div class="bg-white py-2 collapse-inner rounded">
+                    <div class="bg-white  collapse-inner rounded">
                         <a class="collapse-item" id="JO_page" href="<?=base_url("index.php/home")?>">
-                            <i class="fas fa-envelope-open-text "></i>
+                            <i class="fas fa-envelope-open-text"></i>
                             <span id="coba">Job Order</span>
                         </a>
                         <a class="collapse-item" id="Konfirmasi_JO_page" href="<?=base_url("index.php/home/konfirmasi_jo")?>">
-                            <i class="fas fa-info-circle "></i>
+                            <i class="fas fa-info-circle"></i>
                             <span id="coba">Konfirmasi Job Order</span>
                         </a>
                         <a class="collapse-item" id="Invoice_page" href="<?=base_url("index.php/home/invoice")?>">   
@@ -69,7 +69,7 @@
                             <span>Buat Invoice</span>
                         </a>
                         <a class="collapse-item" id="Invoice_Customer_page" href="<?=base_url("index.php/home/invoice_customer")?>">   
-                            <i class="fas fa-receipt mr-2"></i>
+                            <i class="fas fa-receipt"></i>
                             <span>Data Invoice</span>
                         </a>
                     </div>
@@ -84,13 +84,13 @@
                     <span>Penggajian</span>
                 </a>
                 <div id="Penggajian" class="collapse" aria-labelledby="headingTwo">
-                    <div class="bg-white py-2 collapse-inner rounded">
+                    <div class="bg-white collapse-inner rounded">
                         <a class="collapse-item" id="Bon_page" href="<?=base_url("index.php/home/bon")?>">
                             <i class="fas fa-funnel-dollar"></i>
                             <span>Transaksi BON Supir</span>
                         </a>
                         <a class="collapse-item" id="Gaji_page" href="<?=base_url("index.php/home/gaji")?>">
-                            <i class='fas fa-dollar-sign'></i>
+                            <i class="fas fa-dollar-sign"></i>
                             <span>Transaksi Gaji Supir</span>
                         </a>
                     </div>
@@ -105,7 +105,7 @@
                     <span>Laporan</span>
                 </a>
                 <div id="Laporan" class="collapse" aria-labelledby="headingTwo">
-                    <div class="bg-white py-2 collapse-inner rounded">
+                    <div class="bg-white collapse-inner rounded">
                         <a class="collapse-item" id="Laporan_page" href="<?=base_url("index.php/home/report")?>">
                             <i class="fas fa-mail-bulk"></i>
                             <span>Laporan Job Order</span>

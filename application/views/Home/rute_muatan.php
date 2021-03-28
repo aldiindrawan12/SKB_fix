@@ -154,7 +154,7 @@
             <div class="font-size-sm m-3 text-justify">
                 <form action="<?= base_url("index.php/form/update_rute")?>" method="POST">
                     <div class="row">
-                        <div class="col border rounded border-secondary mr-3">
+                        <div class="col border rounded mr-3 ml-3 mb-3 mt-3">
                             <input type="text" name="rute_id_update" id="rute_id_update" hidden>
                             <input autocomplete="off" type="text" class="form-control" id="customer_id_update" name="customer_id_update" required hidden>
                             <div class="form-group">
@@ -181,7 +181,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col border rounded border-secondary mr-3">
+                        <div class="col border rounded mr-3 ml-3 mb-3 mt-3">
                             <small class="font-weight-bold">Detail Uang Jalan (Uj)</small>
                             <hr>
                             <div class="form-group">
@@ -199,7 +199,7 @@
                                 <input autocomplete="off" type="text" class="form-control" id="rute_tagihan_update" name="rute_tagihan_update" required onkeyup="uang(this)">
                             </div>
                         </div>
-                        <div class="col border rounded border-secondary">
+                        <div class="col border rounded mr-3 ml-3 mb-3 mt-3">
                             <small class="font-weight-bold">Detail Gaji Supir</small>
                             <hr>
                             <div class="form-group">

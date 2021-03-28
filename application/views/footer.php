@@ -643,7 +643,8 @@
                 ],
                 "columns": [
                     {
-                        "data": "customer_id"
+                        "data": "customer_id",
+                        className: 'text-center'
                     },
                     {
                         "data": "customer_name"

@@ -12,7 +12,7 @@
                 <form action="<?=base_url("index.php/form/insert_JO")?>" method="POST" class="row">
                     <div class="col-md-4 col-md-offset-4 mb-4">
                         <label class="form-label font-weight-bold " for="Customer">Customer</label>
-                        <select name="Customer" id="Customer" class="form-control selectpicker mb-4" data-live-search="true" required onchange="customer()">
+                        <select name="Customer" value="DESC" id="Customer" class="form-control selectpicker mb-4" data-live-search="true" required onchange="customer()">
                             <?php if(count($customer_by_name)==0){?>
                                 <option class="font-w700" disabled="disabled" selected value="">Customer</option>
                             <?php }else{?>

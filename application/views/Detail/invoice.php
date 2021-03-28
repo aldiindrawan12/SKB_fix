@@ -60,11 +60,11 @@
                             <thead>
                                 <tr>
                                     <th class="text-center" width="10%" scope="col">Tgl JO</th>
-                                    <th class="text-center" width="13%" scope="col">Tgl Bngkr</th>
+                                    <th class="text-center" width="13%" scope="col">Tgl Bongkar</th>
                                     <th class="text-center" width="10%" scope="col">Mobil</th>
                                     <th class="text-center" width="10%" scope="col">Dari</th>
                                     <th class="text-center" width="10%" scope="col">Ke</th>
-                                    <th class="text-center" width="8%" scope="col">Total Muatan</th>
+                                    <th class="text-center" width="10%" scope="col">Total Muatan</th>
                                     <th class="text-center" width="10%" scope="col">Harga/Satuan</th>
                                     <th class="text-center" width="10%" scope="col">Jumlah</th>
                                 </tr>

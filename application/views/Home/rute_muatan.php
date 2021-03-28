@@ -50,7 +50,7 @@
             <div class="font-size-sm m-3 text-justify">
                 <form action="<?= base_url("index.php/form/insert_rute")?>" method="POST">
                     <div class="row">
-                        <div class="col border rounded border-secondary mr-3">
+                        <div class="col border rounded mr-3 ml-3 mb-3 mt-3">
                             <div class="form-group">
                             <label class="form-label font-weight-bold " for="customer_id">Nama Customer</label>
                             <select name="customer_id" id="customer_id" class="form-control selectpicker" data-live-search="true" required>
@@ -73,7 +73,7 @@
                                 <input autocomplete="off" type="text" class="form-control" id="rute_muatan" name="rute_muatan" required>
                             </div>
                         </div>
-                        <div class="col border rounded border-secondary mr-3">
+                        <div class="col border rounded mr-3 ml-3 mb-3 mt-3">
                             <small class="font-weight-bold">Detail Uang Jalan (Uj)</small>
                             <hr>
                             <div class="form-group">
@@ -91,7 +91,7 @@
                                 <input autocomplete="off" type="text" class="form-control" id="rute_tagihan" name="rute_tagihan" required onkeyup="uang(this)">
                             </div>
                         </div>
-                        <div class="col border rounded border-secondary">
+                        <div class="col border rounded mr-3 ml-3 mb-3 mt-3">
                             <small class="font-weight-bold">Detail Gaji</small>
                             <hr>
                             <div class="form-group">
@@ -241,8 +241,8 @@
                 </button>
             </div>
             <div class="font-size-sm m-3 text-justify">
-                <div class="row">
-                        <div class="col border rounded border-secondary mr-3">
+                <div class="row ">
+                        <div class="col border rounded mr-3 ml-3 mb-3 mt-3">
                             <div class="form-group">
                                 <label class="form-label font-weight-bold " for="customer_name_detail">Nama Customer</label>
                                 <input autocomplete="off" type="text" class="form-control" id="customer_name_detail" name="customer_name_detail" readonly>
@@ -267,7 +267,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col border rounded border-secondary mr-3">
+                        <div class="col border rounded mr-3 ml-3 mb-3 mt-3">
                             <small class="font-weight-bold">Detail Uang Jalan (Uj)</small>
                             <hr>
                             <div class="form-group">
@@ -285,7 +285,7 @@
                                 <input autocomplete="off" type="text" class="form-control" id="rute_tagihan_detail" name="rute_tagihan_detail" readonly>
                             </div>
                         </div>
-                        <div class="col border rounded border-secondary">
+                        <div class="col border rounded mr-3 ml-3 mb-3 mt-3">
                             <small class="font-weight-bold">Detail Gaji Supir</small>
                             <hr>
                             <div class="form-group">

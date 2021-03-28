@@ -30,8 +30,8 @@
 </div>
 
 </div>
-<div class="modal fade mt-4" id="update_jo" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+<div class="modal fade mt-4 py-5" id="update_jo" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
                 <h5 class="font-weight-bold">Pilih Status JO</h5>
@@ -42,7 +42,7 @@
             
             <div class="container mt-3">
                 <div class="row">
-                    <div class="col table-bordered">
+                    <div class="col table-borderless ">
                         <form id="form_update_jo" method="POST">
                             <input type="text" name="jo_id" id="jo_id" hidden>
                             <div class="form-group">
@@ -72,7 +72,7 @@
                             </div>
                     </div>
                 </div>
-                <div class="form-group mt-3 mr-2 px-1">
+                <div class="form-group">
                     <button type="submit" class="btn btn-success float-right mb-3">Simpan</button>
                 </div>
                 </form>

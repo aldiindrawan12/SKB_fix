@@ -2,9 +2,11 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800 mt-3 mb-3">Buat Invoice</h1>
     </div> 
-    <div class="card shadow">
+    
+
     <!-- form invoice -->
-    <div class="card-body">
+    <div class="card shadow mb-2">
+        <div class="card-body">
         <form action="<?=base_url("index.php/form/insert_invoice")?>" method="POST">
             <div class="row">
                 <div class="col-md-5 border rounded border-secondary">
@@ -81,30 +83,40 @@
             </div>
         </form>
     
-        <div class="table-responsive">
-            <table class="table table-bordered" id="pilih-jo" width="100%" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th class="text-center" width="" scope="col">Dari</th>
-                        <th class="text-center" width="" scope="col">Ke</th>
-                        <th class="text-center" width="" scope="col">Muatan</th>
-                        <th class="text-center" width="" scope="col">Tgl.Brgkt</th>
-                        <th class="text-center" width="" scope="col">Tgl.Plng</th>
-                        <th class="text-center" width="" scope="col">Tonase</th>
-                        <!-- <th class="text-center" width="" scope="col">Harga</th> -->
-                        <th class="text-center" width="" scope="col">Inv./Tagihan</th>
-                        <th class="text-center" width="" scope="col">Pilih</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
     </div>
     <!-- end form invoice -->
-</div>
 
 </div>
+
+                <!-- table invoice -->
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="pilih-jo" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" width="" scope="col">Dari</th>
+                                        <th class="text-center" width="" scope="col">Ke</th>
+                                        <th class="text-center" width="" scope="col">Muatan</th>
+                                        <th class="text-center" width="" scope="col">Tgl.Brgkt</th>
+                                        <th class="text-center" width="" scope="col">Tgl.Plng</th>
+                                        <th class="text-center" width="" scope="col">Tonase</th>
+                                        <!-- <th class="text-center" width="" scope="col">Harga</th> -->
+                                        <th class="text-center" width="" scope="col">Inv./Tagihan</th>
+                                        <th class="text-center" width="" scope="col">Pilih</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- end table invoice -->
+
+</div>
+</div>
+
+
 <script>
     function customer(){
         var nama_customer = $("#customer_id option:selected").text();

@@ -1538,20 +1538,16 @@
                         className: 'text-center'
                     },
                     {
-                        "data": "customer_name",
-                        className: 'text-center'
+                        "data": "customer_name"
                     },
                     {
-                        "data": "rute_dari",
-                        className: 'text-center'
+                        "data": "rute_dari"
                     },
                     {
-                        "data": "rute_ke",
-                        className: 'text-center'
+                        "data": "rute_ke"
                     },
                     {
-                        "data": "rute_muatan",
-                        className: 'text-center'
+                        "data": "rute_muatan"
                     },
                     {
                         "data": "rute_uj_engkel",

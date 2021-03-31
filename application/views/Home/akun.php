@@ -71,6 +71,7 @@
                         <select name="role" id="role" class="form-control custom-select col-sm-5 ml-4" required>
                             <option class="font-w700" disabled="disabled" selected value="">Jenis Role</option>
                             <option value="Super User">Super User</option>
+                            <option value="Supervisor">Supervisor</option>
                             <option value="Operator">Operator</option>
                         </select>
                     </div>

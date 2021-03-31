@@ -19,6 +19,7 @@
             <table class="table table-bordered" id="Table-rute" width="100%" cellspacing="0">
                 <thead>
                     <tr>
+                        <th class="text-center" scope="col">No</th>
                         <th class="text-center" scope="col">ID Rute</th>
                         <th class="text-center" scope="col">Nama Customer</th>
                         <th class="text-center" scope="col">Dari</th>

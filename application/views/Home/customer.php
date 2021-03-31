@@ -74,7 +74,7 @@
                                 <input autocomplete="off" type="text" class="form-control" id="customer_keterangan" name="customer_keterangan" required>
                             </div>
                         </div>
-                        <div class="col table-bordered ml-2 rounded">
+                        <!-- <div class="col table-bordered ml-2 rounded">
                             <div class="w-100"></div>
                             <h6 class="font-weight-bold text-center mt-2">Transfer</h6>
                             <div class="form-group">
@@ -89,7 +89,7 @@
                                 <label for="customer_AN" class="form-label font-weight-bold">Atas Nama</label>
                                 <input autocomplete="off" type="text" class="form-control" id="customer_AN" name="customer_AN" required>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="form-group mt-3 mr-2 px-1">
@@ -143,7 +143,7 @@
                                 <input autocomplete="off" type="text" class="form-control" id="customer_keterangan_update" name="customer_keterangan_update" required>
                             </div>
                     </div>
-                    <div class="col table-bordered ml-2">
+                    <!-- <div class="col table-bordered ml-2">
                         <div class="w-100"></div>
                         <h6 class="font-weight-bold text-center mt-2">Transfer</h6>
                         <div class="form-group">
@@ -158,7 +158,7 @@
                             <label for="customer_AN_update" class="form-label font-weight-bold">Atas Nama</label>
                             <input autocomplete="off" type="text" class="form-control" id="customer_AN_update" name="customer_AN_update" required>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 </div>
                 <div class="form-group mt-3 mr-2 px-1">
@@ -202,10 +202,14 @@
                                 <td class="font-weight-bold" style="width: 20%;">Telp/HP</td>
                                 <td name="customer_telp"></td>
                             </tr>
+                            <tr>
+                                <td class="font-weight-bold" style="width: 20%;">Keterangan</td>
+                                <td name="customer_keterangan"></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="">
+                <!-- <div class="">
                     <table class="table table-bordered">
                         <tbody>
                             <tr>
@@ -225,7 +229,7 @@
                             </tr>
                         </tbody>
                     </table>
-                </div>
+                </div> -->
             </div>
             </div>
         </div>

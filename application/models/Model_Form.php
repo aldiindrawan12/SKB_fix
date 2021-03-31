@@ -29,6 +29,10 @@ class Model_Form extends CI_model
         return $this->db->get_where("skb_supir",array("supir_id"=>$supir_id))->row_array();
     }
 
+    public function getallsupir(){
+        return $this->db->get("skb_supir")->result_array();
+    }
+
     public function getakunbyname($akun_name){
         return $this->db->get_where("skb_akun",array("akun_name"=>$akun_name))->row_array();
     }
@@ -48,6 +52,30 @@ class Model_Form extends CI_model
         $this->db->update("skb_mobil");
 
         return $this->db->insert("skb_job_order", $data);
+    }
+
+    public function accsupir($supir_id){
+        $this->db->set("validasi","ACC");
+        $this->db->where("supir_id",$supir_id);
+        $this->db->update("skb_supir");
+    }
+
+    public function acccustomer($customer_id){
+        $this->db->set("validasi","ACC");
+        $this->db->where("customer_id",$customer_id);
+        $this->db->update("skb_customer");
+    }
+
+    public function acctruck($truck_id){
+        $this->db->set("validasi","ACC");
+        $this->db->where("mobil_no",$truck_id);
+        $this->db->update("skb_mobil");
+    }
+
+    public function accrute($rute_id){
+        $this->db->set("validasi_rute","ACC");
+        $this->db->where("rute_id",$rute_id);
+        $this->db->update("skb_rute");
     }
 
     public function update_jo_status($data,$supir,$mobil){
@@ -76,6 +104,18 @@ class Model_Form extends CI_model
         }
 
         return $this->db->insert("skb_invoice", $data);
+    }
+
+    public function update_status_aktif_supir($data){
+        $this->db->set("status_aktif",$data["status_aktif"]);
+        if($data["status_aktif"]=="Aktif"){
+            $this->db->set("supir_tgl_aktif",$data["supir_tgl_nonaktif"]);
+            $this->db->set("supir_tgl_nonaktif",null);
+        }else{
+            $this->db->set("supir_tgl_nonaktif",$data["supir_tgl_nonaktif"]);
+        }
+        $this->db->where("supir_id",$data["supir_id"]);
+        $this->db->update("skb_supir");
     }
 
     public function insert_bon($data){
@@ -168,9 +208,9 @@ class Model_Form extends CI_model
         $this->db->set("customer_alamat",$data["customer_alamat"]);
         $this->db->set("customer_kontak_person",$data["customer_kontak_person"]);
         $this->db->set("customer_telp",$data["customer_telp"]);
-        $this->db->set("customer_bank",$data["customer_bank"]);
-        $this->db->set("customer_rekening",$data["customer_rekening"]);
-        $this->db->set("customer_AN",$data["customer_AN"]);
+        // $this->db->set("customer_bank",$data["customer_bank"]);
+        // $this->db->set("customer_rekening",$data["customer_rekening"]);
+        // $this->db->set("customer_AN",$data["customer_AN"]);
         $this->db->set("customer_keterangan",$data["customer_keterangan"]);
         $this->db->where("customer_id",$data["customer_id"]);
         $this->db->update("skb_customer");

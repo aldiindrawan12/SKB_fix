@@ -33,7 +33,7 @@
                         </a>
                         <a class="collapse-item" id="Supir_page" href="<?=base_url("index.php/home/penggajian")?>">
                             <i class="fas fa-money-check-alt"></i>
-                            <span>Supir</span>
+                            <span>Driver</span>
                         </a>
                         <a class="collapse-item"  id="Customer_page" href="<?=base_url("index.php/home/customer")?>">
                             <i class="fas fa-users"></i>

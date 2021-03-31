@@ -165,10 +165,11 @@ class Form extends CI_Controller {
                 "customer_kontak_person"=>$this->input->post("customer_kontak_person"),
                 "customer_telp"=>$this->input->post("customer_telp"),
                 "customer_keterangan"=>$this->input->post("customer_keterangan"),
-                "customer_bank"=>$this->input->post("customer_bank"),
-                "customer_rekening"=>$this->input->post("customer_rekening"),
-                "customer_AN"=>$this->input->post("customer_AN"),
-                "status_hapus"=>"No"
+                // "customer_bank"=>$this->input->post("customer_bank"),
+                // "customer_rekening"=>$this->input->post("customer_rekening"),
+                // "customer_AN"=>$this->input->post("customer_AN"),
+                "status_hapus"=>"No",
+                "validasi"=>"Pending"
             );
             echo var_dump($data);
             $this->model_form->insert_customer($data);
@@ -177,6 +178,22 @@ class Form extends CI_Controller {
         }
 
         public function insert_supir(){
+            $config['upload_path'] = './assets/berkas/driver'; //letak folder file yang akan diupload
+            $config['allowed_types'] = 'jpg|png|img|jpeg'; //jenis file yang dapat diterima
+            $config['max_size'] = '2000'; // kb
+            $this->load->library('upload', $config); //deklarasi library upload (config)
+            if ($this->upload->do_upload('file_foto')) {
+                $this->upload->data();
+                $file_foto =  $this->upload->data('file_name');
+            }
+            if ($this->upload->do_upload('file_sim')) {
+                $this->upload->data();
+                $file_sim =  $this->upload->data('file_name');
+            }
+            if ($this->upload->do_upload('file_ktp')) {
+                $this->upload->data();
+                $file_ktp =  $this->upload->data('file_name');
+            }
             $data=array(
                 "supir_name"=>$this->input->post("Supir"),
                 "supir_kasbon"=>0,
@@ -184,11 +201,24 @@ class Form extends CI_Controller {
                 "status_hapus"=>"NO",
                 "supir_alamat"=>$this->input->post("supir_alamat"),
                 "supir_telp"=>$this->input->post("supir_telp"),
+                "supir_keterangan"=>$this->input->post("supir_keterangan"),
                 "supir_ktp"=>$this->input->post("supir_ktp"),
                 "supir_sim"=>$this->input->post("supir_sim"),
-                "supir_keterangan"=>$this->input->post("supir_keterangan")
+                "supir_panggilan"=>$this->input->post("supir_panggilan"),
+                "status_aktif"=>"Aktif",
+                "supir_tgl_aktif"=>$this->input->post("supir_tgl_aktif"),
+                "supir_tgl_lahir"=>$this->input->post("supir_tgl_lahir"),
+                "supir_tempat_lahir"=>$this->input->post("supir_tempat_lahir"),
+                "file_foto"=>$file_foto,
+                "file_sim"=>$file_sim,
+                "file_ktp"=>$file_ktp,
+                "darurat_nama"=>$this->input->post("darurat_nama"),
+                "darurat_telp"=>$this->input->post("darurat_telp"),
+                "darurat_referensi"=>$this->input->post("darurat_referensi"),
+                "supir_tgl_sim"=>$this->input->post("supir_tgl_sim"),
+                "validasi"=>"Pending",
             );
-            // echo($data["customer_name"]);
+            // echo var_dump($data)."<br><br>";
             $this->model_form->insert_supir($data);
 			$this->session->set_flashdata('status-add-supir', 'Berhasil');
             redirect(base_url("index.php/home/penggajian"));
@@ -207,7 +237,8 @@ class Form extends CI_Controller {
                 "mobil_dump"=>$this->input->post("mobil_dump"),
                 "mobil_tahun"=>$this->input->post("mobil_tahun"),
                 "mobil_berlaku"=>$this->input->post("mobil_berlaku"),
-                "mobil_pajak"=>$this->input->post("mobil_pajak")
+                "mobil_pajak"=>$this->input->post("mobil_pajak"),
+                "validasi"=>"Pending"
             );
             // echo var_dump($data);
             $this->model_form->insert_truck($data);
@@ -242,7 +273,8 @@ class Form extends CI_Controller {
                 "rute_tonase"=>$tonase,
                 "rute_gaji_engkel_rumusan"=>$rute_gaji_engkel_rumusan,
                 "rute_gaji_tronton_rumusan"=>$rute_gaji_tronton_rumusan,
-                "rute_status_hapus"=>"NO"
+                "rute_status_hapus"=>"NO",
+                "validasi_rute"=>"Pending"
             );
             // echo var_dump($data);
             $this->model_form->insert_rute($data);
@@ -306,9 +338,9 @@ class Form extends CI_Controller {
                 "customer_alamat" => $this->input->post("customer_alamat_update"),
                 "customer_kontak_person" => $this->input->post("customer_kontak_person_update"),
                 "customer_telp" => $this->input->post("customer_telp_update"),
-                "customer_bank" => $this->input->post("customer_bank_update"),
-                "customer_rekening" => $this->input->post("customer_rekening_update"),
-                "customer_AN" => $this->input->post("customer_AN_update"),
+                // "customer_bank" => $this->input->post("customer_bank_update"),
+                // "customer_rekening" => $this->input->post("customer_rekening_update"),
+                // "customer_AN" => $this->input->post("customer_AN_update"),
                 "customer_keterangan" => $this->input->post("customer_keterangan_update"),
             );
             // echo var_dump($data);
@@ -340,6 +372,30 @@ class Form extends CI_Controller {
             $this->model_form->deletesupir($supir_id);
             $this->session->set_flashdata('status-delete-supir', 'Berhasil');
             echo $supir_id;
+        }
+
+        public function accsupir(){
+            $supir_id = $this->input->get("id");
+            $this->model_form->accsupir($supir_id);
+            echo $supir_id;
+        }
+
+        public function acccustomer(){
+            $customer_id = $this->input->get("id");
+            $this->model_form->acccustomer($customer_id);
+            echo $customer_id;
+        }
+
+        public function acctruck(){
+            $truck_id = $this->input->get("id");
+            $this->model_form->acctruck($truck_id);
+            echo $truck_id;
+        }
+
+        public function accrute(){
+            $rute_id = $this->input->get("id");
+            $this->model_form->accrute($rute_id);
+            echo $rute_id;
         }
 
         public function deletecustomer(){
@@ -541,4 +597,22 @@ class Form extends CI_Controller {
         echo json_encode($rute);        
     }
     // end fungsi form joborder
+
+    public function update_status_aktif_supir(){
+        $data = array(
+            "supir_id"=>$this->input->post("update_status_supir_id"),
+            "supir_tgl_nonaktif"=>$this->input->post("update_status_tanggal_nonaktif"),
+            "status_aktif"=>$this->input->post("update_status_status_aktif")
+        );
+        $this->model_form->update_status_aktif_supir($data);
+        redirect(base_url("index.php/home/penggajian"));
+    }
+
+    public function generate_selisih_tanggal($tanggal_sim){
+        $tanggal_now = date("Y-m-d");
+        $tgl1 = new DateTime($tanggal_now);
+        $tgl2 = new DateTime($tanggal_sim);
+        $d = $tgl2->diff($tgl1)->days + 1;
+        echo $d;
+    }
 }

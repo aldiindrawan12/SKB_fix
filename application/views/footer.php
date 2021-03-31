@@ -85,6 +85,13 @@
                 ],
                 "columns": [
                     {
+                        "data": "mobil_no",
+                        render: function(data, type, row) {
+                            let html = row["no"];
+                            return html;
+                        }
+                    },
+                    {
                         "data": "mobil_no"
                     },
                     {
@@ -111,10 +118,17 @@
                         className: 'text-center font-weight-bold',
                         "orderable": false,
                         render: function(data, type, row) {
-                            let html = "<a class='btn btn-light btn-detail-truck' href='javascript:void(0)' data-toggle='modal' data-target='#popup-kendaraan' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
-                            "<a class='btn btn-light btn-update-truck' href='javascript:void(0)' data-toggle='modal' data-target='#popup-update-truck' data-pk='"+data+"'><i class='fas fa-pen-square'></i></a> || "+
-                            "<a class='btn btn-light btn-delete-truck' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-trash-alt'></i></a>";
-                            return html;
+                            var role_user = "<?=$_SESSION['role']?>";
+                            if(role_user!="Supervisor"){
+                                let html = "<a class='btn btn-light btn-detail-truck' href='javascript:void(0)' data-toggle='modal' data-target='#popup-kendaraan' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
+                                "<a class='btn btn-light btn-update-truck' href='javascript:void(0)' data-toggle='modal' data-target='#popup-update-truck' data-pk='"+data+"'><i class='fas fa-pen-square'></i></a> || "+
+                                "<a class='btn btn-light btn-delete-truck' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-trash-alt'></i></a>";
+                                return html;
+                            }else{
+                                let html = "<a class='btn btn-light btn-detail-truck' href='javascript:void(0)' data-toggle='modal' data-target='#popup-kendaraan' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
+                                "<a class='btn btn-light btn-acc-truck' href='javascript:void(0)' data-pk='"+data+"'>ACC<i class='fas fa-eye'></i></a>";
+                                return html;
+                            }
                         }
                     }
                 ],
@@ -189,6 +203,34 @@
                                 $('#mobil_keterangan_update').val(data["mobil_keterangan"]); //set value
                             }
                         });
+                    });
+                    $('.btn-acc-truck').click(function() {
+                        let pk = $(this).data('pk');
+                        Swal.fire({
+                            title: 'ACC Tambah Kendaraan',
+                            icon: "warning",
+                            text: 'Yakin anda ingin ACC Data Kendaraan ini?',
+                            showDenyButton: true,
+                            denyButtonText: `Batal`,
+                            confirmButtonText: 'ACC',
+                            denyButtonColor: '#808080',
+                            confirmButtonColor: '#FF0000',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/acctruck') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }else{
+                            }
+                        })
                     });
                 },
                 
@@ -644,7 +686,11 @@
                 "columns": [
                     {
                         "data": "customer_id",
-                        className: 'text-center'
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            let html = row["nomor"];
+                            return html;
+                        }
                     },
                     {
                         "data": "customer_name"
@@ -663,10 +709,17 @@
                         className: 'text-center',
                         "orderable": false,
                         render: function(data, type, row) {
-                            let html = "<a class='btn btn-light btn-detail-customer' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-customer' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
-                            "<a class='btn btn-light btn-update-customer' data-toggle='modal' data-target='#popup-update-customer' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
-                            "<a class='btn btn-light btn-delete-customer' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
-                            return html;
+                            var role_user = "<?=$_SESSION['role']?>";
+                            if(role_user!="Supervisor"){
+                                let html = "<a class='btn btn-light btn-detail-customer' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-customer' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
+                                "<a class='btn btn-light btn-update-customer' data-toggle='modal' data-target='#popup-update-customer' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
+                                "<a class='btn btn-light btn-delete-customer' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
+                                return html;
+                            }else{
+                                let html = "<a class='btn btn-light btn-detail-customer' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-customer' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
+                                "<a class='btn btn-light btn-acc-customer' href='javascript:void(0)' data-pk='"+data+"'>ACC<i class='fas fa-eye'></i></a>";
+                                return html;
+                            }
                         }
                     }
                 ],
@@ -689,9 +742,9 @@
                                 $("#customer_alamat_update").val(data["customer_alamat"]);
                                 $("#customer_kontak_person_update").val(data["customer_kontak_person"]);
                                 $("#customer_telp_update").val(data["customer_telp"]);
-                                $("#customer_bank_update").val(data["customer_bank"]);
-                                $("#customer_rekening_update").val(data["customer_rekening"]);
-                                $("#customer_AN_update").val(data["customer_AN"]);
+                                // $("#customer_bank_update").val(data["customer_bank"]);
+                                // $("#customer_rekening_update").val(data["customer_rekening"]);
+                                // $("#customer_AN_update").val(data["customer_AN"]);
                                 $("#customer_keterangan_update").val(data["customer_keterangan"]);
                             }
                         });
@@ -710,9 +763,10 @@
                                 $('td[name="customer_alamat"]').text(data["customer_alamat"]); //set value
                                 $('td[name="customer_kontak_person"]').text(data["customer_kontak_person"]); //set value
                                 $('td[name="customer_telp"]').text(data["customer_telp"]); //set value
-                                $('td[name="customer_bank"]').text(data["customer_bank"]); //set value
-                                $('td[name="customer_rekening"]').text(data["customer_rekening"]); //set value
-                                $('td[name="customer_AN"]').text(data["customer_AN"]); //set value
+                                $('td[name="customer_keterangan"]').text(data["customer_keterangan"]); //set value
+                                // $('td[name="customer_bank"]').text(data["customer_bank"]); //set value
+                                // $('td[name="customer_rekening"]').text(data["customer_rekening"]); //set value
+                                // $('td[name="customer_AN"]').text(data["customer_AN"]); //set value
                             }
                         });
                     }); 
@@ -741,6 +795,34 @@
                                         location.reload();
                                     }
                                 });
+                            }
+                        })
+                    });
+                    $('.btn-acc-customer').click(function() {
+                        let pk = $(this).data('pk');
+                        Swal.fire({
+                            title: 'ACC Tambah Customer',
+                            icon: "warning",
+                            text: 'Yakin anda ingin ACC Data Customer ini?',
+                            showDenyButton: true,
+                            denyButtonText: `Batal`,
+                            confirmButtonText: 'ACC',
+                            denyButtonColor: '#808080',
+                            confirmButtonColor: '#FF0000',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/acccustomer') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }else{
                             }
                         })
                     });
@@ -833,18 +915,64 @@
                 "columns": [
                     {
                         "data": "supir_id",
-                        className: 'text-center'
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            let html = row["no"];
+                            return html;
+                        }
                     },
                     {
                         "data": "supir_name",
                         
                     },
                     {
-                        "data": "supir_kasbon",
+                        "data": "supir_id",
+                        className: 'text-center font-weight-bold',
+                        "orderable": false,
                         render: function(data, type, row) {
-                            let html = 'Rp.'+rupiah(data);
+                            let html = 'Rp.'+rupiah(row["supir_kasbon"])+"<a class='btn btn-light' href='<?= base_url('index.php/detail/detail_report_bon/"+data+"')?>'><i class='fas fa-eye'></i></a>";
                             return html;
                         }
+                    },
+                    {
+                        "data": "supir_tgl_sim",
+                        className: 'text-center',
+                        "orderable": false,
+                            render: function(data, type, row) {
+                                var selisih = "";
+                                $.ajax({
+                                    async: false,
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/generate_selisih_tanggal/') ?>"+data,
+                                    dataType: "text",
+                                    success: function(tanggal) {
+                                        selisih = tanggal;
+                                    }
+                                });
+                                if(selisih<31){
+                                    let html = "<a class='btn btn-block btn-sm btn-danger'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+selisih+" hari</a>";
+                                    return html;
+                                }else{
+                                    let html = "<a class='btn btn-block btn-sm btn-success'><i class='fa fa-fw fa-check mr-2'></i>"+selisih+" hari</a>";
+                                    return html;
+                                }
+                            }
+
+                    },
+                    {
+                        "data": "status_aktif",
+                        className: 'text-center',
+                        "orderable": false,
+                            render: function(data, type, row) {
+                                if (data == "Aktif") {
+                                    let html = "<a class='btn btn-block btn-sm btn-outline-success btn-update-status-aktif-supir' data-pk='"+row['supir_id']+"' data-toggle='modal' data-target='#update_status_aktif_supir' ><i class='fa fa-fw fa-check mr-2'></i>" + data + "</a>";
+                                    return html;
+                                } else {
+                                    let html = "<a class='btn btn-block btn-sm btn-outline-danger btn-update-status-aktif-supir' data-pk='"+row['supir_id']+"' data-toggle='modal' data-target='#update_status_aktif_supir' ><i class='fa fa-fw fa-exclamation-circle mr-2'></i>" + data + "</a>";
+                                    return html;
+                                }
+                            }
+
                     },
                     {
                         "data": "status_jalan",
@@ -866,11 +994,17 @@
                         className: 'text-center font-weight-bold',
                         "orderable": false,
                         render: function(data, type, row) {
-                            let html = "<a class='btn btn-light btn-detail-supir' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-supir' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
-                            "<a class='btn btn-light btn-update-supir' data-toggle='modal' data-target='#popup-update-supir' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
-                            "<a class='btn btn-light btn-delete-supir' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
-                            // "<a class='btn btn-light' href='<?= base_url('index.php/detail/detail_penggajian/"+data+"')?>'><i class='fas fa-eye'></i></a> || "+
-                            return html;
+                            var role_user = "<?=$_SESSION['role']?>";
+                            if(role_user!="Supervisor"){
+                                let html = "<a class='btn btn-light btn-detail-supir' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-supir' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
+                                "<a class='btn btn-light btn-update-supir' data-toggle='modal' data-target='#popup-update-supir' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
+                                "<a class='btn btn-light btn-delete-supir' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
+                                return html;
+                            }else{
+                                let html = "<a class='btn btn-light btn-detail-supir' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-supir' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
+                                "<a class='btn btn-light btn-acc-supir' href='javascript:void(0)' data-pk='"+data+"'>ACC<i class='fas fa-eye'></i></a>";
+                                return html;
+                            }
                         }
                     }
                 ],
@@ -895,6 +1029,22 @@
                             }
                         });
                     });
+                    $('.btn-update-status-aktif-supir').click(function() {
+                        let pk = $(this).data('pk');
+                        $.ajax({
+                            type: "GET",
+                            url: "<?php echo base_url('index.php/form/getsupirname') ?>",
+                            dataType: "JSON",
+                            data: {
+                                id: pk
+                            },
+                            success: function(data) {
+                                $("#update_status_supir_id").val(data["supir_id"]);
+                                $("#update_status_supir_name").val(data["supir_name"]);
+                                $("#update_status_status_aktif").val(data["status_aktif"]);
+                            }
+                        });
+                    });
                     $('.btn-detail-supir').click(function() {
                         let pk = $(this).data('pk');
                         // alert(pk);
@@ -907,22 +1057,35 @@
                             },
                             success: function(data) { //jika ambil data sukses
                             // alert(data);
-                                $('td[name="supir_name"]').text(data["supir_name"]); //set value
+                                $('td[name="supir_name"]').text(data["supir_name"]+" ("+data["supir_panggilan"]+")"); //set value
                                 $('td[name="supir_alamat"]').text(data["supir_alamat"]); //set value
+                                $('td[name="supir_ttl"]').text(data["supir_tempat_lahir"]+","+data["supir_tgl_lahir"]); //set value
                                 $('td[name="supir_telp"]').text(data["supir_telp"]); //set value
                                 $('td[name="supir_ktp"]').text(data["supir_ktp"]); //set value
-                                $('td[name="supir_sim"]').text(data["supir_sim"]); //set value
+                                $('td[name="supir_sim"]').text(data["supir_sim"]+" (s/d "+data["supir_tgl_sim"]+")"); //set value
                                 $('td[name="supir_kasbon"]').text("Rp."+rupiah(data["supir_kasbon"])); //set value
                                 $('td[name="supir_keterangan"]').text(data["supir_keterangan"]); //set value
+                                $('#aktif').text(data["status_aktif"]); //set value
+                                if(data["status_aktif"]=="Aktif"){
+                                    $('#tgl-aktif').text(data["supir_tgl_aktif"]+" - Sekarang"); //set value
+                                }else{
+                                    $('#tgl-aktif').text(data["supir_tgl_aktif"]+" - "+data["supir_tgl_nonaktif"]); //set value
+                                }
+                                $('td[name="darurat_nama"]').text(data["darurat_nama"]); //set value
+                                $('td[name="darurat_referensi"]').text(data["darurat_referensi"]); //set value
+                                $('td[name="darurat_telp"]').text(data["darurat_telp"]); //set value
+                                $('#foto').attr('src','<?= base_url("assets/berkas/driver/")?>'+data["file_foto"]);
+                                $('#sim').attr('src','<?= base_url("assets/berkas/driver/")?>'+data["file_sim"]);
+                                $('#ktp').attr('src','<?= base_url("assets/berkas/driver/")?>'+data["file_ktp"]);
                             }
                         });
                     }); 
                     $('.btn-delete-supir').click(function() {
                         let pk = $(this).data('pk');
                         Swal.fire({
-                            title: 'Hapus Supir',
+                            title: 'Hapus Driver',
                             icon: "warning",
-                            text: 'Yakin anda ingin menghapus supir ini?',
+                            text: 'Yakin anda ingin menghapus Driver ini?',
                             showDenyButton: true,
                             denyButtonText: `Batal`,
                             confirmButtonText: 'Hapus',
@@ -941,6 +1104,34 @@
                                         location.reload();
                                     }
                                 });
+                            }
+                        })
+                    });
+                    $('.btn-acc-supir').click(function() {
+                        let pk = $(this).data('pk');
+                        Swal.fire({
+                            title: 'ACC Tambah Driver',
+                            icon: "warning",
+                            text: 'Yakin anda ingin ACC Data Driver ini?',
+                            showDenyButton: true,
+                            denyButtonText: `Batal`,
+                            confirmButtonText: 'ACC',
+                            denyButtonColor: '#808080',
+                            confirmButtonColor: '#FF0000',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/accsupir') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }else{
                             }
                         })
                     });
@@ -1535,6 +1726,14 @@
                 "columns": [
                     {
                         "data": "rute_id",
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            let html = row["no"];
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "rute_id",
                         className: 'text-center'
                     },
                     {
@@ -1578,11 +1777,19 @@
                         className: 'text-center',
                         "orderable": false,
                         render: function(data, type, row) {
-                            let html = "<a class='btn btn-light btn-detail-rute' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
-                            "<a class='btn btn-light btn-update-rute' data-toggle='modal' data-target='#popup-update-rute' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
-                            "<a class='btn btn-light btn-delete-rute' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
-                            return html;
+                            var role_user = "<?=$_SESSION['role']?>";
+                            if(role_user!="Supervisor"){
+                                let html = "<a class='btn btn-light btn-detail-rute' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
+                                "<a class='btn btn-light btn-update-rute' data-toggle='modal' data-target='#popup-update-rute' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
+                                "<a class='btn btn-light btn-delete-rute' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
+                                return html;
+                            }else{
+                                let html = "<a class='btn btn-light btn-detail-rute' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
+                                "<a class='btn btn-light btn-acc-rute' href='javascript:void(0)' data-pk='"+data+"'>ACC<i class='fas fa-eye'></i></a>";
+                                return html;
+                            }
                         }
+                        
                     }
                 ],
                 drawCallback: function() {
@@ -1669,6 +1876,34 @@
                                 $("#rute_tonase_detail").val(rupiah(data["rute_tonase"]));
                             }
                         });
+                    });
+                    $('.btn-acc-rute').click(function() {
+                        let pk = $(this).data('pk');
+                        Swal.fire({
+                            title: 'ACC Tambah Rute dan Muatan',
+                            icon: "warning",
+                            text: 'Yakin anda ingin ACC Data Rute dan Muatan ini?',
+                            showDenyButton: true,
+                            denyButtonText: `Batal`,
+                            confirmButtonText: 'ACC',
+                            denyButtonColor: '#808080',
+                            confirmButtonColor: '#FF0000',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/accrute') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }else{
+                            }
+                        })
                     });
                 }
             });
@@ -1762,7 +1997,7 @@
                 Swal.fire({
                         title: "Berhasil",
                         icon: "success",
-                        text: "Menambahkan data supir",
+                        text: "Menambahkan data driver",
                         type: "success",
                         timer: 2000
                     });
@@ -1771,7 +2006,7 @@
                 Swal.fire({
                         title: "Berhasil",
                         icon: "success",
-                        text: "Update data supir",
+                        text: "Update data driver",
                         type: "success",
                         timer: 2000
                     });
@@ -1780,7 +2015,7 @@
                 Swal.fire({
                         title: "Berhasil",
                         icon: "success",
-                        text: "Menghapus data supir",
+                        text: "Menghapus data driver",
                         type: "error",
                         timer: 2000
                     });
@@ -1854,7 +2089,27 @@
                 autoclose: true,
                 todayHighlight: true,
             });
+            $("#supir_tgl_lahir").datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true,
+            });
+            $("#supir_tgl_sim").datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true,
+            });
+            $("#supir_tgl_aktif").datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true,
+            });
             $("#invoice_tgl").datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true
+            });
+            $("#update_status_tanggal_nonaktif").datepicker({
                 format: 'yyyy-mm-dd',
                 autoclose: true,
                 todayHighlight: true
@@ -1863,8 +2118,10 @@
             var date = new Date();
             if(date.getMonth()<10){
                 $("#invoice_tgl").val(date.getFullYear()+"-0"+date.getMonth()+"-"+date.getDate());
+                $("#update_status_tanggal_nonaktif").val(date.getFullYear()+"-0"+date.getMonth()+"-"+date.getDate());
             }else{
                 $("#invoice_tgl").val(date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate());
+                $("#update_status_tanggal_nonaktif").val(date.getFullYear()+"-0"+date.getMonth()+"-"+date.getDate());
             }
         });
     </script>

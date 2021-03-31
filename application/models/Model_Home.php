@@ -29,7 +29,7 @@ class Model_Home extends CI_model
 
     public function getsupir() //all supir
     {
-        return $this->db->get_where("skb_supir",array("status_hapus"=>"NO"))->result_array();
+        return $this->db->get_where("skb_supir",array("status_hapus"=>"NO","status_aktif"=>"Aktif"))->result_array();
     }
 
     public function getsupirbyid($supir_id) //supir by id
@@ -51,6 +51,11 @@ class Model_Home extends CI_model
         public function count_all_truck()
         {
             $this->db->where("status_hapus","NO");
+            if($_SESSION["role"]=="Supervisor"){
+                $this->db->where("validasi","Pending");
+            }else{
+                $this->db->where("validasi","ACC");
+            }
             return $this->db->count_all_results("skb_mobil");
         }
 
@@ -59,6 +64,11 @@ class Model_Home extends CI_model
             $this->db->like('mobil_no', $search);
             // $this->db->or_like('mobil_jenis', $search);
             $this->db->where("status_hapus","NO");
+            if($_SESSION["role"]=="Supervisor"){
+                $this->db->where("validasi","Pending");
+            }else{
+                $this->db->where("validasi","ACC");
+            }
             $this->db->order_by($order_field, $order_ascdesc);
             $this->db->limit($limit, $start);
             return $this->db->get('skb_mobil')->result_array();
@@ -69,6 +79,11 @@ class Model_Home extends CI_model
             $this->db->like('mobil_no', $search);
             // $this->db->or_like('mobil_jenis', $search);
             $this->db->where("status_hapus","NO");
+            if($_SESSION["role"]=="Supervisor"){
+                $this->db->where("validasi","Pending");
+            }else{
+                $this->db->where("validasi","ACC");
+            }
             return $this->db->get('skb_mobil')->num_rows();
         }
      //akhir function-fiunction datatable truck
@@ -252,6 +267,11 @@ class Model_Home extends CI_model
         public function count_all_customer()
         {
             $this->db->where("status_hapus","NO");
+            if($_SESSION["role"]=="Supervisor"){
+                $this->db->where("validasi","Pending");
+            }else{
+                $this->db->where("validasi","ACC");
+            }
             return $this->db->count_all_results("skb_customer");
         }
 
@@ -260,6 +280,11 @@ class Model_Home extends CI_model
             // $this->db->like('customer_id', $search);
             $this->db->where("status_hapus","NO");
             $this->db->like('customer_name', $search);
+            if($_SESSION["role"]=="Supervisor"){
+                $this->db->where("validasi","Pending");
+            }else{
+                $this->db->where("validasi","ACC");
+            }
             $this->db->order_by($order_field, $order_ascdesc);
             $this->db->limit($limit, $start);
             return $this->db->get('skb_customer')->result_array();
@@ -270,6 +295,11 @@ class Model_Home extends CI_model
             // $this->db->like('customer_id', $search);
             $this->db->where("status_hapus","NO");
             $this->db->like('customer_name', $search);
+            if($_SESSION["role"]=="Supervisor"){
+                $this->db->where("validasi","Pending");
+            }else{
+                $this->db->where("validasi","ACC");
+            }
             return $this->db->get('skb_customer')->num_rows();
         }
     //  end Function Customer
@@ -278,6 +308,11 @@ class Model_Home extends CI_model
         public function count_all_supir()
         {
             $this->db->where("status_hapus","NO");
+            if($_SESSION["role"]=="Supervisor"){
+                $this->db->where("validasi","Pending");
+            }else{
+                $this->db->where("validasi","ACC");
+            }
             return $this->db->count_all_results("skb_supir");
         }
 
@@ -286,6 +321,11 @@ class Model_Home extends CI_model
             // $this->db->like('supir_id', $search);
             $this->db->like('supir_name', $search);
             $this->db->where("status_hapus","NO");
+            if($_SESSION["role"]=="Supervisor"){
+                $this->db->where("validasi","Pending");
+            }else{
+                $this->db->where("validasi","ACC");
+            }
             // $this->db->or_like('status_jalan', $search);
             $this->db->order_by($order_field, $order_ascdesc);
             $this->db->limit($limit, $start);
@@ -297,6 +337,11 @@ class Model_Home extends CI_model
             // $this->db->like('supir_id', $search);
             $this->db->like('supir_name', $search);
             $this->db->where("status_hapus","NO");
+            if($_SESSION["role"]=="Supervisor"){
+                $this->db->where("validasi","Pending");
+            }else{
+                $this->db->where("validasi","ACC");
+            }
             // $this->db->or_like('status_jalan', $search);
             return $this->db->get('skb_supir')->num_rows();
         }
@@ -472,6 +517,11 @@ class Model_Home extends CI_model
         public function count_all_rute()
         {
             $this->db->where("skb_rute.rute_status_hapus","No");
+            if($_SESSION["role"]=="Supervisor"){
+                $this->db->where("skb_rute.validasi_rute","Pending");
+            }else{
+                $this->db->where("skb_rute.validasi_rute","ACC");
+            }
             $this->db->join("skb_customer", "skb_customer.customer_id = skb_rute.customer_id", 'left');
             return $this->db->count_all_results("skb_rute");
         }
@@ -490,8 +540,14 @@ class Model_Home extends CI_model
             $hasil = $this->db->get('skb_rute')->result_array();
             $hasil_fix = [];
             for($i=0;$i<count($hasil);$i++){
-                if($hasil[$i]["rute_status_hapus"]=="NO"){
-                    $hasil_fix[] = $hasil[$i];
+                if($_SESSION["role"]=="Supervisor"){
+                    if($hasil[$i]["rute_status_hapus"]=="NO" && $hasil[$i]["validasi_rute"]=="Pending"){
+                        $hasil_fix[] = $hasil[$i];
+                    }
+                }else{
+                    if($hasil[$i]["rute_status_hapus"]=="NO" && $hasil[$i]["validasi_rute"]=="ACC"){
+                        $hasil_fix[] = $hasil[$i];
+                    }
                 }
             }
             return $hasil_fix;
@@ -510,8 +566,14 @@ class Model_Home extends CI_model
             $hasil_data = $this->db->get('skb_rute')->result_array();
                 $hasil_fix = 0;
                 for($i=0;$i<count($hasil_data);$i++){
-                    if($hasil_data[$i]["rute_status_hapus"]=="NO"){
-                        $hasil_fix +=1;
+                    if($_SESSION["role"]=="Supervisor"){
+                        if($hasil_data[$i]["rute_status_hapus"]=="NO" && $hasil_data[$i]["validasi_rute"]=="Pending"){
+                            $hasil_fix +=1;
+                        }
+                    }else{
+                        if($hasil_data[$i]["rute_status_hapus"]=="NO" && $hasil_data[$i]["validasi_rute"]=="ACC"){
+                            $hasil_fix +=1;
+                        }
                     }
                 }
                 return $hasil_fix;           

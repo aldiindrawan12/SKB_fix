@@ -18,6 +18,13 @@
                 <div class="sidebar-brand-text mx-3 ">TLEMU SKB</div>
             </a>
             <!-- Divider -->
+            <hr class="sidebar-divider" id="HR_Dashboard">
+            <li class="nav-item" id="Dashboard_page">
+                <a class="nav-link" href="<?=base_url("index.php/dashboard")?>">
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <!-- Divider -->
             <hr class="sidebar-divider" id="HR_Master_Data">
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item" id="LI_Master_Data">
@@ -190,12 +197,12 @@
 <script>
     function asd(){
         var page = '<?= $page?>';
+        $("#"+page).addClass("active");
         var collapse_group = '<?= $collapse_group?>';
+        $("#"+collapse_group).addClass("show");
         var konfigurasi = <?= $akun_akses["akun_akses"]?>;
         var HR = ["HR_Master_Data","HR_Perintah_Kerja","HR_Penggajian","HR_Laporan","HR_Konfigurasi"];
         var LI = ["LI_Master_Data","LI_Perintah_Kerja","LI_Penggajian","LI_Laporan","LI_Konfigurasi"];
-        $("#"+page).addClass("active");
-        $("#"+collapse_group).addClass("show");
         for(i=0;i<konfigurasi.length;i++){
             if(konfigurasi[i]==0){
                 $("#"+HR[i]).hide();

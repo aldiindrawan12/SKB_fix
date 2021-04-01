@@ -38,7 +38,7 @@
 
 <!-- pop up add truck -->
 <div class="modal fade mt-3 px-3 " id="popup-truck" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
                 <h5 class="font-weight-bold">Menambah Kendaraan</h5>
@@ -46,11 +46,11 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            
             <div class="container mt-4">
+            <!-- <form action="<?= base_url("index.php/form/insert_truck")?>" method="POST"> -->
+            <?php echo form_open_multipart('form/insert_truck'); ?>
                 <div class="row">
                     <div class="col">
-                        <form action="<?= base_url("index.php/form/insert_truck")?>" method="POST">
                         <div class="form-group ">
                             <label for="mobil_no" class="form-label font-weight-bold">Plat No Mobil</label>
                             <input autocomplete="off" type="text" class="form-control" id="mobil_no" name="mobil_no" required>
@@ -79,6 +79,10 @@
                                 <option value="Tidak">Tidak</option>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="mobil_keterangan" class="form-label font-weight-bold">Keterangan</label>
+                            <textarea class="form-control" name="mobil_keterangan" rows="3"></textarea>
+                        </div>
                     </div>    
                     <div class="col">
                         <div class="form-group">
@@ -98,17 +102,48 @@
                             <input autocomplete="off" type="text" class="form-control" id="mobil_pajak" name="mobil_pajak" required>
                         </div>
                         <div class="form-group">
-                            <label for="mobil_keterangan" class="form-label font-weight-bold">Keterangan</label>
-                            <textarea class="form-control" name="mobil_keterangan" rows="3"></textarea>
+                            <label for="mobil_stnk" class="form-label font-weight-bold">No STNK</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_stnk" name="mobil_stnk" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobil_berlaku_stnk" class="form-label font-weight-bold">Berlaku STNK</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_berlaku_stnk" name="mobil_berlaku_stnk" required>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="mobil_kir" class="form-label font-weight-bold">No KIR</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_kir" name="mobil_kir" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobil_berlaku_kir" class="form-label font-weight-bold">Berlaku KIR</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_berlaku_kir" name="mobil_berlaku_kir" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobil_ijin_bongkar" class="form-label font-weight-bold">No Ijin Bongkar</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_ijin_bongkar" name="mobil_ijin_bongkar" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobil_berlaku_ijin_bongkar" class="form-label font-weight-bold">Berlaku Ijin Bongka</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_berlaku_ijin_bongkar" name="mobil_berlaku_ijin_bongkar" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="file_foto" class="form-label font-weight-bold">Foto STNK</label>
+                            <input type="file" class="form-control" id="file_foto" name="file_foto" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="file_STNK" class="form-label font-weight-bold">Foto STNK</label>
+                            <input type="file" class="form-control" id="file_STNK" name="file_STNK" required>
                         </div>
                     </div>
                 </div>  
             </div>
-                    <div class="form-group mt-1 mr-4 ">
-                        <button type="submit" class="btn btn-success float-right">Simpan</button>
-                        <button type="reset" class="btn btn-outline-danger mr-3 float-md-right" onclick="reset_form()">Reset</button>
-                    </div>
-                </form>
+            <div class="form-group mt-1 mr-4 ">
+                <button type="submit" class="btn btn-success float-right">Simpan</button>
+                <button type="reset" class="btn btn-outline-danger mr-3 float-md-right" onclick="reset_form()">Reset</button>
+            </div>
+            <!-- </form> -->
+            <?php echo form_close();?>
         </div>
     </div>
 </div>
@@ -151,7 +186,7 @@
 
 <!-- pop up detail kendaraan -->
 <div class="modal fade mt-4" id="popup-kendaraan" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
-    <div class="modal-dialog modal-md" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
                 <h5 class="block-title">Detail Kendaraan</h5>
@@ -159,7 +194,8 @@
                     <span aria-hidden="true">&times</span>
                 </button>
             </div>
-            <div class="font-size-sm m-3 text-justify">
+            <div class="font-size-sm m-3 text-justify row">
+                <div class="col">
                     <table class="table table-bordered">
                         <tbody>
                             <tr>
@@ -174,10 +210,6 @@
                                 <td class="font-weight-bold">Status Jalan</td>
                                 <td name="status_jalan"></td>
                             </tr>
-                            <!-- <tr>
-                                <td class="font-weight-bold" style="width: 30%;">Maximum Load (Ton)</td>
-                                <td name="mobil_max_load"></td>
-                            </tr> -->
                             <tr>
                                 <td class="font-weight-bold">Keterangan</td>
                                 <td name="mobil_keterangan"></td>
@@ -208,6 +240,45 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+                <div class="col">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="font-weight-bold" width= "35%">No STNK</td>
+                                <td name="mobil_stnk"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Berlaku STNK</td>
+                                <td name="mobil_berlaku_stnk"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" width= "35%">No KIR</td>
+                                <td name="mobil_kir"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Berlaku KIR</td>
+                                <td name="mobil_berlaku_kir"></td>
+                            </tr>                            
+                            <tr>
+                                <td class="font-weight-bold" width= "35%">No Ijin Bongkar</td>
+                                <td name="mobil_ijin_bongkar"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Berlaku Ijin Bongkar</td>
+                                <td name="mobil_berlaku_ijin_bongkar"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                                    <div class="container w-10">
+                                        <img src="" alt="foto mobil" id="file_foto_detail" class="img-thumbnail">
+                                    </div>
+                      
+                                    <div class="container w-10">
+                                        <img src="" alt="foto stnk" id="file_stnk_detail" class="img-thumbnail">
+                                    </div>
+                      
             </div>
         </div>
     </div>

@@ -187,15 +187,9 @@ class Model_Form extends CI_model
         return $this->db->delete("skb_akun");
     }
 
-    public function update_supir($data){
-        $this->db->set("supir_name",$data["supir_name"]);
-        $this->db->set("supir_alamat",$data["supir_alamat"]);
-        $this->db->set("supir_telp",$data["supir_telp"]);
-        $this->db->set("supir_ktp",$data["supir_ktp"]);
-        $this->db->set("supir_sim",$data["supir_sim"]);
-        $this->db->set("supir_keterangan",$data["supir_keterangan"]);
-        $this->db->where("supir_id",$data["supir_id"]);
-        $this->db->update("skb_supir");
+    public function update_supir($data,$supir_id){
+        $this->db->where("supir_id",$supir_id);
+        $this->db->update("skb_supir",$data);
     }
 
     public function update_rute($data,$rute_id){

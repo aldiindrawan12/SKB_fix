@@ -225,6 +225,19 @@ class Form extends CI_Controller {
         }
 
         public function insert_truck(){
+            $config['upload_path'] = './assets/berkas/kendaraan'; //letak folder file yang akan diupload
+            $config['allowed_types'] = 'jpg|png|img|jpeg'; //jenis file yang dapat diterima
+            $config['max_size'] = '2000'; // kb
+            $this->load->library('upload', $config); //deklarasi library upload (config)
+            if ($this->upload->do_upload('file_foto')) {
+                $this->upload->data();
+                $file_foto =  $this->upload->data('file_name');
+            }
+            if ($this->upload->do_upload('file_STNK')) {
+                $this->upload->data();
+                $file_stnk =  $this->upload->data('file_name');
+            }
+
             $data=array(
                 "mobil_no"=>$this->input->post("mobil_no"),
                 "mobil_jenis"=>$this->input->post("mobil_jenis"),
@@ -238,7 +251,15 @@ class Form extends CI_Controller {
                 "mobil_tahun"=>$this->input->post("mobil_tahun"),
                 "mobil_berlaku"=>$this->input->post("mobil_berlaku"),
                 "mobil_pajak"=>$this->input->post("mobil_pajak"),
-                "validasi"=>"Pending"
+                "mobil_stnk"=>$this->input->post("mobil_stnk"),
+                "mobil_kir"=>$this->input->post("mobil_kir"),
+                "mobil_ijin_bongkar"=>$this->input->post("mobil_ijin_bongkar"),
+                "mobil_berlaku_kir"=>$this->input->post("mobil_berlaku_kir"),
+                "mobil_berlaku_stnk"=>$this->input->post("mobil_berlaku_stnk"),
+                "mobil_berlaku_ijin_bongkar"=>$this->input->post("mobil_berlaku_ijin_bongkar"),
+                "validasi"=>"Pending",
+                "file_foto"=>$file_foto,
+                "file_stnk"=>$file_stnk
             );
             // echo var_dump($data);
             $this->model_form->insert_truck($data);
@@ -274,7 +295,9 @@ class Form extends CI_Controller {
                 "rute_gaji_engkel_rumusan"=>$rute_gaji_engkel_rumusan,
                 "rute_gaji_tronton_rumusan"=>$rute_gaji_tronton_rumusan,
                 "rute_status_hapus"=>"NO",
-                "validasi_rute"=>"Pending"
+                "validasi_rute"=>"Pending",
+                "rute_keterangan"=>$this->input->post("rute_keterangan"),
+                "ritase"=>$this->input->post("Ritase")
             );
             // echo var_dump($data);
             $this->model_form->insert_rute($data);
@@ -298,6 +321,8 @@ class Form extends CI_Controller {
                 "rute_gaji_engkel_rumusan"=>str_replace(".","",$this->input->post("rute_gaji_engkel_rumusan_update")),
                 "rute_gaji_tronton_rumusan"=>str_replace(".","",$this->input->post("rute_gaji_tronton_rumusan_update")),
                 "rute_tonase"=>str_replace(".","",$this->input->post("rute_tonase_update")),
+                "rute_keterangan"=>str_replace(".","",$this->input->post("rute_keterangan_update")),
+                "ritase"=>str_replace(".","",$this->input->post("Ritase_update")),
             );
             // echo var_dump($data);
             $this->model_form->update_rute($data,$this->input->post("rute_id_update"));
@@ -305,16 +330,24 @@ class Form extends CI_Controller {
             redirect(base_url("index.php/home/satuan"));
         }
         public function update_supir(){
+            $supir_id = $this->input->post("supir_id");
             $data = array(
                 "supir_name" => $this->input->post("supir_name"),
-                "supir_id" => $this->input->post("supir_id"),
+                "supir_panggilan" => $this->input->post("supir_panggilan_update"),
+                "supir_tempat_lahir" => $this->input->post("supir_tempat_lahir_update"),
+                "supir_tgl_lahir" => $this->input->post("supir_tgl_lahir_update"),
                 "supir_alamat" => $this->input->post("supir_alamat_update"),
                 "supir_telp" => $this->input->post("supir_telp_update"),
                 "supir_ktp" => $this->input->post("supir_ktp_update"),
                 "supir_sim" => $this->input->post("supir_sim_update"),
+                "supir_tgl_sim" => $this->input->post("supir_tgl_sim_update"),
+                "supir_tgl_aktif" => $this->input->post("supir_tgl_aktif_update"),
+                "darurat_nama" => $this->input->post("darurat_nama_update"),
+                "darurat_telp" => $this->input->post("darurat_telp_update"),
+                "darurat_referensi" => $this->input->post("darurat_referensi_update"),
                 "supir_keterangan" => $this->input->post("supir_keterangan_update"),
             );
-            $this->model_form->update_supir($data);
+            $this->model_form->update_supir($data,$supir_id);
             $this->session->set_flashdata('status-update-supir', 'Berhasil');
             redirect(base_url("index.php/home/penggajian"));
         }
@@ -552,50 +585,50 @@ class Form extends CI_Controller {
     //end fungsi lain
 
     // fungsi form joborder
-    public function getrutebycustomer($customer_id){
-        $rute = $this->model_form->getrutebycustomer($customer_id);
-        echo json_encode($rute);        
-    }
-    public function getrutebymuatan(){
-        $customer_id = $this->input->post("customer_id");
-        $muatan = $this->input->post("rute_muatan");
-        $rute = $this->model_form->getrutebymuatan($customer_id,$muatan);
-        echo json_encode($rute);        
-    }
-    public function getrutebyasal(){
-        $customer_id = $this->input->post("customer_id");
-        $muatan = $this->input->post("rute_muatan");
-        $rute_dari = $this->input->post("rute_asal");
-        $rute = $this->model_form->getrutebydari($customer_id,$muatan,$rute_dari);
-        echo json_encode($rute);        
-    }
-    public function getmobilbyjenis(){
-        $mobil_jenis = $this->input->post("mobil_jenis");
-        $mobil = $this->model_form->getmobilbyjenis($mobil_jenis);
-        echo json_encode($mobil);        
-    }
-    public function getrutefix(){
-        $data = array(
-            "customer_id" => $this->input->post("customer_id"),
-            "muatan" => $this->input->post("rute_muatan"),
-            "rute_dari" => $this->input->post("rute_asal"),
-            "rute_ke" => $this->input->post("rute_ke"),
-            "mobil_jenis" => $this->input->post("mobil_jenis"),
-            "rute_tonase"=>$this->input->post("rute_tonase"),
-        );   
-        $rute = $this->model_form->getrutefix($data);
-        echo json_encode($rute);        
-    }
-    public function getrutetonase(){
-        $data = array(
-            "customer_id" => $this->input->post("customer_id"),
-            "muatan" => $this->input->post("rute_muatan"),
-            "rute_dari" => $this->input->post("rute_asal"),
-            "rute_ke" => $this->input->post("rute_ke")
-        );   
-        $rute = $this->model_form->getrutetonase($data);
-        echo json_encode($rute);        
-    }
+        public function getrutebycustomer($customer_id){
+            $rute = $this->model_form->getrutebycustomer($customer_id);
+            echo json_encode($rute);        
+        }
+        public function getrutebymuatan(){
+            $customer_id = $this->input->post("customer_id");
+            $muatan = $this->input->post("rute_muatan");
+            $rute = $this->model_form->getrutebymuatan($customer_id,$muatan);
+            echo json_encode($rute);        
+        }
+        public function getrutebyasal(){
+            $customer_id = $this->input->post("customer_id");
+            $muatan = $this->input->post("rute_muatan");
+            $rute_dari = $this->input->post("rute_asal");
+            $rute = $this->model_form->getrutebydari($customer_id,$muatan,$rute_dari);
+            echo json_encode($rute);        
+        }
+        public function getmobilbyjenis(){
+            $mobil_jenis = $this->input->post("mobil_jenis");
+            $mobil = $this->model_form->getmobilbyjenis($mobil_jenis);
+            echo json_encode($mobil);        
+        }
+        public function getrutefix(){
+            $data = array(
+                "customer_id" => $this->input->post("customer_id"),
+                "muatan" => $this->input->post("rute_muatan"),
+                "rute_dari" => $this->input->post("rute_asal"),
+                "rute_ke" => $this->input->post("rute_ke"),
+                "mobil_jenis" => $this->input->post("mobil_jenis"),
+                "rute_tonase"=>$this->input->post("rute_tonase"),
+            );   
+            $rute = $this->model_form->getrutefix($data);
+            echo json_encode($rute);        
+        }
+        public function getrutetonase(){
+            $data = array(
+                "customer_id" => $this->input->post("customer_id"),
+                "muatan" => $this->input->post("rute_muatan"),
+                "rute_dari" => $this->input->post("rute_asal"),
+                "rute_ke" => $this->input->post("rute_ke")
+            );   
+            $rute = $this->model_form->getrutetonase($data);
+            echo json_encode($rute);        
+        }
     // end fungsi form joborder
 
     public function update_status_aktif_supir(){

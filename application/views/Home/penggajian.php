@@ -20,13 +20,13 @@
             <table class="table table-bordered" id="Table-Supir" width="100%" cellspacing="0">
                 <thead>
                     <tr>        
-                        <th class="text-center" width="5%" scope="col">ID Driver</th>
-                        <th class="text-center" width="15%" scope="col">Nama Driver</th>
+                        <th class="text-center" width="3%" scope="col">ID Driver</th>
+                        <th class="text-center" width="10%" scope="col">Nama Driver</th>
                         <th class="text-center" width="20%" scope="col">Kasbon</th>
                         <th width="15%" scope="col">Berlaku SIM</th>
                         <th width="15%" scope="col">Status Aktif</th>
                         <th width="15%" scope="col">Status Jalan</th>
-                        <th width="15%" scope="col">Aksi</th>
+                        <th width="20%" scope="col">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -176,8 +176,8 @@
 <!-- end pop up update status supir -->
 
 <!-- pop up update data supir -->
-<div class="modal fade mt-5" id="popup-update-supir" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+<div class="modal fade" id="popup-update-supir" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
                 <h5 class="font-weight-bold">Update Data Driver</h5>
@@ -185,44 +185,69 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-           
-            <div class="container mt-3">
+            <div class="container">
                 <div class="row">
                     <div class="col">
-                    <form action="<?= base_url("index.php/form/update_supir")?>" method="POST">
-                    <input type="text" name=supir_id id=supir_id hidden>
-                        <div class="form-group">
-                        <label for="supir_name" class="form-label font-weight-bold">Nama Driver</label>
-                            <input autocomplete="off" type="text" class="form-control" id="supir_name" name="supir_name" required>
+                        <form action="<?= base_url("index.php/form/update_supir")?>" method="POST">
+                        <input type="text" name=supir_id id=supir_id hidden>
+                        <div class="form-group row">
+                            <label for="supir_name" class="form-label font-weight-bold col-md-12">Nama Driver</label>
+                            <input autocomplete="off" type="text" class="form-control col-md-7" id="supir_name" name="supir_name" required>
+                            <input autocomplete="off" type="text" class="form-control col" id="supir_panggilan_update" name="supir_panggilan_update" required placeholder="Panggilan">
+                        </div>
+                        <div class="form-group row">
+                            <label for="supir_ttl_update" class="form-label font-weight-bold col-md-12">Tempat,Tanggal Lahir</label>
+                            <input autocomplete="off" type="text" class="form-control col" id="supir_tempat_lahir_update" name="supir_tempat_lahir_update" required placeholder="Tempat Lahir">
+                            <input autocomplete="off" type="text" class="form-control col" id="supir_tgl_lahir_update" name="supir_tgl_lahir_update" required placeholder="Tanggal Lahir">
                         </div>
                         <div class="form-group">
-                        <label for="supir_alamat_update" class="form-label font-weight-bold">Alamat</label>
+                            <label for="supir_alamat_update" class="form-label font-weight-bold">Alamat</label>
                             <input autocomplete="off" type="text" class="form-control" id="supir_alamat_update" name="supir_alamat_update" required>
                         </div>
                         <div class="form-group">
-                        <label for="supir_telp_update" class="form-label font-weight-bold">Telp./HP</label>
+                            <label for="supir_telp_update" class="form-label font-weight-bold">Telp./HP</label>
                             <input autocomplete="off" type="text" class="form-control" id="supir_telp_update" name="supir_telp_update" required>
                         </div>
-                    </div>
-                    <div class="col">
-
                         <div class="form-group">
-                        <label for="supir_ktp_update" class="form-label font-weight-bold">No.KTP</label>
+                            <label for="supir_ktp_update" class="form-label font-weight-bold">No.KTP</label>
                             <input autocomplete="off" type="text" class="form-control" id="supir_ktp_update" name="supir_ktp_update" required>
                         </div>
                         <div class="form-group">
-                        <label for="supir_sim_update" class="form-label font-weight-bold">No.SIM</label>
+                            <label for="supir_sim_update" class="form-label font-weight-bold">No.SIM</label>
                             <input autocomplete="off" type="text" class="form-control" id="supir_sim_update" name="supir_sim_update" required>
                         </div>
                         <div class="form-group">
-                        <label for="supir_keterangan_update" class="form-label font-weight-bold">Keterangan</label>
-                            <textarea class="form-control" name="supir_keterangan_update" id="supir_keterangan_update" rows="3"></textarea>
+                            <label for="supir_tgl_sim_update" class="form-label font-weight-bold">Tanggal Berlaku SIM</label>
+                            <input autocomplete="off" type="text" class="form-control" id="supir_tgl_sim_update" name="supir_tgl_sim_update" required placeholder="Berlaku SIM">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="supir_tgl_aktif_update" class="form-label font-weight-bold">Tanggal Aktif Supir</label>
+                            <input autocomplete="off" type="text" class="form-control" id="supir_tgl_aktif_update" name="supir_tgl_aktif_update" required placeholder="Tanggal Aktif Supir">
                         </div>
                         <div class="form-group">
-                        <button type="submit" class="btn btn-success mb-3 float-right">Simpan</button>
+                            <label for="supir_keterangan_update" class="form-label font-weight-bold">Keterangan</label>
+                            <textarea class="form-control" name="supir_keterangan_update" id="supir_keterangan_update" rows="3"></textarea>
                         </div>
-                        </form>
+                        <span>Data Keluarga yang Dapat Dihubungi</span>
+                        <div class="form-group">
+                            <label for="darurat_nama_update" class="form-label font-weight-bold">Nama</label>
+                            <input autocomplete="off" type="text" class="form-control" id="darurat_nama_update" name="darurat_nama_update" required placeholder="Nama Keluarga">
+                        </div>
+                        <div class="form-group">
+                            <label for="darurat_telp_update" class="form-label font-weight-bold">Telp</label>
+                            <input autocomplete="off" type="text" class="form-control" id="darurat_telp_update" name="darurat_telp_update" required placeholder="Telp Keluarga">
+                        </div>
+                        <div class="form-group">
+                            <label for="darurat_referensi_update" class="form-label font-weight-bold">Referensi</label>
+                            <input autocomplete="off" type="text" class="form-control" id="darurat_referensi_update" name="darurat_referensi_update" required placeholder="Referensi">
+                        </div>
                     </div>
+                    <div class="form-group col-md-12">
+                        <button type="submit" class="btn btn-success mb-3 float-right">Simpan</button>
+                    </div>
+                    </form>
                 </div>
             </div>
 

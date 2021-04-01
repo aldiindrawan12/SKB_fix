@@ -183,6 +183,15 @@
                                 $('td[name="mobil_tahun"]').text(data["mobil_tahun"]); //set value
                                 $('td[name="mobil_berlaku"]').text(data["mobil_berlaku"]); //set value
                                 $('td[name="mobil_pajak"]').text(data["mobil_pajak"]); //set value
+                                $('#file_foto_detail').attr('src','<?= base_url("assets/berkas/kendaraan/")?>'+data["file_foto"]);
+                                $('#file_stnk_detail').attr('src','<?= base_url("assets/berkas/kendaraan/")?>'+data["file_stnk"]);
+                                $('td[name="mobil_berlaku_stnk"]').text(data["mobil_berlaku_stnk"]); //set value
+                                $('td[name="mobil_stnk"]').text(data["mobil_stnk"]); //set value
+                                $('td[name="mobil_berlaku_kir"]').text(data["mobil_berlaku_kir"]); //set value
+                                $('td[name="mobil_kir"]').text(data["mobil_kir"]); //set value
+                                $('td[name="mobil_berlaku_ijin_bongkar"]').text(data["mobil_berlaku_ijin_bongkar"]); //set value
+                                $('td[name="mobil_ijin_bongkar"]').text(data["mobil_ijin_bongkar"]); //set value
+
                             }
                         });
                     });                    
@@ -1021,10 +1030,18 @@
                             },
                             success: function(data) {
                                 $("#supir_name").val(data["supir_name"]);
+                                $("#supir_panggilan_update").val(data["supir_panggilan"]);
+                                $("#supir_tempat_lahir_update").val(data["supir_tempat_lahir"]);
+                                $("#supir_tgl_lahir_update").val(data["supir_tgl_lahir"]);
                                 $("#supir_alamat_update").val(data["supir_alamat"]);
                                 $("#supir_telp_update").val(data["supir_telp"]);
                                 $("#supir_ktp_update").val(data["supir_ktp"]);
                                 $("#supir_sim_update").val(data["supir_sim"]);
+                                $("#supir_tgl_sim_update").val(data["supir_tgl_sim"]);
+                                $("#supir_tgl_aktif_update").val(data["supir_tgl_aktif"]);
+                                $("#darurat_nama_update").val(data["darurat_nama"]);
+                                $("#darurat_telp_update").val(data["darurat_telp"]);
+                                $("#darurat_referensi_update").val(data["darurat_referensi"]);
                                 $("#supir_keterangan_update").val(data["supir_keterangan"]);
                             }
                         });
@@ -1819,6 +1836,8 @@
                                 $("#rute_gaji_engkel_rumusan_update").val(rupiah(data["rute_gaji_engkel_rumusan"]));
                                 $("#rute_gaji_tronton_rumusan_update").val(rupiah(data["rute_gaji_tronton_rumusan"]));
                                 $("#rute_tonase_update").val(rupiah(data["rute_tonase"]));
+                                $("#rute_keterangan_update").val(data["rute_keterangan"]);
+                                $("#Ritase_update").val(data["ritase"]);
                             }
                         });
                     });
@@ -1874,6 +1893,9 @@
                                 $("#rute_gaji_engkel_rumusan_detail").val(rupiah(data["rute_gaji_engkel_rumusan"]));
                                 $("#rute_gaji_tronton_rumusan_detail").val(rupiah(data["rute_gaji_tronton_rumusan"]));
                                 $("#rute_tonase_detail").val(rupiah(data["rute_tonase"]));
+                                $("#rute_keterangan_detail").val(data["rute_keterangan"]);
+                                $("#Ritase_detail").val(data["ritase"]);
+
                             }
                         });
                     });
@@ -2105,6 +2127,21 @@
                 todayHighlight: true,
             });
             $("#invoice_tgl").datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true
+            });
+            $("#mobil_berlaku_kir").datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true
+            });
+            $("#mobil_berlaku_ijin_bongkar").datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true
+            });
+            $("#mobil_berlaku_stnk").datepicker({
                 format: 'yyyy-mm-dd',
                 autoclose: true,
                 todayHighlight: true

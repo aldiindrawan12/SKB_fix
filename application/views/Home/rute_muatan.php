@@ -88,6 +88,14 @@
                             <small class="font-weight-bold">Detail Keuangan</small>
                             <hr>
                             <div class="form-group">
+                                <label class="form-label font-weight-bold" for="Ritase">Ritase/Tonase</label>
+                                <select name="Ritase" id="Ritase" class="form-control" required>
+                                    <option class="font-w700" disabled="disabled" selected value="">Ritase/Tonase</option>
+                                    <option class="font-w700" value="Ritase">Ritase</option>
+                                    <option class="font-w700" value="Tonase">Tonase</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label for="rute_tagihan" class="form-label font-weight-bold">Inv./Tagihan</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_tagihan" name="rute_tagihan" required onkeyup="uang(this)">
                             </div>
@@ -128,6 +136,10 @@
                                     <label for="rute_gaji_tronton_rumusan" class="form-label font-weight-bold">Gaji Tronton(Non-FIX)</label>
                                     <input autocomplete="off" type="text" class="form-control" id="rute_gaji_tronton_rumusan" name="rute_gaji_tronton_rumusan" onkeyup="uang(this)">
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="rute_keterangan" class="form-label font-weight-bold">keterangan</label>
+                                <input autocomplete="off" type="text" class="form-control" id="rute_keterangan" name="rute_keterangan" required>
                             </div>
                         </div>
                     </div>
@@ -196,6 +208,14 @@
                             <small class="font-weight-bold">Detail Keuangan</small>
                             <hr>
                             <div class="form-group">
+                                <label class="form-label font-weight-bold" for="Ritase_update">Ritase/Tonase</label>
+                                <select name="Ritase_update" id="Ritase_update" class="form-control" required>
+                                    <option class="font-w700" disabled="disabled" selected value="">Ritase/Tonase</option>
+                                    <option class="font-w700" value="Ritase">Ritase</option>
+                                    <option class="font-w700" value="Tonase">Tonase</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label for="rute_tagihan_update" class="form-label font-weight-bold">Inv./Tagihan</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_tagihan_update" name="rute_tagihan_update" required onkeyup="uang(this)">
                             </div>
@@ -218,6 +238,10 @@
                             <div class="form-group">
                                 <label for="rute_gaji_tronton_rumusan_update" class="form-label font-weight-bold">Gaji Tronton(Non-Fix)</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_gaji_tronton_rumusan_update" name="rute_gaji_tronton_rumusan_update" required onkeyup="uang(this)">
+                            </div>
+                            <div class="form-group">
+                                <label for="rute_keterangan_update" class="form-label font-weight-bold">keterangan</label>
+                                <input autocomplete="off" type="text" class="form-control" id="rute_keterangan_update" name="rute_keterangan_update">
                             </div>
                         </div>
                     </div>
@@ -282,6 +306,10 @@
                             <small class="font-weight-bold">Detail Keuangan</small>
                             <hr>
                             <div class="form-group">
+                                <label class="form-label font-weight-bold" for="Ritase_detail">Ritase/Tonase</label>
+                                <input autocomplete="off" type="text" class="form-control" id="Ritase_detail" name="Ritase_detail" readonly>
+                            </div>
+                            <div class="form-group">
                                 <label for="rute_tagihan_detail" class="form-label font-weight-bold">Inv./Tagihan</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_tagihan_detail" name="rute_tagihan_detail" readonly>
                             </div>
@@ -304,6 +332,10 @@
                             <div class="form-group">
                                 <label for="rute_gaji_tronton_rumusan_detail" class="form-label font-weight-bold">Gaji Tronton(Non-Fix)</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_gaji_tronton_rumusan_detail" name="rute_gaji_tronton_rumusan_detail" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="rute_keterangan_detail" class="form-label font-weight-bold">keterangan</label>
+                                <input autocomplete="off" type="text" class="form-control" id="rute_keterangan_detail" name="rute_keterangan_detail" readonly>
                             </div>
                         </div>
                 </div>

@@ -15,7 +15,6 @@ class Print_Berkas extends CI_Controller {
         $this->load->model('model_print');//load model
 		$this->load->model('model_detail');//load model
     }
-
     public function cetaklaporanpdf($tanggal,$bulan,$tahun,$status_jo,$asal){
         $data["jo"] = $this->model_print->getjobyperiode($tanggal,$bulan,$tahun,$status_jo);
         $data["tanggal"] = $tanggal."-".$bulan."-".$tahun;
@@ -38,7 +37,7 @@ class Print_Berkas extends CI_Controller {
         $name_file = "JobOrder_".$data["tanggal"].".pdf";
         $dompdf->stream($name_file);
     }
-    // public function cetaklaporanexcel($tanggal,$bulan,$tahun,$status_jo,$asal){
+// public function cetaklaporanexcel($tanggal,$bulan,$tahun,$status_jo,$asal){
     //	// echo $tahun."-".$bulan."-".$tanggal;
     //  $jo = $this->model_print->getjobyperiode($tanggal,$bulan,$tahun,$status_jo);
     //  $data["tanggal"] = $tanggal."-".$bulan."-".$tahun;
@@ -159,7 +158,7 @@ class Print_Berkas extends CI_Controller {
 
 	// 	$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
 	// 	$write->save('php://output');
-    // }
+// }
 	// fungsi cetak invoice,gaji,memo
 		public function invoice($invoice_id,$asal){
             if(!$_SESSION["user"]){
@@ -168,7 +167,6 @@ class Print_Berkas extends CI_Controller {
             }
 			$data["invoice"] = $this->model_detail->getinvoicebyid(str_replace("%20"," ",$invoice_id));
 			$data["customer"] = $this->model_home->getcustomerbyid($data["invoice"][0]["customer_id"]);
-			// $data["Jo_id"] = $Jo_id;
 			$data["invoice_kode"] = $data["invoice"][0]["invoice_kode"];
 			$data["asal"] = $asal;
 			$this->load->view("print/invoice_print",$data);

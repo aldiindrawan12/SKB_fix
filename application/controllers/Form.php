@@ -267,6 +267,21 @@ class Form extends CI_Controller {
             redirect(base_url("index.php/home/truck"));
         }
 
+        public function insert_merk(){
+            $data=array(
+                "merk_nama"=>$this->input->post("merk_nama"),
+                "merk_type"=>$this->input->post("merk_type"),
+                "merk_jenis"=>$this->input->post("merk_jenis"),
+                "merk_dump"=>$this->input->post("merk_dump"),
+                "status_hapus"=>"NO",
+                "validasi"=>"Pending",
+            );
+            // echo var_dump($data);
+            $this->model_form->insert_merk($data);
+			$this->session->set_flashdata('status-add-merk', 'Berhasil');
+            redirect(base_url("index.php/home/merk"));
+        }
+
         public function insert_rute(){
             if($this->input->post("Tonase")==""){
                 $rute_gaji_engkel = str_replace(".","",$this->input->post("rute_gaji_engkel"));
@@ -363,7 +378,19 @@ class Form extends CI_Controller {
             $this->session->set_flashdata('status-update-truck', 'Berhasil');
             redirect(base_url("index.php/home/truck"));
         }
-
+        public function update_merk(){
+            $data = array(
+                "merk_nama" => $this->input->post("merk_nama_update"),
+                "merk_type" => $this->input->post("merk_type_update"),
+                "merk_jenis" => $this->input->post("merk_jenis_update"),
+                "merk_dump" => $this->input->post("merk_dump_update")
+            );
+            $merk_id = $this->input->post("merk_id_update");
+            $this->model_form->update_merk($data,$merk_id);
+            $this->session->set_flashdata('status-update-merk', 'Berhasil');
+            redirect(base_url("index.php/home/merk"));
+        }
+        
         public function update_customer(){
             $data = array(
                 "customer_id" => $this->input->post("customer_id_update"),
@@ -381,7 +408,6 @@ class Form extends CI_Controller {
             $this->session->set_flashdata('status-update-customer', 'Berhasil');
             redirect(base_url("index.php/home/customer"));
         }
-
         public function update_akun(){
             $akun = $this->model_form->getakunbyid($this->input->post("akun_id"));
             $password = $this->input->post("password_update");
@@ -399,78 +425,77 @@ class Form extends CI_Controller {
             $this->session->set_flashdata('status-update-akun', 'Berhasil');
             redirect(base_url("index.php/home/akun"));
         }
-
         public function deletesupir(){
             $supir_id = $this->input->get("id");
             $this->model_form->deletesupir($supir_id);
             $this->session->set_flashdata('status-delete-supir', 'Berhasil');
             echo $supir_id;
         }
-
+        public function deletemerk(){
+            $merk_id = $this->input->get("id");
+            $this->model_form->deletemerk($merk_id);
+            $this->session->set_flashdata('status-delete-merk', 'Berhasil');
+            echo $merk_id;
+        }
         public function accsupir(){
             $supir_id = $this->input->get("id");
             $this->model_form->accsupir($supir_id);
             echo $supir_id;
         }
-
         public function acccustomer(){
             $customer_id = $this->input->get("id");
             $this->model_form->acccustomer($customer_id);
             echo $customer_id;
         }
-
         public function acctruck(){
             $truck_id = $this->input->get("id");
             $this->model_form->acctruck($truck_id);
             echo $truck_id;
         }
-
         public function accrute(){
             $rute_id = $this->input->get("id");
             $this->model_form->accrute($rute_id);
             echo $rute_id;
         }
-
+        public function accmerk(){
+            $merk_id = $this->input->get("id");
+            $this->model_form->accmerk($merk_id);
+            echo $merk_id;
+        }
         public function deletecustomer(){
             $customer_id = $this->input->get("id");
             $this->model_form->deletecustomer($customer_id);
             $this->session->set_flashdata('status-delete-customer', 'Berhasil');
             echo $customer_id;
         }
-
         public function deleterute(){
             $rute_id = $this->input->get("id");
             $this->model_form->deleterute($rute_id);
             $this->session->set_flashdata('status-delete-satuan', 'Berhasil');
             echo $rute_id;
         }
-
         public function deleteakun(){
             $akun_id = $this->input->get("id");
             $this->model_form->deleteakun($akun_id);
             $this->session->set_flashdata('status-delete-akun', 'Berhasil');
             echo $akun_id;
         }
-
         public function deletetruck(){
             $mobil_no = $this->input->get("id");
             $this->model_form->deletetruck($mobil_no);
             $this->session->set_flashdata('status-delete-kendaraan', 'Berhasil');
             echo $mobil_no;
         }
-
         public function getsupirname(){
             $supir_id = $this->input->get("id");
             $supir = $this->model_form->getsupirname($supir_id);
             echo json_encode($supir);
         }
-
         public function getrutebyid(){
             $rute_id = $this->input->get("id");
             $rute = $this->model_form->getrutebyid($rute_id);
             echo json_encode($rute);
         }
-
         public function generate_terbilang($uang){
             $uang = abs($uang);
             $huruf = array("", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "sebelas");
@@ -495,7 +520,6 @@ class Form extends CI_Controller {
             }     
             return $temp;
         }
-
         public function generate_terbilang_fix($uang){
             if($uang != "x"){
                 echo $this->generate_terbilang(str_replace(".","",$uang))." Rupiah";
@@ -503,21 +527,18 @@ class Form extends CI_Controller {
                 echo "";
             }
         }
-
         function getbonsupir()
         {
             $supir_id = $this->input->get('id');
             $data = $this->model_form->getbonbysupir($supir_id);
             echo $data["supir_kasbon"];
         }
-
         function getakunbyid()
         {
             $akun_id = $this->input->get('id');
             $data = $this->model_form->getakunbyid($akun_id);
             echo json_encode($data);
         }
-
         public function konfigurasi($akun_id){
             if(!$_SESSION["user"]){
                 $this->session->set_flashdata('status-login', 'False');
@@ -531,14 +552,12 @@ class Form extends CI_Controller {
             $this->load->view('form/konfigurasi',$data);
             $this->load->view('footer');
         }   
-
         public function update_konfigurasi($akun_id){
             $data_konfigurasi = [$this->input->post("cek1"),$this->input->post("cek2"),$this->input->post("cek3"),
             $this->input->post("cek4"),$this->input->post("cek5")];
             $this->model_form->update_konfigurasi($akun_id,$data_konfigurasi);
             redirect(base_url("index.php/home/akun"));
         }
-
         public function update_jo_status($supir,$mobil){
             if($this->input->post("status")!="Dibatalkan"){
                 $data_jo = $this->model_home->getjobyid($this->input->post("jo_id"));

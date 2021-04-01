@@ -31,6 +31,10 @@
                             <i class="fas fa-truck"></i>
                             <span>Data Kendaraan</span>
                         </a>
+                        <a class="collapse-item" id="Merk_page" href="<?=base_url("index.php/home/merk")?>">
+                            <i class="fas fa-truck"></i>
+                            <span>Data Merk</span>
+                        </a>
                         <a class="collapse-item" id="Supir_page" href="<?=base_url("index.php/home/penggajian")?>">
                             <i class="fas fa-money-check-alt"></i>
                             <span>Driver</span>

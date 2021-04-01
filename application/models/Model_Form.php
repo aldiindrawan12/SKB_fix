@@ -78,6 +78,12 @@ class Model_Form extends CI_model
         $this->db->update("skb_rute");
     }
 
+    public function accmerk($merk_id){
+        $this->db->set("validasi","ACC");
+        $this->db->where("merk_id",$merk_id);
+        $this->db->update("skb_merk_kendaraan");
+    }
+
     public function update_jo_status($data,$supir,$mobil){
         $this->db->set("tonase",$data["tonase"]);
         $this->db->set("bonus",$data["bonus"]);
@@ -104,6 +110,10 @@ class Model_Form extends CI_model
         }
 
         return $this->db->insert("skb_invoice", $data);
+    }
+
+    public function insert_merk($data){
+        return $this->db->insert("skb_merk_kendaraan", $data);
     }
 
     public function update_status_aktif_supir($data){
@@ -170,6 +180,12 @@ class Model_Form extends CI_model
         return $this->db->update("skb_mobil");
     }
 
+    public function deletemerk($merk_id){
+        $this->db->set("status_hapus","YES");
+        $this->db->where("merk_id",$merk_id);
+        return $this->db->update("skb_merk_kendaraan");
+    }
+
     public function deletecustomer($customer_id){
         $this->db->set("status_hapus","YES");
         $this->db->where("customer_id",$customer_id);
@@ -190,6 +206,11 @@ class Model_Form extends CI_model
     public function update_supir($data,$supir_id){
         $this->db->where("supir_id",$supir_id);
         $this->db->update("skb_supir",$data);
+    }
+
+    public function update_merk($data,$merk_id){
+        $this->db->where("merk_id",$merk_id);
+        $this->db->update("skb_merk_kendaraan",$data);
     }
 
     public function update_rute($data,$rute_id){

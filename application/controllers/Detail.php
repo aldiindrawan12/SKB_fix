@@ -12,7 +12,7 @@ class Detail extends CI_Controller {
         }
     // end contruck
 
-    //fungsi untuk Detail JO
+    //fungsi untuk Detail JO dan invoice
         public function detail_jo($Jo_id,$asal)
         {
             if(!$_SESSION["user"]){
@@ -42,9 +42,6 @@ class Detail extends CI_Controller {
             $this->load->view('detail/joborder');
             $this->load->view('footer');
         }
-    //end fungsi untuk Detail JO
-
-    //fungsi untuk Detail invoice
         public function detail_invoice($invoice_id)
         {
             if(!$_SESSION["user"]){
@@ -64,7 +61,6 @@ class Detail extends CI_Controller {
             $this->load->view('detail/invoice');
             $this->load->view('footer');
         }
-
         public function updatestatusjo($supir,$mobil){
             $data_jo = $this->model_home->getjobyid($this->input->post("jo_id"));
             $keterangan = "<strong>Catatan JO : </strong>".$data_jo["keterangan"]."<br><strong>Catatan Konfirmasi : </strong>".$this->input->post("Keterangan");
@@ -110,7 +106,12 @@ class Detail extends CI_Controller {
             $data["asal"] = "batal JO";
             $this->load->view("print/bon_print",$data);
         }
-    //end fungsi untuk Detail invoice
+        public function getjo(){
+            $jo_id = $this->input->get('id');
+            $data = $this->model_home->getjobyid($jo_id);
+            echo json_encode($data);       
+        }
+    //end fungsi untuk Detail jo dan invoice
 
     //fungsi untuk Detail customer
         public function detail_customer($customer_id)
@@ -131,6 +132,12 @@ class Detail extends CI_Controller {
             $this->load->view('sidebar');
             $this->load->view('detail/customer',$data);
             $this->load->view('footer');
+        }
+        function getcustomer()
+        {
+            $customer_id = $this->input->get('id');
+            $data = $this->model_home->getcustomerbyid($customer_id);
+            echo json_encode($data);
         }
     //end fungsi untuk Detail customer
 
@@ -174,14 +181,19 @@ class Detail extends CI_Controller {
         }
     //end fungsi untuk Detail ttruckk
 
-    //fungsi untuk Detail customer
-        function getcustomer()
+    //fungsi untuk Detail merk
+        function getmerk()
         {
-            $customer_id = $this->input->get('id');
-            $data = $this->model_home->getcustomerbyid($customer_id);
+            $merk_id = $this->input->get('id');
+            $data = $this->model_detail->getmerkbyid($merk_id);
             echo json_encode($data);
         }
-    //end fungsi untuk Detail customer
+        function getallmerk()
+        {
+            $data = $this->model_detail->getallmerk();
+            echo json_encode($data);
+        }
+    //end fungsi untuk Detail merk
 
     //fungsi untuk Detail supir
         function getsupir()
@@ -246,9 +258,5 @@ class Detail extends CI_Controller {
         }
     //end fungsi untuk Detail penggajian
 
-    public function getjo(){
-        $jo_id = $this->input->get('id');
-        $data = $this->model_home->getjobyid($jo_id);
-        echo json_encode($data);       
-    }
+    
 }

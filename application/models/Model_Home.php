@@ -7,10 +7,10 @@ class Model_Home extends CI_model
         return $this->db->get_where("skb_mobil",array("status_hapus"=>"NO"))->result_array();
     }
 
-    // public function getallsatuan() //all satuan
-    // {
-    //     return $this->db->get("skb_satuan")->result_array();
-    // }
+    public function getmerk() //all truck
+    {
+        return $this->db->get_where("skb_merk_kendaraan",array("status_hapus"=>"NO"))->result_array();
+    }
 
     public function getmobilbyid($mobil_no) //mobil by ID
     {
@@ -669,4 +669,64 @@ class Model_Home extends CI_model
 
         }
     //akhir function-fiunction datatable JO
+
+    //function-fiunction datatable truck
+    public function count_all_merk()
+    {
+        $this->db->where("status_hapus","NO");
+        if($_SESSION["role"]=="Supervisor"){
+            $this->db->where("validasi","Pending");
+        }else{
+            $this->db->where("validasi","ACC");
+        }
+        return $this->db->count_all_results("skb_merk_kendaraan");
+    }
+
+    public function filter_merk($search, $order_field, $order_ascdesc)
+    {
+        if($search!=""){
+            $this->db->like('merk_nama', $search);
+            $this->db->or_like('merk_type', $search);
+            $this->db->or_like('merk_jenis', $search);
+        }
+        $this->db->order_by($order_field, $order_ascdesc);
+        $hasil = $this->db->get('skb_merk_kendaraan')->result_array();
+        $hasil_fix = [];
+        for($i=0;$i<count($hasil);$i++){
+            if($_SESSION["role"]=="Supervisor"){
+                if($hasil[$i]["status_hapus"]=="NO" && $hasil[$i]["validasi"]=="Pending"){
+                    $hasil_fix[] = $hasil[$i];
+                }
+            }else{
+                if($hasil[$i]["status_hapus"]=="NO" && $hasil[$i]["validasi"]=="ACC"){
+                    $hasil_fix[] = $hasil[$i];
+                }
+            }
+        }
+        return $hasil_fix;   
+    }
+
+    public function count_filter_merk($search)
+    {
+        if($search!=""){
+            $this->db->like('merk_nama', $search);
+            $this->db->or_like('merk_type', $search);
+            $this->db->or_like('merk_jenis', $search);
+        }
+        $hasil_data = $this->db->get('skb_merk_kendaraan')->result_array();
+            $hasil_fix = 0;
+            for($i=0;$i<count($hasil_data);$i++){
+                if($_SESSION["role"]=="Supervisor"){
+                    if($hasil_data[$i]["status_hapus"]=="NO" && $hasil_data[$i]["validasi"]=="Pending"){
+                        $hasil_fix +=1;
+                    }
+                }else{
+                    if($hasil_data[$i]["status_hapus"]=="NO" && $hasil_data[$i]["validasi"]=="ACC"){
+                        $hasil_fix +=1;
+                    }
+                }
+            }
+            return $hasil_fix;
+    }
+ //akhir function-fiunction datatable truck
 }

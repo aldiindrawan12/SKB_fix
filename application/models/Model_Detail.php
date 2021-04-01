@@ -33,6 +33,14 @@ class Model_Detail extends CI_model
     public function gettruckbyid($truck_id){ //truck by ID
         return $this->db->get_where("skb_mobil",array("mobil_no"=>$truck_id))->row_array();
     }
+
+    public function getmerkbyid($merk_id){ //merk by ID
+        return $this->db->get_where("skb_merk_kendaraan",array("merk_id"=>$merk_id))->row_array();
+    }
+
+    public function getallmerk(){ //merk all
+        return $this->db->get_where("skb_merk_kendaraan",array("status_hapus"=>"NO","Validasi"=>"ACC"))->result_array();
+    }
     
     public function getinvoicebyid($invoice_id){ //invoice by ID
         $this->db->join("skb_invoice","skb_invoice.invoice_kode=skb_job_order.invoice_id","left");

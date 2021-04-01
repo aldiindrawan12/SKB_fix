@@ -386,24 +386,24 @@ class Home extends CI_Controller {
     // end funngsi report 
 
     // funngsi report uang jalan 
-    public function report_uang_jalan()
-    {
-        if(!$_SESSION["user"]){
-            $this->session->set_flashdata('status-login', 'False');
-            redirect(base_url());
+        public function report_uang_jalan()
+        {
+            if(!$_SESSION["user"]){
+                $this->session->set_flashdata('status-login', 'False');
+                redirect(base_url());
+            }
+            $data["page"] = "Laporan_Uang_Jalan_page";
+            $data["collapse_group"] = "Laporan";
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            if(json_decode($data["akun_akses"]["akun_akses"])[3]==0){
+                redirect(base_url());
+            }
+            $this->load->view('header',$data);
+            $this->load->view('sidebar');
+            $this->load->view('home/report_uang_jalan');
+            $this->load->view('footer');
         }
-        $data["page"] = "Laporan_Uang_Jalan_page";
-        $data["collapse_group"] = "Laporan";
-        $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
-        if(json_decode($data["akun_akses"]["akun_akses"])[3]==0){
-            redirect(base_url());
-        }
-        $this->load->view('header',$data);
-        $this->load->view('sidebar');
-        $this->load->view('home/report_uang_jalan');
-        $this->load->view('footer');
-    }
-// end funngsi report uang jalan 
+    // end funngsi report uang jalan 
 
     // Invoice
         public function view_invoice(){
@@ -603,4 +603,52 @@ class Home extends CI_Controller {
             echo json_encode($callback);
         }
     // end rute dan muatan
+
+    //fungsi untuk truk
+    public function merk()
+    {
+        if(!$_SESSION["user"]){
+            $this->session->set_flashdata('status-login', 'False');
+            redirect(base_url());
+        }
+        $data["merk"] = $this->model_home->getmerk();
+        $data["page"] = "Merk_page";
+        $data["collapse_group"] = "Master_Data";
+        $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+        if(json_decode($data["akun_akses"]["akun_akses"])[0]==0){
+            redirect(base_url());
+        }
+        $this->load->view('header',$data);
+        $this->load->view('sidebar');
+        $this->load->view('home/merk');
+        $this->load->view('footer');
+    }
+    public function view_merk(){
+        $search = $_POST['search']['value'];
+        $order_index = $_POST['order'][0]['column'];
+        $order_field = $_POST['columns'][$order_index]['data'];
+        $order_ascdesc = $_POST['order'][0]['dir'];
+        $sql_total = $this->model_home->count_all_merk();
+        $sql_data = $this->model_home->filter_merk($search, $order_field, $order_ascdesc);
+        $sql_filter = $this->model_home->count_filter_merk($search);
+        $data = array();
+        for($i=0;$i<count($sql_data);$i++){
+            array_push($data, $sql_data[$i]);
+        }
+        $no = 1;
+        for($i=0;$i<count($data);$i++){
+            $data[$i]['no'] = $no;   
+            $no++;
+        }
+        $callback = array(
+            'draw' => $_POST['draw'],
+            'recordsTotal' => $sql_total,
+            'recordsFiltered' => $sql_filter,
+            'data' => $data
+        );
+
+        header('Content-Type: application/json');
+        echo json_encode($callback);
+    }
+//end fungsi untuk truk
 }

@@ -65,9 +65,6 @@
         $(document).ready(function() {
             var table = null;
             table = $('#Table-Truck').DataTable({
-                language: {
-                    searchPlaceholder: "Nomor Polisi"
-                },
                 "processing": true,
                 "serverSide": true,
                 "ordering": true,
@@ -244,6 +241,219 @@
         });
     </script>
     <!-- end kendaraan -->
+
+     <!-- merk -->
+     <script> //script datatables merk
+        $(document).ready(function() {
+            var table = null;
+            table = $('#Table-Merk').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ordering": true,
+                "order": [
+                    [0, 'asc']
+                ],
+                "ajax": {
+                    "url": "<?php echo base_url('index.php/home/view_merk/') ?>",
+                    "type": "POST",
+                },
+                "deferRender": true,
+                "paging":false,
+                "columns": [
+                    {
+                        "data": "merk_id",
+                        render: function(data, type, row) {
+                            let html = row["no"];
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "merk_nama"
+                    },
+                    
+                    {
+                        "data": "merk_type"
+                    },
+                    {
+                        "data": "merk_jenis"
+                    },
+                    
+                    {
+                        "data": "merk_dump"
+                    },
+                    {
+                        "data": "merk_id",
+                        className: 'text-center font-weight-bold',
+                        "orderable": false,
+                        render: function(data, type, row) {
+                            var role_user = "<?=$_SESSION['role']?>";
+                            if(role_user!="Supervisor"){
+                                let html ="<a class='btn btn-light btn-update-merk' href='javascript:void(0)' data-toggle='modal' data-target='#popup-update-merk' data-pk='"+data+"'><i class='fas fa-pen-square'></i></a> || "+
+                                "<a class='btn btn-light btn-delete-merk' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-trash-alt'></i></a>";
+                                return html;
+                            }else{
+                                let html ="<a class='btn btn-light btn-acc-merk' href='javascript:void(0)' data-pk='"+data+"'>ACC<i class='fas fa-eye'></i></a>";
+                                return html;
+                            }
+                        }
+                    }
+                ],
+                drawCallback: function() {
+                    $('.btn-delete-merk').click(function() {
+                        let pk = $(this).data('pk');
+                        Swal.fire({
+                            title: 'Hapus Merk',
+                            text:'Yakin anda akan menghapus data Merk ini?',
+                            showDenyButton: true,
+                            denyButtonText: `Batal`,
+                            denyButtonColor: '#808080',
+                            confirmButtonText: 'Hapus',
+                            confirmButtonColor: '#FF0000',
+                            icon: "warning"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/deletemerk') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        })
+                    });              
+                    $('.btn-update-merk').click(function() {
+                        let pk = $(this).data('pk');
+                        $.ajax({ //ajax ambil data bon
+                            type: "GET",
+                            url: "<?php echo base_url('index.php/detail/getmerk') ?>",
+                            dataType: "JSON",
+                            data: {
+                                id: pk
+                            },
+                            success: function(data) { //jika ambil data sukses
+                                $('#merk_id_update').val(data["merk_id"]); //set value
+                                $('#merk_nama_update').val(data["merk_nama"]); //set value
+                                $('#merk_type_update').val(data["merk_type"]); //set value
+                                $('#merk_jenis_update').val(data["merk_jenis"]); //set value
+                                $('#merk_dump_update').val(data["merk_dump"]); //set value
+                            }
+                        });
+                    });
+                    $('.btn-acc-merk').click(function() {
+                        let pk = $(this).data('pk');
+                        Swal.fire({
+                            title: 'ACC Tambah Merk',
+                            icon: "warning",
+                            text: 'Yakin anda ingin ACC Data Merk ini?',
+                            showDenyButton: true,
+                            denyButtonText: `Batal`,
+                            confirmButtonText: 'ACC',
+                            denyButtonColor: '#808080',
+                            confirmButtonColor: '#FF0000',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/accmerk') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }else{
+                            }
+                        })
+                    });
+                },
+                
+            });
+        });
+    </script>
+    <!-- end merk -->
+
+    <!-- pilih merk -->
+    <script> //script datatables merk
+        $(document).ready(function() {
+            var table = null;
+            table = $('#Table-Pilih-Merk').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ordering": true,
+                "order": [
+                    [0, 'asc']
+                ],
+                "ajax": {
+                    "url": "<?php echo base_url('index.php/home/view_merk/') ?>",
+                    "type": "POST",
+                },
+                "deferRender": true,
+                "paging":false,
+                "columns": [
+                    {
+                        "data": "merk_id",
+                        render: function(data, type, row) {
+                            let html = row["no"];
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "merk_nama"
+                    },
+                    
+                    {
+                        "data": "merk_type"
+                    },
+                    {
+                        "data": "merk_jenis"
+                    },
+                    
+                    {
+                        "data": "merk_dump"
+                    },
+                    {
+                        "data": "merk_id",
+                        className: 'text-center font-weight-bold',
+                        "orderable": false,
+                        render: function(data, type, row) {
+                            let html ="<a class='btn btn-light btn-pilih-merk' href='javascript:void(0)' data-pk='"+data+"'>Pilih<i class='fas fa-eye'></i></a>";
+                            return html;
+                        }
+                    }
+                ],
+                drawCallback: function() {
+                    $('.btn-pilih-merk').click(function() {
+                        let pk = $(this).data('pk');
+                        alert(pk);
+                        $.ajax({ //ajax ambil data bon
+                            type: "GET",
+                            url: "<?php echo base_url('index.php/detail/getmerk') ?>",
+                            dataType: "JSON",
+                            data: {
+                                id: pk
+                            },
+                            success: function(data) { //jika ambil data sukses
+                            alert(data);
+                                $('#mobil_type').val(data["merk_type"]); //set value
+                                $('#mobil_merk').val(data["merk_nama"]); //set value
+                                $('#mobil_jenis').val(data["merk_jenis"]); //set value
+                                $('#mobil_dump').val(data["merk_dump"]); //set value
+                            }
+                        });
+                    });
+                },
+                
+            });
+        });
+    </script>
+    <!-- end pilih merk -->
 
     <!-- JO -->
     <script> //script datatables job order
@@ -1949,6 +2159,9 @@
             var satuan = '<?= $this->session->flashdata('status-add-satuan'); ?>';
             var update_rute = '<?= $this->session->flashdata('status-update-satuan'); ?>';
             var delete_satuan = '<?= $this->session->flashdata('status-delete-satuan'); ?>';
+            var merk = '<?= $this->session->flashdata('status-add-merk'); ?>';
+            var update_merk = '<?= $this->session->flashdata('status-update-merk'); ?>';
+            var delete_merk = '<?= $this->session->flashdata('status-delete-merk'); ?>';
             if(login == "Berhasil"){
                 Swal.fire({
                         title: "Berhasil Login",
@@ -2089,6 +2302,33 @@
                         title: "Berhasil",
                         icon: "success",
                         text: "Menghapus data customer",
+                        type: "error",
+                        timer: 2000
+                    });
+            }
+            if(merk == "Berhasil"){
+                Swal.fire({
+                        title: "Berhasil",
+                        icon: "success",
+                        text: "Menambahkan data merk",
+                        type: "success",
+                        timer: 2000
+                    });
+            }
+            if(update_merk == "Berhasil"){
+                Swal.fire({
+                        title: "Berhasil",
+                        icon: "success",
+                        text: "Update data merk",
+                        type: "success",
+                        timer: 2000
+                    });
+            }
+            if(delete_merk == "Berhasil"){
+                Swal.fire({
+                        title: "Berhasil",
+                        icon: "success",
+                        text: "Menghapus data merk",
                         type: "error",
                         timer: 2000
                     });

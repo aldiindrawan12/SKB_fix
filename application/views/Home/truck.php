@@ -56,28 +56,30 @@
                             <input autocomplete="off" type="text" class="form-control" id="mobil_no" name="mobil_no" required>
                         </div>
                         <div class="form-group">
-                            <label for="mobil_merk" class="form-label font-weight-bold">Merk</label>
-                            <input autocomplete="off" type="text" class="form-control" id="mobil_merk" name="mobil_merk" required>
+                            <label for="mobil_merk" class="form-label font-weight-bold" onclick="merk()"">Merk</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_merk" name="mobil_merk" required readonly>
                         </div>
                         <div class="form-group">
                             <label for="mobil_type" class="form-label font-weight-bold">Type</label>
-                            <input autocomplete="off" type="text" class="form-control" id="mobil_type" name="mobil_type" required>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_type" name="mobil_type" required readonly>
                         </div>
                         <div class="form-group">
                             <label class="form-label font-weight-bold" for="mobil_jenis">Jenis Mobil</label>
-                            <select name="mobil_jenis" id="mobil_jenis" class="form-control custom-select" required onchange="nominal()">
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_jenis" name="mobil_jenis" required readonly>
+                            <!-- <select name="mobil_jenis" id="mobil_jenis" class="form-control custom-select" required readonly>
                                 <option class="font-w700" disabled="disabled" selected value="">Jenis Mobil</option>
                                 <option value="Sedang(Engkel)">Sedang(Engkel)</option>
                                 <option value="Besar(Tronton)">Besar(Tronton)</option>
-                            </select>
+                            </select> -->
                         </div>
                         <div class="form-group">
                             <label class="form-label font-weight-bold" for="mobil_dump">Dump</label>
-                            <select name="mobil_dump" id="mobil_dump" class="form-control custom-select" required onchange="nominal()">
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_dump" name="mobil_dump" required readonly>
+                            <!-- <select name="mobil_dump" id="mobil_dump" class="form-control custom-select" required readonly>
                                 <option class="font-w700" disabled="disabled" selected value="">Pilih Ya/Tidak</option>
                                 <option value="Ya">Ya</option>
                                 <option value="Tidak">Tidak</option>
-                            </select>
+                            </select> -->
                         </div>
                         <div class="form-group">
                             <label for="mobil_keterangan" class="form-label font-weight-bold">Keterangan</label>
@@ -144,6 +146,22 @@
             </div>
             <!-- </form> -->
             <?php echo form_close();?>
+            <div class="table-responsive">
+            <table class="table table-bordered" id="Table-Pilih-Merk" width="100%" cellspacing="0">
+                <thead>
+                    <tr>    
+                        <th class="text-center" width="12%" scope="col">No</th>
+                        <th class="text-center" width="12%" scope="col">Merk</th>
+                        <th class="text-center" width="12%" scope="col">Type</th>
+                        <th class="text-center" width="15%" scope="col">Jenis Kendaraan</th>
+                        <th class="text-center" width="10%" scope="col">Dump</th>
+                        <th class="text-center" width="30%" scope="col">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
         </div>
     </div>
 </div>
@@ -185,7 +203,7 @@
 <!-- end pop up update truck -->
 
 <!-- pop up detail kendaraan -->
-<div class="modal fade mt-4" id="popup-kendaraan" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<div class="modal fade mt-3 px-3" id="popup-kendaraan" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
@@ -284,3 +302,16 @@
     </div>
 </div>
 <!-- end pop up detail kendaraan -->
+
+<script>
+    function merk(){
+        $.ajax({ //ajax ambil data bon
+            type: "GET",
+            url: "<?php echo base_url('index.php/detail/getallmerk') ?>",
+            dataType: "JSON",
+            success: function(data) { //jika ambil data sukses
+                alert(data);
+            }
+        });
+    }
+</script>

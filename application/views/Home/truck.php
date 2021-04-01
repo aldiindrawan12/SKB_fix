@@ -57,7 +57,7 @@
                         </div>
                         <div class="form-group">
                             <label for="mobil_merk" class="form-label font-weight-bold" onclick="merk()"">Merk</label>
-                            <input autocomplete="off" type="text" class="form-control" id="mobil_merk" name="mobil_merk" required readonly>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_merk" name="mobil_merk" placeholder="Pilih Merk di Tabel Merk di Bawah" required>
                         </div>
                         <div class="form-group">
                             <label for="mobil_type" class="form-label font-weight-bold">Type</label>
@@ -147,21 +147,21 @@
             <!-- </form> -->
             <?php echo form_close();?>
             <div class="table-responsive">
-            <table class="table table-bordered" id="Table-Pilih-Merk" width="100%" cellspacing="0">
-                <thead>
-                    <tr>    
-                        <th class="text-center" width="12%" scope="col">No</th>
-                        <th class="text-center" width="12%" scope="col">Merk</th>
-                        <th class="text-center" width="12%" scope="col">Type</th>
-                        <th class="text-center" width="15%" scope="col">Jenis Kendaraan</th>
-                        <th class="text-center" width="10%" scope="col">Dump</th>
-                        <th class="text-center" width="30%" scope="col">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
+                <table class="table table-bordered" id="Table-Pilih-Merk" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>    
+                            <th class="text-center" width="12%" scope="col">No</th>
+                            <th class="text-center" width="12%" scope="col">Merk</th>
+                            <th class="text-center" width="12%" scope="col">Type</th>
+                            <th class="text-center" width="15%" scope="col">Jenis Kendaraan</th>
+                            <th class="text-center" width="10%" scope="col">Dump</th>
+                            <th class="text-center" width="30%" scope="col">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

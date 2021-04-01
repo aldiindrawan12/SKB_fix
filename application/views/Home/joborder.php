@@ -28,6 +28,7 @@
             <table class="table table-bordered  " id="Table-Job-Order" width="100%" cellspacing="0">
                 <thead>
                     <tr>
+                        <th width ="10%" class="text-center" scope="col">No</th>
                         <th width ="10%" class="text-center" scope="col">No JO</th>
                         <th width ="17%" class="text-center" scope="col">Customer</th>
                         <th width ="15%" class="text-center" scope="col">Muatan</th>

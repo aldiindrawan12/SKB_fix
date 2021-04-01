@@ -478,6 +478,13 @@
                 "columns": [
                     {
                         "data": "Jo_id",
+                        render: function(data, type, row) {
+                            let html = row["no"];
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "Jo_id",
                         className: 'text-center'
                     },
                     {

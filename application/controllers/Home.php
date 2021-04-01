@@ -76,11 +76,20 @@ class Home extends CI_Controller {
             $sql_total = $this->model_home->count_all_JO($status);
             $sql_data = $this->model_home->filter_JO($search,$order_field, $order_ascdesc,$status);
             $sql_filter = $this->model_home->count_filter_JO($search,$status);
+            $data = array();
+            for($i=0;$i<count($sql_data);$i++){
+                array_push($data, $sql_data[$i]);
+            }
+            $no = 1;
+            for($i=0;$i<count($data);$i++){
+                $data[$i]['no'] = $no;   
+                $no++;
+            }
             $callback = array(
                 'draw' => $_POST['draw'],
                 'recordsTotal' => $sql_total,
                 'recordsFiltered' => $sql_filter,
-                'data' => $sql_data
+                'data' => $data
             );
 
             header('Content-Type: application/json');

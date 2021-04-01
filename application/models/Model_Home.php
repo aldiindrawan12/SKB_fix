@@ -59,32 +59,71 @@ class Model_Home extends CI_model
             return $this->db->count_all_results("skb_mobil");
         }
 
-        public function filter_truck($search, $limit, $start, $order_field, $order_ascdesc)
+        public function filter_truck($search, $order_field, $order_ascdesc)
         {
-            $this->db->like('mobil_no', $search);
-            // $this->db->or_like('mobil_jenis', $search);
-            $this->db->where("status_hapus","NO");
-            if($_SESSION["role"]=="Supervisor"){
-                $this->db->where("validasi","Pending");
-            }else{
-                $this->db->where("validasi","ACC");
+            if($search!=""){
+                $this->db->like('mobil_no', $search);
+                $this->db->or_like('mobil_jenis', $search);
+                $this->db->or_like('mobil_merk', $search);
+                $this->db->or_like('mobil_type', $search);
+                $this->db->or_like('mobil_tahun', $search);
             }
+
+            // $this->db->where("status_hapus","NO");
+            // if($_SESSION["role"]=="Supervisor"){
+            //     $this->db->where("validasi","Pending");
+            // }else{
+            //     $this->db->where("validasi","ACC");
+            // }
             $this->db->order_by($order_field, $order_ascdesc);
-            $this->db->limit($limit, $start);
-            return $this->db->get('skb_mobil')->result_array();
+            // $this->db->limit($limit, $start);
+            // return $this->db->get('skb_mobil')->result_array();
+            $hasil = $this->db->get('skb_mobil')->result_array();
+            $hasil_fix = [];
+            for($i=0;$i<count($hasil);$i++){
+                if($_SESSION["role"]=="Supervisor"){
+                    if($hasil[$i]["status_hapus"]=="NO" && $hasil[$i]["validasi"]=="Pending"){
+                        $hasil_fix[] = $hasil[$i];
+                    }
+                }else{
+                    if($hasil[$i]["status_hapus"]=="NO" && $hasil[$i]["validasi"]=="ACC"){
+                        $hasil_fix[] = $hasil[$i];
+                    }
+                }
+            }
+            return $hasil_fix;   
         }
 
         public function count_filter_truck($search)
         {
-            $this->db->like('mobil_no', $search);
-            // $this->db->or_like('mobil_jenis', $search);
-            $this->db->where("status_hapus","NO");
-            if($_SESSION["role"]=="Supervisor"){
-                $this->db->where("validasi","Pending");
-            }else{
-                $this->db->where("validasi","ACC");
+            if($search!=""){
+                $this->db->like('mobil_no', $search);
+                $this->db->or_like('mobil_jenis', $search);
+                $this->db->or_like('mobil_merk', $search);
+                $this->db->or_like('mobil_type', $search);
+                $this->db->or_like('mobil_tahun', $search);
             }
-            return $this->db->get('skb_mobil')->num_rows();
+            // $this->db->where("status_hapus","NO");
+            // if($_SESSION["role"]=="Supervisor"){
+            //     $this->db->where("validasi","Pending");
+            // }else{
+            //     $this->db->where("validasi","ACC");
+            // }
+            // return $this->db->get('skb_mobil')->num_rows();
+            $hasil_data = $this->db->get('skb_mobil')->result_array();
+                $hasil_fix = 0;
+                for($i=0;$i<count($hasil_data);$i++){
+                    if($_SESSION["role"]=="Supervisor"){
+                        if($hasil_data[$i]["status_hapus"]=="NO" && $hasil_data[$i]["validasi"]=="Pending"){
+                            $hasil_fix +=1;
+                        }
+                    }else{
+                        if($hasil_data[$i]["status_hapus"]=="NO" && $hasil_data[$i]["validasi"]=="ACC"){
+                            $hasil_fix +=1;
+                        }
+                    }
+                }
+                return $hasil_fix;
         }
      //akhir function-fiunction datatable truck
 

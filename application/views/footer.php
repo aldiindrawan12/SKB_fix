@@ -79,10 +79,7 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                "aLengthMenu": [
-                    [10, 30, 50, 100],
-                    [10, 30, 50, 100]
-                ],
+                "paging":false,
                 "columns": [
                     {
                         "data": "mobil_no",

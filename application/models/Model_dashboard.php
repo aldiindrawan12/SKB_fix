@@ -43,25 +43,13 @@ class Model_Dashboard extends CI_model
                 $tgl2 = new DateTime($tanggal);
                 $d = $tgl2->diff($tgl1)->days + 1;
                 if($fungsi=="tidak_jalan"){
-                    if($_SESSION["role"]=="Supervisor"){
-                        if($hasil[$i]["status_hapus"]=="NO" && $hasil[$i]["status_jalan"]=="Tidak Jalan" && $hasil[$i]["validasi"]=="Pending"){
-                            $hasil_fix[] = $hasil[$i];
-                        }
-                    }else{
                         if($hasil[$i]["status_hapus"]=="NO" && $hasil[$i]["status_jalan"]=="Tidak Jalan" && $hasil[$i]["validasi"]=="ACC"){
                             $hasil_fix[] = $hasil[$i];
                         }
-                    }   
                 }else{
-                    if($_SESSION["role"]=="Supervisor"){
-                        if($hasil[$i]["status_hapus"]=="NO" && $d<31 && $tanggal!=null  && $hasil[$i]["validasi"]=="Pending"){
-                            $hasil_fix[] = $hasil[$i];
-                        }
-                    }else{
                         if($hasil[$i]["status_hapus"]=="NO" && $d<31 && $tanggal!=null  && $hasil[$i]["validasi"]=="ACC"){
                             $hasil_fix[] = $hasil[$i];
                         }
-                    }
                 }
             }
             return $hasil_fix;   
@@ -95,25 +83,13 @@ class Model_Dashboard extends CI_model
                     $tgl2 = new DateTime($tanggal);
                     $d = $tgl2->diff($tgl1)->days + 1;
                     if($fungsi="tidak_jalan"){
-                        if($_SESSION["role"]=="Supervisor"){
-                            if($hasil_data[$i]["status_hapus"]=="NO" && $hasil_data[$i]["status_jalan"]=="Tidak Jalan" && $hasil_data[$i]["validasi"]=="Pending"){
-                                $hasil_fix +=1;
-                            }
-                        }else{
                             if($hasil_data[$i]["status_hapus"]=="NO" && $hasil_data[$i]["status_jalan"]=="Tidak Jalan" && $hasil_data[$i]["validasi"]=="ACC"){
                                 $hasil_fix +=1;
                             }
-                        }
                     }else{
-                        if($_SESSION["role"]=="Supervisor"){
-                            if($hasil_data[$i]["status_hapus"]=="NO"  && $d<31 && $tanggal!=null && $hasil_data[$i]["validasi"]=="Pending"){
-                                $hasil_fix +=1;
-                            }
-                        }else{
                             if($hasil_data[$i]["status_hapus"]=="NO"  && $d<31 && $tanggal!=null && $hasil_data[$i]["validasi"]=="ACC"){
                                 $hasil_fix +=1;
                             }
-                        }
                     }
                 }
                 return $hasil_fix;
@@ -149,25 +125,13 @@ class Model_Dashboard extends CI_model
                 $tgl2 = new DateTime($tanggal);
                 $d = $tgl2->diff($tgl1)->days + 1;
                 if($fungsi=="tidak_jalan"){
-                    if($_SESSION["role"]=="Supervisor"){
-                        if($hasil[$i]["status_hapus"]=="NO" && $hasil[$i]["status_jalan"]=="Tidak Jalan" && $hasil[$i]["validasi"]=="Pending"){
-                            $hasil_fix[] = $hasil[$i];
-                        }
-                    }else{
                         if($hasil[$i]["status_hapus"]=="NO" && $hasil[$i]["status_jalan"]=="Tidak Jalan" && $hasil[$i]["validasi"]=="ACC"){
                             $hasil_fix[] = $hasil[$i];
                         }
-                    }   
                 }else{
-                    if($_SESSION["role"]=="Supervisor"){
-                        if($hasil[$i]["status_hapus"]=="NO" && $d<31 && $tanggal!=null  && $hasil[$i]["validasi"]=="Pending"){
-                            $hasil_fix[] = $hasil[$i];
-                        }
-                    }else{
                         if($hasil[$i]["status_hapus"]=="NO" && $d<31 && $tanggal!=null  && $hasil[$i]["validasi"]=="ACC"){
                             $hasil_fix[] = $hasil[$i];
                         }
-                    }
                 }
             }
             return $hasil_fix;   
@@ -190,32 +154,119 @@ class Model_Dashboard extends CI_model
                 $tgl2 = new DateTime($tanggal);
                 $d = $tgl2->diff($tgl1)->days + 1;
                 if($fungsi="tidak_jalan"){
-                    if($_SESSION["role"]=="Supervisor"){
-                        if($hasil_data[$i]["status_hapus"]=="NO" && $hasil_data[$i]["status_jalan"]=="Tidak Jalan" && $hasil_data[$i]["validasi"]=="Pending"){
-                            $hasil_fix +=1;
-                        }
-                    }else{
                         if($hasil_data[$i]["status_hapus"]=="NO" && $hasil_data[$i]["status_jalan"]=="Tidak Jalan" && $hasil_data[$i]["validasi"]=="ACC"){
                             $hasil_fix +=1;
                         }
-                    }
                 }else{
-                    if($_SESSION["role"]=="Supervisor"){
-                        if($hasil_data[$i]["status_hapus"]=="NO"  && $d<31 && $tanggal!=null && $hasil_data[$i]["validasi"]=="Pending"){
-                            $hasil_fix +=1;
-                        }
-                    }else{
                         if($hasil_data[$i]["status_hapus"]=="NO"  && $d<31 && $tanggal!=null && $hasil_data[$i]["validasi"]=="ACC"){
                             $hasil_fix +=1;
                         }
-                    }
                 }
             }
             return $hasil_fix;
             
         }
     //  end Function Supir
+    // Function Invoice Jatuh Tempo
+        public function count_all_invoice_jatuh_tempo()
+        {
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_invoice.customer_id", 'left');
+            return $this->db->count_all_results("skb_invoice");
+        }
 
+        public function filter_invoice_jatuh_tempo($search, $order_field, $order_ascdesc)
+        {
+            if($search!=""){
+                $this->db->like('invoice_kode', $search);
+                $this->db->or_like('customer_name', $search);
+            }
+            $this->db->order_by($order_field, $order_ascdesc);
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_invoice.customer_id", 'left');
+            $hasil = $this->db->get('skb_invoice')->result_array();
+            $hasil_fix = [];
+            for($i=0;$i<count($hasil);$i++){
+                $tgl_invoice = $hasil[$i]["tanggal_invoice"];
+                $tanggal = date('Y-m-d', strtotime('+'.$hasil[$i]["batas_pembayaran"].' days', strtotime($tgl_invoice)));
+                $tanggal_now = date("Y-m-d");
+                $tgl1 = new DateTime($tgl_invoice);
+                $tgl2 = new DateTime($tanggal);
+                $d = $tgl2->diff($tgl1)->days + 1;
+                if($hasil[$i]["status_bayar"]=="Belum Lunas" && $tanggal_now>$tanggal){
+                    $hasil_fix[] = $hasil[$i];
+                }
+            }
+            return $hasil_fix;  
+        }
+
+        public function count_filter_invoice_jatuh_tempo($search)
+        {
+            $this->db->where("status_bayar","Belum Lunas");
+            $this->db->like('invoice_kode', $search);
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_invoice.customer_id", 'left');
+            $hasil_data = $this->db->get('skb_invoice')->result_array();
+            $hasil_fix = 0;
+            for($i=0;$i<count($hasil_data);$i++){
+                $tgl_invoice = $hasil_data[$i]["tanggal_invoice"];
+                $tanggal = date('Y-m-d', strtotime('+'.$hasil_data[$i]["batas_pembayaran"].' days', strtotime($tgl_invoice)));
+                $tanggal_now = date("Y-m-d");
+                $tgl1 = new DateTime($tgl_invoice);
+                $tgl2 = new DateTime($tanggal);
+                $d = $tgl2->diff($tgl1)->days + 1;
+                if($hasil_data[$i]["status_bayar"]=="Belum Lunas" && $tanggal_now>$tanggal){
+                    $hasil_fix +=1;
+                }
+            }
+            return $hasil_fix;
+        }
+    // end Function Invoice Jatuh Tempo
+    //function-fiunction datatable JO
+        public function count_all_JO($status)
+        {
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
+            return $this->db->count_all_results("skb_job_order");
+        }
+
+        public function filter_JO($search, $order_field, $order_ascdesc,$status)
+        {
+            if($search!=""){
+                $this->db->like('JO_id', $search);
+                $this->db->or_like('customer_name', $search);
+                $this->db->or_like('muatan', $search);
+                $this->db->or_like('asal', $search);
+                $this->db->or_like('tujuan', $search);
+            }
+            $this->db->order_by($order_field, $order_ascdesc);
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
+            $hasil = $this->db->get('skb_job_order')->result_array();
+                $hasil_fix = [];
+                for($i=0;$i<count($hasil);$i++){
+                    if($hasil[$i]["status"]==$status && $hasil[$i]["invoice_id"]==""){
+                        $hasil_fix[] = $hasil[$i];
+                    }
+                }
+                return $hasil_fix;
+        }
+
+        public function count_filter_JO($search,$status)
+        {   
+            if($search!=""){
+                $this->db->like('JO_id', $search);
+                $this->db->or_like('customer_name', $search);
+                $this->db->or_like('muatan', $search);
+                $this->db->or_like('asal', $search);
+                $this->db->or_like('tujuan', $search);
+            }
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
+            $hasil_data = $this->db->get('skb_job_order')->result_array();
+                $hasil_fix = 0;
+                for($i=0;$i<count($hasil_data);$i++){
+                    if($hasil_data[$i]["status"]==$status && $hasil_data[$i]["invoice_id"]==""){
+                        $hasil_fix +=1;
+                    }
+                }
+                return $hasil_fix;
+        }
+    //akhir function-fiunction datatable JO
     public function generate_selisih_tanggal($tanggal){
         $tanggal_now = date("Y-m-d");
         $tgl1 = new DateTime($tanggal_now);

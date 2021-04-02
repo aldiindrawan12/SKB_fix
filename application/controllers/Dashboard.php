@@ -74,4 +74,69 @@ class Dashboard extends CI_Controller {
         header('Content-Type: application/json');
         echo json_encode($callback);
     }
+    public function view_invoice_jatuh_tempo(){
+        $search = $_POST['search']['value'];
+        $order_index = $_POST['order'][0]['column'];
+        $order_field = $_POST['columns'][$order_index]['data'];
+        $order_ascdesc = $_POST['order'][0]['dir'];
+        $sql_total = $this->model_dashboard->count_all_invoice_jatuh_tempo();
+        $sql_data = $this->model_dashboard->filter_invoice_jatuh_tempo($search,$order_field, $order_ascdesc);
+        $sql_filter = $this->model_dashboard->count_filter_invoice_jatuh_tempo($search);
+        $data = array();
+        for($i=0;$i<count($sql_data);$i++){
+            array_push($data, $sql_data[$i]);
+        }
+        $no = 1;
+        for($i=0;$i<count($data);$i++){
+            //tanggal pembayaran invoice dan sisa hari
+            $tgl_invoice = $data[$i]["tanggal_invoice"];
+            $tanggal = date('Y-m-d', strtotime('+'.$data[$i]["batas_pembayaran"].' days', strtotime($tgl_invoice)));
+            $tanggal_now = date("Y-m-d");
+            $tgl1 = new DateTime($tanggal_now);
+            $tgl2 = new DateTime($tanggal);
+            $d = $tgl2->diff($tgl1)->days + 1;
+
+            $data[$i]['no'] = $no;   
+            $data[$i]['tgl_batas_pembayaran'] = $tanggal;   
+            $data[$i]['batas_pembayaran'] = $d;   
+            $no++;
+        }
+        $callback = array(
+            'draw' => $_POST['draw'],
+            'recordsTotal' => $sql_total,
+            'recordsFiltered' => $sql_filter,
+            'data' => $data
+        );
+
+        header('Content-Type: application/json');
+        echo json_encode($callback);
+    }
+    public function view_JO_no_invoice(){
+        $search = $_POST['search']['value'];
+        $status = "Sampai Tujuan";
+        $order_index = $_POST['order'][0]['column'];
+        $order_field = $_POST['columns'][$order_index]['data'];
+        $order_ascdesc = $_POST['order'][0]['dir'];
+        $sql_total = $this->model_dashboard->count_all_JO($status);
+        $sql_data = $this->model_dashboard->filter_JO($search,$order_field, $order_ascdesc,$status);
+        $sql_filter = $this->model_dashboard->count_filter_JO($search,$status);
+        $data = array();
+        for($i=0;$i<count($sql_data);$i++){
+            array_push($data, $sql_data[$i]);
+        }
+        $no = 1;
+        for($i=0;$i<count($data);$i++){
+            $data[$i]['no'] = $no;   
+            $no++;
+        }
+        $callback = array(
+            'draw' => $_POST['draw'],
+            'recordsTotal' => $sql_total,
+            'recordsFiltered' => $sql_filter,
+            'data' => $data
+        );
+
+        header('Content-Type: application/json');
+        echo json_encode($callback);
+    }
 }

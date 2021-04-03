@@ -42,6 +42,26 @@ class Dashboard extends CI_Controller {
         }
         $no = 1;
         for($i=0;$i<count($data);$i++){
+            if($fungsi=="nopol"){
+                $tanggal = $data[$i]["mobil_berlaku"];
+            }else if($fungsi=="kir"){
+                $tanggal = $data[$i]["mobil_berlaku_kir"];
+            }else if($fungsi=="stnk"){
+                $tanggal = $data[$i]["mobil_berlaku_stnk"];
+            }else if($fungsi=="ijin"){
+                $tanggal = $data[$i]["mobil_berlaku_ijin_bongkar"];
+            }else{
+                $tanggal = "0000-00-00";
+            }
+            $tanggal_now = date("Y-m-d");
+            $tgl1 = new DateTime($tanggal_now);
+            $tgl2 = new DateTime($tanggal);
+            $d = $tgl2->diff($tgl1)->days + 1;
+            if($tanggal_now<$tanggal){
+                $data[$i]['sisa'] = "-".$d." hari";   
+            }else{
+                $data[$i]['sisa'] = "+".$d." hari";   
+            }
             $data[$i]['no'] = $no;   
             $no++;
         }
@@ -63,12 +83,32 @@ class Dashboard extends CI_Controller {
         $sql_total = $this->model_dashboard->count_all_supir($fungsi);
         $sql_data = $this->model_dashboard->filter_supir($fungsi,$search, $order_field, $order_ascdesc);
         $sql_filter = $this->model_dashboard->count_filter_supir($fungsi,$search);
-        
+        $data = array();
+        for($i=0;$i<count($sql_data);$i++){
+            array_push($data, $sql_data[$i]);
+        }
+        $no = 1;
+        for($i=0;$i<count($data);$i++){
+            if($fungsi=="sim"){
+                $tanggal = $data[$i]["supir_tgl_sim"];
+            }else{
+                $tanggal = "0000-00-00";
+            }
+            $tanggal_now = date("Y-m-d");
+            $tgl1 = new DateTime($tanggal_now);
+            $tgl2 = new DateTime($tanggal);
+            $d = $tgl2->diff($tgl1)->days + 1;
+            if($tanggal_now<$tanggal){
+                $data[$i]['sisa'] = "-".$d." hari";   
+            }else{
+                $data[$i]['sisa'] = "+".$d." hari";   
+            }
+        }
         $callback = array(
             'draw' => $_POST['draw'],
             'recordsTotal' => $sql_total,
             'recordsFiltered' => $sql_filter,
-            'data' => $sql_data
+            'data' => $data
         );
 
         header('Content-Type: application/json');

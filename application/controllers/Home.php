@@ -189,6 +189,16 @@ class Home extends CI_Controller {
             }
             $no = $start + 1;
             for($i=0;$i<count($data);$i++){
+                $tanggal = $data[$i]["supir_tgl_sim"];
+                $tanggal_now = date("Y-m-d");
+                $tgl1 = new DateTime($tanggal_now);
+                $tgl2 = new DateTime($tanggal);
+                $d = $tgl2->diff($tgl1)->days + 1;
+                if($tanggal_now<$tanggal){
+                    $data[$i]['sisa'] = $d." hari";   
+                }else{
+                    $data[$i]['sisa'] = "+".$d." hari";   
+                }
                 $data[$i]['no'] = $no;   
                 $no++;
             }

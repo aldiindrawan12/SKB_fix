@@ -287,23 +287,23 @@
                         className: 'text-center',
                         "orderable": false,
                             render: function(data, type, row) {
-                                var selisih = "";
-                                $.ajax({
-                                    async: false,
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/generate_selisih_tanggal/') ?>"+data,
-                                    dataType: "text",
-                                    success: function(tanggal) {
-                                        selisih = tanggal;
-                                    }
-                                });
-                                if(selisih<31){
-                                    let html = "<a class='btn btn-block btn-sm btn-danger'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+selisih+" hari</a>";
-                                    return html;
-                                }else{
-                                    let html = "<a class='btn btn-block btn-sm btn-success'><i class='fa fa-fw fa-check mr-2'></i>"+selisih+" hari</a>";
-                                    return html;
-                                }
+                                // var selisih = "";
+                                // $.ajax({
+                                //     async: false,
+                                //     type: "GET",
+                                //     url: "<?php echo base_url('index.php/form/generate_selisih_tanggal/') ?>"+data,
+                                //     dataType: "text",
+                                //     success: function(tanggal) {
+                                //         selisih = tanggal;
+                                //     }
+                                // });
+                                // if(selisih<31){
+                                let html = "<a class='btn btn-block btn-sm btn-danger'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
+                                return html;
+                                // }else{
+                                //     let html = "<a class='btn btn-block btn-sm btn-success'><i class='fa fa-fw fa-check mr-2'></i>"+row["sisa"]+"</a>";
+                                //     return html;
+                                // }
                             }
                     }
                 ]
@@ -341,23 +341,8 @@
                         className: 'text-center',
                         "orderable": false,
                             render: function(data, type, row) {
-                                var selisih = "";
-                                $.ajax({
-                                    async: false,
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/generate_selisih_tanggal/') ?>"+data,
-                                    dataType: "text",
-                                    success: function(tanggal) {
-                                        selisih = tanggal;
-                                    }
-                                });
-                                if(selisih<31){
-                                    let html = "<a class='btn btn-block btn-sm btn-danger'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+selisih+" hari</a>";
-                                    return html;
-                                }else{
-                                    let html = "<a class='btn btn-block btn-sm btn-success'><i class='fa fa-fw fa-check mr-2'></i>"+selisih+" hari</a>";
-                                    return html;
-                                }
+                                let html = "<a class='btn btn-block btn-sm btn-danger'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
+                                return html;
                             }
                     }
                 ]
@@ -395,23 +380,8 @@
                         className: 'text-center',
                         "orderable": false,
                             render: function(data, type, row) {
-                                var selisih = "";
-                                $.ajax({
-                                    async: false,
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/generate_selisih_tanggal/') ?>"+data,
-                                    dataType: "text",
-                                    success: function(tanggal) {
-                                        selisih = tanggal;
-                                    }
-                                });
-                                if(selisih<31){
-                                    let html = "<a class='btn btn-block btn-sm btn-danger'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+selisih+" hari</a>";
-                                    return html;
-                                }else{
-                                    let html = "<a class='btn btn-block btn-sm btn-success'><i class='fa fa-fw fa-check mr-2'></i>"+selisih+" hari</a>";
-                                    return html;
-                                }
+                                let html = "<a class='btn btn-block btn-sm btn-danger'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
+                                return html;
                             }
                     }
                 ]
@@ -449,23 +419,8 @@
                         className: 'text-center',
                         "orderable": false,
                             render: function(data, type, row) {
-                                var selisih = "";
-                                $.ajax({
-                                    async: false,
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/generate_selisih_tanggal/') ?>"+data,
-                                    dataType: "text",
-                                    success: function(tanggal) {
-                                        selisih = tanggal;
-                                    }
-                                });
-                                if(selisih<31){
-                                    let html = "<a class='btn btn-block btn-sm btn-danger'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+selisih+" hari</a>";
-                                    return html;
-                                }else{
-                                    let html = "<a class='btn btn-block btn-sm btn-success'><i class='fa fa-fw fa-check mr-2'></i>"+selisih+" hari</a>";
-                                    return html;
-                                }
+                                let html = "<a class='btn btn-block btn-sm btn-danger'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
+                                return html;
                             }
                     }
                 ]
@@ -572,23 +527,8 @@
                         className: 'text-center',
                         "orderable": false,
                             render: function(data, type, row) {
-                                var selisih = "";
-                                $.ajax({
-                                    async: false,
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/generate_selisih_tanggal/') ?>"+data,
-                                    dataType: "text",
-                                    success: function(tanggal) {
-                                        selisih = tanggal;
-                                    }
-                                });
-                                if(selisih<31){
-                                    let html = "<a class='btn btn-block btn-sm btn-danger'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+selisih+" hari</a>";
-                                    return html;
-                                }else{
-                                    let html = "<a class='btn btn-block btn-sm btn-success'><i class='fa fa-fw fa-check mr-2'></i>"+selisih+" hari</a>";
-                                    return html;
-                                }
+                                let html = "<a class='btn btn-block btn-sm btn-danger'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
+                                return html;
                             }
                     }
                 ]

@@ -5,28 +5,14 @@
     </div>
     <div class="card-body">
             <div class="container ">
-            <!-- <div class="float-right mb-3">
-            <?php if($jo["status"]=="Dalam Perjalanan"){?>                    
-                        <a class='btn btn-outline-danger btn-sm mr-2 ' href='<?= base_url("index.php/detail/updatejobatal/").$jo["Jo_id"]?>' id="">
-                            <span>Batalkan Perjalanan JO</span>
-                        </a>
-                        <a class='btn btn-success btn-sm ' data-toggle='modal' data-target='#popup-status-jo' href='' id="<?php echo $jo["Jo_id"] ?>" onclick="datajo(this,<?php echo $jo['supir_id'] ?>,'<?php echo $jo['mobil_no'] ?>')">
-                            <span class>Konfirmasi Sampai</span>
-                        </a>
-                        
-                <?php }?></div> -->
-
                 <div class="float-right mb-3">
-                <?php if($jo["status"]=="Dalam Perjalanan"){?>                    
-                            <a class='btn btn-primary btn-sm ' href='<?= base_url("index.php/print_berkas/uang_jalan/").$jo["Jo_id"]?>' id="">
-                                <span>Cetak Bukti Uang Jalan</span>
-                            </a>
-                    <?php }?></div>
-
-                
+                    <?php if($jo["status"]=="Dalam Perjalanan"){?>                    
+                        <a class='btn btn-primary btn-sm ' href='<?= base_url("index.php/print_berkas/uang_jalan/").$jo["Jo_id"]?>' id="">
+                            <span>Cetak Bukti Uang Jalan</span>
+                        </a>
+                    <?php }?>
+                </div>
             </div>
-                    
-
         <!-- tampilan detail jo -->
         <div class="container" id="detail-jo">
             <table class="table table-bordered">
@@ -70,6 +56,28 @@
                         <td class="font-weight-bold " style="width: 25%;">Uang Jalan</td>
                         <td colspan=3><p>Rp.<?= number_format($jo["uang_jalan"],2,',','.')." (".$jo["terbilang"].")" ?></p></td>
                     </tr>
+                    <tr>
+                        <td class="font-weight-bold " style="width: 25%;">Uang Jalan Terbayar</td>
+                        <?php if($jo["uang_jalan_bayar"]==$jo["uang_jalan"]){?>
+                            <td colspan=3>
+                                <div class="row ">
+                                    <p class="col">Rp.<?= number_format($jo["uang_jalan_bayar"],2,',','.')?></p>
+                                    <a class='btn btn-success btn-sm col-md-4 col'>
+                                        <span>Pembayaran UJ Lunas</span>
+                                    </a>
+                                </div>
+                            </td>
+                        <?php }else{?>
+                            <td colspan=3>
+                                <div class="row ">
+                                    <p class="col">Rp.<?= number_format($jo["uang_jalan_bayar"],2,',','.')?></p>
+                                    <a class='btn btn-primary btn-sm col-md-4' data-toggle="modal" data-target="#update_ju">
+                                        <span>Konfirmasi Bayar UJ</span>
+                                    </a>
+                                </div>
+                            </td>
+                        <?php }?>
+                    </tr>
                     <tr class="text-center">
                         <td colspan=3><strong>Detail Muatan</strong></td>
                     </tr>
@@ -88,9 +96,6 @@
                         <td class="font-weight-bold" style="width: 20%;">Catatan/Keterangan</td>
                         <td colspan=3><?= $jo["keterangan"]?></td>
                     </tr>
-
-                    
-
                 </tbody>
             </table>
         </div>
@@ -101,41 +106,27 @@
 
 
 <!-- pop up update status jo -->
-<div class="modal fade mt-4 py-5" id="popup-status-jo" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<div class="modal fade mt-4 py-5" id="update_ju" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
-                <h5 class="block-title font-weight-bold">Konfirmasi Job Order</h5>
+                <h5 class="block-title font-weight-bold">Konfirmasi Uang Jalan</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times</span>
                 </button>
             </div>
             <div class="font-size-sm m-3 text-justify">
-                <p>Isi Data Dengan Lengkap</p>
-                <form id="form-status-jo"  method="POST" id="status_supir">
-                    <input type="text" name="jo_id" id="jo_id" hidden>
+                <form action="<?php echo base_url("index.php/detail/updateUJ/").$jo["Jo_id"]?>" method="POST">
                     <div class="mb-3 row">
-                        <label for="tonase" class="col-sm-5 col-form-label">Muatan akhir</label>
+                        <label for="uang_jalan_bayar" class="col-sm-5 col-form-label">Nominal Uang Jalan Yang Dibayar</label>
                         <div class="col-sm-6">
-                            <input autocomplete="off" class="form-control" type="text" name="tonase" id="tonase" onkeyup="uang()" required>    
+                            <input autocomplete="off" class="form-control" type="text" name="uang_jalan_bayar" id="uang_jalan_bayar" onkeyup="uang(this)" required>    
                         </div>
                     </div>
-                     <!-- <div class="mb-3 row">
-                        <label class="col-sm-5 col-form-label" for="harga">Harga / Tonase</label>
-                        <div class="col-sm-6">
-                            <input autocomplete="off" class="form-control" type="text" name="harga" id="harga" onkeyup="uang()" required>
-                        </div>
-                    </div> -->
                     <div class="mb-3 row">
-                        <label class="col-sm-5 col-form-label" for="bonus">Biaya Lain</label>
+                        <label for="Keterangan" class="col-sm-5 col-form-label">Keterangan</label>
                         <div class="col-sm-6">
-                            <input autocomplete="off" class="form-control" type="text" name="bonus" id="bonus" onkeyup="uang()" required>
-                        </div>
-                    </div>
-                     <div class="mb-3 row">
-                        <label class="col-sm-5 col-form-label" for="Keterangan" class="form-label">Keterangan/Catatan Tambahan</label>
-                        <div class="col-sm-6">
-                            <textarea class="form-control" name="Keterangan" rows="3"></textarea>
+                            <input autocomplete="off" class="form-control" type="text" name="Keterangan" id="Keterangan" onkeyup="uang()" required>    
                         </div>
                     </div>
                     <div class="float-right mr-5 px-3 mt-2">
@@ -147,23 +138,8 @@
     </div>
 </div>
 <!-- end pop up update status jo -->
-
 <script>
-
-    function datajo(a,supir,mobil){
-        jo_id = a.id;
-        $('#jo_id').val(jo_id); //set value
-        $('#form-status-jo').attr('action','<?php echo base_url("index.php/detail/updatestatusjo/")?>'+supir+'/'+mobil);
-    }
-
-    function cetak_invoice(){
-        window.location.replace("<?= base_url("index.php/print_berkas/invoice/".$jo["Jo_id"]."/JO")?>");    
-    }
-
-    function uang(){
-        $( '#tonase' ).mask('000.000.000', {reverse: true});
-        $( '#harga' ).mask('000.000.000', {reverse: true});
-        $( '#upah' ).mask('000.000.000', {reverse: true});
-        $( '#bonus' ).mask('000.000.000', {reverse: true});
+    function uang(a){
+        $( '#'+a.id ).mask('000.000.000', {reverse: true});
     }
 </script>

@@ -20,6 +20,13 @@ class Model_Detail extends CI_model
         $this->db->update("skb_mobil");
     }
 
+    public function updateUJ($jo_id,$keterangan,$uj){ //update status jo saat sampai tujuan
+        $this->db->set("uang_jalan_bayar",$uj);
+        $this->db->set("keterangan",$keterangan);
+        $this->db->where("Jo_id",$jo_id);
+        $this->db->update("skb_job_order");
+    }
+
     public function getbonbyid($bon_id){ //bon by ID
         $this->db->join("skb_supir","skb_supir.supir_id=skb_bon.supir_id","left");
         return $this->db->get_where("skb_bon",array("bon_id"=>$bon_id))->row_array();

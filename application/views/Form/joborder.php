@@ -85,12 +85,14 @@
                         <label for="Uang" class="form-label font-weight-bold">Uang Jalan</label>
                         <input autocomplete="off" type="text" class="form-control" id="Uang" name="Uang" required readonly>
                     </div>
-
                     <div class="col-md-4 col-md-offset-4 ">
                         <label for="Terbilang" class="form-label font-weight-bold">Terbilang</label>
                         <input autocomplete="off" type="text" class="form-control" id="Terbilang" name="Terbilang" required readonly>
                     </div>
-
+                    <div class="col-md-4 col-md-offset-4">
+                        <label for="uang_jalan_bayar" class="form-label font-weight-bold">Uang Jalan Dibayar</label>
+                        <input autocomplete="off" type="text" class="form-control" id="uang_jalan_bayar" name="uang_jalan_bayar" required onkeyup="uang(this)">
+                    </div>
                     <div class="col-md-4 col-md-offset-4 ">
                         <label for="Keterangan" class="form-label font-weight-bold">Keterangan/Catatan</label>
                         <textarea class="form-control" name="Keterangan" id="Keterangan" rows="3"></textarea>
@@ -377,5 +379,8 @@
                     });
                 }
             });
+    }
+    function uang(a){
+        $( '#'+a.id ).mask('000.000.000', {reverse: true});
     }
 </script>

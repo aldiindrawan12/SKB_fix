@@ -431,7 +431,6 @@
                 drawCallback: function() {
                     $('.btn-pilih-merk').click(function() {
                         let pk = $(this).data('pk');
-                        alert(pk);
                         $.ajax({ //ajax ambil data bon
                             type: "GET",
                             url: "<?php echo base_url('index.php/detail/getmerk') ?>",
@@ -440,7 +439,6 @@
                                 id: pk
                             },
                             success: function(data) { //jika ambil data sukses
-                            alert(data);
                                 $('#mobil_type').val(data["merk_type"]); //set value
                                 $('#mobil_merk').val(data["merk_nama"]); //set value
                                 $('#mobil_jenis').val(data["merk_jenis"]); //set value

@@ -76,6 +76,14 @@ class Detail extends CI_Controller {
             redirect(base_url("index.php/detail/detail_jo/").$this->input->post("jo_id")."/JO");
         }
 
+        public function updateUJ($jo_id){
+            $data_jo = $this->model_home->getjobyid($jo_id);
+            $keterangan = $data_jo["keterangan"]."<br><strong>Catatan Bayar UJ : </strong>".$this->input->post("Keterangan");
+            $uj = $data_jo["uang_jalan_bayar"]+str_replace(".","",$this->input->post("uang_jalan_bayar"));
+            $this->model_detail->updateUJ($jo_id,$keterangan,$uj);
+            redirect(base_url("index.php/detail/detail_jo/").$jo_id."/JO");
+        }
+
         public function updateinvoice(){
             $invoice_kode = $this->input->post("invoice-kode");
             $this->model_detail->updateinvoice($invoice_kode);

@@ -99,6 +99,7 @@ class Form extends CI_Controller {
                 "asal"=>$this->input->post("Asal"),
                 "tujuan"=>$this->input->post("Tujuan"),
                 "uang_jalan"=>str_replace(".","",$this->input->post("Uang")),
+                "uang_jalan_bayar"=>str_replace(".","",$this->input->post("uang_jalan_bayar")),
                 "terbilang"=>$this->input->post("Terbilang"),
                 "tanggal_surat"=>date("Y-m-d"),
                 "keterangan"=>$this->input->post("Keterangan"),

@@ -65,7 +65,7 @@
                                 <th class="text-center" width="20%" scope="col">No Polisi</th>
                                 <th class="text-center" width="20%" scope="col">No Ijin BM</th>
                                 <th class="text-center" width="40%" scope="col">Berlaku Ijin BM</th>
-                                <th class="text-center" width="30%" scope="col">Ssisa Berlaku</th>
+                                <th class="text-center" width="30%" scope="col">Sisa Berlaku</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -271,13 +271,15 @@
                 "columns": [
                     {
                         "data": "mobil_no",
+                        className: 'text-center',
                         render: function(data, type, row) {
                             let html = row["no"];
                             return html;
                         }
                     },
                     {
-                        "data": "mobil_no"
+                        "data": "mobil_no",
+                        className: 'text-center'
                     },
                     {
                         "data": "mobil_berlaku",
@@ -298,7 +300,7 @@
                                 //     }
                                 // });
                                 // if(selisih<31){
-                                let html = "<a class='btn btn-block btn-sm btn-danger'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
+                                let html = "<a class='btn btn-block btn-sm btn-warning'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
                                 return html;
                                 // }else{
                                 //     let html = "<a class='btn btn-block btn-sm btn-success'><i class='fa fa-fw fa-check mr-2'></i>"+row["sisa"]+"</a>";

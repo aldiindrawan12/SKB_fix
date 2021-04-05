@@ -2,7 +2,7 @@
 <div class="container small">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-center">Laporan Gaji Supir</h6>
+            <h5 class="m-0 font-weight-bold text-center">Laporan Gaji Supir</h5>
         </div>
         <div class="card-body">
             <table class="w-50">
@@ -22,7 +22,7 @@
         </div>
         <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-danger">Belum Dibayar</h6>
+            <h6 class="m-0  text-danger">Belum Dibayar</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">

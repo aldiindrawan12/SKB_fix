@@ -1,7 +1,7 @@
-    <div class="info-kendaraan">
+    <div class="info-kendaraan"> 
         <div class="card shadow mb-4">
-            <div class="card-header py-3 text-center">
-                <h6 class="m-0 font-weight-bold text-primary">Info Kendaraan</h6>
+            <div class="card-header py-3 text-center">  
+                <h6 class="m-0 font-weight-bold text-primary h3">Info Kendaraan</h6>
             </div>  
             <div class="card-body row justify-content-md-center small">
                 <div class="table-responsive col-md-6 border border-primary rounded p-1">

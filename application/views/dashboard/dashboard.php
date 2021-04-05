@@ -72,7 +72,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="table-responsive col-md-6 border border-primary rounded p-1">
+                <div class="table-responsive border border-primary rounded p-1">
                     <div class="card-header py-3 text-center">
                         <h6 class="m-0 font-weight-bold text-primary">Kendaraan Tidak Jalan</h6>
                     </div>

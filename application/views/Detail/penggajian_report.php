@@ -1,6 +1,6 @@
 <!-- tampilan detail penggajian supir -->
 <div class="container small">
-    <div class="card shadow mb-4">
+    <div class="card shadow mb-2">
         <div class="card-header py-3">
             <h5 class="m-0 font-weight-bold text-center">Laporan Gaji Supir</h5>
         </div>
@@ -20,7 +20,10 @@
                 </tbody>
             </table>
         </div>
-        <div class="card shadow mb-4">
+        
+        
+    </div>
+    <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 text-danger">Belum Dibayar</h6>
         </div>
@@ -29,14 +32,14 @@
                 <table class="table table-bordered table-striped" id="Table-Penggajian" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th class="text-center" width="10%" scope="col">JO ID</th>
+                            <th class="text-center" width="5%" scope="col">JO ID</th>
                             <th class="text-center" width="10%" scope="col">Tgl Keluar</th>
                             <th class="text-center" width="13%" scope="col">Tgl Bongkar</th>
                             <th class="text-center" width="10%" scope="col">Muatan</th>
                             <th class="text-center" width="10%" scope="col">Dari</th>
                             <th class="text-center" width="10%" scope="col">Ke</th>
                             <th class="text-center" width="10%" scope="col">Uang Jalan</th>
-                            <th class="text-center" width="8%" scope="col">Total Muatan</th>
+                            <th class="text-center" width="11%" scope="col">Total Muatan</th>
                             <th class="text-center" width="10%" scope="col">Upah+Bonus</th>
                         </tr>
                     </thead>
@@ -79,8 +82,6 @@
                 </table>
             </div>
         </div>
-        
-    </div>
 </div>
 <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -91,14 +92,14 @@
                 <table class="table table-bordered table-striped" id="Table-Penggajian" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th class="text-center" width="10%" scope="col">JO ID</th>
+                        <th class="text-center" width="5%" scope="col">JO ID</th>
                             <th class="text-center" width="10%" scope="col">Tgl Keluar</th>
                             <th class="text-center" width="13%" scope="col">Tgl Bongkar</th>
                             <th class="text-center" width="10%" scope="col">Muatan</th>
                             <th class="text-center" width="10%" scope="col">Dari</th>
                             <th class="text-center" width="10%" scope="col">Ke</th>
                             <th class="text-center" width="10%" scope="col">Uang Jalan</th>
-                            <th class="text-center" width="8%" scope="col">Total Muatan</th>
+                            <th class="text-center" width="11%" scope="col">Total Muatan</th>
                             <th class="text-center" width="10%" scope="col">Upah+Bonus</th>
                         </tr>
                     </thead>

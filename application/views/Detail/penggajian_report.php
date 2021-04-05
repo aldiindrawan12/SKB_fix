@@ -79,7 +79,10 @@
                 </table>
             </div>
         </div>
-        <div class="card shadow mb-4">
+        
+    </div>
+</div>
+<div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0  text-primary">Sudah Dibayar</h6>
         </div>
@@ -130,8 +133,6 @@
                 </table>
             </div>
         </div>
-    </div>
-</div>
 </div>
 </div>
 </div>  

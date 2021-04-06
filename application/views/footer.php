@@ -262,6 +262,7 @@
                 "columns": [
                     {
                         "data": "merk_id",
+                        className: 'text-center',
                         render: function(data, type, row) {
                             let html = row["no"];
                             return html;
@@ -279,7 +280,8 @@
                     },
                     
                     {
-                        "data": "merk_dump"
+                        "data": "merk_dump",
+                        className: 'text-center'
                     },
                     {
                         "data": "merk_id",

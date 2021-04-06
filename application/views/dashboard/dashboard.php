@@ -1,12 +1,12 @@
     <div class="info-kendaraan"> 
-        <div class="card shadow mb-4">
+        <div class="card shadow mb-4 ml-2 mr-2">
             <div class="card-header py-3 text-center">  
-                <h6 class="m-0 font-weight-bold text-primary h3">Info Kendaraan</h6>
+                <h6 class="m-0 font-weight-bold btn-facebook disabled h4 p-3 " style="border-radius:10px;">INFO KENDARAAN</h6>
             </div>  
             <div class="card-body row justify-content-md-center small">
-                <div class="table-responsive col-md-6 border border-primary rounded p-1">
+                <div class="table-responsive col-md-6 border border-primary rounded p-1 mb-3">
                     <div class="card-header py-3 text-center">
-                        <h6 class="m-0 font-weight-bold text-primary">Pajak Kendaraan</h6>
+                        <h6 class="m-0 font-weight-bold text-gray-900">Pajak Kendaraan</h6>
                     </div>
                     <table class="table table-bordered" id="Table-Truck" width="100%" cellspacing="0">
                         <thead>
@@ -21,9 +21,9 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="table-responsive col-md-6 border border-success rounded p-1">
+                <div class="table-responsive col-md-6 border border-success rounded p-1 mb-3">
                     <div class="card-header py-3 text-center">
-                        <h6 class="m-0 font-weight-bold text-primary">No STNK Kendaraan</h6>
+                        <h6 class="m-0 font-weight-bold text-gray-900">No STNK Kendaraan</h6>
                     </div>
                     <table class="table table-bordered" id="Table-Truck-Stnk" width="100%" cellspacing="0">
                         <thead>
@@ -38,9 +38,9 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="table-responsive col-md-6 border border-success rounded p-1">
+                <div class="table-responsive col-md-6 border border-success rounded p-1 mb-3">
                     <div class="card-header py-3 text-center">
-                        <h6 class="m-0 font-weight-bold text-primary">KIR Kendaraan</h6>
+                        <h6 class="m-0 font-weight-bold  text-gray-900">KIR Kendaraan</h6>
                     </div>
                     <table class="table table-bordered" id="Table-Truck-Kir" width="100%" cellspacing="0">
                         <thead>
@@ -55,9 +55,9 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="table-responsive col-md-6 border border-primary rounded p-1">
+                <div class="table-responsive col-md-6 border border-primary rounded p-1 mb-3">
                     <div class="card-header py-3 text-center">
-                        <h6 class="m-0 font-weight-bold text-primary">Ijin Bongkar Muat (BM) Kendaraan</h6>
+                        <h6 class="m-0 font-weight-bold  text-gray-900">Ijin Bongkar Muat (BM) Kendaraan</h6>
                     </div>
                     <table class="table table-bordered" id="Table-Truck-Ijin-Bongkar" width="100%" cellspacing="0">
                         <thead>
@@ -74,7 +74,7 @@
                 </div>
                 <div class="table-responsive border border-primary rounded p-1">
                     <div class="card-header py-3 text-center">
-                        <h6 class="m-0 font-weight-bold text-primary">Kendaraan Tidak Jalan</h6>
+                        <h6 class="m-0 font-weight-bold  text-gray-900">Kendaraan Tidak Jalan</h6>
                     </div>
                     <table class="table table-bordered" id="Table-Truck-Tidak-Jalan" width="100%" cellspacing="0">
                         <thead>

@@ -1,6 +1,6 @@
 <div class="container">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Seluruh Merk</h1>
+        <h1 class="h3 mb-0 text-gray-800">Seluruh Merk Kendaraan</h1>
         <a class="btn btn-primary btn-icon-split" data-toggle='modal' data-target='#popup-merk'>
             <span class="icon text-white-100">
                 <i class="fas fa-plus"></i> 
@@ -79,6 +79,9 @@
         </div>
     </div>
 </div>
+</div>
+</div>
+
 <!-- end pop up add merk -->
 
 <!-- pop up update merk -->
@@ -91,10 +94,10 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="font-size-sm m-3 text-justify">
+            <div class="font-size-sm ml-3 mr-3 mb-3 text-justify">
                     <form action="<?= base_url("index.php/form/update_merk")?>" method="POST">
                         <input autocomplete="off" type="text" class="form-control" id="merk_id_update" name="merk_id_update" required hidden>
-                        <div class="form-group ">
+                        <div class="form-group mt-2">
                             <label for="merk_nama_update" class="form-label font-weight-bold">Merk</label>
                             <input autocomplete="off" type="text" class="form-control" id="merk_nama_update" name="merk_nama_update" required>
                         </div>
@@ -118,7 +121,7 @@
                                 <option value="Tidak">Tidak</option>
                             </select>
                         </div>
-                        <div class="form-group mt-1 mr-4 ">
+                        <div class="form-group mt-1  ">
                             <button type="submit" class="btn btn-success float-right">Simpan</button>
                             <button type="reset" class="btn btn-outline-danger mr-3 float-md-right" onclick="reset_form()">Reset</button>
                         </div>

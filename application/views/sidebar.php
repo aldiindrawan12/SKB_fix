@@ -43,7 +43,7 @@
                             <span>Data Merk</span>
                         </a>
                         <a class="collapse-item" id="Supir_page" href="<?=base_url("index.php/home/penggajian")?>">
-                            <i class="fas fa-money-check-alt"></i>
+                            <i class="fas fa-id-badge"></i>
                             <span>Driver</span>
                         </a>
                         <a class="collapse-item"  id="Customer_page" href="<?=base_url("index.php/home/customer")?>">

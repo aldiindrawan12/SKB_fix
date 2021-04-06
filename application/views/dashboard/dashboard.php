@@ -1,7 +1,7 @@
     <div class="info-kendaraan"> 
         <div class="card shadow mb-4 ml-2 mr-2">
             <div class="card-header py-3 text-center">  
-                <h6 class="m-0 font-weight-bold btn-facebook disabled h4 p-3 " style="border-radius:10px;">INFORMASI KENDARAAN</h6>
+                <h6 class="m-0 font-weight-bold btn-facebook disabled h4 p-3 " style="border-radius:10px;">Informasi Kendaraan</h6>
             </div>  
             <div class="card-body row justify-content-md-center small">
                 <div class="table-responsive col-md-6 border border-primary rounded p-1 mb-3">
@@ -96,7 +96,7 @@
     <div class="info-supir">
         <div class="card shadow mb-4 ml-2 mr-2">
             <div class="card-header py-3 text-center">
-            <h6 class="m-0 font-weight-bold btn-info disabled h4 p-3 " style="border-radius:10px;">INFORMASI SUPIR</h6>
+            <h6 class="m-0 font-weight-bold btn-info disabled h4 p-3 " style="border-radius:10px; background-color:#c19277;">Informasi Driver</h6>
             </div>  
             <div class="card-body row justify-content-md-center small">
                 <div class="table-responsive col-md-6 border border-info rounded p-1">
@@ -139,7 +139,7 @@
     <div class="info-invoice">
         <div class="card shadow mb-4">
             <div class="card-header py-3 text-center">
-                <h6 class="m-0 font-weight-bold text-primary">Invoice Jatuh Tempo</h6>
+                <h6 class="m-0 font-weight-bold btn-warning disabled h4 p-3 " style="border-radius:10px; background-color:#ffcc29;">Invoice Jatuh Tempo</h6>
             </div>  
             <div class="card-body row justify-content-md-center small">
                 <div class="table-responsive col-md-12 border border-primary rounded p-1">
@@ -165,7 +165,8 @@
     <div class="info-jo">
         <div class="card shadow mb-4">
             <div class="card-header py-3 text-center">
-                <h6 class="m-0 font-weight-bold text-primary">Job Order Belum Ada Invoice</h6>
+                <h6 class="m-0 font-weight-bold text-primary"></h6>
+                <h6 class="m-0 font-weight-bold btn-facebook disabled h4 p-3 " style="border-radius:10px;  background-color:#91c788;">Job Order Belum Ada Invoice</h6>
             </div>  
             <div class="card-body row justify-content-md-center small">
                 <div class="table-responsive col-md-12 border border-primary rounded p-1">

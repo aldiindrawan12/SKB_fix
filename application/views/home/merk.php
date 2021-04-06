@@ -35,7 +35,7 @@
 </div>
 
 <!-- pop up add merk -->
-<div class="modal fade mt-3 px-3 " id="popup-merk" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<div class="modal fade mt-3 py-3 " id="popup-merk" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">

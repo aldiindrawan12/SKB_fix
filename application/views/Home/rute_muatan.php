@@ -39,7 +39,7 @@
 </div>
 
 <!-- pop up add rute dan muatan -->
-<div class="modal fade px-5 py-5" id="popup-rute" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<div class="modal fade" id="popup-rute" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-xl"  role="document"  >
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">

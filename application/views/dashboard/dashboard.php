@@ -1,7 +1,7 @@
     <div class="info-kendaraan"> 
         <div class="card shadow mb-4 ml-2 mr-2">
             <div class="card-header py-3 text-center">  
-                <h6 class="m-0 font-weight-bold btn-facebook disabled h4 p-3 " style="border-radius:10px;">INFO KENDARAAN</h6>
+                <h6 class="m-0 font-weight-bold btn-facebook disabled h4 p-3 " style="border-radius:10px;">INFORMASI KENDARAAN</h6>
             </div>  
             <div class="card-body row justify-content-md-center small">
                 <div class="table-responsive col-md-6 border border-primary rounded p-1 mb-3">
@@ -21,7 +21,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="table-responsive col-md-6 border border-success rounded p-1 mb-3">
+                <div class="table-responsive col-md-6 border border-primary  rounded p-1 mb-3">
                     <div class="card-header py-3 text-center">
                         <h6 class="m-0 font-weight-bold text-gray-900">No STNK Kendaraan</h6>
                     </div>
@@ -38,7 +38,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="table-responsive col-md-6 border border-success rounded p-1 mb-3">
+                <div class="table-responsive col-md-6 border border-primary rounded p-1 mb-3">
                     <div class="card-header py-3 text-center">
                         <h6 class="m-0 font-weight-bold  text-gray-900">KIR Kendaraan</h6>
                     </div>
@@ -94,14 +94,14 @@
         </div>
     </div>
     <div class="info-supir">
-        <div class="card shadow mb-4">
+        <div class="card shadow mb-4 ml-2 mr-2">
             <div class="card-header py-3 text-center">
-                <h6 class="m-0 font-weight-bold text-primary">Info Supir</h6>
+            <h6 class="m-0 font-weight-bold btn-info disabled h4 p-3 " style="border-radius:10px;">INFORMASI SUPIR</h6>
             </div>  
             <div class="card-body row justify-content-md-center small">
-                <div class="table-responsive col-md-6 border border-primary rounded p-1">
+                <div class="table-responsive col-md-6 border border-info rounded p-1">
                     <div class="card-header py-3 text-center">
-                        <h6 class="m-0 font-weight-bold text-primary">Supir Tidak Jalan</h6>
+                        <h6 class="m-0 font-weight-bold text-gray-900">Supir Tidak Jalan</h6>
                     </div>
                     <table class="table table-bordered" id="Table-Supir-Tidak-Jalan" width="100%" cellspacing="0">
                         <thead>
@@ -115,9 +115,9 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="table-responsive col-md-6 border border-success rounded p-1">
+                <div class="table-responsive col-md-6 border border-info rounded p-1">
                     <div class="card-header py-3 text-center">
-                        <h6 class="m-0 font-weight-bold text-primary">Berlaku SIM</h6>
+                        <h6 class="m-0 font-weight-bold text-gray-900">Berlaku SIM</h6>
                     </div>
                     <table class="table table-bordered" id="Table-Supir-Sim" width="100%" cellspacing="0">
                         <thead>

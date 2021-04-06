@@ -45,6 +45,10 @@ class Model_Detail extends CI_model
         return $this->db->get_where("skb_merk_kendaraan",array("merk_id"=>$merk_id))->row_array();
     }
 
+    public function getrutebyid($rute_id){ //rute by ID
+        return $this->db->get_where("skb_rute",array("rute_id"=>$rute_id))->row_array();
+    }
+
     public function getallmerk(){ //merk all
         return $this->db->get_where("skb_merk_kendaraan",array("status_hapus"=>"NO","Validasi"=>"ACC"))->result_array();
     }

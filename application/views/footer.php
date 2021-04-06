@@ -247,7 +247,7 @@
     </script>
     <!-- end kendaraan -->
 
-     <!-- merk -->
+    <!-- merk -->
      <script> //script datatables merk
         $(document).ready(function() {
             var table = null;
@@ -383,7 +383,7 @@
                 
             });
         });
-    </script>
+     </script>
     <!-- end merk -->
 
     <!-- pilih merk -->
@@ -1952,7 +1952,10 @@
                 ],
                 "ajax": {
                     "url": "<?php echo base_url('index.php/home/view_rute')?>",
-                    "type": "POST"
+                    "type": "POST",
+                    'data': function(data) {
+                        data.customer = "x";
+                    }
                 },
                 "deferRender": true,
                 "paging":false,
@@ -1993,14 +1996,6 @@
                             return html;
                         }
                     },
-                    // {
-                    //     "data": "rute_uj_tronton",
-                    //     className: 'text-center',
-                    //     render: function(data, type, row) {
-                    //         let html = 'Rp.'+rupiah(data);
-                    //         return html;
-                    //     }
-                    // },
                     {
                         "data": "rute_tagihan",
                         className: 'text-center',
@@ -2386,7 +2381,7 @@
             });
         }
     </script>
-    <script>
+    <script> //script pilih JO untuk invoice
         $(document).ready(function() {
             var table = null;
             table = $('#pilih-jo').DataTable({
@@ -2509,6 +2504,103 @@
                     $("#invoice_ppn_nilai").val(ppn);
                     $("#invoice_grand_total").val(grand_total);
                 }
+            });
+        });
+    </script>
+    <script> //script pilih rute untuk JO
+        $(document).ready(function() {
+            var table = null;
+            table = $('#Table-Pilih-Rute').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ordering": true,
+                "order": [
+                    [0, 'desc']
+                ],
+                "ajax": {
+                    "url": "<?php echo base_url('index.php/home/view_rute')?>",
+                    "type": "POST",
+                    'data': function(data) {
+                        data.customer = $("#Customer").val();
+                    }
+                },
+                "deferRender": true,
+                "paging":false,
+                "columns": [
+                    {
+                        "data": "rute_id",
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            let html = row["no"];
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "customer_name"
+                    },
+                    {
+                        "data": "rute_muatan"
+                    },
+                    {
+                        "data": "rute_dari"
+                    },
+                    {
+                        "data": "rute_ke"
+                    },
+                    {
+                        "data": "jenis_mobil"
+                    },
+                    {
+                        "data": "rute_id",
+                        className: 'text-center font-weight-bold',
+                        "orderable": false,
+                        render: function(data, type, row) {
+                            let html ="<a class='btn btn-light btn-pilih-rute' href='javascript:void(0)' data-pk='"+data+"'>Pilih<i class='fas fa-eye'></i></a>";
+                            return html;
+                        }
+                    }
+                ],   
+                drawCallback: function() {
+                    $('.btn-pilih-rute').click(function() {
+                        let pk = $(this).data('pk');
+                        $.ajax({
+                            type: "GET",
+                            url: "<?php echo base_url('index.php/detail/getrute') ?>",
+                            dataType: "JSON",
+                            data: {
+                                id: pk
+                            },
+                            success: function(data) { //jika ambil data sukses
+                                $('#Muatan').val(data["rute_muatan"]); //set value
+                                $('#Asal').val(data["rute_dari"]); //set value
+                                $('#Tujuan').val(data["rute_ke"]); //set value
+                                $('#Jenis').val(data["jenis_mobil"]); //set value
+                                if(data["rute_tonase"]==0){
+                                    $('#Type_Tonase').val("FIX"); //set value
+                                    $('#Upah').val(data["rute_gaji_engkel"]); //set value
+                                }else{
+                                    $('#Type_Tonase').val("NON-FIX"); //set value
+                                    $('#Upah').val(data["rute_gaji_engkel_rumusan"]); //set value
+                                }
+                                $('#Tonase').val(data["rute_tonase"]); //set value
+                                $('#Uang').val(rupiah(data["rute_uj_engkel"])); //set value
+                                $('#Tagihan').val(data["rute_tagihan"]); //set value
+                                uang = rupiah(data["rute_uj_engkel"]);
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/generate_terbilang_fix/') ?>"+uang,
+                                    dataType: "text",
+                                    success: function(data) {
+                                        $('#Terbilang').val(data);
+                                    }
+                                });
+                            }
+                        });
+                    });
+                },
+            });
+            $("#Customer").change(function() {
+                table.ajax.reload();
             });
         });
     </script>

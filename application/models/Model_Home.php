@@ -553,8 +553,11 @@ class Model_Home extends CI_model
     //  end Function Akun
 
     // Function rute
-        public function count_all_rute()
+        public function count_all_rute($customer)
         {
+            if($customer!="x"){
+                $this->db->where("skb_rute.customer_id",$customer);
+            }
             $this->db->where("skb_rute.rute_status_hapus","No");
             if($_SESSION["role"]=="Supervisor"){
                 $this->db->where("skb_rute.validasi_rute","Pending");
@@ -565,7 +568,7 @@ class Model_Home extends CI_model
             return $this->db->count_all_results("skb_rute");
         }
 
-        public function filter_rute($search, $order_field, $order_ascdesc)
+        public function filter_rute($customer,$search, $order_field, $order_ascdesc)
         {
             if($search!=""){
                 $this->db->like('rute_id', $search);
@@ -580,19 +583,31 @@ class Model_Home extends CI_model
             $hasil_fix = [];
             for($i=0;$i<count($hasil);$i++){
                 if($_SESSION["role"]=="Supervisor"){
-                    if($hasil[$i]["rute_status_hapus"]=="NO" && $hasil[$i]["validasi_rute"]=="Pending"){
-                        $hasil_fix[] = $hasil[$i];
+                    if($customer=='x'){
+                        if($hasil[$i]["rute_status_hapus"]=="NO" && $hasil[$i]["validasi_rute"]=="Pending"){
+                            $hasil_fix[] = $hasil[$i];
+                        }
+                    }else{
+                        if($hasil[$i]["customer_id"]==$customer && $hasil[$i]["rute_status_hapus"]=="NO" && $hasil[$i]["validasi_rute"]=="Pending"){
+                            $hasil_fix[] = $hasil[$i];
+                        }
                     }
                 }else{
-                    if($hasil[$i]["rute_status_hapus"]=="NO" && $hasil[$i]["validasi_rute"]=="ACC"){
-                        $hasil_fix[] = $hasil[$i];
+                    if($customer=='x'){
+                        if($hasil[$i]["rute_status_hapus"]=="NO" && $hasil[$i]["validasi_rute"]=="ACC"){
+                            $hasil_fix[] = $hasil[$i];
+                        }
+                    }else{
+                        if($hasil[$i]["customer_id"]==$customer && $hasil[$i]["rute_status_hapus"]=="NO" && $hasil[$i]["validasi_rute"]=="ACC"){
+                            $hasil_fix[] = $hasil[$i];
+                        }
                     }
                 }
             }
             return $hasil_fix;
         }
 
-        public function count_filter_rute($search)
+        public function count_filter_rute($customer,$search)
         {
             if($search!=""){
                 $this->db->like('rute_id', $search);
@@ -606,12 +621,24 @@ class Model_Home extends CI_model
                 $hasil_fix = 0;
                 for($i=0;$i<count($hasil_data);$i++){
                     if($_SESSION["role"]=="Supervisor"){
-                        if($hasil_data[$i]["rute_status_hapus"]=="NO" && $hasil_data[$i]["validasi_rute"]=="Pending"){
-                            $hasil_fix +=1;
+                        if($customer=="x"){
+                            if($hasil_data[$i]["rute_status_hapus"]=="NO" && $hasil_data[$i]["validasi_rute"]=="Pending"){
+                                $hasil_fix +=1;
+                            }
+                        }else{
+                            if($hasil_data[$i]["customer_id"]==$customer && $hasil_data[$i]["rute_status_hapus"]=="NO" && $hasil_data[$i]["validasi_rute"]=="Pending"){
+                                $hasil_fix +=1;
+                            }
                         }
                     }else{
-                        if($hasil_data[$i]["rute_status_hapus"]=="NO" && $hasil_data[$i]["validasi_rute"]=="ACC"){
-                            $hasil_fix +=1;
+                        if($customer=="x"){
+                            if($hasil_data[$i]["rute_status_hapus"]=="NO" && $hasil_data[$i]["validasi_rute"]=="ACC"){
+                                $hasil_fix +=1;
+                            }
+                        }else{
+                            if($hasil_data[$i]["customer_id"]==$customer && $hasil_data[$i]["rute_status_hapus"]=="NO" && $hasil_data[$i]["validasi_rute"]=="ACC"){
+                                $hasil_fix +=1;
+                            }
                         }
                     }
                 }

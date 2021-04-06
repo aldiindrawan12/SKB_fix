@@ -265,6 +265,12 @@ class Detail extends CI_Controller {
             echo $data["supir_id"];
         }
     //end fungsi untuk Detail penggajian
-
+    
+    function getrute()
+    {
+        $rute_id = $this->input->get('id');
+        $data = $this->model_detail->getrutebyid($rute_id);
+        echo json_encode($data);
+    }
     
 }

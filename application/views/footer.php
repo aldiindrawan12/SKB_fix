@@ -80,13 +80,14 @@
                 "columns": [
                     {
                         "data": "mobil_no",
+                        className: 'text-center',
                         render: function(data, type, row) {
                             let html = row["no"];
                             return html;
                         }
                     },
                     {
-                        "data": "mobil_no"
+                        "data": "mobil_no",
                     },
                     {
                         "data": "mobil_merk"

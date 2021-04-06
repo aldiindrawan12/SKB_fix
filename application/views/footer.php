@@ -1833,7 +1833,7 @@
     </script>
     <!-- end script angka rupiah -->
 
-     <!-- Akun -->
+    <!-- Akun -->
      <script> //script datatables customer
         $(document).ready(function() {
             var table = null;
@@ -1936,9 +1936,9 @@
                 }
             });
         });
-    </script>
+     </script>
     <!-- end Akun --> 
-    
+
     <!-- rute -->
     <script> //script datatables rute
         $(document).ready(function() {
@@ -2346,7 +2346,8 @@
         });
     </script>
     <!-- end script alert -->
-    <script type="text/javascript">
+
+    <script> //script set tanggal saat ini
         $(function(){
             $("#invoice_tgl").datepicker({
                 format: 'yyyy-mm-dd',
@@ -2364,7 +2365,8 @@
             }
         });
     </script>
-    <script>
+
+    <script> //script input tanggal
         function tanggal_berlaku(a){
             // alert(a.id);
             Swal.fire({
@@ -2381,6 +2383,7 @@
             });
         }
     </script>
+
     <script> //script pilih JO untuk invoice
         $(document).ready(function() {
             var table = null;
@@ -2507,6 +2510,7 @@
             });
         });
     </script>
+
     <script> //script pilih rute untuk JO
         $(document).ready(function() {
             var table = null;
@@ -2528,14 +2532,6 @@
                 "paging":false,
                 "columns": [
                     {
-                        "data": "rute_id",
-                        className: 'text-center',
-                        render: function(data, type, row) {
-                            let html = row["no"];
-                            return html;
-                        }
-                    },
-                    {
                         "data": "customer_name"
                     },
                     {
@@ -2549,6 +2545,23 @@
                     },
                     {
                         "data": "jenis_mobil"
+                    },
+                    {
+                        "data": "rute_tonase",
+                        className: 'text-center font-weight-bold',
+                        "orderable": false,
+                        render: function(data, type, row) {
+                            if(data=="0"){
+                                let html ="<small>FIX</small>";
+                                return html;
+                            }else{
+                                let html ="<small>NON-FIX</small>";
+                                return html;
+                            }
+                        }
+                    },
+                    {
+                        "data": "rute_tonase"
                     },
                     {
                         "data": "rute_id",
@@ -2592,6 +2605,26 @@
                                     dataType: "text",
                                     success: function(data) {
                                         $('#Terbilang').val(data);
+                                    }
+                                });
+                                var mobil_jenis = $("#Jenis").val();
+                                $('#Kendaraan').find('option').remove().end(); //reset option select
+                                $.ajax({ //ajax set option kendaraan
+                                    type: "POST",
+                                    url: "<?php echo base_url('index.php/form/getmobilbyjenis') ?>",
+                                    dataType: "JSON",
+                                    data: {
+                                        mobil_jenis: mobil_jenis,
+                                    },
+                                    success: function(data) {
+                                        if(data.length==0){
+                                            $('#Kendaraan').append('<option class="font-w700" disabled="disabled" selected value="">Kosong</option>'); 
+                                        }else{
+                                            $('#Kendaraan').append('<option class="font-w700" disabled="disabled" selected value="">Kendaraan Pengiriman</option>'); 
+                                            for(i=0;i<data.length;i++){
+                                                    $('#Kendaraan').append('<option value="'+data[i]["mobil_no"]+'">'+data[i]["mobil_no"]+'  ||  '+data[i]["mobil_max_load"]+' Ton  ||  '+data[i]["mobil_jenis"]+'</option>'); 
+                                            }
+                                        }
                                     }
                                 });
                             }

@@ -9,6 +9,7 @@
             </div>
             <div class="card-body">
                 <!-- form Job Order Baru -->
+                <small>Pilih Rute Yang Tersedia Pada Tabel Rute Dibawah</small>
                 <form action="<?=base_url("index.php/form/insert_JO")?>" method="POST" class="row">
                     <div class="col-md-3 col-md-offset-4 mb-4">
                         <label class="form-label font-weight-bold " for="Customer">Customer</label>
@@ -92,7 +93,7 @@
                     </div>
                     <div class="col-md-4 col-md-offset-4 mb-4">
                         <label class="form-label font-weight-bold " for="Kendaraan">Kendaraan</label>
-                        <select name="Kendaraan" id="Kendaraan" class="form-control mb-4" required onclick="kendaraan()">
+                        <select name="Kendaraan" id="Kendaraan" class="form-control mb-4" required>
                             <option class="font-w700 font-weight-bold mb-4" disabled="disabled" selected value="">Kendaraan Pengiriman</option>
                         </select>
                     </div>
@@ -112,13 +113,14 @@
                     <table class="table table-bordered" id="Table-Pilih-Rute" width="100%" cellspacing="0">
                         <thead>
                             <tr>    
-                                <th class="text-center" scope="col">No</th>
                                 <th class="text-center" scope="col">Customer</th>
                                 <th class="text-center" scope="col">Muatan</th>
                                 <th class="text-center" scope="col">Dari</th>
                                 <th class="text-center" scope="col">Ke</th>
                                 <th class="text-center" scope="col">Jenis Mobil</th>
-                                <th class="text-center" scope="col">Aksi</th>
+                                <th class="text-center" scope="col">Type Tonase</th>
+                                <th class="text-center" scope="col">Tonase</th>
+                                <th class="text-center" width="15%" scope="col">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -404,27 +406,5 @@
     // fungsi form
     function uang(a){
         $( '#'+a.id ).mask('000.000.000', {reverse: true});
-    }
-    function kendaraan(){
-        var mobil_jenis = $("#Jenis").val();
-        $('#Kendaraan').find('option').remove().end(); //reset option select
-        $.ajax({ //ajax set option kendaraan
-            type: "POST",
-            url: "<?php echo base_url('index.php/form/getmobilbyjenis') ?>",
-            dataType: "JSON",
-            data: {
-                mobil_jenis: mobil_jenis,
-            },
-            success: function(data) {
-                if(data.length==0){
-                    $('#Kendaraan').append('<option class="font-w700" disabled="disabled" selected value="">Kosong</option>'); 
-                }else{
-                    $('#Kendaraan').append('<option class="font-w700" disabled="disabled" selected value="">Kendaraan Pengiriman</option>'); 
-                    for(i=0;i<data.length;i++){
-                            $('#Kendaraan').append('<option value="'+data[i]["mobil_no"]+'">'+data[i]["mobil_no"]+'  ||  '+data[i]["mobil_max_load"]+' Ton  ||  '+data[i]["mobil_jenis"]+'</option>'); 
-                    }
-                }
-            }
-        });
     }
 </script>

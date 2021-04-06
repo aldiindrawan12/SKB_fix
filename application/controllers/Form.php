@@ -577,7 +577,7 @@ class Form extends CI_Controller {
                     "jo_id" => $this->input->post("jo_id"),
                     "status" => $this->input->post("status"),
                     "tonase"=>$this->input->post("tonase"),
-                    "bonus"=>str_replace(".","",$this->input->post("bonus")),
+                    // "bonus"=>str_replace(".","",$this->input->post("bonus")),
                     "keterangan"=>$keterangan,
                     "tanggal_bongkar"=>date('Y-m-d'),
                 );

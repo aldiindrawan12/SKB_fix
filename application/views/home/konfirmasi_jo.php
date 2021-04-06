@@ -61,10 +61,10 @@
                                     <label class="form-label" for="harga">Harga / Tonase</label>
                                     <input autocomplete="off" class="form-control" type="text" name="harga" id="harga" onkeyup="uang()">
                                 </div> -->
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label class="form-label" for="bonus">Biaya Lain</label>
                                     <input autocomplete="off" class="form-control" type="text" name="bonus" id="bonus" onkeyup="uang()">
-                                </div>
+                                </div> -->
                                 <div class="form-group">
                                     <label class="form-label" for="Keterangan" class="form-label">Keterangan/Catatan Tambahan</label>
                                     <textarea class="form-control" name="Keterangan" rows="3"></textarea>

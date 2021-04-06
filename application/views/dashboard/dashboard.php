@@ -6,7 +6,7 @@
             <div class="card-body row justify-content-md-center small">
                 <div class="table-responsive col-md-6 border border-primary rounded p-1 mb-3">
                     <div class="card-header py-3 text-center">
-                        <h6 class="m-0 font-weight-bold text-gray-900">Pajak Kendaraan</h6>
+                        <h6 class="m-0 font-weight-bold text-gray-900">Pajak 1 Tahun Kendaraan</h6>
                     </div>
                     <table class="table table-bordered" id="Table-Truck" width="100%" cellspacing="0">
                         <thead>
@@ -23,14 +23,14 @@
                 </div>
                 <div class="table-responsive col-md-6 border border-primary  rounded p-1 mb-3">
                     <div class="card-header py-3 text-center">
-                        <h6 class="m-0 font-weight-bold text-gray-900">No STNK Kendaraan</h6>
+                        <h6 class="m-0 font-weight-bold text-gray-900">Pajak 5 Tahun Kendaraan</h6>
                     </div>
                     <table class="table table-bordered" id="Table-Truck-Stnk" width="100%" cellspacing="0">
                         <thead>
                             <tr>
+                                <th class="text-center" width="10%" scope="col">No</th>
                                 <th class="text-center" width="20%" scope="col">No Polisi</th>
-                                <th class="text-center" width="20%" scope="col">No STNK</th>
-                                <th class="text-center" width="40%" scope="col">Berlaku No STNK</th>
+                                <th class="text-center" width="40%" scope="col">Berlaku Pajak STNK</th>
                                 <th class="text-center" width="30%" scope="col">Sisa Berlaku</th>
                             </tr>
                         </thead>
@@ -290,23 +290,8 @@
                         className: 'text-center',
                         "orderable": false,
                             render: function(data, type, row) {
-                                // var selisih = "";
-                                // $.ajax({
-                                //     async: false,
-                                //     type: "GET",
-                                //     url: "<?php echo base_url('index.php/form/generate_selisih_tanggal/') ?>"+data,
-                                //     dataType: "text",
-                                //     success: function(tanggal) {
-                                //         selisih = tanggal;
-                                //     }
-                                // });
-                                // if(selisih<31){
                                 let html = "<a class='btn btn-block btn-sm btn-warning'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
                                 return html;
-                                // }else{
-                                //     let html = "<a class='btn btn-block btn-sm btn-success'><i class='fa fa-fw fa-check mr-2'></i>"+row["sisa"]+"</a>";
-                                //     return html;
-                                // }
                             }
                     }
                 ]
@@ -331,20 +316,25 @@
                 "paging":false,
                 "columns": [
                     {
+                        "data": "mobil_no",
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            let html = row["no"];
+                            return html;
+                        }
+                    },
+                    {
                         "data": "mobil_no"
                     },
-                    {
-                        "data": "mobil_stnk"
-                    },
-                    {
-                        "data": "mobil_berlaku_stnk",
+                     {
+                        "data": "mobil_pajak",
                         className: 'text-center'
                     },{
-                        "data": "mobil_berlaku_stnk",
+                        "data": "mobil_pajak",
                         className: 'text-center',
                         "orderable": false,
                             render: function(data, type, row) {
-                                let html = "<a class='btn btn-block btn-sm btn-danger'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
+                                let html = "<a class='btn btn-block btn-sm btn-warning'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
                                 return html;
                             }
                     }

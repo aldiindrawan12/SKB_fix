@@ -246,6 +246,7 @@ class Form extends CI_Controller {
                 "status_jalan"=>"Tidak Jalan",
                 "status_hapus"=>"NO",
                 "mobil_keterangan"=>$this->input->post("mobil_keterangan"),
+                "merk_id"=>$this->input->post("merk_id"),
                 "mobil_merk"=>$this->input->post("mobil_merk"),
                 "mobil_type"=>$this->input->post("mobil_type"),
                 "mobil_dump"=>$this->input->post("mobil_dump"),
@@ -256,7 +257,6 @@ class Form extends CI_Controller {
                 "mobil_kir"=>$this->input->post("mobil_kir"),
                 "mobil_ijin_bongkar"=>$this->input->post("mobil_ijin_bongkar"),
                 "mobil_berlaku_kir"=>$this->input->post("mobil_berlaku_kir"),
-                "mobil_berlaku_stnk"=>$this->input->post("mobil_berlaku_stnk"),
                 "mobil_berlaku_ijin_bongkar"=>$this->input->post("mobil_berlaku_ijin_bongkar"),
                 "validasi"=>"Pending",
                 "file_foto"=>$file_foto,
@@ -286,15 +286,15 @@ class Form extends CI_Controller {
         public function insert_rute(){
             if($this->input->post("Tonase")==""){
                 $rute_gaji_engkel = str_replace(".","",$this->input->post("rute_gaji_engkel"));
-                $rute_gaji_tronton = str_replace(".","",$this->input->post("rute_gaji_tronton"));
+                // $rute_gaji_tronton = str_replace(".","",$this->input->post("rute_gaji_tronton"));
                 $rute_gaji_engkel_rumusan = 0;
-                $rute_gaji_tronton_rumusan = 0;
+                // $rute_gaji_tronton_rumusan = 0;
                 $tonase = 0;
             }else{
                 $rute_gaji_engkel = 0;
-                $rute_gaji_tronton = 0;
+                // $rute_gaji_tronton = 0;
                 $rute_gaji_engkel_rumusan = str_replace(".","",$this->input->post("rute_gaji_engkel_rumusan"));
-                $rute_gaji_tronton_rumusan = str_replace(".","",$this->input->post("rute_gaji_tronton_rumusan"))     ;
+                // $rute_gaji_tronton_rumusan = str_replace(".","",$this->input->post("rute_gaji_tronton_rumusan"))     ;
                 $tonase = str_replace(".","",$this->input->post("Tonase"));
             }
             $data=array(
@@ -302,14 +302,15 @@ class Form extends CI_Controller {
                 "rute_dari"=>$this->input->post("rute_dari"),
                 "rute_ke"=>$this->input->post("rute_ke"),
                 "rute_muatan"=>$this->input->post("rute_muatan"),
+                "jenis_mobil"=>$this->input->post("jenis_mobil"),
                 "rute_uj_engkel"=>str_replace(".","",$this->input->post("rute_uj_engkel")),
-                "rute_uj_tronton"=>str_replace(".","",$this->input->post("rute_uj_tronton")),
+                // "rute_uj_tronton"=>str_replace(".","",$this->input->post("rute_uj_tronton")),
                 "rute_tagihan"=>str_replace(".","",$this->input->post("rute_tagihan")),
                 "rute_gaji_engkel"=>$rute_gaji_engkel,
-                "rute_gaji_tronton"=>$rute_gaji_tronton,
+                // "rute_gaji_tronton"=>$rute_gaji_tronton,
                 "rute_tonase"=>$tonase,
                 "rute_gaji_engkel_rumusan"=>$rute_gaji_engkel_rumusan,
-                "rute_gaji_tronton_rumusan"=>$rute_gaji_tronton_rumusan,
+                // "rute_gaji_tronton_rumusan"=>$rute_gaji_tronton_rumusan,
                 "rute_status_hapus"=>"NO",
                 "validasi_rute"=>"Pending",
                 "rute_keterangan"=>$this->input->post("rute_keterangan"),
@@ -330,15 +331,15 @@ class Form extends CI_Controller {
                 "rute_ke"=>$this->input->post("rute_ke_update"),
                 "rute_muatan"=>$this->input->post("rute_muatan_update"),
                 "rute_uj_engkel"=>str_replace(".","",$this->input->post("rute_uj_engkel_update")),
-                "rute_uj_tronton"=>str_replace(".","",$this->input->post("rute_uj_tronton_update")),
+                // "rute_uj_tronton"=>str_replace(".","",$this->input->post("rute_uj_tronton_update")),
                 "rute_tagihan"=>str_replace(".","",$this->input->post("rute_tagihan_update")),
                 "rute_gaji_engkel"=>str_replace(".","",$this->input->post("rute_gaji_engkel_update")),
-                "rute_gaji_tronton"=>str_replace(".","",$this->input->post("rute_gaji_tronton_update")),
+                // "rute_gaji_tronton"=>str_replace(".","",$this->input->post("rute_gaji_tronton_update")),
                 "rute_gaji_engkel_rumusan"=>str_replace(".","",$this->input->post("rute_gaji_engkel_rumusan_update")),
-                "rute_gaji_tronton_rumusan"=>str_replace(".","",$this->input->post("rute_gaji_tronton_rumusan_update")),
+                // "rute_gaji_tronton_rumusan"=>str_replace(".","",$this->input->post("rute_gaji_tronton_rumusan_update")),
                 "rute_tonase"=>str_replace(".","",$this->input->post("rute_tonase_update")),
                 "rute_keterangan"=>str_replace(".","",$this->input->post("rute_keterangan_update")),
-                "ritase"=>str_replace(".","",$this->input->post("Ritase_update")),
+                // "ritase"=>str_replace(".","",$this->input->post("Ritase_update")),
             );
             // echo var_dump($data);
             $this->model_form->update_rute($data,$this->input->post("rute_id_update"));
@@ -370,8 +371,13 @@ class Form extends CI_Controller {
         public function update_truck(){
             $data = array(
                 "mobil_no" => $this->input->post("mobil_no_update"),
+                "mobil_stnk" => $this->input->post("mobil_stnk_update"),
                 "mobil_berlaku" => $this->input->post("mobil_berlaku_update"),
                 "mobil_pajak" => $this->input->post("mobil_pajak_update"),
+                "mobil_kir" => $this->input->post("mobil_kir_update"),
+                "mobil_berlaku_kir" => $this->input->post("mobil_berlaku_kir_update"),
+                "mobil_ijin_bongkar" => $this->input->post("mobil_ijin_bongkar_update"),
+                "mobil_berlaku_ijin_bongkar" => $this->input->post("mobil_berlaku_ijin_bongkar_update"),
                 "mobil_keterangan" => $this->input->post("mobil_keterangan_update")
             );
             // echo var_dump($data);
@@ -496,6 +502,10 @@ class Form extends CI_Controller {
             $rute_id = $this->input->get("id");
             $rute = $this->model_form->getrutebyid($rute_id);
             echo json_encode($rute);
+        }
+        public function getallmobil(){
+            $mobil = $this->model_form->getallmobil();
+            echo json_encode($mobil);
         }
         public function generate_terbilang($uang){
             $uang = abs($uang);

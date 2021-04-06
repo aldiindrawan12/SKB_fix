@@ -209,6 +209,20 @@ class Model_Form extends CI_model
     }
 
     public function update_merk($data,$merk_id){
+        $data_merk = $this->db->get_where("skb_merk_kendaraan",array("merk_id"=>$merk_id))->row_array();
+        $this->db->set("jenis_mobil",$data["merk_jenis"]);
+        $this->db->where("jenis_mobil",$data_merk["merk_jenis"]);
+        $this->db->update("skb_rute");
+
+        $data_truck = array(
+            "mobil_merk" => $data["merk_nama"],
+            "mobil_type" => $data["merk_type"],
+            "mobil_jenis" => $data["merk_jenis"],
+            "mobil_dump" => $data["merk_dump"]
+        );
+        $this->db->where("merk_id",$merk_id);
+        $this->db->update("skb_mobil",$data_truck);
+
         $this->db->where("merk_id",$merk_id);
         $this->db->update("skb_merk_kendaraan",$data);
     }
@@ -223,20 +237,14 @@ class Model_Form extends CI_model
         $this->db->set("customer_alamat",$data["customer_alamat"]);
         $this->db->set("customer_kontak_person",$data["customer_kontak_person"]);
         $this->db->set("customer_telp",$data["customer_telp"]);
-        // $this->db->set("customer_bank",$data["customer_bank"]);
-        // $this->db->set("customer_rekening",$data["customer_rekening"]);
-        // $this->db->set("customer_AN",$data["customer_AN"]);
         $this->db->set("customer_keterangan",$data["customer_keterangan"]);
         $this->db->where("customer_id",$data["customer_id"]);
         $this->db->update("skb_customer");
     }
 
     public function update_truck($data){
-        $this->db->set("mobil_berlaku",$data["mobil_berlaku"]);
-        $this->db->set("mobil_pajak",$data["mobil_pajak"]);
-        $this->db->set("mobil_keterangan",$data["mobil_keterangan"]);
         $this->db->where("mobil_no",$data["mobil_no"]);
-        $this->db->update("skb_mobil");
+        $this->db->update("skb_mobil",$data);
     }
 
     public function update_akun($data){
@@ -296,6 +304,9 @@ class Model_Form extends CI_model
         }
         public function getmobilbyjenis($mobil_jenis){
             return $this->db->get_where("skb_mobil",array("mobil_jenis"=>$mobil_jenis,"status_jalan"=>"Tidak Jalan"))->result_array();
+        }
+        public function getallmobil(){
+            return $this->db->get_where("skb_mobil",array("status_hapus"=>"No"))->result_array();
         }
         public function getrutefix($data){
             if($data["rute_tonase"]!=0){

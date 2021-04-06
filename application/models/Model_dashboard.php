@@ -32,7 +32,7 @@ class Model_Dashboard extends CI_model
                 }else if($fungsi=="kir"){
                     $tanggal = $hasil[$i]["mobil_berlaku_kir"];
                 }else if($fungsi=="stnk"){
-                    $tanggal = $hasil[$i]["mobil_berlaku_stnk"];
+                    $tanggal = $hasil[$i]["mobil_pajak"];
                 }else if($fungsi=="ijin"){
                     $tanggal = $hasil[$i]["mobil_berlaku_ijin_bongkar"];
                 }else{
@@ -72,7 +72,7 @@ class Model_Dashboard extends CI_model
                     }else if($fungsi=="kir"){
                         $tanggal = $hasil_data[$i]["mobil_berlaku_kir"];
                     }else if($fungsi=="stnk"){
-                        $tanggal = $hasil_data[$i]["mobil_berlaku_stnk"];
+                        $tanggal = $hasil_data[$i]["mobil_pajak"];
                     }else if($fungsi=="ijin"){
                         $tanggal = $hasil_data[$i]["mobil_berlaku_ijin_bongkar"];
                     }else{

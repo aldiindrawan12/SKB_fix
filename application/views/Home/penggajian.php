@@ -61,7 +61,7 @@
                         <div class="form-group row">
                             <!-- <label for="supir_ttl" class="form-label font-weight-bold">Alamat</label> -->
                             <input autocomplete="off" type="text" class="form-control col" id="supir_tempat_lahir" name="supir_tempat_lahir" required placeholder="Tempat Lahir">
-                            <input autocomplete="off" type="text" class="form-control col" id="supir_tgl_lahir" name="supir_tgl_lahir" required placeholder="Tanggal Lahir">
+                            <input autocomplete="off" type="text" class="form-control col" id="supir_tgl_lahir" name="supir_tgl_lahir" required placeholder="Tanggal Lahir" onclick="tanggal_berlaku(this)">
                         </div>
                         <div class="form-group">
                             <!-- <label for="supir_alamat" class="form-label font-weight-bold">Alamat</label> -->
@@ -81,11 +81,10 @@
                         </div>
                         <div class="form-group">
                             <!-- <label for="supir_tgl_sim" class="form-label font-weight-bold">Tanggal Berlaku SIM</label> -->
-                            <input autocomplete="off" type="text" class="form-control" id="supir_tgl_sim" name="supir_tgl_sim" required placeholder="Berlaku SIM">
+                            <input autocomplete="off" type="text" class="form-control" id="supir_tgl_sim" name="supir_tgl_sim" required placeholder="Berlaku SIM" onclick="tanggal_berlaku(this)">
                         </div>
                         <div class="form-group">
-                            <!-- <label for="supir_tgl_aktif" class="form-label font-weight-bold">Tanggal Aktif Supir</label> -->
-                            <input autocomplete="off" type="text" class="form-control" id="supir_tgl_aktif" name="supir_tgl_aktif" required placeholder="Tanggal Aktif Supir">
+                            <input autocomplete="off" type="text" class="form-control" id="supir_tgl_aktif" name="supir_tgl_aktif" required placeholder="Tanggal Aktif Supir" onclick="tanggal_berlaku(this)">
                         </div>
                         <div class="form-group">
                             <label for="supir_keterangan" class="form-label font-weight-bold">Keterangan</label>
@@ -96,15 +95,12 @@
                     <div class="col">
                         <span>Data Keluarga yang Dapat Dihubungi</span>
                         <div class="form-group">
-                            <!-- <label for="darurat_nama" class="form-label font-weight-bold">Nama</label> -->
                             <input autocomplete="off" type="text" class="form-control" id="darurat_nama" name="darurat_nama" required placeholder="Nama Keluarga">
                         </div>
                         <div class="form-group">
-                            <!-- <label for="darurat_telp" class="form-label font-weight-bold">Alamat</label> -->
                             <input autocomplete="off" type="text" class="form-control" id="darurat_telp" name="darurat_telp" required placeholder="Telp Keluarga">
                         </div>
                         <div class="form-group">
-                            <!-- <label for="darurat_referensi" class="form-label font-weight-bold">Telp./HP</label> -->
                             <input autocomplete="off" type="text" class="form-control" id="darurat_referensi" name="darurat_referensi" required placeholder="Referensi">
                         </div>
                         <div class="form-group">
@@ -155,7 +151,7 @@
                         </div>
                         <div class="form-group">
                             <label for="update_status_tanggal_nonaktif" class="form-label font-weight-bold">Tanggal Aktif / Non-Aktif</label>
-                            <input autocomplete="off" type="text" class="form-control" id="update_status_tanggal_nonaktif" name="update_status_tanggal_nonaktif" required>
+                            <input autocomplete="off" type="text" class="form-control" id="update_status_tanggal_nonaktif" name="update_status_tanggal_nonaktif" required onclick="tanggal_berlaku(this)">
                         </div>
                         <div class="form-group">
                             <label for="update_status_status_aktif" class="form-label font-weight-bold">Status Aktif</label>
@@ -198,7 +194,7 @@
                         <div class="form-group row">
                             <label for="supir_ttl_update" class="form-label font-weight-bold col-md-12">Tempat,Tanggal Lahir</label>
                             <input autocomplete="off" type="text" class="form-control col" id="supir_tempat_lahir_update" name="supir_tempat_lahir_update" required placeholder="Tempat Lahir">
-                            <input autocomplete="off" type="text" class="form-control col" id="supir_tgl_lahir_update" name="supir_tgl_lahir_update" required placeholder="Tanggal Lahir">
+                            <input autocomplete="off" type="text" class="form-control col" id="supir_tgl_lahir_update" name="supir_tgl_lahir_update" required placeholder="Tanggal Lahir" onclick="tanggal_berlaku(this)">
                         </div>
                         <div class="form-group">
                             <label for="supir_alamat_update" class="form-label font-weight-bold">Alamat</label>
@@ -213,18 +209,18 @@
                             <input autocomplete="off" type="text" class="form-control" id="supir_ktp_update" name="supir_ktp_update" required>
                         </div>
                         <div class="form-group">
-                            <label for="supir_sim_update" class="form-label font-weight-bold">No.SIM</label>
-                            <input autocomplete="off" type="text" class="form-control" id="supir_sim_update" name="supir_sim_update" required>
+                            <label for="supir_tgl_sim_update" class="form-label font-weight-bold">Tanggal Berlaku SIM</label>
+                            <input autocomplete="off" type="text" class="form-control" id="supir_tgl_sim_update" name="supir_tgl_sim_update" required placeholder="Berlaku SIM" onclick="tanggal_berlaku(this)">
                         </div>
                         <div class="form-group">
-                            <label for="supir_tgl_sim_update" class="form-label font-weight-bold">Tanggal Berlaku SIM</label>
-                            <input autocomplete="off" type="text" class="form-control" id="supir_tgl_sim_update" name="supir_tgl_sim_update" required placeholder="Berlaku SIM">
+                            <label for="supir_sim_update" class="form-label font-weight-bold">No.SIM</label>
+                            <input autocomplete="off" type="text" class="form-control" id="supir_sim_update" name="supir_sim_update" required>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-group">
                             <label for="supir_tgl_aktif_update" class="form-label font-weight-bold">Tanggal Aktif Supir</label>
-                            <input autocomplete="off" type="text" class="form-control" id="supir_tgl_aktif_update" name="supir_tgl_aktif_update" required placeholder="Tanggal Aktif Supir">
+                            <input autocomplete="off" type="text" class="form-control" id="supir_tgl_aktif_update" name="supir_tgl_aktif_update" required placeholder="Tanggal Aktif Supir" onclick="tanggal_berlaku(this)">
                         </div>
                         <div class="form-group">
                             <label for="supir_keterangan_update" class="form-label font-weight-bold">Keterangan</label>

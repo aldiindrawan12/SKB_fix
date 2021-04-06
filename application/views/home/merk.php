@@ -56,11 +56,7 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label font-weight-bold" for="merk_jenis">Jenis Mobil</label>
-                            <select name="merk_jenis" id="merk_jenis" class="form-control custom-select" required onchange="nominal()">
-                                <option class="font-w700" disabled="disabled" selected value="">Jenis Mobil</option>
-                                <option value="Sedang(Engkel)">Sedang(Engkel)</option>
-                                <option value="Besar(Tronton)">Besar(Tronton)</option>
-                            </select>
+                            <input autocomplete="off" type="text" class="form-control" name="merk_jenis" id="merk_jenis" required>
                         </div>
                         <div class="form-group">
                             <label class="form-label font-weight-bold" for="merk_dump">Dump</label>
@@ -107,11 +103,7 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label font-weight-bold" for="merk_jenis_update">Jenis Mobil</label>
-                            <select name="merk_jenis_update" id="merk_jenis_update" class="form-control custom-select" required onchange="nominal()">
-                                <option class="font-w700" disabled="disabled" selected value="">Jenis Mobil</option>
-                                <option value="Sedang(Engkel)">Sedang(Engkel)</option>
-                                <option value="Besar(Tronton)">Besar(Tronton)</option>
-                            </select>
+                            <input autocomplete="off" type="text" class="form-control" name="merk_jenis_update" id="merk_jenis_update" required>
                         </div>
                         <div class="form-group">
                             <label class="form-label font-weight-bold" for="merk_dump_update">Dump</label>

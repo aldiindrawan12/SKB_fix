@@ -29,7 +29,6 @@
                             <option class="font-w700" disabled="disabled" selected value="">Muatan</option>
                         </select>
                     </div>
-                    
                     <div class="col-md-4 col-md-offset-4 mb-4 mb-4">
                         <label class="form-label font-weight-bold" for="Asal ">Asal</label>
                         <select name="Asal" id="Asal" class="form-control mb-4" required onchange="asal()">

@@ -180,7 +180,6 @@
                                 $('td[name="mobil_pajak"]').text(data["mobil_pajak"]); //set value
                                 $('#file_foto_detail').attr('src','<?= base_url("assets/berkas/kendaraan/")?>'+data["file_foto"]);
                                 $('#file_stnk_detail').attr('src','<?= base_url("assets/berkas/kendaraan/")?>'+data["file_stnk"]);
-                                $('td[name="mobil_berlaku_stnk"]').text(data["mobil_berlaku_stnk"]); //set value
                                 $('td[name="mobil_stnk"]').text(data["mobil_stnk"]); //set value
                                 $('td[name="mobil_berlaku_kir"]').text(data["mobil_berlaku_kir"]); //set value
                                 $('td[name="mobil_kir"]').text(data["mobil_kir"]); //set value
@@ -202,8 +201,13 @@
                             },
                             success: function(data) { //jika ambil data sukses
                                 $('#mobil_no_update').val(data["mobil_no"]); //set value
+                                $('#mobil_stnk_update').val(data["mobil_stnk"]); //set value
                                 $('#mobil_berlaku_update').val(data["mobil_berlaku"]); //set value
                                 $('#mobil_pajak_update').val(data["mobil_pajak"]); //set value
+                                $('#mobil_kir_update').val(data["mobil_kir"]); //set value
+                                $('#mobil_ijin_bongkar_update').val(data["mobil_ijin_bongkar"]); //set value
+                                $('#mobil_berlaku_kir_update').val(data["mobil_berlaku_kir"]); //set value
+                                $('#mobil_berlaku_ijin_bongkar_update').val(data["mobil_berlaku_ijin_bongkar"]); //set value
                                 $('#mobil_keterangan_update').val(data["mobil_keterangan"]); //set value
                             }
                         });
@@ -442,6 +446,7 @@
                                 id: pk
                             },
                             success: function(data) { //jika ambil data sukses
+                                $('#merk_id').val(data["merk_id"]); //set value
                                 $('#mobil_type').val(data["merk_type"]); //set value
                                 $('#mobil_merk').val(data["merk_nama"]); //set value
                                 $('#mobil_jenis').val(data["merk_jenis"]); //set value
@@ -1988,14 +1993,14 @@
                             return html;
                         }
                     },
-                    {
-                        "data": "rute_uj_tronton",
-                        className: 'text-center',
-                        render: function(data, type, row) {
-                            let html = 'Rp.'+rupiah(data);
-                            return html;
-                        }
-                    },
+                    // {
+                    //     "data": "rute_uj_tronton",
+                    //     className: 'text-center',
+                    //     render: function(data, type, row) {
+                    //         let html = 'Rp.'+rupiah(data);
+                    //         return html;
+                    //     }
+                    // },
                     {
                         "data": "rute_tagihan",
                         className: 'text-center',
@@ -2043,13 +2048,14 @@
                                 $("#rute_dari_update").val(data["rute_dari"]);
                                 $("#rute_ke_update").val(data["rute_ke"]);
                                 $("#rute_muatan_update").val(data["rute_muatan"]);
+                                $("#jenis_mobil_update").val(data["jenis_mobil"]);
                                 $("#rute_uj_engkel_update").val(rupiah(data["rute_uj_engkel"]));
-                                $("#rute_uj_tronton_update").val(rupiah(data["rute_uj_tronton"]));
+                                // $("#rute_uj_tronton_update").val(rupiah(data["rute_uj_tronton"]));
                                 $("#rute_tagihan_update").val(rupiah(data["rute_tagihan"]));
                                 $("#rute_gaji_engkel_update").val(rupiah(data["rute_gaji_engkel"]));
-                                $("#rute_gaji_tronton_update").val(rupiah(data["rute_gaji_tronton"]));
+                                // $("#rute_gaji_tronton_update").val(rupiah(data["rute_gaji_tronton"]));
                                 $("#rute_gaji_engkel_rumusan_update").val(rupiah(data["rute_gaji_engkel_rumusan"]));
-                                $("#rute_gaji_tronton_rumusan_update").val(rupiah(data["rute_gaji_tronton_rumusan"]));
+                                // $("#rute_gaji_tronton_rumusan_update").val(rupiah(data["rute_gaji_tronton_rumusan"]));
                                 $("#rute_tonase_update").val(rupiah(data["rute_tonase"]));
                                 $("#rute_keterangan_update").val(data["rute_keterangan"]);
                                 $("#Ritase_update").val(data["ritase"]);
@@ -2100,13 +2106,14 @@
                                 $("#rute_dari_detail").val(data["rute_dari"]);
                                 $("#rute_ke_detail").val(data["rute_ke"]);
                                 $("#rute_muatan_detail").val(data["rute_muatan"]);
+                                $("#jenis_mobil_detail").val(data["jenis_mobil"]);
                                 $("#rute_uj_engkel_detail").val(rupiah(data["rute_uj_engkel"]));
-                                $("#rute_uj_tronton_detail").val(rupiah(data["rute_uj_tronton"]));
+                                // $("#rute_uj_tronton_detail").val(rupiah(data["rute_uj_tronton"]));
                                 $("#rute_tagihan_detail").val(rupiah(data["rute_tagihan"]));
                                 $("#rute_gaji_engkel_detail").val(rupiah(data["rute_gaji_engkel"]));
-                                $("#rute_gaji_tronton_detail").val(rupiah(data["rute_gaji_tronton"]));
+                                // $("#rute_gaji_tronton_detail").val(rupiah(data["rute_gaji_tronton"]));
                                 $("#rute_gaji_engkel_rumusan_detail").val(rupiah(data["rute_gaji_engkel_rumusan"]));
-                                $("#rute_gaji_tronton_rumusan_detail").val(rupiah(data["rute_gaji_tronton_rumusan"]));
+                                // $("#rute_gaji_tronton_rumusan_detail").val(rupiah(data["rute_gaji_tronton_rumusan"]));
                                 $("#rute_tonase_detail").val(rupiah(data["rute_tonase"]));
                                 $("#rute_keterangan_detail").val(data["rute_keterangan"]);
                                 $("#Ritase_detail").val(data["ritase"]);
@@ -2346,52 +2353,7 @@
     <!-- end script alert -->
     <script type="text/javascript">
         $(function(){
-            $("#mobil_berlaku").datepicker({
-                format: 'yyyy-mm-dd',
-                autoclose: true,
-                todayHighlight: true,
-            });
-            $("#mobil_pajak").datepicker({
-                format: 'yyyy-mm-dd',
-                autoclose: true,
-                todayHighlight: true,
-            });
-            $("#supir_tgl_lahir").datepicker({
-                format: 'yyyy-mm-dd',
-                autoclose: true,
-                todayHighlight: true,
-            });
-            $("#supir_tgl_sim").datepicker({
-                format: 'yyyy-mm-dd',
-                autoclose: true,
-                todayHighlight: true,
-            });
-            $("#supir_tgl_aktif").datepicker({
-                format: 'yyyy-mm-dd',
-                autoclose: true,
-                todayHighlight: true,
-            });
             $("#invoice_tgl").datepicker({
-                format: 'yyyy-mm-dd',
-                autoclose: true,
-                todayHighlight: true
-            });
-            $("#mobil_berlaku_kir").datepicker({
-                format: 'yyyy-mm-dd',
-                autoclose: true,
-                todayHighlight: true
-            });
-            $("#mobil_berlaku_ijin_bongkar").datepicker({
-                format: 'yyyy-mm-dd',
-                autoclose: true,
-                todayHighlight: true
-            });
-            $("#mobil_berlaku_stnk").datepicker({
-                format: 'yyyy-mm-dd',
-                autoclose: true,
-                todayHighlight: true
-            });
-            $("#update_status_tanggal_nonaktif").datepicker({
                 format: 'yyyy-mm-dd',
                 autoclose: true,
                 todayHighlight: true
@@ -2417,22 +2379,7 @@
                 type: "success",
                 timer: 500
             });
-            $("#mobil_berlaku_update").datepicker({
-                format: 'yyyy-mm-dd',
-                autoclose: true,
-                todayHighlight: true,
-            });
-        }
-        function tanggal_pajak(a){
-            // alert(a.id);
-            Swal.fire({
-                title: "Loading",
-                icon: "success",
-                text: "Mohon Tunggu Sebentar",
-                type: "success",
-                timer: 500
-            });
-            $("#mobil_pajak_update").datepicker({
+            $("#"+a.id).datepicker({
                 format: 'yyyy-mm-dd',
                 autoclose: true,
                 todayHighlight: true,

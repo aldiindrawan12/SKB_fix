@@ -47,7 +47,7 @@ class Dashboard extends CI_Controller {
             }else if($fungsi=="kir"){
                 $tanggal = $data[$i]["mobil_berlaku_kir"];
             }else if($fungsi=="stnk"){
-                $tanggal = $data[$i]["mobil_berlaku_stnk"];
+                $tanggal = $data[$i]["mobil_pajak"];
             }else if($fungsi=="ijin"){
                 $tanggal = $data[$i]["mobil_berlaku_ijin_bongkar"];
             }else{

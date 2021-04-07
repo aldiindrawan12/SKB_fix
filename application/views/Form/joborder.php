@@ -1,11 +1,11 @@
 <div class="container">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800 mt-3 ">Buat Job Order</h1>
+        <h1 class="h3 mb-0 text-gray-800 mt-3 ">Buat Job Order (Reguler)</h1>
     </div> 
         <!-- Card Formulir JO -->
         <div class="card shadow mb-4">
             <div class="card-header ">
-                <h6 class="m-0 font-weight-bold text-primary">Form Buat Job Order</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Form Buat Job Order (Reguler)</h6>
             </div>
             <div class="card-body">
                 <!-- form Job Order Baru -->
@@ -14,11 +14,7 @@
                     <div class="col-md-3 col-md-offset-4 mb-4">
                         <label class="form-label font-weight-bold " for="Customer">Customer</label>
                         <select name="Customer" value="DESC" id="Customer" class="form-control selectpicker mb-4" data-live-search="true" required onchange="customer()">
-                            <?php if(count($customer_by_name)==0){?>
-                                <option class="font-w700" disabled="disabled" selected value="">Customer</option>
-                            <?php }else{?>
-                                <option class="font-w700" selected value="<?=$customer_by_name["customer_id"]?>"><?=$customer_by_name["customer_name"]?></option>
-                            <?php }?>
+                            <option class="font-w700" disabled="disabled" selected value="">Customer</option>
                             <?php foreach($customer as $value){?>
                                 <option value="<?=$value["customer_id"]?>"><?=$value["customer_name"]?></option>
                             <?php } ?>

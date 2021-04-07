@@ -58,8 +58,9 @@
                     </tr>
                     <tr>
                         <td class="font-weight-bold " style="width: 25%;">Uang Jalan Kosongan</td>
-                        <?php if($jo["uang_kosongan"]==""){?>
-                            <td colspan=3><p>Rp.<?= number_format($jo["uang_kosongan"],2,',','.') ?> (Tidak Ada Rute Kosongan)</p></td>
+                        <?php if($jo["uang_kosongan"]==""){
+                            $jo["uang_kosongan"] = 0;?>
+                            <td colspan=3><p>Rp.0 (Tidak Ada Rute Kosongan)</p></td>
                         <?php }else{?>
                             <td colspan=3><p>Rp.<?= number_format($jo["uang_kosongan"],2,',','.') ?></p></td>
                         <?php }?>
@@ -94,20 +95,24 @@
                         <td class="font-weight-bold" style="width: 20%;">Catatan/Keterangan</td>
                         <td colspan=3><?= $jo["keterangan"]?></td>
                     </tr>
+                    <tr>
+                        <td class="font-weight-bold " style="width: 25%;">Upah Supir</td>
+                        <td colspan=3><p>Rp.<?= number_format($jo["upah"],2,',','.')?></p></td>
+                    </tr>
                     <tr class="text-center">
                         <td colspan=3><strong>Detail Muatan</strong></td>
                     </tr>
                     <tr>
                         <td colspan=3>Muatan Tonase : <?= $jo["tonase"]?></td>
                     </tr>
-                    <tr class="text-center">
+                    <!-- <tr class="text-center">
                         <td colspan=3><strong>Upah Supir</strong></td>
                     </tr>
                     <tr>
                         <td>Upah : Rp.<?= number_format($jo["upah"],2,',','.')?></td>
                         <td>Bonus : Rp.<?= number_format($jo["bonus"],2,',','.')?></td>
                         <td>Jumlah : Rp.<?= number_format($jo["bonus"]+$jo["upah"],2,',','.')?></td>
-                    </tr>
+                    </tr> -->
                 </tbody>
             </table>
         </div>

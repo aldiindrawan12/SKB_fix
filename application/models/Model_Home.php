@@ -767,7 +767,7 @@ class Model_Home extends CI_model
         }
     //akhir function-fiunction datatable truck
 
-    //function-fiunction datatable truck
+    //function-fiunction datatable kosongan
         public function count_all_kosongan()
         {
             $this->db->where("status_hapus","NO");
@@ -823,5 +823,63 @@ class Model_Home extends CI_model
                 }
                 return $hasil_fix;
         }
-    //akhir function-fiunction datatable truck
+    //akhir function-fiunction datatable kosongan
+
+        //function-fiunction datatable paketan
+        public function count_all_paketan()
+        {
+            $this->db->where("status_hapus","NO");
+            if($_SESSION["role"]=="Supervisor"){
+                $this->db->where("validasi","Pending");
+            }else{
+                $this->db->where("validasi","ACC");
+            }
+            return $this->db->count_all_results("skb_paketan");
+        }
+
+        public function filter_paketan($search, $order_field, $order_ascdesc)
+        {
+            // if($search!=""){
+            //     $this->db->like('kosongan_dari', $search);
+            //     $this->db->or_like('kosongan_ke', $search);
+            // }
+            $this->db->order_by($order_field, $order_ascdesc);
+            $hasil = $this->db->get('skb_paketan')->result_array();
+            $hasil_fix = [];
+            for($i=0;$i<count($hasil);$i++){
+                if($_SESSION["role"]=="Supervisor"){
+                    if($hasil[$i]["status_hapus"]=="NO" && $hasil[$i]["validasi"]=="Pending"){
+                        $hasil_fix[] = $hasil[$i];
+                    }
+                }else{
+                    if($hasil[$i]["status_hapus"]=="NO" && $hasil[$i]["validasi"]=="ACC"){
+                        $hasil_fix[] = $hasil[$i];
+                    }
+                }
+            }
+            return $hasil_fix;   
+        }
+
+        public function count_filter_paketan($search)
+        {
+            // if($search!=""){
+            //     $this->db->like('kosongan_dari', $search);
+            //     $this->db->or_like('kosongan_ke', $search);
+            // }
+            $hasil_data = $this->db->get('skb_paketan')->result_array();
+                $hasil_fix = 0;
+                for($i=0;$i<count($hasil_data);$i++){
+                    if($_SESSION["role"]=="Supervisor"){
+                        if($hasil_data[$i]["status_hapus"]=="NO" && $hasil_data[$i]["validasi"]=="Pending"){
+                            $hasil_fix +=1;
+                        }
+                    }else{
+                        if($hasil_data[$i]["status_hapus"]=="NO" && $hasil_data[$i]["validasi"]=="ACC"){
+                            $hasil_fix +=1;
+                        }
+                    }
+                }
+                return $hasil_fix;
+        }
+    //akhir function-fiunction datatable paketan
 }

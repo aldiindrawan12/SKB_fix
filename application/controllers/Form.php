@@ -11,16 +11,12 @@ class Form extends CI_Controller {
     }
 
     // fungsi view form
-        public function joborder($customer_name){
+        public function joborder(){
             if(!$_SESSION["user"]){
     			$this->session->set_flashdata('status-login', 'False');
                 redirect(base_url());
             }
             $data["customer"] = $this->model_home->getcustomer();
-            $data["customer_by_name"] = $this->model_form->getcustomerbyname($customer_name);
-            if($data["customer_by_name"] == null){
-                $data["customer_by_name"] = [];
-            }
             $data["mobil"] = $this->model_home->gettruck();
             $data["supir"] = $this->model_home->getsupir();
             $data["kosongan"] = $this->model_home->getkosongan();
@@ -30,6 +26,23 @@ class Form extends CI_Controller {
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('form/joborder');
+            $this->load->view('footer');
+        }
+
+        public function joborderpaketan(){
+            if(!$_SESSION["user"]){
+    			$this->session->set_flashdata('status-login', 'False');
+                redirect(base_url());
+            }
+            $data["customer"] = $this->model_home->getcustomer();
+            $data["mobil"] = $this->model_home->gettruck();
+            $data["supir"] = $this->model_home->getsupir();
+            $data["page"] = "JO_page";
+            $data["collapse_group"] = "Perintah_Kerja";
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            $this->load->view('header',$data);
+            $this->load->view('sidebar');
+            $this->load->view('form/joborderpaketan');
             $this->load->view('footer');
         }
 
@@ -85,6 +98,48 @@ class Form extends CI_Controller {
             $data_jo = explode(",",$this->input->post("data_jo"));
             $this->model_form->insert_invoice($data,$data_jo);
             redirect(base_url("index.php/home/invoice"));
+        }
+        public function insert_paketan(){
+            $data_dari = explode(",",$this->input->post("data_rute_dari"));
+            $data_ke = explode(",",$this->input->post("data_rute_ke"));
+            $data_muatan = explode(",",$this->input->post("data_rute_muatan"));
+            $data_rute = [];
+            for($i=0;$i<count($data_dari);$i++){
+                $isi_data_rute = [];
+                $isi_data_rute = array(
+                    "dari"=>$data_dari[$i],
+                    "ke"=>$data_ke[$i],
+                    "muatan"=>$data_muatan[$i],
+                );
+                $data_rute[] = $isi_data_rute;
+            }
+            if($this->input->post("Tonase")==""){
+                $paketan_gaji = str_replace(".","",$this->input->post("paketan_gaji"));
+                $paketan_gaji_rumusan = 0;
+                $tonase = 0;
+            }else{
+                $paketan_gaji = 0;
+                $paketan_gaji_rumusan = str_replace(".","",$this->input->post("paketan_gaji_rumusan"));
+                $tonase = str_replace(".","",$this->input->post("Tonase"));
+            }
+            $data=array(
+                "customer_id"=>$this->input->post("customer_id"),
+                "jenis_mobil"=>$this->input->post("jenis_mobil"),
+                "paketan_uj"=>str_replace(".","",$this->input->post("paketan_uj")),
+                "paketan_tagihan"=>str_replace(".","",$this->input->post("paketan_tagihan")),
+                "paketan_gaji"=>$paketan_gaji,
+                "paketan_tonase"=>$tonase,
+                "paketan_gaji_rumusan"=>$paketan_gaji_rumusan,
+                "paketan_status_hapus"=>"NO",
+                "validasi_paketan"=>"Pending",
+                "paketan_keterangan"=>$this->input->post("paketan_keterangan"),
+                "paketan_data_rute"=>json_encode($data_rute),
+                "ritase"=>$this->input->post("Ritase")
+            );
+            // echo var_dump($data);
+            $this->model_form->insert_paketan($data);
+			$this->session->set_flashdata('status-add-paketan', 'Berhasil');
+            redirect(base_url("index.php/home/paketan"));
         }
         public function insert_JO(){
             $kosongan = $this->model_home->getkosonganbyid($this->input->post("kosongan_id"));

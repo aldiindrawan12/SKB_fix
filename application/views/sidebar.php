@@ -58,6 +58,10 @@
                             <i class="fas fa-weight"></i>
                             <span>Rute Kosongan</span>
                         </a>
+                        <a class="collapse-item" id="Paketan_page"href="<?=base_url("index.php/home/paketan")?>">  
+                            <i class="fas fa-weight"></i>
+                            <span>Rute Paketan</span>
+                        </a>
                     </div>
                 </div>
             </li>

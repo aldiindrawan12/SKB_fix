@@ -170,6 +170,10 @@ class Model_Form extends CI_model
         return $this->db->insert("skb_rute", $data);
     }
 
+    public function insert_paketan($data){
+        return $this->db->insert("skb_paketan", $data);
+    }
+
     public function insert_truck($data){
         return $this->db->insert("skb_mobil", $data);
     }

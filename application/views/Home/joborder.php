@@ -1,14 +1,18 @@
 <div class="container">
     <div class="d-sm-flex align-items-center justify-content-between mb-4 ">
         <h1 class="h3 mb-0 text-gray-800 mt-3 mb-3">Seluruh Data Job Order</h1>
-        <a href="<?=base_url("index.php/form/joborder/x")?>" class="btn btn-primary btn-icon-split">
-            <span class="icon text-white-100">
-                <i class="fas fa-plus"></i> 
-            </span>
-            <span class="text">
-                 Buat Job Order
-            </span>
-        </a>
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                <span class="icon text-white-100">
+                    <i class="fas fa-plus"></i> 
+                </span>
+                Buat Job Order
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="<?=base_url("index.php/form/joborder")?>">Reguler</a>
+                <a class="dropdown-item" href="<?=base_url("index.php/form/joborderpaketan")?>">Paketan</a>
+            </div>
+        </div>
     </div> 
     <div class="card shadow mb-4">
     <div class="card-header py-3">

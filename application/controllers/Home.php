@@ -671,7 +671,7 @@ class Home extends CI_Controller {
         }
     //end fungsi untuk truk
 
-        //fungsi untuk kosongan
+    //fungsi untuk kosongan
         public function kosongan()
         {
             if(!$_SESSION["user"]){
@@ -717,4 +717,52 @@ class Home extends CI_Controller {
             echo json_encode($callback);
         }
     //end fungsi untuk kosongan
+
+    //fungsi untuk paketan
+        public function paketan()
+        {
+            if(!$_SESSION["user"]){
+                $this->session->set_flashdata('status-login', 'False');
+                redirect(base_url());
+            }
+            $data["page"] = "Paketan_page";
+            $data["collapse_group"] = "Master_Data";
+            $data["customer"] = $this->model_home->getcustomer();
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            if(json_decode($data["akun_akses"]["akun_akses"])[0]==0){
+                redirect(base_url());
+            }
+            $this->load->view('header',$data);
+            $this->load->view('sidebar');
+            $this->load->view('home/paketan');
+            $this->load->view('footer');
+        }
+        public function view_paketan(){
+            $search = $_POST['search']['value'];
+            $order_index = $_POST['order'][0]['column'];
+            $order_field = $_POST['columns'][$order_index]['data'];
+            $order_ascdesc = $_POST['order'][0]['dir'];
+            $sql_total = $this->model_home->count_all_paketan();
+            $sql_data = $this->model_home->filter_paketan($search, $order_field, $order_ascdesc);
+            $sql_filter = $this->model_home->count_filter_paketan($search);
+            $data = array();
+            for($i=0;$i<count($sql_data);$i++){
+                array_push($data, $sql_data[$i]);
+            }
+            $no = 1;
+            for($i=0;$i<count($data);$i++){
+                $data[$i]['no'] = $no;   
+                $no++;
+            }
+            $callback = array(
+                'draw' => $_POST['draw'],
+                'recordsTotal' => $sql_total,
+                'recordsFiltered' => $sql_filter,
+                'data' => $data
+            );
+
+            header('Content-Type: application/json');
+            echo json_encode($callback);
+        }
+    //end fungsi untuk paketan
 }

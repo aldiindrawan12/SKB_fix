@@ -23,6 +23,7 @@ class Form extends CI_Controller {
             }
             $data["mobil"] = $this->model_home->gettruck();
             $data["supir"] = $this->model_home->getsupir();
+            $data["kosongan"] = $this->model_home->getkosongan();
             $data["page"] = "JO_page";
             $data["collapse_group"] = "Perintah_Kerja";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
@@ -86,6 +87,7 @@ class Form extends CI_Controller {
             redirect(base_url("index.php/home/invoice"));
         }
         public function insert_JO(){
+            $kosongan = $this->model_home->getkosonganbyid($this->input->post("kosongan_id"));
             $jo_id = $this->model_form->getjoid();
             $isi_jo_id = [];
             for($i=0;$i<count($jo_id);$i++){
@@ -107,7 +109,9 @@ class Form extends CI_Controller {
                 "status"=>"Dalam Perjalanan",
                 "status_upah"=>"Belum Dibayar",
                 "upah"=>str_replace(".","",$this->input->post("Upah")),
-                "tagihan"=>str_replace(".","",$this->input->post("Tagihan"))
+                "tagihan"=>str_replace(".","",$this->input->post("Tagihan")),
+                "kosongan_id"=>$kosongan["kosongan_id"],
+                "uang_kosongan" =>$kosongan["kosongan_uang"]
             );
             $this->model_form->insert_JO($data["data"]);
             $data["jo_id"] = max($isi_jo_id)+1;

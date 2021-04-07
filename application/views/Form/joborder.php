@@ -101,6 +101,23 @@
                         <label for="Keterangan" class="form-label font-weight-bold">Keterangan/Catatan</label>
                         <textarea class="form-control" name="Keterangan" id="Keterangan" rows="3"></textarea>
                     </div>
+                    <div class="col-md-4 col-md-offset-4 mb-4">
+                        <label class="form-label font-weight-bold" for="Kosongan">Rute Kosongan</label>
+                        <select name="Kosongan" id="Kosongan" class="form-control" required onchange="kosongan(this)">
+                            <option class="font-w700" disabled="disabled" selected value="">Tipe Tonase</option>
+                            <option class="font-w700" value="Ya">Ya</option>
+                            <option class="font-w700" value="Tidak">Tidak</option>
+                        </select>
+                    </div>
+                    <div class="col-md-8 col-md-offset-4" style="display:none" id="rute_kosongan_pilih">
+                        <label class="form-label font-weight-bold " for="kosongan_id">Rute Kosongan</label>
+                        <select name="kosongan_id" value="DESC" id="kosongan_id" class="form-control selectpicker mb-4" data-live-search="true">
+                        <option class="font-w700" disabled="disabled" selected value="">Dari - Ke - Uang Jalan</option>
+                            <?php foreach($kosongan as $value){?>
+                                <option value="<?=$value["kosongan_id"]?>"><?=$value["kosongan_dari"]?> - <?=$value["kosongan_ke"]?> - Rp.<?= number_format($value["kosongan_uang"],2,",",".")?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
                     <input autocomplete="off" type="text" class="form-control" id="Upah" name="Upah" required hidden>
                     <input autocomplete="off" type="text" class="form-control" id="Tagihan" name="Tagihan" required hidden>
                     <div class="col-md-12 col-md-offset-4 ">
@@ -406,5 +423,12 @@
     // fungsi form
     function uang(a){
         $( '#'+a.id ).mask('000.000.000', {reverse: true});
+    }
+    function kosongan(a){
+        if($("#"+a.id).val()=="Ya"){
+            $("#rute_kosongan_pilih").show();
+        }else{
+            $("#rute_kosongan_pilih").hide();
+        }
     }
 </script>

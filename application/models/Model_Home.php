@@ -32,6 +32,16 @@ class Model_Home extends CI_model
         return $this->db->get_where("skb_supir",array("status_hapus"=>"NO","status_aktif"=>"Aktif"))->result_array();
     }
 
+    public function getkosongan() //all kosongan
+    {
+        return $this->db->get_where("skb_kosongan",array("status_hapus"=>"NO"))->result_array();
+    }
+
+    public function getkosonganbyid($kosongan_id) //kosongan by id
+    {
+        return $this->db->get_where("skb_kosongan",array("status_hapus"=>"NO","kosongan_id"=>$kosongan_id))->row_array();
+    }
+
     public function getsupirbyid($supir_id) //supir by id
     {
         return $this->db->get_where("skb_supir",array("supir_id"=>$supir_id))->row_array();

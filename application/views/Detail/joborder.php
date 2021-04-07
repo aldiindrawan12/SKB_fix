@@ -57,8 +57,20 @@
                         <td colspan=3><p>Rp.<?= number_format($jo["uang_jalan"],2,',','.')." (".$jo["terbilang"].")" ?></p></td>
                     </tr>
                     <tr>
+                        <td class="font-weight-bold " style="width: 25%;">Uang Jalan Kosongan</td>
+                        <?php if($jo["uang_kosongan"]==""){?>
+                            <td colspan=3><p>Rp.<?= number_format($jo["uang_kosongan"],2,',','.') ?> (Tidak Ada Rute Kosongan)</p></td>
+                        <?php }else{?>
+                            <td colspan=3><p>Rp.<?= number_format($jo["uang_kosongan"],2,',','.') ?></p></td>
+                        <?php }?>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold " style="width: 25%;">Total Uang Jalan</td>
+                        <td colspan=3><p>Rp.<?= number_format($jo["uang_jalan"]+$jo["uang_kosongan"],2,',','.')?></p></td>
+                    </tr>
+                    <tr>
                         <td class="font-weight-bold " style="width: 25%;">Uang Jalan Terbayar</td>
-                        <?php if($jo["uang_jalan_bayar"]==$jo["uang_jalan"]){?>
+                        <?php if($jo["uang_jalan_bayar"]>$jo["uang_jalan"]+$jo["uang_kosongan"]){?>
                             <td colspan=3>
                                 <div class="row ">
                                     <p class="col">Rp.<?= number_format($jo["uang_jalan_bayar"],2,',','.')?></p>
@@ -78,6 +90,10 @@
                             </td>
                         <?php }?>
                     </tr>
+                    <tr>
+                        <td class="font-weight-bold" style="width: 20%;">Catatan/Keterangan</td>
+                        <td colspan=3><?= $jo["keterangan"]?></td>
+                    </tr>
                     <tr class="text-center">
                         <td colspan=3><strong>Detail Muatan</strong></td>
                     </tr>
@@ -91,10 +107,6 @@
                         <td>Upah : Rp.<?= number_format($jo["upah"],2,',','.')?></td>
                         <td>Bonus : Rp.<?= number_format($jo["bonus"],2,',','.')?></td>
                         <td>Jumlah : Rp.<?= number_format($jo["bonus"]+$jo["upah"],2,',','.')?></td>
-                    </tr>
-                    <tr>
-                        <td class="font-weight-bold" style="width: 20%;">Catatan/Keterangan</td>
-                        <td colspan=3><?= $jo["keterangan"]?></td>
                     </tr>
                 </tbody>
             </table>

@@ -185,6 +185,7 @@ class Print_Berkas extends CI_Controller {
 			}
 			$data["data_jo_id"] = $data_jo_id;
 			$data["upah"] = $upah;
+			$data["bonus"]=$this->input->post("bonus");
 			$this->load->view("print/penggajian_print",$data);
 		}
 		public function memo_tunai($supir_id,$gaji){

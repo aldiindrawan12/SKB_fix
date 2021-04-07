@@ -68,8 +68,12 @@
                             <td>Rp.<?= number_format($supir["supir_kasbon"],2,',','.')?></td>
                         </tr>
                         <tr>
+                            <td colspan=8>Bonus</td>
+                            <td><input class="form-control" type="text" id="bonus" name="bonus" onkeyup="total(),uang(this)"></td>
+                        </tr>
+                        <tr>
                             <td colspan=8>Grand Total Upah</td>
-                            <td>Rp.<?= number_format($upah-$supir["supir_kasbon"],2,',','.')?></td>
+                            <td id="grand_total">Rp.<?= number_format($upah-$supir["supir_kasbon"],0,',','.')?></td>
                         </tr>
                     </tbody>
                 </table>
@@ -81,10 +85,6 @@
 
 
 <div class="container">
-    <!-- button print daftar gaji -->
-    <!-- <button onclick="print_gaji()" class="btn btn-primary">Cetak Bukti Upah</button> -->
-    <!-- end button print daftar gaji -->
-
     <!-- button print memo tunai -->
     <button onclick="print_memo_tunai()" class="btn btn-primary">Cetak Memo Tunai</button>
     <!-- end button print memo tunai -->
@@ -92,7 +92,7 @@
 <hr>
 <!-- form rekening supir -->
 <div class="container mt-3 small">
-    <form action="<?= base_url("index.php/print_berkas/memo_tf/".$supir["supir_id"]."/".($upah-$supir["supir_kasbon"]))?>" method="POST" class="row">
+    <form action="<?= base_url("index.php/print_berkas/memo_tf/".$supir["supir_id"]."/".($upah-$supir["supir_kasbon"]))?>" method="POST" class="row" id="form-rekening">
         <div class="form-group col-md-6">
             <label for="Bank" class="form-label">Bank</label>
             <input autocomplete="off" type="text" class="form-control" id="Bank" name="Bank" required>
@@ -113,11 +113,26 @@
 <!-- end form rekening supir -->
 
 <script>
-    function print_gaji(){
-        window.location.replace("<?= base_url("index.php/print_berkas/data_gaji/".$supir["supir_id"])?>");    
-    }
-
     function print_memo_tunai(){
-        window.location.replace("<?= base_url("index.php/print_berkas/memo_tunai/".$supir["supir_id"]."/".($upah-$supir["supir_kasbon"]))?>");    
+        var total = "<?= $upah-$supir['supir_kasbon']?>";
+        var bonus = $("#bonus").val();
+        if(bonus==""){
+            bonus="0";
+        }
+        var bonus_int = bonus.replaceAll(".","");
+        window.location.replace("<?= base_url("index.php/print_berkas/memo_tunai/".$supir["supir_id"]."/")?>"+(parseInt(total)+parseInt(bonus_int)));    
+    }
+    function total(){
+        var total = "<?= $upah-$supir['supir_kasbon']?>";
+        var bonus = $("#bonus").val();
+        if(bonus==""){
+            bonus="0";
+        }
+        var bonus_int = bonus.replaceAll(".","");
+        $("#grand_total").text("Rp."+rupiah(parseInt(total)+parseInt(bonus_int)));
+        $("#form-rekening").attr("action","<?= base_url('index.php/print_berkas/memo_tf/'.$supir['supir_id'].'/')?>"+(parseInt(total)+parseInt(bonus_int)));
+    }
+    function uang(a){
+        $( '#'+a.id ).mask('000.000.000', {reverse: true});
     }
 </script>

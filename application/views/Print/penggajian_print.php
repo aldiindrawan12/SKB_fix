@@ -51,11 +51,11 @@
                         </thead>
                         <tbody>
                         <?php $uang_jalan = 0;
-                        $upah = 0;
+                        $upah_jo = 0;
                         $data_jo_id = [];
                         foreach($jo as $value){ 
                             $uang_jalan += $value["uang_jalan"];
-                            $upah += ($value["upah"]+$value["bonus"]);
+                            $upah_jo += ($value["upah"]+$value["bonus"]);
                             $data_jo_id[] = $value["Jo_id"];
                             ?>
                             <tr>
@@ -74,15 +74,19 @@
                                 <td colspan=6>Total</td>
                                 <td>Rp.<?= number_format($uang_jalan,2,',','.')?></td>
                                 <td></td>
-                                <td>Rp.<?= number_format($upah,2,',','.')?></td>
+                                <td>Rp.<?= number_format($upah_jo,2,',','.')?></td>
                             </tr>
                             <tr>
                                 <td colspan=8>Total Bon Terhutang</td>
                                 <td>Rp.<?= number_format($supir["supir_kasbon"],2,',','.')?></td>
                             </tr>
                             <tr>
+                                <td colspan=8>Bonus</td>
+                                <td>Rp.<?= number_format($upah-$upah_jo,2,',','.')?></td>
+                            </tr>
+                            <tr>
                                 <td colspan=8>Grand Total Upah</td>
-                                <td>Rp.<?= number_format($upah-$supir["supir_kasbon"],2,',','.')?></td>
+                                <td>Rp.<?= number_format($upah,2,',','.')?></td>
                             </tr>
                         </tbody>
                     </table>

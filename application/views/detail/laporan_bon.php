@@ -1,6 +1,14 @@
 <div class="card shadow mb-4 ml-5 mr-5 py-2 px-2 small">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">Detail Bon Supir</h6>
+        <a href="" class="btn btn-primary btn-icon-split" onclick="print_bon()">
+                <span class="icon text-white-100">
+                    <i class="fas fa-print"></i> 
+                </span>
+                <span class="text">
+                    Cetak Bon
+                </span>
+        </a>
     </div>
     <div class="card-body">
         <!-- tampilan detail transaksi bon -->

@@ -1,5 +1,5 @@
-<div class="card shadow mb-4 ml-5 mr-5 py-2 px-2 small">
-    <div class="card-header py-3">
+<div class="card shadow mb-4 ml-5 mr-5 py-2 px-2">
+    <div class="card-header py-3 d-sm-flex align-items-center justify-content-between mb-4">
         <h6 class="m-0 font-weight-bold text-primary">Detail Bon Supir</h6>
         <a href="" class="btn btn-primary btn-icon-split" onclick="print_bon()">
                 <span class="icon text-white-100">
@@ -12,19 +12,19 @@
     </div>
     <div class="card-body">
         <!-- tampilan detail transaksi bon -->
-        <div class="container" id="detail-bon_supir">
-            <table class="table table-bordered ">
+        <div class="container" id="detail-bon-supir">
+            <div class="text-center mb-3 h5">
+                <span><?=$supir?></span>
+            </div>
+            <table class="table table-bordered small">
                 <thead>
                     <tr>
-                        <th colspan=6 class="text-center font-weight-bold h5"><?=$supir?></th>
-                    </tr>
-                    <tr>
-                        <th class="text-center">No.</th>
-                        <th class="text-center">Tanggal Transaksi</th>
-                        <th class="text-center">Keterangan</th>
-                        <th class="text-center">Bayar</th>
-                        <th class="text-center">Bon</th>
-                        <th class="text-center">Sisa Bon</th>
+                        <th class="p-1">No.</th>
+                        <th class="p-1">Tanggal Transaksi</th>
+                        <th class="p-1">Keterangan</th>
+                        <th class="p-1">Bayar</th>
+                        <th class="p-1">Bon</th>
+                        <th class="p-1">Sisa Bon</th>
                     </tr>    
                 </thead>
                 <tbody>  
@@ -32,22 +32,22 @@
                             $sisa_bon=0;
                     foreach($transaksi_bon as $value){?>
                         <tr>
-                            <td class="text-center"><?= $n?></td>
-                            <td class="text-center"><?= $value["bon_tanggal"]?></td>
-                            <td class="text-center"><?= $value["bon_keterangan"]?></td>
+                            <td class="p-1"><?= $n?></td>
+                            <td class="p-1"><?= $value["bon_tanggal"]?></td>
+                            <td class="p-1"><?= $value["bon_keterangan"]?></td>
                             <?php if($value["bon_jenis"]=="Pembayaran"){
                                 $sisa_bon-=$value["bon_nominal"];?>
-                                <td class="text-center">Rp.<?= number_format($value["bon_nominal"],2,',','.')?></td>
-                                <td class="text-center">Rp.0</td>
+                                <td class="p-1">Rp.<?= number_format($value["bon_nominal"],2,',','.')?></td>
+                                <td class="p-1">Rp.0</td>
                             <?php }else{
                                 $sisa_bon+=$value["bon_nominal"];?>
-                                <td class="text-center">Rp.0</td>
-                                <td class="text-center">Rp.<?= number_format($value["bon_nominal"],2,',','.')?></td>
+                                <td class="p-1">Rp.0</td>
+                                <td class="p-1">Rp.<?= number_format($value["bon_nominal"],2,',','.')?></td>
                             <?php }
                             if($sisa_bon==0){?>
-                                <td class="text-center">Lunas</td>
+                                <td class="p-1">Lunas</td>
                             <?php }else{?>
-                                <td class="text-center">Rp.<?= number_format($sisa_bon,2,',','.')?></td>
+                                <td class="p-1">Rp.<?= number_format($sisa_bon,2,',','.')?></td>
                             <?php }?>
                         </tr>
                     <?php $n++;
@@ -58,4 +58,12 @@
         <!-- end tampilan detail transaksi bon -->
     </div>
 </div>
-</div>
+<script>
+function print_bon(){
+    var restorepage = document.body.innerHTML;
+	var printcontent = document.getElementById("detail-bon-supir").innerHTML;
+	document.body.innerHTML = printcontent;
+	window.print();
+	document.body.innerHTML = restorepage;
+}
+</script>

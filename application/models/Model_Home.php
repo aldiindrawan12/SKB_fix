@@ -825,57 +825,86 @@ class Model_Home extends CI_model
         }
     //akhir function-fiunction datatable kosongan
 
-        //function-fiunction datatable paketan
-        public function count_all_paketan()
+    //function-fiunction datatable paketan
+        public function count_all_paketan($customer)
         {
-            $this->db->where("status_hapus","NO");
+            if($customer!="x"){
+                $this->db->where("skb_paketan.customer_id",$customer);
+            }
+            $this->db->where("paketan_status_hapus","NO");
             if($_SESSION["role"]=="Supervisor"){
-                $this->db->where("validasi","Pending");
+                $this->db->where("validasi_paketan","Pending");
             }else{
-                $this->db->where("validasi","ACC");
+                $this->db->where("validasi_paketan","ACC");
             }
             return $this->db->count_all_results("skb_paketan");
         }
 
-        public function filter_paketan($search, $order_field, $order_ascdesc)
+        public function filter_paketan($customer,$search, $order_field, $order_ascdesc)
         {
-            // if($search!=""){
-            //     $this->db->like('kosongan_dari', $search);
-            //     $this->db->or_like('kosongan_ke', $search);
-            // }
+            if($search!=""){
+                $this->db->like('customer_name', $search);
+                // $this->db->or_like('kosongan_ke', $search);
+            }
             $this->db->order_by($order_field, $order_ascdesc);
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_paketan.customer_id", 'left');
             $hasil = $this->db->get('skb_paketan')->result_array();
             $hasil_fix = [];
             for($i=0;$i<count($hasil);$i++){
                 if($_SESSION["role"]=="Supervisor"){
-                    if($hasil[$i]["status_hapus"]=="NO" && $hasil[$i]["validasi"]=="Pending"){
-                        $hasil_fix[] = $hasil[$i];
+                    if($customer=='x'){
+                        if($hasil[$i]["paketan_status_hapus"]=="NO" && $hasil[$i]["validasi_paketan"]=="Pending"){
+                            $hasil_fix[] = $hasil[$i];
+                        }
+                    }else{
+                        if($hasil[$i]["customer_id"]==$customer && $hasil[$i]["paketan_status_hapus"]=="NO" && $hasil[$i]["validasi_paketan"]=="Pending"){
+                            $hasil_fix[] = $hasil[$i];
+                        }
                     }
                 }else{
-                    if($hasil[$i]["status_hapus"]=="NO" && $hasil[$i]["validasi"]=="ACC"){
-                        $hasil_fix[] = $hasil[$i];
+                    if($customer=='x'){
+                        if($hasil[$i]["paketan_status_hapus"]=="NO" && $hasil[$i]["validasi_paketan"]=="ACC"){
+                            $hasil_fix[] = $hasil[$i];
+                        }
+                    }else{
+                        if($hasil[$i]["customer_id"]==$customer && $hasil[$i]["paketan_status_hapus"]=="NO" && $hasil[$i]["validasi_paketan"]=="ACC"){
+                            $hasil_fix[] = $hasil[$i];
+                        }
                     }
                 }
             }
             return $hasil_fix;   
         }
 
-        public function count_filter_paketan($search)
+        public function count_filter_paketan($customer,$search)
         {
-            // if($search!=""){
-            //     $this->db->like('kosongan_dari', $search);
-            //     $this->db->or_like('kosongan_ke', $search);
-            // }
+            if($search!=""){
+                $this->db->like('customer_name', $search);
+                // $this->db->or_like('kosongan_ke', $search);
+            }
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_paketan.customer_id", 'left');
             $hasil_data = $this->db->get('skb_paketan')->result_array();
                 $hasil_fix = 0;
                 for($i=0;$i<count($hasil_data);$i++){
                     if($_SESSION["role"]=="Supervisor"){
-                        if($hasil_data[$i]["status_hapus"]=="NO" && $hasil_data[$i]["validasi"]=="Pending"){
-                            $hasil_fix +=1;
+                        if($customer=='x'){
+                            if($hasil_data[$i]["paketan_status_hapus"]=="NO" && $hasil_data[$i]["validasi_paketan"]=="Pending"){
+                                $hasil_fix +=1;
+                            }
+                        }else{
+                            if($hasil_data[$i]["customer_id"]==$customer && $hasil_data[$i]["paketan_status_hapus"]=="NO" && $hasil_data[$i]["validasi_paketan"]=="Pending"){
+                                $hasil_fix +=1;
+                            }
                         }
                     }else{
-                        if($hasil_data[$i]["status_hapus"]=="NO" && $hasil_data[$i]["validasi"]=="ACC"){
-                            $hasil_fix +=1;
+                        if($customer=='x'){
+                            if($hasil_data[$i]["paketan_status_hapus"]=="NO" && $hasil_data[$i]["validasi_paketan"]=="ACC"){
+                                $hasil_fix +=1;
+                            }
+                        }else{
+                            if($hasil_data[$i]["customer_id"]==$customer && $hasil_data[$i]["paketan_status_hapus"]=="NO" && $hasil_data[$i]["validasi_paketan"]=="ACC"){
+                                $hasil_fix +=1;
+                            }
                         }
                     }
                 }

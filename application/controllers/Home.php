@@ -739,12 +739,13 @@ class Home extends CI_Controller {
         }
         public function view_paketan(){
             $search = $_POST['search']['value'];
+            $customer = $this->input->post('customer');
             $order_index = $_POST['order'][0]['column'];
             $order_field = $_POST['columns'][$order_index]['data'];
             $order_ascdesc = $_POST['order'][0]['dir'];
-            $sql_total = $this->model_home->count_all_paketan();
-            $sql_data = $this->model_home->filter_paketan($search, $order_field, $order_ascdesc);
-            $sql_filter = $this->model_home->count_filter_paketan($search);
+            $sql_total = $this->model_home->count_all_paketan($customer);
+            $sql_data = $this->model_home->filter_paketan($customer,$search, $order_field, $order_ascdesc);
+            $sql_filter = $this->model_home->count_filter_paketan($customer,$search);
             $data = array();
             for($i=0;$i<count($sql_data);$i++){
                 array_push($data, $sql_data[$i]);

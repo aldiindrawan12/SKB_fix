@@ -21,11 +21,10 @@
                 <thead>
                     <tr>
                         <th class="text-center" scope="col">No</th>
-                        <th class="text-center" scope="col">ID Rute</th>
                         <th class="text-center" scope="col">Nama Customer</th>
-                        <th class="text-center" scope="col">Dari</th>
-                        <th class="text-center" scope="col">Ke</th>
-                        <th class="text-center" scope="col">Muatan</th>
+                        <th class="text-center" scope="col">Rute</th>
+                        <th class="text-center" scope="col">Jenis Mobil</th>
+                        <th class="text-center" scope="col">Ritase/Tonase</th>
                         <th class="text-center" scope="col">Uang Jalan</th>
                         <th class="text-center" scope="col">Inv./Tagihan</th>
                         <th class="text-center" width="20%" scope="col">Aksi</th>
@@ -163,6 +162,63 @@
 </div>
 <!-- end pop up add rute paketan -->
 
+<!-- pop up add detail rute paketan -->
+<div class="modal fade" id="popup-detail-rute-paketan" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+    <div class="modal-dialog modal-xl"  role="document"  >
+        <div class="modal-content">
+            <div class="modal-header bg-primary-dark">
+                <h5 class="font-weight-bold">Detail Rute</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="font-size-sm m-3 text-justify">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="table-data-rute-paketan" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center" scope="col">No Rute</th>
+                                            <th class="text-center" scope="col">Dari</th>
+                                            <th class="text-center" scope="col">Ke</th>
+                                            <th class="text-center" scope="col">Muatan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="table-detail-paketan" width="100%" cellspacing="0">
+                                    <tbody>
+                                        <tr>
+                                            <td>Keterangan</td>
+                                            <td><span id="detail-keterangan"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tonase</td>
+                                            <td><span id="detail-tonase"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Type Gaji</td>
+                                            <td><span id="detail-gaji"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Gaji Fix</td>
+                                            <td><span id="detail-gaji-fix"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Gaji Non-Fix</td>
+                                            <td><span id="detail-gaji-nonfix"></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end pop up add detail rute paketan -->
+
 <!-- pop up add rute untuk form add rute paketan -->
 <div class="modal fade" id="popup-add-rute" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-sm"  role="document"  >
@@ -198,99 +254,103 @@
 </div>
 <!-- end pop up add rute untuk form add rute paketan -->
 
-<!-- pop up detail rute -->
-<div class="modal fade mt-5" id="popup-detail-rute" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
+<!-- pop up add rute paketan -->
+<div class="modal fade" id="popup-update-paketan" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+    <div class="modal-dialog modal-xl"  role="document"  >
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
-                <h5 class="block-title">Detail Rute</h5>
+                <h5 class="font-weight-bold">update Rute Paketan</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times</span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="font-size-sm m-3 text-justify">
-                <div class="row ">
-                        <div class="col border rounded mr-3 ml-3 mb-3 mt-3">
+                <form action="<?= base_url("index.php/form/update_paketan")?>" method="POST">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">Simpan</button>
+                        <button type="reset" class="btn btn-outline-danger" onclick="reset_form()">Reset</button>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 border rounded mr-3 ml-3">
                             <div class="form-group">
-                                <label class="form-label font-weight-bold " for="customer_name_detail">Nama Customer</label>
-                                <input autocomplete="off" type="text" class="form-control" id="customer_name_detail" name="customer_name_detail" readonly>
-                            </select>
+                                <input autocomplete="off" type="text" class="form-control" name="paketan_id_update" id="paketan_id_update" required hidden>
                             </div>
-                            <div class="form-group">
-                                <label class="form-label font-weight-bold" for="rute_dari_detail">Dari</label>
-                                <input autocomplete="off" type="text" class="form-control" id="rute_dari_detail" name="rute_dari_detail" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label font-weight-bold" for="rute_ke_detail">Ke</label>
-                                <input autocomplete="off" type="text" class="form-control" id="rute_ke_detail" name="rute_ke_detail" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label for="rute_muatan_detail" class="form-label font-weight-bold ">Muatan</label> 
-                                <input autocomplete="off" type="text" class="form-control" id="rute_muatan_detail" name="rute_muatan_detail" readonly>
-                            </div>
-                            <div class="rute_tonase_detail">
-                                <div class="form-group">
-                                    <label for="rute_tonase_detail" class="form-label font-weight-bold">Tonase</label>  
-                                    <input autocomplete="off" type="text" class="form-control" id="rute_tonase_detail" name="rute_tonase_detail" readonly>
-                                </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="table-data-rute-update" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center" scope="col">No Rute</th>
+                                            <th class="text-center" scope="col">Dari</th>
+                                            <th class="text-center" scope="col">Ke</th>
+                                            <th class="text-center" scope="col">Muatan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                        <div class="col border rounded mr-3 ml-3 mb-3 mt-3">
+                        <div class="col border rounded mr-3 ml-3">
                             <div class="form-group">
-                                <label for="jenis_mobil_detail" class="form-label font-weight-bold">Jenis Mobil</label>  
-                                <input autocomplete="off" type="text" class="form-control" id="jenis_mobil_detail" name="jenis_mobil_detail" readonly>
+                                <label for="jenis_mobil_update" class="form-label font-weight-bold ">Jenis Mobil</label> 
+                                <select name="jenis_mobil_update" id="jenis_mobil_update" class="form-control mb-4" required>
+                                    <option class="font-w700" disabled="disabled" selected value="">Jenis Mobil</option>
+                                </select>
                             </div>
                             <small class="font-weight-bold">Detail Uang Jalan (Uj)</small>
                             <hr>
                             <div class="form-group">
-                                <label for="rute_uj_engkel_detail" class="form-label font-weight-bold">Uang Jalan</label>
-                                <input autocomplete="off" type="text" class="form-control" id="rute_uj_engkel_detail" name="rute_uj_engkel_detail" readonly>
+                                <label for="paketan_uj_update" class="form-label font-weight-bold">Uang Jalan</label>
+                                <input autocomplete="off" type="text" class="form-control" id="paketan_uj_update" name="paketan_uj_update" required onkeyup="uang(this)">
                             </div>
-                            <!-- <div class="form-group">
-                                <label for="rute_uj_tronton_detail" class="form-label font-weight-bold">Uj.Tronton</label>
-                                <input autocomplete="off" type="text" class="form-control" id="rute_uj_tronton_detail" name="rute_uj_tronton_detail" readonly>
-                            </div> -->
                             <small class="font-weight-bold">Detail Keuangan</small>
                             <hr>
                             <div class="form-group">
-                                <label class="form-label font-weight-bold" for="Ritase_detail">Ritase/Tonase</label>
-                                <input autocomplete="off" type="text" class="form-control" id="Ritase_detail" name="Ritase_detail" readonly>
+                                <label class="form-label font-weight-bold" for="Ritase_update">Ritase/Tonase</label>
+                                <input autocomplete="off" type="text" class="form-control" name="Ritase_update" id="Ritase_update" required readonly>
                             </div>
                             <div class="form-group">
-                                <label for="rute_tagihan_detail" class="form-label font-weight-bold">Inv./Tagihan</label>
-                                <input autocomplete="off" type="text" class="form-control" id="rute_tagihan_detail" name="rute_tagihan_detail" readonly>
+                                <label for="paketan_tagihan_update" class="form-label font-weight-bold">Inv./Tagihan</label>
+                                <input autocomplete="off" type="text" class="form-control" id="paketan_tagihan_update" name="paketan_tagihan_update" required onkeyup="uang(this)">
                             </div>
                         </div>
-                        <div class="col border rounded mr-3 ml-3 mb-3 mt-3">
-                            <small class="font-weight-bold">Detail Gaji Supir</small>
+                        <div class="col border rounded mr-3 ml-3">
+                            <small class="font-weight-bold">Detail Gaji</small>
                             <hr>
                             <div class="form-group">
-                                <label for="rute_gaji_engkel_detail" class="form-label font-weight-bold">Gaji(Fix)</label>
-                                <input autocomplete="off" type="text" class="form-control" id="rute_gaji_engkel_detail" name="rute_gaji_engkel_detail" readonly>
+                                <label class="form-label font-weight-bold" for="Gaji_update">Gaji</label>
+                                <input autocomplete="off" type="text" class="form-control" id="Gaji_update" name="Gaji_update" required readonly>
                             </div>
-                            <!-- <div class="form-group">
-                                <label for="rute_gaji_tronton_detail" class="form-label font-weight-bold">Gaji Tronton(Fix)</label>
-                                <input autocomplete="off" type="text" class="form-control" id="rute_gaji_tronton_detail" name="rute_gaji_tronton_detail" readonly>
-                            </div> -->
-                            <div class="form-group">
-                                <label for="rute_gaji_engkel_rumusan_detail" class="form-label font-weight-bold">Gaji Rumusan(Non-Fix)</label>
-                                <input autocomplete="off" type="text" class="form-control" id="rute_gaji_engkel_rumusan_detail" name="rute_gaji_engkel_rumusan_detail" readonly>
+                            <div class="Tonase">
+                                <div class="form-group">
+                                    <label for="Tonase_update" class="form-label font-weight-bold">Tonase</label>  
+                                    <input autocomplete="off" type="text" class="form-control" id="Tonase_update" name="Tonase_update">
+                                </div>
                             </div>
-                            <!-- <div class="form-group">
-                                <label for="rute_gaji_tronton_rumusan_detail" class="form-label font-weight-bold">Gaji Tronton(Non-Fix)</label>
-                                <input autocomplete="off" type="text" class="form-control" id="rute_gaji_tronton_rumusan_detail" name="rute_gaji_tronton_rumusan_detail" readonly>
-                            </div> -->
+                            <div class="Fix">
+                                <div class="form-group">
+                                    <label for="paketan_gaji_update" class="form-label font-weight-bold">Gaji(FIX)</label>
+                                    <input autocomplete="off" type="text" class="form-control" id="paketan_gaji_update" name="paketan_gaji_update" onkeyup="uang(this)">
+                                </div>
+                            </div>
+                            <div class="Non-Fix">
+                                <div class="form-group">
+                                    <label for="paketan_gaji_rumusan_update" class="form-label font-weight-bold">Gaji Rumusan(Non-FIX)</label>
+                                    <input autocomplete="off" type="text" class="form-control" id="paketan_gaji_rumusan_update" name="paketan_gaji_rumusan_update" onkeyup="uang(this)">
+                                </div>
+                            </div>
                             <div class="form-group">
-                                <label for="rute_keterangan_detail" class="form-label font-weight-bold">keterangan</label>
-                                <input autocomplete="off" type="text" class="form-control" id="rute_keterangan_detail" name="rute_keterangan_detail" readonly>
+                                <label for="paketan_keterangan_update" class="form-label font-weight-bold">keterangan</label>
+                                <input autocomplete="off" type="text" class="form-control" id="paketan_keterangan_update" name="paketan_keterangan_update" required>
                             </div>
                         </div>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
-<!-- end pop up detail rute -->
+<!-- end pop up add rute paketan -->
 
 <script>
     function uang(a){

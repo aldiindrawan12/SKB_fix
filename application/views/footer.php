@@ -2150,6 +2150,258 @@
     </script>
     <!-- End rute -->
 
+    <!-- paketan -->
+    <script> //script datatables rute
+        $(document).ready(function() {
+            var table = null;
+            table = $('#Table-Paketan').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ordering": true,
+                "order": [
+                    [0, 'desc']
+                ],
+                "ajax": {
+                    "url": "<?php echo base_url('index.php/home/view_paketan')?>",
+                    "type": "POST",
+                    'data': function(data) {
+                        data.customer = "x";
+                    }
+                },
+                "deferRender": true,
+                "paging":false,
+                "columns": [
+                    {
+                        "data": "paketan_id",
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            let html = row["no"];
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "customer_name"
+                    },
+                    {
+                        "data": "paketan_id",
+                        className: 'text-center',
+                        "orderable": false,
+                        render: function(data, type, row) {
+                            let html = "<a class='btn btn-light btn-detail-rute-paketan' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-pk='"+data+"'><i class='fas fa-eye'></i></a>";
+                            return html;
+                        } 
+                    },
+                    {
+                        "data": "jenis_mobil"
+                    },
+                    {
+                        "data": "ritase"
+                    },
+                    {
+                        "data": "paketan_uj",
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            let html = 'Rp.'+rupiah(data);
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "paketan_tagihan",
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            let html = 'Rp.'+rupiah(data);
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "paketan_id",
+                        className: 'text-center',
+                        "orderable": false,
+                        render: function(data, type, row) {
+                            var role_user = "<?=$_SESSION['role']?>";
+                            if(role_user!="Supervisor"){
+                                let html = "<a class='btn btn-light btn-update-paketan' data-toggle='modal' data-target='#popup-update-paketan' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
+                                "<a class='btn btn-light btn-delete-paketan' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
+                                return html;
+                            }else{
+                                let html = "<a class='btn btn-light btn-acc-paketan' href='javascript:void(0)' data-pk='"+data+"'>ACC<i class='fas fa-eye'></i></a>";
+                                return html;
+                            }
+                        } 
+                    }
+                ],
+                drawCallback: function() {
+                    $('.btn-delete-paketan').click(function() {
+                        let pk = $(this).data('pk');
+                        // alert(pk);
+                        Swal.fire({
+                            title: 'Hapus Rute Paketan',
+                            text:'Yakin anda ingin menghapus Rute Paketan ini?',
+                            showDenyButton: true,
+                            denyButtonText: `Batal`,
+                            confirmButtonText: 'Hapus',
+                            denyButtonColor: '#808080',
+                            confirmButtonColor: '#FF0000',
+                            icon: "warning",
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/deletepaketan') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        })
+                    });
+                    $('.btn-update-paketan').click(function() {
+                        let pk = $(this).data('pk');
+                        $.ajax({ //ajax ambil data customer
+                            type: "GET",
+                            url: "<?php echo base_url('index.php/form/getpaketanbyid') ?>",
+                            dataType: "JSON",
+                            data: {
+                                id: pk
+                            },
+                            success: function(data) { //jika ambil data sukses
+                                var data_rute = JSON.parse(data["paketan_data_rute"]);
+                                let html = "";
+                                for(i=0;i<data_rute.length;i++){
+                                    html += "<tr>"+
+                                    "<td>Rute ke-"+(i+1)+"</td>"+
+                                    "<td>"+data_rute[i]["dari"]+"</td>"+
+                                    "<td>"+data_rute[i]["ke"]+"</td>"+
+                                    "<td>"+data_rute[i]["muatan"]+"</td>"+
+                                    "</tr>"
+                                }
+                                $("#table-data-rute-update tbody").html(html);
+
+                                var data_mobil = data["jenis_mobil"];
+                                $('#jenis_mobil_update').find('option').remove().end(); //reset option select
+                                var isi_jenis = [];
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/getallmobil/') ?>",
+                                    dataType: "JSON",
+                                    success: function(data) {
+                                        if(data.length==0){
+                                            $('#jenis_mobil_update').append('<option class="font-w700" disabled="disabled" selected value="">Kosong</option>'); 
+                                        }else{
+                                            $('#jenis_mobil_update').append('<option class="font-w700" selected value="'+data_mobil+'">'+data_mobil+'</option>'); 
+                                            for(i=0;i<data.length;i++){
+                                                if(!isi_jenis.includes(data[i]["mobil_jenis"])){
+                                                    $('#jenis_mobil_update').append('<option value="'+data[i]["mobil_jenis"]+'">'+data[i]["mobil_jenis"]+'</option>'); 
+                                                    isi_jenis.push(data[i]["mobil_jenis"]);
+                                                }
+                                            }
+                                        }
+                                    }
+                                });
+                                
+                                if(data["paketan_tonase"]==0){  
+                                    $("#Gaji_update").val("FIX");
+                                    $("#paketan_gaji_rumusan_update").attr("readonly",true);
+                                    $("#paketan_gaji_update").removeAttr("readonly");
+                                    $("#Tonase_update").attr("readonly",true);
+                                }else{
+                                    $("#Gaji_update").val("NON-FIX");
+                                    $("#paketan_gaji_rumusan_update").removeAttr("readonly");
+                                    $("#paketan_gaji_update").attr("readonly",true);
+                                    $("#Tonase_update").removeAttr("readonly");
+                                }
+                                $("#paketan_id_update").val(data["paketan_id"]);
+                                $("#paketan_uj_update").val(rupiah(data["paketan_uj"]));
+                                $("#Ritase_update").val(data["ritase"]);
+                                $("#paketan_gaji_rumusan_update").val(rupiah(data["paketan_gaji_rumusan"]));
+                                $("#paketan_gaji_update").val(rupiah(data["paketan_gaji"]));
+                                $("#paketan_tagihan_update").val(rupiah(data["paketan_tagihan"]));
+                                $("#Tonase_update").val(rupiah(data["paketan_tonase"]));
+                                $("#paketan_keterangan_update").val(data["paketan_keterangan"]);
+                            }
+                        });
+                    });
+                    $('.btn-detail-rute-paketan').click(function() {
+                        let pk = $(this).data('pk');
+                        $.ajax({
+                            type: "GET",
+                            url: "<?php echo base_url('index.php/form/getrutepaketanbyid') ?>",
+                            dataType: "JSON",
+                            data: {
+                                id: pk
+                            },
+                            success: function(data) { //jika ambil data sukses
+                                // alert(data[0]["dari"]);
+                                let html = "";
+                                for(i=0;i<data.length;i++){
+                                    html += "<tr>"+
+                                    "<td>Rute ke-"+(i+1)+"</td>"+
+                                    "<td>"+data[i]["dari"]+"</td>"+
+                                    "<td>"+data[i]["ke"]+"</td>"+
+                                    "<td>"+data[i]["muatan"]+"</td>"+
+                                    "</tr>"
+                                }
+                                $("#table-data-rute-paketan tbody").html(html);
+                            }
+                        });
+                        $.ajax({
+                            type: "GET",
+                            url: "<?php echo base_url('index.php/form/getpaketanbyid') ?>",
+                            dataType: "JSON",
+                            data: {
+                                id: pk
+                            },
+                            success: function(data) { //jika ambil data sukses
+                                $("#detail-keterangan").text(data["paketan_keterangan"]);
+                                $("#detail-tonase").text(data["paketan_tonase"]);
+                                if(data["paketan_tonase"]==0){  
+                                    $("#detail-gaji").text("FIX");
+                                }else{
+                                    $("#detail-gaji").text("NON-FIX");
+                                }
+                                $("#detail-gaji-fix").text("Rp."+rupiah(data["paketan_gaji"]));
+                                $("#detail-gaji-nonfix").text("Rp."+rupiah(data["paketan_gaji_rumusan"]));
+                            }
+                        });
+                    });
+                    $('.btn-acc-paketan').click(function() {
+                        let pk = $(this).data('pk');
+                        Swal.fire({
+                            title: 'ACC Tambah Rute Paketan',
+                            icon: "warning",
+                            text: 'Yakin anda ingin ACC Data Rute Paketan ini?',
+                            showDenyButton: true,
+                            denyButtonText: `Batal`,
+                            confirmButtonText: 'ACC',
+                            denyButtonColor: '#808080',
+                            confirmButtonColor: '#FF0000',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/accpaketan') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }else{
+                            }
+                        })
+                    });
+                }
+            });
+        });
+    </script>
+    <!-- End paketan -->
+
     <!-- script alert-alert -->
     <script>
         $(document).ready(function() {

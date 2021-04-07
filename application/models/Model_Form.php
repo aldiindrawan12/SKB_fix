@@ -20,6 +20,16 @@ class Model_Form extends CI_model
         return $this->db->get_where("skb_rute",array("skb_rute.rute_id"=>$rute_id))->row_array();
     }
 
+    public function getpaketanbyid($paketan_id){
+        $this->db->join("skb_customer", "skb_customer.customer_id = skb_paketan.customer_id", 'left');
+        return $this->db->get_where("skb_paketan",array("skb_paketan.paketan_id"=>$paketan_id))->row_array();
+    }
+
+    public function getrutepaketanbyid($paketan_id){
+        $this->db->select("paketan_data_rute");
+        return $this->db->get_where("skb_paketan",array("paketan_id"=>$paketan_id))->row_array();
+    }
+
     public function getjoid(){
         $this->db->select("Jo_id");
         return $this->db->get("skb_job_order")->result_array();
@@ -82,6 +92,12 @@ class Model_Form extends CI_model
         $this->db->set("validasi_rute","ACC");
         $this->db->where("rute_id",$rute_id);
         $this->db->update("skb_rute");
+    }
+
+    public function accpaketan($paketan_id){
+        $this->db->set("validasi_paketan","ACC");
+        $this->db->where("paketan_id",$paketan_id);
+        $this->db->update("skb_paketan");
     }
 
     public function accmerk($merk_id){
@@ -188,6 +204,12 @@ class Model_Form extends CI_model
         return $this->db->update("skb_supir");
     }
 
+    public function deletepaketan($paketan_id){
+        $this->db->set("paketan_status_hapus","YES");
+        $this->db->where("paketan_id",$paketan_id);
+        return $this->db->update("skb_paketan");
+    }
+
     public function deletekosongan($kosongan_id){
         $this->db->set("status_hapus","YES");
         $this->db->where("kosongan_id",$kosongan_id);
@@ -255,6 +277,11 @@ class Model_Form extends CI_model
     public function update_rute($data,$rute_id){
         $this->db->where("rute_id",$rute_id);
         $this->db->update("skb_rute",$data);
+    }
+
+    public function update_paketan($data,$paketan_id){
+        $this->db->where("paketan_id",$paketan_id);
+        $this->db->update("skb_paketan",$data);
     }
 
     public function update_customer($data){

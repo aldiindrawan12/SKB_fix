@@ -421,6 +421,22 @@ class Form extends CI_Controller {
             $this->session->set_flashdata('status-update-satuan', 'Berhasil');
             redirect(base_url("index.php/home/satuan"));
         }
+        public function update_paketan(){
+            $data=array(
+                "jenis_mobil"=>$this->input->post("jenis_mobil_update"),
+                "paketan_uj"=>str_replace(".","",$this->input->post("paketan_uj_update")),
+                "paketan_tagihan"=>str_replace(".","",$this->input->post("paketan_tagihan_update")),
+                "paketan_gaji"=>str_replace(".","",$this->input->post("paketan_gaji_update")),
+                "paketan_tonase"=>str_replace(".","",$this->input->post("Tonase_update")),
+                "paketan_gaji_rumusan"=>str_replace(".","",$this->input->post("paketan_gaji_rumusan_update")),
+                "paketan_keterangan"=>$this->input->post("paketan_keterangan_update"),
+                "ritase"=>$this->input->post("Ritase_update")
+            );
+            // echo var_dump($data);
+            // $this->model_form->update_paketan($data,$this->input->post("paketan_id_update"));
+            // $this->session->set_flashdata('status-update-paketan', 'Berhasil');
+            // redirect(base_url("index.php/home/paketan"));
+        }
         public function update_supir(){
             $supir_id = $this->input->post("supir_id");
             $data = array(
@@ -525,6 +541,12 @@ class Form extends CI_Controller {
             $this->session->set_flashdata('status-delete-supir', 'Berhasil');
             echo $supir_id;
         }
+        public function deletepaketan(){
+            $paketan_id = $this->input->get("id");
+            $this->model_form->deletepaketan($paketan_id);
+            $this->session->set_flashdata('status-delete-paketan', 'Berhasil');
+            echo $paketan_id;
+        }
         public function deletemerk(){
             $merk_id = $this->input->get("id");
             $this->model_form->deletemerk($merk_id);
@@ -565,6 +587,11 @@ class Form extends CI_Controller {
             $this->model_form->accrute($rute_id);
             echo $rute_id;
         }
+        public function accpaketan(){
+            $paketan_id = $this->input->get("id");
+            $this->model_form->accpaketan($paketan_id);
+            echo $paketan_id;
+        }
         public function accmerk(){
             $merk_id = $this->input->get("id");
             $this->model_form->accmerk($merk_id);
@@ -603,6 +630,16 @@ class Form extends CI_Controller {
             $rute_id = $this->input->get("id");
             $rute = $this->model_form->getrutebyid($rute_id);
             echo json_encode($rute);
+        }
+        public function getpaketanbyid(){
+            $paketan_id = $this->input->get("id");
+            $paketan = $this->model_form->getpaketanbyid($paketan_id);
+            echo json_encode($paketan);
+        }
+        public function getrutepaketanbyid(){
+            $rute_id = $this->input->get("id");
+            $rute = $this->model_form->getrutepaketanbyid($rute_id);
+            echo json_decode(json_encode($rute["paketan_data_rute"]));
         }
         public function getallmobil(){
             $mobil = $this->model_form->getallmobil();

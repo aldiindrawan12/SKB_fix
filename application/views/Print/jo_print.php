@@ -56,7 +56,7 @@
                                 <td><?= $data["tujuan"]?></td>
                             </tr>
                             <tr>
-                                <td width="30%">Sebesar</td>
+                                <td width="30%">Uang Jalan</td>
                                 <td width="5%">:</td>
                                 <td>Rp.<?= number_format($data["uang_jalan"],2,',','.')?></td>
                             </tr>
@@ -64,6 +64,21 @@
                                 <td width="30%">Terbilang</td>
                                 <td width="5%">:</td>
                                 <td><?= $data["terbilang"]?></td>
+                            </tr>
+                            <tr>
+                                <td width="30%">Rute Kosongan</td>
+                                <td width="5%">:</td>
+                                <td><?= $kosongan["kosongan_dari"]." - ".$kosongan["kosongan_ke"]." - ".number_format($kosongan["kosongan_uang"],2,",",".")?></td>
+                            </tr>
+                            <tr>
+                                <td width="30%">Total Uang Jalan</td>
+                                <td width="5%">:</td>
+                                <td>Rp.<?= number_format($data["uang_jalan"]+$data["uang_kosongan"],2,',','.')?></td>
+                            </tr>
+                            <tr>
+                                <td width="30%">Total Uang Jalan Dibayar</td>
+                                <td width="5%">:</td>
+                                <td>Rp.<?= number_format($data["uang_jalan_bayar"],2,',','.')?></td>
                             </tr>
                             <tr>
                                 <td width="30%">Keterangan</td>
@@ -97,12 +112,12 @@
     </div>
 </body>
 <script>
-    window.print();
-    var asal = '<?= $asal?>';
-    if(asal=="detail"){
-        window.location.replace("<?= base_url('index.php/detail/detail_jo/').$jo_id."/JO"?>");
-    }else{
-        window.location.replace("<?= base_url('index.php/home')?>");
-    }
+    // window.print();
+    // var asal = '<?= $asal?>';
+    // if(asal=="detail"){
+    //     window.location.replace("<?= base_url('index.php/detail/detail_jo/').$jo_id."/JO"?>");
+    // }else{
+    //     window.location.replace("<?= base_url('index.php/home')?>");
+    // }
 </script>
 </html>

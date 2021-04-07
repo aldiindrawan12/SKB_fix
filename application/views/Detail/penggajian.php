@@ -41,7 +41,7 @@
                     $upah = 0;
                     $data_jo_id = [];
                     foreach($jo as $value){ 
-                        $uang_jalan += $value["uang_jalan"];
+                        $uang_jalan += $value["uang_jalan"]+$value["uang_kosongan"];
                         $upah += ($value["upah"]+$value["bonus"]);
                         $data_jo_id[] = $value["Jo_id"];
                         ?>
@@ -52,7 +52,7 @@
                             <td><?= $value["muatan"]?></td>
                             <td><?= $value["asal"]?></td>
                             <td><?= $value["tujuan"]?></td>
-                            <td>Rp.<?= number_format($value["uang_jalan"],2,',','.') ?></td>
+                            <td>Rp.<?= number_format($value["uang_jalan"]+$value["uang_kosongan"],2,',','.') ?></td>
                             <td><?= $value["tonase"]?></td>
                             <td>Rp.<?= number_format($value["upah"]+$value["bonus"],2,',','.')?></td>
                         </tr>

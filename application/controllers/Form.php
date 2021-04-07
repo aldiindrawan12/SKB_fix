@@ -116,6 +116,7 @@ class Form extends CI_Controller {
             $this->model_form->insert_JO($data["data"]);
             $data["jo_id"] = max($isi_jo_id)+1;
             $data["asal"] = "insert";
+            $data["kosongan"] = $this->model_detail->getkosonganbyid($data["data"]["kosongan_id"]);
             $data["supir"] = $this->model_home->getsupirbyid($data["data"]["supir_id"]);
             $data["mobil"] = $this->model_home->getmobilbyid($data["data"]["mobil_no"]);
             $this->load->view("print/jo_print",$data);

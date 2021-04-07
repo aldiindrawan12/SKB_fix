@@ -112,12 +112,12 @@
     </div>
 </body>
 <script>
-    // window.print();
-    // var asal = '<?= $asal?>';
-    // if(asal=="detail"){
-    //     window.location.replace("<?= base_url('index.php/detail/detail_jo/').$jo_id."/JO"?>");
-    // }else{
-    //     window.location.replace("<?= base_url('index.php/home')?>");
-    // }
+    window.print();
+    var asal = '<?= $asal?>';
+    if(asal=="detail"){
+        window.location.replace("<?= base_url('index.php/detail/detail_jo/').$jo_id."/JO"?>");
+    }else{
+        window.location.replace("<?= base_url('index.php/home')?>");
+    }
 </script>
 </html>

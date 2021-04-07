@@ -268,6 +268,21 @@ class Form extends CI_Controller {
             redirect(base_url("index.php/home/truck"));
         }
 
+        public function insert_kosongan(){
+
+            $data=array(
+                "kosongan_dari"=>$this->input->post("kosongan_dari"),
+                "kosongan_ke"=>$this->input->post("kosongan_ke"),
+                "kosongan_uang"=>str_replace(".","",$this->input->post("kosongan_uang")),
+                "status_hapus"=>"NO",
+                "validasi"=>"Pending"
+            );
+            // echo var_dump($data);
+            $this->model_form->insert_kosongan($data);
+			$this->session->set_flashdata('status-add-kosongan', 'Berhasil');
+            redirect(base_url("index.php/home/kosongan"));
+        }
+
         public function insert_merk(){
             $data=array(
                 "merk_nama"=>$this->input->post("merk_nama"),
@@ -385,6 +400,18 @@ class Form extends CI_Controller {
             $this->session->set_flashdata('status-update-truck', 'Berhasil');
             redirect(base_url("index.php/home/truck"));
         }
+        public function update_kosongan(){
+            $data = array(
+                "kosongan_dari" => $this->input->post("kosongan_dari_update"),
+                "kosongan_ke" => $this->input->post("kosongan_ke_update"),
+                "kosongan_uang" => str_replace(".","",$this->input->post("kosongan_uang_update")),
+            );
+            // echo var_dump($data);
+            $kosongan_id = $this->input->post("kosongan_id_update");
+            $this->model_form->update_kosongan($kosongan_id,$data);
+            $this->session->set_flashdata('status-update-kosongan', 'Berhasil');
+            redirect(base_url("index.php/home/kosongan"));
+        }
         public function update_merk(){
             $data = array(
                 "merk_nama" => $this->input->post("merk_nama_update"),
@@ -444,10 +471,24 @@ class Form extends CI_Controller {
             $this->session->set_flashdata('status-delete-merk', 'Berhasil');
             echo $merk_id;
         }
+
+        public function deletekosongan(){
+            $kosongan_id = $this->input->get("id");
+            $this->model_form->deletekosongan($kosongan_id);
+            $this->session->set_flashdata('status-delete-kosongan', 'Berhasil');
+            echo $kosongan_id;
+        }
+
         public function accsupir(){
             $supir_id = $this->input->get("id");
             $this->model_form->accsupir($supir_id);
             echo $supir_id;
+        }
+        
+        public function acckosongan(){
+            $kosongan_id = $this->input->get("id");
+            $this->model_form->acckosongan($kosongan_id);
+            echo $kosongan_id;
         }
         public function acccustomer(){
             $customer_id = $this->input->get("id");

@@ -189,6 +189,15 @@ class Detail extends CI_Controller {
         }
     //end fungsi untuk Detail ttruckk
 
+    //fungsi untuk Detail kosongan
+        function getkosongan()
+        {
+            $kosongan_id = $this->input->get('id');
+            $data = $this->model_detail->getkosonganbyid($kosongan_id);
+            echo json_encode($data);
+        }
+    //end fungsi untuk Detail kosongan
+
     //fungsi untuk Detail merk
         function getmerk()
         {

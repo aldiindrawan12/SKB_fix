@@ -60,6 +60,12 @@ class Model_Form extends CI_model
         $this->db->update("skb_supir");
     }
 
+    public function acckosongan($kosongan_id){
+        $this->db->set("validasi","ACC");
+        $this->db->where("kosongan_id",$kosongan_id);
+        $this->db->update("skb_kosongan");
+    }
+
     public function acccustomer($customer_id){
         $this->db->set("validasi","ACC");
         $this->db->where("customer_id",$customer_id);
@@ -167,11 +173,21 @@ class Model_Form extends CI_model
     public function insert_truck($data){
         return $this->db->insert("skb_mobil", $data);
     }
+
+    public function insert_kosongan($data){
+        return $this->db->insert("skb_kosongan", $data);
+    }
     
     public function deletesupir($supir_id){
         $this->db->set("status_hapus","YES");
         $this->db->where("supir_id",$supir_id);
         return $this->db->update("skb_supir");
+    }
+
+    public function deletekosongan($kosongan_id){
+        $this->db->set("status_hapus","YES");
+        $this->db->where("kosongan_id",$kosongan_id);
+        return $this->db->update("skb_kosongan");
     }
 
     public function deletetruck($mobil_no){
@@ -206,6 +222,11 @@ class Model_Form extends CI_model
     public function update_supir($data,$supir_id){
         $this->db->where("supir_id",$supir_id);
         $this->db->update("skb_supir",$data);
+    }
+
+    public function update_kosongan($kosongan_id,$data){
+        $this->db->where("kosongan_id",$kosongan_id);
+        $this->db->update("skb_kosongan",$data);
     }
 
     public function update_merk($data,$merk_id){

@@ -624,50 +624,97 @@ class Home extends CI_Controller {
     // end rute dan muatan
 
     //fungsi untuk truk
-    public function merk()
-    {
-        if(!$_SESSION["user"]){
-            $this->session->set_flashdata('status-login', 'False');
-            redirect(base_url());
+        public function merk()
+        {
+            if(!$_SESSION["user"]){
+                $this->session->set_flashdata('status-login', 'False');
+                redirect(base_url());
+            }
+            $data["merk"] = $this->model_home->getmerk();
+            $data["page"] = "Merk_page";
+            $data["collapse_group"] = "Master_Data";
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            if(json_decode($data["akun_akses"]["akun_akses"])[0]==0){
+                redirect(base_url());
+            }
+            $this->load->view('header',$data);
+            $this->load->view('sidebar');
+            $this->load->view('home/merk');
+            $this->load->view('footer');
         }
-        $data["merk"] = $this->model_home->getmerk();
-        $data["page"] = "Merk_page";
-        $data["collapse_group"] = "Master_Data";
-        $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
-        if(json_decode($data["akun_akses"]["akun_akses"])[0]==0){
-            redirect(base_url());
-        }
-        $this->load->view('header',$data);
-        $this->load->view('sidebar');
-        $this->load->view('home/merk');
-        $this->load->view('footer');
-    }
-    public function view_merk(){
-        $search = $_POST['search']['value'];
-        $order_index = $_POST['order'][0]['column'];
-        $order_field = $_POST['columns'][$order_index]['data'];
-        $order_ascdesc = $_POST['order'][0]['dir'];
-        $sql_total = $this->model_home->count_all_merk();
-        $sql_data = $this->model_home->filter_merk($search, $order_field, $order_ascdesc);
-        $sql_filter = $this->model_home->count_filter_merk($search);
-        $data = array();
-        for($i=0;$i<count($sql_data);$i++){
-            array_push($data, $sql_data[$i]);
-        }
-        $no = 1;
-        for($i=0;$i<count($data);$i++){
-            $data[$i]['no'] = $no;   
-            $no++;
-        }
-        $callback = array(
-            'draw' => $_POST['draw'],
-            'recordsTotal' => $sql_total,
-            'recordsFiltered' => $sql_filter,
-            'data' => $data
-        );
+        public function view_merk(){
+            $search = $_POST['search']['value'];
+            $order_index = $_POST['order'][0]['column'];
+            $order_field = $_POST['columns'][$order_index]['data'];
+            $order_ascdesc = $_POST['order'][0]['dir'];
+            $sql_total = $this->model_home->count_all_merk();
+            $sql_data = $this->model_home->filter_merk($search, $order_field, $order_ascdesc);
+            $sql_filter = $this->model_home->count_filter_merk($search);
+            $data = array();
+            for($i=0;$i<count($sql_data);$i++){
+                array_push($data, $sql_data[$i]);
+            }
+            $no = 1;
+            for($i=0;$i<count($data);$i++){
+                $data[$i]['no'] = $no;   
+                $no++;
+            }
+            $callback = array(
+                'draw' => $_POST['draw'],
+                'recordsTotal' => $sql_total,
+                'recordsFiltered' => $sql_filter,
+                'data' => $data
+            );
 
-        header('Content-Type: application/json');
-        echo json_encode($callback);
-    }
-//end fungsi untuk truk
+            header('Content-Type: application/json');
+            echo json_encode($callback);
+        }
+    //end fungsi untuk truk
+
+        //fungsi untuk kosongan
+        public function kosongan()
+        {
+            if(!$_SESSION["user"]){
+                $this->session->set_flashdata('status-login', 'False');
+                redirect(base_url());
+            }
+            $data["page"] = "Kosongan_page";
+            $data["collapse_group"] = "Master_Data";
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            if(json_decode($data["akun_akses"]["akun_akses"])[0]==0){
+                redirect(base_url());
+            }
+            $this->load->view('header',$data);
+            $this->load->view('sidebar');
+            $this->load->view('home/kosongan');
+            $this->load->view('footer');
+        }
+        public function view_kosongan(){
+            $search = $_POST['search']['value'];
+            $order_index = $_POST['order'][0]['column'];
+            $order_field = $_POST['columns'][$order_index]['data'];
+            $order_ascdesc = $_POST['order'][0]['dir'];
+            $sql_total = $this->model_home->count_all_kosongan();
+            $sql_data = $this->model_home->filter_kosongan($search, $order_field, $order_ascdesc);
+            $sql_filter = $this->model_home->count_filter_kosongan($search);
+            $data = array();
+            for($i=0;$i<count($sql_data);$i++){
+                array_push($data, $sql_data[$i]);
+            }
+            $no = 1;
+            for($i=0;$i<count($data);$i++){
+                $data[$i]['no'] = $no;   
+                $no++;
+            }
+            $callback = array(
+                'draw' => $_POST['draw'],
+                'recordsTotal' => $sql_total,
+                'recordsFiltered' => $sql_filter,
+                'data' => $data
+            );
+
+            header('Content-Type: application/json');
+            echo json_encode($callback);
+        }
+    //end fungsi untuk kosongan
 }

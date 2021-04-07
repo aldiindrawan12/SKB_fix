@@ -2637,6 +2637,141 @@
             });
         });
     </script>
+
+    <script> //script datatables kendaraan
+        $(document).ready(function() {
+            var table = null;
+            table = $('#Table-Kosongan').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ordering": true,
+                "order": [
+                    [0, 'asc']
+                ],
+                "ajax": {
+                    "url": "<?php echo base_url('index.php/home/view_kosongan/') ?>",
+                    "type": "POST",
+                },
+                "deferRender": true,
+                "paging":false,
+                "columns": [
+                    {
+                        "data": "kosongan_id",
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            let html = row["no"];
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "kosongan_dari",
+                    },
+                    {
+                        "data": "kosongan_ke"
+                    },
+                    {
+                        "data": "kosongan_uang",
+                        render: function(data, type, row) {
+                            let html = "Rp."+rupiah(data);
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "kosongan_id",
+                        className: 'text-center font-weight-bold',
+                        "orderable": false,
+                        render: function(data, type, row) {
+                            var role_user = "<?=$_SESSION['role']?>";
+                            if(role_user!="Supervisor"){
+                                let html = "<a class='btn btn-light btn-update-kosongan' href='javascript:void(0)' data-toggle='modal' data-target='#popup-update-kosongan' data-pk='"+data+"'><i class='fas fa-pen-square'></i></a> || "+
+                                "<a class='btn btn-light btn-delete-kosongan' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-trash-alt'></i></a>";
+                                return html;
+                            }else{
+                                let html = "<a class='btn btn-light btn-acc-kosongan' href='javascript:void(0)' data-pk='"+data+"'>ACC<i class='fas fa-eye'></i></a>";
+                                return html;
+                            }
+                        }
+                    }
+                ],
+                drawCallback: function() {
+                    $('.btn-delete-kosongan').click(function() {
+                        let pk = $(this).data('pk');
+                        Swal.fire({
+                            title: 'Hapus Rute Kosongan',
+                            text:'Yakin anda akan menghapus data Rute Kosongan ini?',
+                            showDenyButton: true,
+                            denyButtonText: `Batal`,
+                            denyButtonColor: '#808080',
+                            confirmButtonText: 'Hapus',
+                            confirmButtonColor: '#FF0000',
+                            icon: "warning"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/deletekosongan') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        })
+                    });               
+                    $('.btn-update-kosongan').click(function() {
+                        let pk = $(this).data('pk');
+                        // alert(pk);
+                        $.ajax({
+                            type: "GET",
+                            url: "<?php echo base_url('index.php/detail/getkosongan') ?>",
+                            dataType: "JSON",
+                            data: {
+                                id: pk
+                            },
+                            success: function(data) { //jika ambil data sukses
+                                $('#kosongan_id_update').val(data["kosongan_id"]); //set value
+                                $('#kosongan_dari_update').val(data["kosongan_dari"]); //set value
+                                $('#kosongan_ke_update').val(data["kosongan_ke"]); //set value
+                                $('#kosongan_uang_update').val(rupiah(data["kosongan_uang"])); //set value
+                            }
+                        });
+                    });
+                    $('.btn-acc-kosongan').click(function() {
+                        let pk = $(this).data('pk');
+                        Swal.fire({
+                            title: 'ACC Tambah Rute Kosongan',
+                            icon: "warning",
+                            text: 'Yakin anda ingin ACC Data Rute Kosongan ini?',
+                            showDenyButton: true,
+                            denyButtonText: `Batal`,
+                            confirmButtonText: 'ACC',
+                            denyButtonColor: '#808080',
+                            confirmButtonColor: '#FF0000',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({ //ajax ambil data bon
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/acckosongan') ?>",
+                                    dataType: "JSON",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) { //jika ambil data sukses
+                                        location.reload();
+                                    }
+                                });
+                            }else{
+                            }
+                        })
+                    });
+                },
+            });
+        });
+    </script>
+
     <script>
         function upload_foto(a){
             var filePath = a.value;

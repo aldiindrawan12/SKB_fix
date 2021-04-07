@@ -177,7 +177,7 @@ class Form extends CI_Controller {
 			$this->session->set_flashdata('status-add-customer', 'Berhasil');
             redirect(base_url("index.php/home/customer"));
         }
-
+        
         public function insert_supir(){
             $config['upload_path'] = './assets/berkas/driver'; //letak folder file yang akan diupload
             $config['allowed_types'] = 'jpg|png|img|jpeg'; //jenis file yang dapat diterima

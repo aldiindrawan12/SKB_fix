@@ -2637,6 +2637,21 @@
             });
         });
     </script>
+    <script>
+        function upload_foto(a){
+            var filePath = a.value;
+            var fileSize = a.files[0].size;
+            var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+            if (!allowedExtensions.exec(filePath)) {
+                alert('File Harus Berupa Gambar JPG,JPEG,PNG');
+                a.value = '';
+            }
+            if (fileSize>2000000) {
+                alert('File Harus Kurang Dari 2 MB');
+                a.value = '';
+            }
+        }
+    </script>
 </body>
 
 </html>

@@ -38,7 +38,7 @@
 </div>
 
 <!-- pop up add supir -->
-<div class="modal fade" id="popup-supir" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<div class="modal fade" id="popup-supir" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
@@ -105,15 +105,15 @@
                         </div>
                         <div class="form-group">
                             <label for="file_foto" class="form-label font-weight-bold">Foto Driver</label>
-                            <input type="file" class="form-control" id="file_foto" name="file_foto" required>
+                            <input type="file" class="form-control" id="file_foto" name="file_foto" required onchange="upload_foto(this)">
                         </div>
                         <div class="form-group">
                             <label for="file_sim" class="form-label font-weight-bold">Foto SIM</label>
-                            <input type="file" class="form-control" id="file_sim" name="file_sim" required>
+                            <input type="file" class="form-control" id="file_sim" name="file_sim" required onchange="upload_foto(this)">
                         </div>
                         <div class="form-group">
                             <label for="file_ktp" class="form-label font-weight-bold">Foto KTP</label>
-                            <input type="file" class="form-control" id="file_ktp" name="file_ktp" required>
+                            <input type="file" class="form-control" id="file_ktp" name="file_ktp" required onchange="upload_foto(this)">
                         </div>
                         <div class="form-group">
                         <button type="submit" class="btn btn-success mb-3 float-right">Simpan</button>

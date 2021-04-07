@@ -117,11 +117,11 @@
                         </div>
                         <div class="form-group">
                             <label for="file_foto" class="form-label font-weight-bold">Foto STNK</label>
-                            <input type="file" class="form-control" id="file_foto" name="file_foto" required>
+                            <input type="file" class="form-control" id="file_foto" name="file_foto" required onchange="upload_foto(this)">
                         </div>
                         <div class="form-group">
                             <label for="file_STNK" class="form-label font-weight-bold">Foto STNK</label>
-                            <input type="file" class="form-control" id="file_STNK" name="file_STNK" required>
+                            <input type="file" class="form-control" id="file_STNK" name="file_STNK" required onchange="upload_foto(this)"> 
                         </div>
                     </div>
                 </div>  

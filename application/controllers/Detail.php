@@ -281,5 +281,12 @@ class Detail extends CI_Controller {
         $data = $this->model_detail->getrutebyid($rute_id);
         echo json_encode($data);
     }
+
+    function getpaketan()
+    {
+        $paketan_id = $this->input->get('id');
+        $data = $this->model_form->getpaketanbyid($paketan_id);
+        echo json_encode($data);
+    }
     
 }

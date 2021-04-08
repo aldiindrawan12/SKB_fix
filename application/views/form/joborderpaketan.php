@@ -1,4 +1,4 @@
-<div class="container">
+    <div class="container">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800 mt-3 ">Buat Job Order (Paketan)</h1>
     </div> 
@@ -8,8 +8,9 @@
                 <h6 class="m-0 font-weight-bold text-primary">Form Buat Job Order (Paketan)</h6>
             </div>
             <div class="card-body">
+                <small>Pilih Rute Pada Table di Bawah</small>
                 <!-- form Job Order Baru -->
-                <form action="<?=base_url("index.php/form/insert_JO")?>" method="POST" class="row">
+                <form action="<?=base_url("index.php/form/insert_JO_paketan")?>" method="POST" class="row">
                     <div class="col-md-3 col-md-offset-4 mb-4">
                         <label class="form-label font-weight-bold " for="Customer">Customer</label>
                         <select name="Customer" value="DESC" id="Customer" class="form-control selectpicker mb-4" data-live-search="true" required onchange="customer()">
@@ -20,48 +21,16 @@
                         </select>
                     </div>
                     <div class="col-md-3 col-md-offset-4 mb-4">
-                        <label for="Muatan" class="form-label font-weight-bold ">Muatan</label> 
-                        <input autocomplete="off" type="text" class="form-control" name="Muatan" id="Muatan" required readonly>
-                        <!-- <select name="Muatan" id="Muatan" class="form-control mb-4" required onchange="muatan()">
-                            <option class="font-w700" disabled="disabled" selected value="">Muatan</option>
-                        </select> -->
-                    </div>
-                    <div class="col-md-3 col-md-offset-4 mb-4 mb-4">
-                        <label class="form-label font-weight-bold" for="Asal ">Asal</label>
-                        <input autocomplete="off" type="text" class="form-control" name="Asal" id="Asal" required readonly>
-                        <!-- <select name="Asal" id="Asal" class="form-control mb-4" required onchange="asal()">
-                            <option class="font-w700" disabled="disabled" selected value="">Asal</option>
-                        </select> -->
-                    </div>
-                    <div class="col-md-3 col-md-offset-4 mb-4 mb-4">
-                        <label class="form-label font-weight-bold" for="Tujuan">Tujuan</label>
-                        <input autocomplete="off" type="text" class="form-control" name="Tujuan" id="Tujuan" required readonly>
-                        <!-- <select name="Tujuan" id="Tujuan" class="form-control mb-4" required onchange="tujuan()">
-                            <option class="font-w700" disabled="disabled" selected value="">Tujuan</option>
-                        </select> -->
-                    </div>
-                    <div class="col-md-4 col-md-offset-4 mb-4">
                         <label class="form-label font-weight-bold" for="Jenis">Jenis Mobil</label>
                         <input autocomplete="off" type="text" class="form-control" name="Jenis" id="Jenis" required readonly>
-                        <!-- <select name="Jenis" id="Jenis" class="form-control mb-4" required onchange="jenis()">
-                            <option class="font-w700 mb-4" disabled="disabled" selected value="">Jenis Mobil</option>
-                        </select> -->
                     </div>
-                    <div class="col-md-4 col-md-offset-4 mb-4">
+                    <div class="col-md-3 col-md-offset-4 mb-4">
                         <label class="form-label font-weight-bold" for="Type_Tonase">Tipe Tonase</label>
                         <input autocomplete="off" type="text" class="form-control" name="Type_Tonase" id="Type_Tonase" required readonly>
-                        <!-- <select name="Type_Tonase" id="Type_Tonase" class="form-control" required onchange="tonase()">
-                            <option class="font-w700" disabled="disabled" selected value="">Tipe Tonase</option>
-                            <option class="font-w700" value="Fix">Fix</option>
-                            <option class="font-w700" value="Non-Fix">Non-Fix</option>
-                        </select> -->
                     </div>
-                    <div class="col-md-4 col-md-offset-4 mb-4 Tonase">
+                    <div class="col-md-3 col-md-offset-4 mb-4 Tonase">
                         <label class="form-label font-weight-bold" for="Tonase">Tonase</label>
                         <input autocomplete="off" type="text" class="form-control" name="Tonase" id="Tonase" required readonly>
-                        <!-- <select name="Tonase" id="Tonase" class="form-control mb-4" onchange="tonase_non_fix()" disabled>
-                            <option class="font-w700" disabled="disabled" selected value="">Tonase</option>
-                        </select> -->
                     </div>
                     <div class="col-md-4 col-md-offset-4 mb-4">
                         <label for="Uang" class="form-label font-weight-bold">Uang Jalan</label>
@@ -96,23 +65,22 @@
                         <label for="Keterangan" class="form-label font-weight-bold">Keterangan/Catatan</label>
                         <textarea class="form-control" name="Keterangan" id="Keterangan" rows="3"></textarea>
                     </div>
-                    <div class="col-md-4 col-md-offset-4 mb-4">
-                        <label class="form-label font-weight-bold" for="Kosongan">Rute Kosongan</label>
-                        <select name="Kosongan" id="Kosongan" class="form-control" required onchange="kosongan(this)">
-                            <option class="font-w700" disabled="disabled" selected value="">Tipe Tonase</option>
-                            <option class="font-w700" value="Ya">Ya</option>
-                            <option class="font-w700" value="Tidak">Tidak</option>
-                        </select>
+                    <div class="table-responsive col-md-12 col-md-offset-12 text-center">
+                        <strong>Data Rute</strong>
+                        <table class="table table-bordered" id="table-data-rute-paketan" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th class="text-center" scope="col">No Rute</th>
+                                    <th class="text-center" scope="col">Dari</th>
+                                    <th class="text-center" scope="col">Ke</th>
+                                    <th class="text-center" scope="col">Muatan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="col-md-8 col-md-offset-4" style="display:none" id="rute_kosongan_pilih">
-                        <label class="form-label font-weight-bold " for="kosongan_id">Rute Kosongan</label>
-                        <select name="kosongan_id" value="DESC" id="kosongan_id" class="form-control selectpicker mb-4" data-live-search="true">
-                        <option class="font-w700" disabled="disabled" selected value="">Dari - Ke - Uang Jalan</option>
-                            <?php foreach($kosongan as $value){?>
-                                <option value="<?=$value["kosongan_id"]?>"><?=$value["kosongan_dari"]?> - <?=$value["kosongan_ke"]?> - Rp.<?= number_format($value["kosongan_uang"],2,",",".")?></option>
-                            <?php } ?>
-                        </select>
-                    </div>
+                    <input autocomplete="off" type="text" class="form-control" id="paketan_id" name="paketan_id" required hidden>
                     <input autocomplete="off" type="text" class="form-control" id="Upah" name="Upah" required hidden>
                     <input autocomplete="off" type="text" class="form-control" id="Tagihan" name="Tagihan" required hidden>
                     <div class="col-md-12 col-md-offset-4 ">
@@ -121,9 +89,84 @@
                     </div>
                 </form>
                 <!-- end form Job Order Baru -->
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="Table-Pilih-Rute-Paketan" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>    
+                                <th class="text-center" scope="col">No</th>
+                                <th class="text-center" scope="col">Nama Customer</th>
+                                <th class="text-center" scope="col">Rute</th>
+                                <th class="text-center" scope="col">Jenis Mobil</th>
+                                <th class="text-center" scope="col">Ritase/Tonase</th>
+                                <th class="text-center" scope="col">Uang Jalan</th>
+                                <th class="text-center" scope="col">Inv./Tagihan</th>
+                                <th class="text-center" width="20%" scope="col">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
+    <!-- pop up add detail rute paketan -->
+    <div class="modal fade" id="popup-detail-rute-paketan" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+        <div class="modal-dialog modal-xl"  role="document"  >
+            <div class="modal-content">
+                <div class="modal-header bg-primary-dark">
+                    <h5 class="font-weight-bold">Detail Rute</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="font-size-sm m-3 text-justify">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="table-data-rute-paketan" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center" scope="col">No Rute</th>
+                                                <th class="text-center" scope="col">Dari</th>
+                                                <th class="text-center" scope="col">Ke</th>
+                                                <th class="text-center" scope="col">Muatan</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="table-detail-paketan" width="100%" cellspacing="0">
+                                        <tbody>
+                                            <tr>
+                                                <td>Keterangan</td>
+                                                <td><span id="detail-keterangan"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tonase</td>
+                                                <td><span id="detail-tonase"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Type Gaji</td>
+                                                <td><span id="detail-gaji"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Gaji Fix</td>
+                                                <td><span id="detail-gaji-fix"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Gaji Non-Fix</td>
+                                                <td><span id="detail-gaji-nonfix"></span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end pop up add detail rute paketan -->
+
 <script>
     function reset_form(){
         location.reload();

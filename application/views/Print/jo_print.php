@@ -18,7 +18,12 @@
 <body class="text-dark">
     <div class="container w-50">
         <div class="body-card text-center">
-            <span class="h3">Bukti Titipan Uang Jalan</span>
+            <span class="h3">Bukti Titipan Uang Jalan</span><br>
+            <?php if($tipe_jo=="paketan"){?>
+                <span class="h3">Tipe Paketan</span>
+            <?php }else{?>
+                <span class="h3">Tipe Reguler</span>
+            <?php }?>
             <hr>
         </div>
         <div class="card-body">
@@ -41,19 +46,48 @@
                                 <td><?= $supir["supir_name"]?></td>
                             </tr>
                             <tr>
-                                <td width="30%">Muatan</td>
+                                <td width="30%">Rute</td>
                                 <td width="5%">:</td>
-                                <td><?= $data["muatan"]?></td>
-                            </tr>
-                            <tr>
-                                <td width="30%">Dari</td>
-                                <td width="5%">:</td>
-                                <td><?= $data["asal"]?></td>
-                            </tr>
-                            <tr>
-                                <td width="30%">Ke</td>
-                                <td width="5%">:</td>
-                                <td><?= $data["tujuan"]?></td>
+                                <td>
+                                    <table class="table table-bordered small">
+                                        <thead>
+                                            <tr>
+                                                <th>No Rute</th>
+                                                <th>Dari</th>
+                                                <th>Ke</th>
+                                                <th>Muatan</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php if($tipe_jo=="paketan"){?>
+                                                <?php $data_rute = json_decode($paketan["paketan_data_rute"],true);?>
+                                                <?php for($i=0;$i<count($data_rute);$i++){?>
+                                                    <tr>
+                                                        <td>Rute ke-<?= $i+1?></td>
+                                                        <td><?= $data_rute[$i]["dari"]?></td>
+                                                        <td><?= $data_rute[$i]["ke"]?></td>
+                                                        <td><?= $data_rute[$i]["muatan"]?></td>
+                                                    </tr>
+                                                <?php }?>
+                                            <?php }else{?>
+                                                <?php if($kosongan != null){?>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td><?= $kosongan["kosongan_dari"]?></td>
+                                                    <td><?= $kosongan["kosongan_ke"]?></td>
+                                                    <td>Kosongan</td>
+                                                </tr>
+                                                <?php }?>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td><?= $data["asal"]?></td>
+                                                    <td><?= $data["tujuan"]?></td>
+                                                    <td><?= $data["muatan"]?></td>
+                                                </tr>
+                                            <?php }?>
+                                        </tbody>
+                                    </table>
+                                </td>
                             </tr>
                             <tr>
                                 <td width="30%">Uang Jalan</td>
@@ -65,15 +99,25 @@
                                 <td width="5%">:</td>
                                 <td><?= $data["terbilang"]?></td>
                             </tr>
-                            <tr>
-                                <td width="30%">Rute Kosongan</td>
-                                <td width="5%">:</td>
-                                <td><?= $kosongan["kosongan_dari"]." - ".$kosongan["kosongan_ke"]." - ".number_format($kosongan["kosongan_uang"],2,",",".")?></td>
-                            </tr>
+                            <?php if($tipe_jo=="reguler"){?>
+                                <tr>
+                                    <td width="30%">Uang Jalan Kosongan</td>
+                                    <td width="5%">:</td>
+                                    <?php if($tipe_jo!="paketan" && $kosongan!=null){?>
+                                        <td>Rp.<?= number_format($kosongan["kosongan_uang"],2,",",".")?></td>
+                                    <?php }else{?>
+                                        <td>Rp.0 (Tidak Ada)</td>
+                                    <?php }?>
+                                </tr>
+                            <?php }?>
                             <tr>
                                 <td width="30%">Total Uang Jalan</td>
                                 <td width="5%">:</td>
-                                <td>Rp.<?= number_format($data["uang_jalan"]+$data["uang_kosongan"],2,',','.')?></td>
+                                <?php if($tipe_jo!="paketan"){?>
+                                    <td>Rp.<?= number_format($data["uang_jalan"]+$data["uang_kosongan"],2,',','.')?></td>
+                                <?php }else{?>
+                                    <td>Rp.<?= number_format($data["uang_jalan"],2,',','.')?></td>
+                                <?php }?>
                             </tr>
                             <tr>
                                 <td width="30%">Total Uang Jalan Dibayar</td>

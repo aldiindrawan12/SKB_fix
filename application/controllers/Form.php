@@ -171,12 +171,44 @@ class Form extends CI_Controller {
             $this->model_form->insert_JO($data["data"]);
             $data["jo_id"] = max($isi_jo_id)+1;
             $data["asal"] = "insert";
+            $data["tipe_jo"] = "reguler";
             $data["kosongan"] = $this->model_detail->getkosonganbyid($data["data"]["kosongan_id"]);
             $data["supir"] = $this->model_home->getsupirbyid($data["data"]["supir_id"]);
             $data["mobil"] = $this->model_home->getmobilbyid($data["data"]["mobil_no"]);
             $this->load->view("print/jo_print",$data);
         }
-
+        public function insert_JO_paketan(){
+            $jo_id = $this->model_form->getjoid();
+            $isi_jo_id = [];
+            for($i=0;$i<count($jo_id);$i++){
+                $isi_jo_id[] = $jo_id[$i]["Jo_id"];
+            }
+            $data["data"]=array(
+                "Jo_id"=>max($isi_jo_id)+1,
+                "mobil_no"=>$this->input->post("Kendaraan"),
+                "supir_id"=>$this->input->post("Supir"),
+                "uang_jalan"=>str_replace(".","",$this->input->post("Uang")),
+                "uang_jalan_bayar"=>str_replace(".","",$this->input->post("uang_jalan_bayar")),
+                "terbilang"=>$this->input->post("Terbilang"),
+                "tanggal_surat"=>date("Y-m-d"),
+                "keterangan"=>$this->input->post("Keterangan"),
+                "customer_id"=>$this->input->post("Customer"),
+                "status"=>"Dalam Perjalanan",
+                "status_upah"=>"Belum Dibayar",
+                "upah"=>str_replace(".","",$this->input->post("Upah")),
+                "tagihan"=>str_replace(".","",$this->input->post("Tagihan")),
+                "paketan_id"=>$this->input->post("paketan_id"),
+            );
+            $this->model_form->insert_JO($data["data"]);
+            $data["jo_id"] = max($isi_jo_id)+1;
+            $data["asal"] = "insert";
+            $data["tipe_jo"] = "paketan";
+            $data["paketan"] = $this->model_form->getpaketanbyid($this->input->post("paketan_id"));
+            $data["kosongan"] = $this->model_detail->getkosonganbyid(0);
+            $data["supir"] = $this->model_home->getsupirbyid($data["data"]["supir_id"]);
+            $data["mobil"] = $this->model_home->getmobilbyid($data["data"]["mobil_no"]);
+            $this->load->view("print/jo_print",$data);
+        }
         public function insert_bon(){
             $bon_id = $this->model_form->getbonid();
             $isi_bon_id = [];

@@ -100,7 +100,7 @@
                     <div class="col-md-4 col-md-offset-4 mb-4">
                         <label class="form-label font-weight-bold" for="Kosongan">Rute Kosongan</label>
                         <select name="Kosongan" id="Kosongan" class="form-control" required onchange="kosongan(this)">
-                            <option class="font-w700" disabled="disabled" selected value="">Tipe Tonase</option>
+                            <option class="font-w700" disabled="disabled" selected value="">Rute Kosongan</option>
                             <option class="font-w700" value="Ya">Ya</option>
                             <option class="font-w700" value="Tidak">Tidak</option>
                         </select>

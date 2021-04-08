@@ -50,7 +50,8 @@ class Model_Detail extends CI_model
     }
 
     public function getkosonganbyid($kosongan_id){ //kosongan by ID
-        return $this->db->get_where("skb_kosongan",array("kosongan_id"=>$kosongan_id))->row_array();
+        $this->db->join("skb_job_order","skb_job_order.kosongan_id=skb_kosongan.kosongan_id","left");
+        return $this->db->get_where("skb_kosongan",array("skb_kosongan.kosongan_id"=>$kosongan_id))->row_array();
     }
 
     public function getallmerk(){ //merk all

@@ -24,13 +24,62 @@
                             <hr>
                             <p class="font-weight-bold badge badge-success">ID JO</p>
                             <p class="font-size-sm font-weight-bold"><?= $jo["Jo_id"] ?></p>
+                            <hr>
+                            <p class="font-weight-bold badge badge-success">Tipe Job Order</p>
+                            <?php if($tipe_jo=="paketan"){?>
+                                <p class="font-size-sm font-weight-bold">Paketan</p>
+                            <?php }else{?>
+                                <p class="font-size-sm font-weight-bold">Reguler</p>
+                            <?php }?>
                         </td>
-                        <td class="font-weight-bold mt-2" style="width: 25%;">Muatan</td>
-                        <td colspan=3 width="70%"><?= $jo["muatan"]?> </td>
-                    </tr>
-                    <tr>
-                        <td class="font-weight-bold" style="width: 25%;">Asal-Tujuan</td>
-                        <td colspan=3><?= $jo["asal"]."--".$jo["tujuan"] ?></td>
+                        <td class="font-weight-bold" style="width: 25%;">Rute Muatan</td>
+                        <td colspan=3>
+                                    <table class="table table-bordered small">
+                                        <thead>
+                                            <tr>
+                                                <th>No Rute</th>
+                                                <th>Dari</th>
+                                                <th>Ke</th>
+                                                <th>Muatan</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php if($tipe_jo=="paketan"){?>
+                                                <?php $data_rute = json_decode($paketan["paketan_data_rute"],true);?>
+                                                <?php for($i=0;$i<count($data_rute);$i++){?>
+                                                    <tr>
+                                                        <td>Rute ke-<?= $i+1?></td>
+                                                        <td><?= $data_rute[$i]["dari"]?></td>
+                                                        <td><?= $data_rute[$i]["ke"]?></td>
+                                                        <td><?= $data_rute[$i]["muatan"]?></td>
+                                                    </tr>
+                                                <?php }?>
+                                            <?php }else{?>
+                                                <?php if($kosongan != null){?>
+                                                <tr>
+                                                    <td>Rute ke-1</td>
+                                                    <td><?= $kosongan["kosongan_dari"]?></td>
+                                                    <td><?= $kosongan["kosongan_ke"]?></td>
+                                                    <td>Kosongan</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Rute ke-2</td>
+                                                    <td><?= $jo["asal"]?></td>
+                                                    <td><?= $jo["tujuan"]?></td>
+                                                    <td><?= $jo["muatan"]?></td>
+                                                </tr>
+                                                <?php }else{?>
+                                                    <tr>
+                                                        <td>Rute ke-1</td>
+                                                        <td><?= $jo["asal"]?></td>
+                                                        <td><?= $jo["tujuan"]?></td>
+                                                        <td><?= $jo["muatan"]?></td>
+                                                    </tr>
+                                                <?php }?>
+                                            <?php }?>
+                                        </tbody>
+                                    </table>
+                        </td>
                     </tr>
                     <tr>
                         <td class="font-weight-bold" style="width: 25%;">Tanggal Berangkat</td>
@@ -71,7 +120,7 @@
                     </tr>
                     <tr>
                         <td class="font-weight-bold " style="width: 25%;">Uang Jalan Terbayar</td>
-                        <?php if($jo["uang_jalan_bayar"]>$jo["uang_jalan"]+$jo["uang_kosongan"]){?>
+                        <?php if($jo["uang_jalan_bayar"]>=$jo["uang_jalan"]+$jo["uang_kosongan"]){?>
                             <td colspan=3>
                                 <div class="row ">
                                     <p class="col">Rp.<?= number_format($jo["uang_jalan_bayar"],2,',','.')?></p>

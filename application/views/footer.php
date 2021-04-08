@@ -654,13 +654,22 @@
                         "data": "customer_name"
                     },
                     {
-                        "data": "muatan"
-                    },
-                    {
-                        "data": "asal"
-                    },
-                    {
-                        "data": "tujuan"
+                        "data": "paketan_id",
+                        className: 'text-center',
+                        "orderable": false,
+                        render: function(data, type, row) {
+                            if(data!=0){
+                                let html = "<a class='btn btn-light btn-detail-rute-paketan' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-pk='"+data+"'><i class='fas fa-eye'></i></a>";
+                                return html;
+                            }
+                            if(row["kosongan_id"]!=""){
+                                let html = "<a class='btn btn-light btn-detail-rute-paketan-kosong' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-pk='"+row["kosongan_id"]+"'><i class='fas fa-eye'></i></a>";
+                                return html;
+                            }else{
+                                let html = "<a class='btn btn-light btn-detail-rute-paketan-reguler' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-pk='"+row["Jo_id"]+"'><i class='fas fa-eye'></i></a>";
+                                return html;
+                            }
+                        } 
                     },
                     {
                         "data": "tanggal_surat"
@@ -688,6 +697,80 @@
                             },
                             success: function(data) { //jika ambil data sukses
                                 $("#form_update_jo").attr('action','<?php echo base_url("index.php/form/update_jo_status/")?>'+data['supir_id']+'/'+data['mobil_no'])
+                            }
+                        });
+                    });
+                    $('.btn-detail-rute-paketan').click(function() {
+                        let pk = $(this).data('pk');
+                        $("#table-data-rute-paketan tbody").html("");
+                        $.ajax({
+                            type: "GET",
+                            url: "<?php echo base_url('index.php/form/getrutepaketanbyid') ?>",
+                            dataType: "JSON",
+                            data: {
+                                id: pk
+                            },
+                            success: function(data) { //jika ambil data sukses
+                                let html = "";
+                                for(i=0;i<data.length;i++){
+                                    html += "<tr>"+
+                                    "<td>Rute ke-"+(i+1)+"</td>"+
+                                    "<td>"+data[i]["dari"]+"</td>"+
+                                    "<td>"+data[i]["ke"]+"</td>"+
+                                    "<td>"+data[i]["muatan"]+"</td>"+
+                                    "</tr>"
+                                }
+                                $("#table-data-rute-paketan tbody").html(html);
+                            }
+                        });
+                    });
+                    $('.btn-detail-rute-paketan-kosong').click(function() {
+                        let pk = $(this).data('pk');
+                        $("#table-data-rute-paketan tbody").html("");
+                        $.ajax({
+                            type: "GET",
+                            url: "<?php echo base_url('index.php/detail/getkosongan') ?>",
+                            dataType: "JSON",
+                            data: {
+                                id: pk
+                            },
+                            success: function(data) { //jika ambil data sukses
+                                    let html = "";
+                                    html += "<tr>"+
+                                    "<td>Rute ke-1</td>"+
+                                    "<td>"+data["kosongan_dari"]+"</td>"+
+                                    "<td>"+data["kosongan_ke"]+"</td>"+
+                                    "<td>Kosongan</td>"+
+                                    "</tr>";
+                                    html += "<tr>"+
+                                    "<td>Rute ke-2</td>"+
+                                    "<td>"+data["asal"]+"</td>"+
+                                    "<td>"+data["tujuan"]+"</td>"+
+                                    "<td>"+data["muatan"]+"</td>"+
+                                    "</tr>";
+                                $("#table-data-rute-paketan tbody").html(html);
+                            }
+                        });
+                    });
+                    $('.btn-detail-rute-paketan-reguler').click(function() {
+                        let pk = $(this).data('pk');
+                        $("#table-data-rute-paketan tbody").html("");
+                        $.ajax({
+                            type: "GET",
+                            url: "<?php echo base_url('index.php/detail/getjo') ?>",
+                            dataType: "JSON",
+                            data: {
+                                id: pk
+                            },
+                            success: function(data) { //jika ambil data sukses
+                                    let html = "";
+                                    html += "<tr>"+
+                                    "<td>Rute ke-1</td>"+
+                                    "<td>"+data["asal"]+"</td>"+
+                                    "<td>"+data["tujuan"]+"</td>"+
+                                    "<td>"+data["muatan"]+"</td>"+
+                                    "</tr>";
+                                $("#table-data-rute-paketan tbody").html(html);
                             }
                         });
                     });

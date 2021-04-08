@@ -22,7 +22,7 @@ class Login extends CI_Controller {
         $password = sha1($this->input->post("password"));
         $user = $this->model_login->getuserbyusername($username);
         $akun = $this->model_login->getakunbyid($user["akun_id"]);
-        $redirect = ["truck","","bon","report","akun"];
+        // $redirect = ["truck","","bon","report","akun"];
         $akun_akses = json_decode($akun["akun_akses"]);
         if($user){
             $save_password = $user["password"];
@@ -33,7 +33,7 @@ class Login extends CI_Controller {
                 $_SESSION["role"] = $user["akun_role"];
                 for($i=0;$i<count($akun_akses);$i++){
                     if($akun_akses[$i]==1){
-                        redirect(base_url("index.php/home/".$redirect[$i]));
+                        redirect(base_url("index.php/dashboard/"));
                         break;
                     }
                 }

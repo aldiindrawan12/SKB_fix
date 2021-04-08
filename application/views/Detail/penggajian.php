@@ -97,12 +97,14 @@
 <div class="container">
     <!-- <button onclick="sudah_bayar()" class="btn btn-success">Tandai Sudah Bayar</button> -->
     <!-- button print memo tunai -->
+    <button onclick="print_memo_tf()" class="btn btn-primary">Cetak Memo Transfer</button>
     <button onclick="print_memo_tunai()" class="btn btn-primary">Cetak Memo Tunai</button>
     <!-- end button print memo tunai -->
 </div>
 <hr>
 <!-- form rekening supir -->
-<div class="container mt-3 small">
+<div class="container mt-3 small" style="display:none" id="form-rekening">
+    <small>Isi Data Rekening Supir</small>
     <form action="<?= base_url("index.php/print_berkas/memo_tf/".$supir["supir_id"]."/".($upah-$supir["supir_kasbon"]))?>" method="POST" class="row" id="form-rekening">
         <div class="form-group col-md-6">
             <label for="Bank" class="form-label">Bank</label>
@@ -124,14 +126,33 @@
 <!-- end form rekening supir -->
 
 <script>
+    function print_memo_tf(){
+        var data_jo_id = [];
+        <?php for($i=0;$i<count($jo);$i++){?>
+            data_jo_id.push(<?= $jo[$i]["Jo_id"]?>)
+        <?php }?>
+        if(data_jo_id.length==0){
+            alert("Tidak Ada Gaji");
+        }else{
+            $("#form-rekening").show();
+        }
+    }
     function print_memo_tunai(){
+        var data_jo_id = [];
         var total = "<?= $upah-$supir['supir_kasbon']?>";
         var bonus = $("#bonus").val();
         if(bonus==""){
             bonus="0";
         }
         var bonus_int = bonus.replaceAll(".","");
-        window.location.replace("<?= base_url("index.php/print_berkas/memo_tunai/".$supir["supir_id"]."/")?>"+(parseInt(total)+parseInt(bonus_int)));    
+        <?php for($i=0;$i<count($jo);$i++){?>
+            data_jo_id.push(<?= $jo[$i]["Jo_id"]?>)
+        <?php }?>
+        if(data_jo_id.length==0){
+            alert("Tidak Ada Gaji");
+        }else{
+            window.location.replace("<?= base_url("index.php/print_berkas/memo_tunai/".$supir["supir_id"]."/")?>"+(parseInt(total)+parseInt(bonus_int)));    
+        }
     }
     function total(){
         var total = "<?= $upah-$supir['supir_kasbon']?>";

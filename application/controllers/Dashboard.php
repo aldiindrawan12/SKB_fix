@@ -21,9 +21,6 @@ class Dashboard extends CI_Controller {
         $data["page"] = "Dashboard_page";
         $data["collapse_group"] = "Dashboard";
         $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
-        if(json_decode($data["akun_akses"]["akun_akses"])[1]==0){
-            redirect(base_url());
-        }
         $this->load->view('header',$data);
         $this->load->view('sidebar');
         $this->load->view('dashboard/dashboard');

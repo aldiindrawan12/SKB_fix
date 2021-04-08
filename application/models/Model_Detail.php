@@ -92,10 +92,14 @@ class Model_Detail extends CI_model
     public function update_upah($data){ //update upah saat bayar gaji/upah
         $supir_id = $data["supir_id"];
         $Jo_id = $data["Jo_id"];
-        $upah = $data["upah"];
-        $supir_kasbon = $data["supir_kasbon"];
+        $upah = $data["upah"]; //-2000000
+        $supir_kasbon = $data["supir_kasbon"]; //65000000
 
-        $grand_upah = $upah-$supir_kasbon;
+        if($upah<0){
+            $grand_upah = ($supir_kasbon-($supir_kasbon+$upah))*(-1);
+        }else{
+            $grand_upah = $upah-$supir_kasbon;
+        }
         if($grand_upah < 0){
             $this->db->set("supir_kasbon",$grand_upah*(-1));
             $this->db->where("supir_id",$supir_id);

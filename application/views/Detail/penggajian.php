@@ -41,7 +41,11 @@
                     $upah = 0;
                     $data_jo_id = [];
                     foreach($jo as $value){ 
-                        $uang_jalan += $value["uang_jalan"]+$value["uang_kosongan"];
+                        if($value["uang_kosongan"]!=""){
+                            $uang_jalan += $value["uang_jalan"]+$value["uang_kosongan"];   
+                        }else{
+                            $uang_jalan += $value["uang_jalan"];
+                        }
                         $upah += ($value["upah"]+$value["bonus"]);
                         $data_jo_id[] = $value["Jo_id"];
                         ?>
@@ -52,7 +56,13 @@
                             <td><?= $value["muatan"]?></td>
                             <td><?= $value["asal"]?></td>
                             <td><?= $value["tujuan"]?></td>
-                            <td>Rp.<?= number_format($value["uang_jalan"]+$value["uang_kosongan"],2,',','.') ?></td>
+                            <?php
+                                if($value["uang_kosongan"]!=""){
+                                    echo "<td>Rp.".number_format($value["uang_jalan"]+$value["uang_kosongan"],2,',','.')."</td>";
+                                }else{
+                                    echo "<td>Rp.".number_format($value["uang_jalan"],2,',','.')."</td>";
+                                }
+                            ?>
                             <td><?= $value["tonase"]?></td>
                             <td>Rp.<?= number_format($value["upah"]+$value["bonus"],2,',','.')?></td>
                         </tr>
@@ -85,6 +95,7 @@
 
 
 <div class="container">
+    <!-- <button onclick="sudah_bayar()" class="btn btn-success">Tandai Sudah Bayar</button> -->
     <!-- button print memo tunai -->
     <button onclick="print_memo_tunai()" class="btn btn-primary">Cetak Memo Tunai</button>
     <!-- end button print memo tunai -->
@@ -135,4 +146,34 @@
     function uang(a){
         $( '#'+a.id ).mask('000.000.000', {reverse: true});
     }
+    // function sudah_bayar(){
+    //     var data_jo_id = [];
+    //     var total = "<?= $upah-$supir['supir_kasbon']?>";
+    //     var bonus = $("#bonus").val();
+    //     if(bonus==""){
+    //         bonus="0";
+    //     }
+    //     var bonus_int = bonus.replaceAll(".","");
+    //     <?php for($i=0;$i<count($jo);$i++){?>
+    //         data_jo_id.push(<?= $jo[$i]["Jo_id"]?>)
+    //     <?php }?>
+    //     if(data_jo_id.length==0){
+    //         alert("Tidak Ada Gaji");
+    //     }else{
+    //         $.ajax({
+    //             type: "GET",
+    //             url: "<?php echo base_url('index.php/detail/update_upah') ?>",
+    //             dataType: "text",
+    //             data: {
+    //                 upah:parseInt(total)+parseInt(bonus_int),
+    //                 supir_id:<?= $supir["supir_id"]?>,
+    //                 supir_kasbon:<?= $supir["supir_kasbon"]?>,
+    //                 jo_id:data_jo_id
+    //             },
+    //             success: function(data) {
+    //                 window.location.replace("<?= base_url("index.php/home/gaji")?>");    
+    //             }
+    //         });   
+    //     }     
+    // }
 </script>

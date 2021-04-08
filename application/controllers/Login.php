@@ -31,12 +31,7 @@ class Login extends CI_Controller {
                 $_SESSION["user_id"] = $user["akun_id"];
                 $_SESSION["user"] = $user["akun_name"];
                 $_SESSION["role"] = $user["akun_role"];
-                for($i=0;$i<count($akun_akses);$i++){
-                    if($akun_akses[$i]==1){
-                        redirect(base_url("index.php/dashboard/"));
-                        break;
-                    }
-                }
+                redirect(base_url("index.php/dashboard/"));
             }else{
                 $this->session->set_flashdata('status-login', 'Password');
                 redirect(base_url());                

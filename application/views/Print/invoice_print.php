@@ -40,7 +40,7 @@
                         <td><?= $invoice[0]["batas_pembayaran"]?></td>
                     </tr>
                     <tr>
-                        <td width="35%">Muatan</td>
+                        <td width="35%">Keterangan/Catatan</td>
                         <td width="5%">:</td>
                         <td><?= $invoice[0]["invoice_keterangan"]?></td>
                     </tr>
@@ -58,7 +58,6 @@
                             <th class="text-center" width="10%" scope="col">Dari</th>
                             <th class="text-center" width="10%" scope="col">Ke</th>
                             <th class="text-center" width="8%" scope="col">Total Muatan</th>
-                            <th class="text-center" width="10%" scope="col">Harga/Satuan</th>
                             <th class="text-center" width="10%" scope="col">Jumlah</th>
                         </tr>
                     </thead>
@@ -71,20 +70,19 @@
                             <td><?= $value["asal"]?></td>
                             <td><?= $value["tujuan"]?></td>
                             <td><?= $value["tonase"]?></td>
-                            <td>Rp.<?= number_format(10000,2,',','.')?></td>
-                            <td>Rp.<?= number_format($value["tonase"]*10000,2,',','.')?></td>
+                            <td>Rp.<?= number_format($value["grand_total"],2,',','.')?></td>
                         </tr>
                     <?php }?>
                         <tr>
-                            <td colspan=7>Total</td>
+                            <td colspan=6>Total</td>
                             <td>Rp.<?= number_format($invoice[0]["total"],2,',','.')?></td>
                         </tr>
                         <tr>
-                            <td colspan=7>PPN 10%</td>
+                            <td colspan=6>PPN 10%</td>
                             <td>Rp.<?= number_format($invoice[0]["ppn"],2,',','.')?></td>
                         </tr>
                         <tr>
-                            <td colspan=7>Jumlah</td>
+                            <td colspan=6>Jumlah</td>
                             <td>Rp.<?= number_format($invoice[0]["grand_total"],2,',','.')?></td>
                         </tr>
                     </tbody>

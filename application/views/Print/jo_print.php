@@ -77,9 +77,15 @@
                                                     <td><?= $kosongan["kosongan_ke"]?></td>
                                                     <td>Kosongan</td>
                                                 </tr>
-                                                <?php }?>
                                                 <tr>
                                                     <td>2</td>
+                                                    <td><?= $data["asal"]?></td>
+                                                    <td><?= $data["tujuan"]?></td>
+                                                    <td><?= $data["muatan"]?></td>
+                                                </tr>
+                                                <?php }?>
+                                                <tr>
+                                                    <td>1</td>
                                                     <td><?= $data["asal"]?></td>
                                                     <td><?= $data["tujuan"]?></td>
                                                     <td><?= $data["muatan"]?></td>

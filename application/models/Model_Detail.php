@@ -92,23 +92,44 @@ class Model_Detail extends CI_model
     public function update_upah($data){ //update upah saat bayar gaji/upah
         $supir_id = $data["supir_id"];
         $Jo_id = $data["Jo_id"];
-        $upah = $data["upah"]; //-2000000
-        $supir_kasbon = $data["supir_kasbon"]; //65000000
-
-        if($upah<0){
-            $grand_upah = ($supir_kasbon-($supir_kasbon+$upah))*(-1);
-        }else{
-            $grand_upah = $upah-$supir_kasbon;
-        }
+        $upah = $data["upah"];
+        $supir_kasbon = $data["supir_kasbon"];
+        $grand_upah = ($supir_kasbon-($supir_kasbon+$upah))*(-1);
+        //set kasbon supir
         if($grand_upah < 0){
             $this->db->set("supir_kasbon",$grand_upah*(-1));
-            $this->db->where("supir_id",$supir_id);
-            $this->db->update("skb_supir");
         }else{
             $this->db->set("supir_kasbon",0);
-            $this->db->where("supir_id",$supir_id);
-            $this->db->update("skb_supir");
         }
+        $this->db->where("supir_id",$supir_id);
+        $this->db->update("skb_supir");
+        //end set kasbon supir
+
+        //insert kasbon 
+        if($upah-$supir_kasbon != $upah){
+            if($upah<0){
+                $nominal_bon = $supir_kasbon+$upah;
+            }else{
+                $nominal_bon = $supir_kasbon;
+            }
+            $this->db->select("bon_id");
+            $bon_id = $this->db->get("skb_bon")->result_array();
+            $isi_bon_id = [];
+            for($i=0;$i<count($bon_id);$i++){
+                $isi_bon_id[] = $bon_id[$i]["bon_id"];
+            }
+            date_default_timezone_set('Asia/Jakarta');
+            $data=array(
+                "bon_id"=>max($isi_bon_id)+1,
+                "supir_id"=>$supir_id,
+                "bon_jenis"=>"Potong Gaji",
+                "bon_nominal"=>$nominal_bon,
+                "bon_keterangan"=>"Potongan Kasbon Dari Pembayaran Gaji",
+                "bon_tanggal"=>date("Y-m-d H:i:s")
+            );
+            $this->db->insert("skb_bon",$data);
+        }
+        //end insert kasbon 
 
         //update status upah pada jo id
         if($Jo_id != null){

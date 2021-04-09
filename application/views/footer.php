@@ -505,7 +505,7 @@
                                 let html = "<a class='btn btn-light btn-detail-rute-paketan' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-pk='"+data+"'><i class='fas fa-eye'></i></a>";
                                 return html;
                             }
-                            if(row["kosongan_id"]!=""){
+                            if(row["kosongan_id"]!=0){
                                 let html = "<a class='btn btn-light btn-detail-rute-paketan-kosong' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-pk='"+row["kosongan_id"]+"'><i class='fas fa-eye'></i></a>";
                                 return html;
                             }else{
@@ -662,7 +662,7 @@
                                 let html = "<a class='btn btn-light btn-detail-rute-paketan' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-pk='"+data+"'><i class='fas fa-eye'></i></a>";
                                 return html;
                             }
-                            if(row["kosongan_id"]!=""){
+                            if(row["kosongan_id"]!=0){
                                 let html = "<a class='btn btn-light btn-detail-rute-paketan-kosong' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-pk='"+row["kosongan_id"]+"'><i class='fas fa-eye'></i></a>";
                                 return html;
                             }else{

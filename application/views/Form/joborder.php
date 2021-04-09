@@ -108,7 +108,7 @@
                     <div class="col-md-8 col-md-offset-4" style="display:none" id="rute_kosongan_pilih">
                         <label class="form-label font-weight-bold " for="kosongan_id">Rute Kosongan</label>
                         <select name="kosongan_id" value="DESC" id="kosongan_id" class="form-control selectpicker mb-4" data-live-search="true">
-                        <option class="font-w700" disabled="disabled" selected value="">Dari - Ke - Uang Jalan</option>
+                        <option class="font-w700" selected value="0">Dari - Ke - Uang Jalan</option>
                             <?php foreach($kosongan as $value){?>
                                 <option value="<?=$value["kosongan_id"]?>"><?=$value["kosongan_dari"]?> - <?=$value["kosongan_ke"]?> - Rp.<?= number_format($value["kosongan_uang"],2,",",".")?></option>
                             <?php } ?>

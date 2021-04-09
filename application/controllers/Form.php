@@ -148,6 +148,10 @@ class Form extends CI_Controller {
             for($i=0;$i<count($jo_id);$i++){
                 $isi_jo_id[] = $jo_id[$i]["Jo_id"];
             }
+            if(!$kosongan){
+                $kosongan_id = 0;
+                $uang_kosongan = 0;
+            }
             $data["data"]=array(
                 "Jo_id"=>max($isi_jo_id)+1,
                 "mobil_no"=>$this->input->post("Kendaraan"),
@@ -165,8 +169,9 @@ class Form extends CI_Controller {
                 "status_upah"=>"Belum Dibayar",
                 "upah"=>str_replace(".","",$this->input->post("Upah")),
                 "tagihan"=>str_replace(".","",$this->input->post("Tagihan")),
-                "kosongan_id"=>$kosongan["kosongan_id"],
-                "uang_kosongan" =>$kosongan["kosongan_uang"]
+                "kosongan_id"=>$kosongan_id,
+                "paketan_id"=>0,
+                "uang_kosongan" =>$uang_kosongan
             );
             $this->model_form->insert_JO($data["data"]);
             $data["jo_id"] = max($isi_jo_id)+1;

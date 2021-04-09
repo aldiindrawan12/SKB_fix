@@ -70,18 +70,23 @@ class Model_Detail extends CI_model
         return $this->db->get_where("skb_job_order",array("skb_job_order.supir_id"=>$supir_id))->result_array();
     }
 
-    public function getjobbysupirbayar($supir_id){ //JO by supir upah lunas
-        $this->db->where("status_upah","Sudah Dibayar");
-        $this->db->where("upah!=","0");
-        $this->db->join("skb_supir","skb_supir.supir_id=skb_job_order.supir_id","left");
-        return $this->db->get_where("skb_job_order",array("skb_job_order.supir_id"=>$supir_id))->result_array();
-    }
+    // public function getjobbysupirbayar($supir_id){ //JO by supir upah lunas
+    //     $this->db->where("status_upah","Sudah Dibayar");
+    //     $this->db->where("upah!=","0");
+    //     $this->db->join("skb_supir","skb_supir.supir_id=skb_job_order.supir_id","left");
+    //     return $this->db->get_where("skb_job_order",array("skb_job_order.supir_id"=>$supir_id))->result_array();
+    // }
 
-    public function getjobbysupirbelumbayar($supir_id){ //JO by supir updah belum lunas
-        $this->db->where("status_upah","Belum Dibayar");
-        $this->db->where("upah!=","0");
-        $this->db->join("skb_supir","skb_supir.supir_id=skb_job_order.supir_id","left");
-        return $this->db->get_where("skb_job_order",array("skb_job_order.supir_id"=>$supir_id))->result_array();
+    // public function getjobbysupirbelumbayar($supir_id){ //JO by supir updah belum lunas
+    //     $this->db->where("status_upah","Belum Dibayar");
+    //     $this->db->where("upah!=","0");
+    //     $this->db->join("skb_supir","skb_supir.supir_id=skb_job_order.supir_id","left");
+    //     return $this->db->get_where("skb_job_order",array("skb_job_order.supir_id"=>$supir_id))->result_array();
+    // }
+
+    public function getpembayaranupah($supir_id){
+        $this->db->join("skb_supir","skb_supir.supir_id=skb_pembayaran_upah.supir_id","left");
+        return $this->db->get_where("skb_pembayaran_upah",array("skb_pembayaran_upah.supir_id"=>$supir_id))->result_array();
     }
 
     public function getinvoicebyjo($jo_id){ //invoice by JO

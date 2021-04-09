@@ -24,134 +24,52 @@
         
     </div>
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 text-danger">Belum Dibayar</h6>
-        </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered table-striped" id="Table-Penggajian" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th class="text-center" width="5%" scope="col">JO ID</th>
-                            <th class="text-center" width="10%" scope="col">Tgl Keluar</th>
-                            <th class="text-center" width="13%" scope="col">Tgl Bongkar</th>
-                            <th class="text-center" width="10%" scope="col">Muatan</th>
-                            <th class="text-center" width="10%" scope="col">Dari</th>
-                            <th class="text-center" width="10%" scope="col">Ke</th>
-                            <th class="text-center" width="10%" scope="col">Uang Jalan</th>
-                            <th class="text-center" width="11%" scope="col">Total Muatan</th>
-                            <th class="text-center" width="10%" scope="col">Upah+Bonus</th>
+                            <th class="text-center" width="5%" scope="col">No Pembayaran</th>
+                            <th class="text-center" width="10%" scope="col">Tgl Pembayaran</th>
+                            <th class="text-center" width="13%" scope="col">Nominal</th>
+                            <th class="text-center" width="10%" scope="col">Bonus</th>
+                            <th class="text-center" width="10%" scope="col">Potong Kasbon</th>
+                            <th class="text-center" width="10%" scope="col">Total</th>
                         </tr>
                     </thead>
                     <tbody>
-                    <?php $uang_jalan = 0;
-                    $upah = 0;
-                    $data_jo_id = [];
-                    foreach($jo_belumbayar as $value){ 
-                        $uang_jalan += $value["uang_jalan"];
-                        $upah += ($value["upah"]+$value["bonus"]);
-                        $data_jo_id[] = $value["Jo_id"];
+                    <?php $nominal = 0;
+                    $bonus = 0;
+                    $bon = 0;
+                    $grand = 0;
+                    foreach($pembayaran_upah as $value){ 
+                        $nominal += $value["pembayaran_upah_nominal"];
+                        $bonus += $value["pembayaran_upah_bonus"];
+                        $bon += $value["pembayaran_upah_bon"];
+                        $grand += $value["pembayaran_upah_nominal"]+$value["pembayaran_upah_bonus"]-$value["pembayaran_upah_bon"];
                         ?>
                         <tr>
-                            <td><?= $value["Jo_id"]?></td>
-                            <td><?= $value["tanggal_surat"]?></td>
-                            <td><?= $value["tanggal_bongkar"]?></td>
-                            <td><?= $value["muatan"]?></td>
-                            <td><?= $value["asal"]?></td>
-                            <td><?= $value["tujuan"]?></td>
-                            <td>Rp.<?= number_format($value["uang_jalan"],2,',','.') ?></td>
-                            <td><?= $value["tonase"]?></td>
-                            <td>Rp.<?= number_format($value["upah"]+$value["bonus"],2,',','.')?></td>
+                            <td><?= $value["pembayaran_upah_id"]?></td>
+                            <td><?= $value["pembayaran_upah_tanggal"]?></td>
+                            <td>Rp.<?= number_format($value["pembayaran_upah_nominal"],2,",",".")?></td>
+                            <td>Rp.<?= number_format($value["pembayaran_upah_bonus"],2,",",".")?></td>
+                            <td>Rp.<?= number_format($value["pembayaran_upah_bon"],2,",",".")?></td>
+                            <td>Rp.<?= number_format($value["pembayaran_upah_nominal"]+$value["pembayaran_upah_bonus"]-
+                            $value["pembayaran_upah_bon"],2,',','.') ?></td>
                         </tr>
                     <?php } ?>
                         <tr>
-                            <td colspan=6>Total</td>
-                            <td>Rp.<?= number_format($uang_jalan,2,',','.')?></td>
-                            <td></td>
-                            <td>Rp.<?= number_format($upah,2,',','.')?></td>
-                        </tr>
-                        <tr>
-                            <td colspan=8>Total Bon Terhutang</td>
-                            <td>Rp.<?= number_format($supir["supir_kasbon"],2,',','.')?></td>
-                        </tr>
-                        <tr>
-                            <td colspan=8>Grand Total Upah</td>
-                            <td>Rp.<?= number_format($upah-$supir["supir_kasbon"],2,',','.')?></td>
+                            <td colspan=2>Grand Total</td>
+                            <td>Rp.<?= number_format($nominal,2,',','.')?></td>
+                            <td>Rp.<?= number_format($bonus,2,',','.')?></td>
+                            <td>Rp.<?= number_format($bon,2,',','.')?></td>
+                            <td>Rp.<?= number_format($grand,2,',','.')?></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-</div>
-<div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0  text-primary">Sudah Dibayar</h6>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered table-striped" id="Table-Penggajian" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                        <th class="text-center" width="5%" scope="col">JO ID</th>
-                            <th class="text-center" width="10%" scope="col">Tgl Keluar</th>
-                            <th class="text-center" width="13%" scope="col">Tgl Bongkar</th>
-                            <th class="text-center" width="10%" scope="col">Muatan</th>
-                            <th class="text-center" width="10%" scope="col">Dari</th>
-                            <th class="text-center" width="10%" scope="col">Ke</th>
-                            <th class="text-center" width="10%" scope="col">Uang Jalan</th>
-                            <th class="text-center" width="11%" scope="col">Total Muatan</th>
-                            <th class="text-center" width="10%" scope="col">Upah+Bonus</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <?php $uang_jalan = 0;
-                    $upah = 0;
-                    $data_jo_id = [];
-                    foreach($jo_bayar as $value){ 
-                        $uang_jalan += $value["uang_jalan"];
-                        $upah += ($value["upah"]+$value["bonus"]);
-                        $data_jo_id[] = $value["Jo_id"];
-                        ?>
-                        <tr>
-                            <td><?= $value["Jo_id"]?></td>
-                            <td><?= $value["tanggal_surat"]?></td>
-                            <td><?= $value["tanggal_bongkar"]?></td>
-                            <td><?= $value["muatan"]?></td>
-                            <td><?= $value["asal"]?></td>
-                            <td><?= $value["tujuan"]?></td>
-                            <td>Rp.<?= number_format($value["uang_jalan"],2,',','.') ?></td>
-                            <td><?= $value["tonase"]?></td>
-                            <td>Rp.<?= number_format($value["upah"]+$value["bonus"],2,',','.')?></td>
-                        </tr>
-                    <?php } ?>
-                        <tr>
-                            <td colspan=6>Total</td>
-                            <td>Rp.<?= number_format($uang_jalan,2,',','.')?></td>
-                            <td></td>
-                            <td>Rp.<?= number_format($upah,2,',','.')?></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-</div>
+    </div>
 </div>
 </div>  
 <!-- end tampilan detail penggajian supir -->
-
-
-<!-- <div class="container"> -->
-    <!-- button print daftar gaji -->
-    <!-- <button onclick="print_gaji()" class="btn btn-primary">Cetak Bukti Upah</button> -->
-    <!-- end button print daftar gaji -->
-
-    <!-- button print memo tunai -->
-    <!-- <button onclick="print_memo_tunai()" class="btn btn-primary">Cetak Memo Tunai</button> -->
-    <!-- end button print memo tunai -->
-<!-- </div> -->
-
-<script>
-    // function print_memo_tunai(){
-    //     window.location.replace("<?= base_url("index.php/print_berkas/memo_tunai/".$supir["supir_id"]."/".($upah-$supir["supir_kasbon"]))?>");    
-    // }
-</script>

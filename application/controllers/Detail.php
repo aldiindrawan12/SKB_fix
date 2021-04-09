@@ -257,8 +257,7 @@ class Detail extends CI_Controller {
     			$this->session->set_flashdata('status-login', 'False');
                 redirect(base_url());
             }
-            $data["jo_bayar"] = $this->model_detail->getjobbysupirbayar($supir_id);
-            $data["jo_belumbayar"] = $this->model_detail->getjobbysupirbelumbayar($supir_id);
+            $data["pembayaran_upah"] = $this->model_detail->getpembayaranupah($supir_id);
             $data["supir"] = $this->model_home->getsupirbyid($supir_id);
             $data["page"] = "Laporan_Gaji_page";
             $data["collapse_group"] = "Laporan";

@@ -70,7 +70,7 @@
                             <td><?= $value["asal"]?></td>
                             <td><?= $value["tujuan"]?></td>
                             <td><?= $value["tonase"]?></td>
-                            <td>Rp.<?= number_format($value["grand_total"],2,',','.')?></td>
+                            <td>Rp.<?= number_format($value["total"],2,',','.')?></td>
                         </tr>
                     <?php }?>
                         <tr>

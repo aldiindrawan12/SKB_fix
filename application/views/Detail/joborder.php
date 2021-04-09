@@ -107,7 +107,7 @@
                     </tr>
                     <tr>
                         <td class="font-weight-bold " style="width: 25%;">Uang Jalan Kosongan</td>
-                        <?php if($jo["uang_kosongan"]==""){
+                        <?php if($jo["uang_kosongan"]==0){
                             $jo["uang_kosongan"] = 0;?>
                             <td colspan=3><p>Rp.0 (Tidak Ada Rute Kosongan)</p></td>
                         <?php }else{?>

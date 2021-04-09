@@ -3142,7 +3142,7 @@
         });
     </script>
 
-    <script> //script datatables kendaraan
+    <script> //script datatables kosongan
         $(document).ready(function() {
             var table = null;
             table = $('#Table-Kosongan').DataTable({
@@ -3236,7 +3236,7 @@
                                 id: pk
                             },
                             success: function(data) { //jika ambil data sukses
-                                $('#kosongan_id_update').val(data["kosongan_id"]); //set value
+                                $('#kosongan_id_update').val(pk); //set value
                                 $('#kosongan_dari_update').val(data["kosongan_dari"]); //set value
                                 $('#kosongan_ke_update').val(data["kosongan_ke"]); //set value
                                 $('#kosongan_uang_update').val(rupiah(data["kosongan_uang"])); //set value

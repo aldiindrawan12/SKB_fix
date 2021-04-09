@@ -151,6 +151,9 @@ class Form extends CI_Controller {
             if(!$kosongan){
                 $kosongan_id = 0;
                 $uang_kosongan = 0;
+            }else{
+                $kosongan_id = $kosongan["kosongan_id"];
+                $uang_kosongan = $kosongan["kosongan_uang"];
             }
             $data["data"]=array(
                 "Jo_id"=>max($isi_jo_id)+1,
@@ -470,9 +473,9 @@ class Form extends CI_Controller {
                 "ritase"=>$this->input->post("Ritase_update")
             );
             // echo var_dump($data);
-            // $this->model_form->update_paketan($data,$this->input->post("paketan_id_update"));
-            // $this->session->set_flashdata('status-update-paketan', 'Berhasil');
-            // redirect(base_url("index.php/home/paketan"));
+            $this->model_form->update_paketan($data,$this->input->post("paketan_id_update"));
+            $this->session->set_flashdata('status-update-paketan', 'Berhasil');
+            redirect(base_url("index.php/home/paketan"));
         }
         public function update_supir(){
             $supir_id = $this->input->post("supir_id");

@@ -70,26 +70,27 @@
                                                     </tr>
                                                 <?php }?>
                                             <?php }else{?>
-                                                <?php if($kosongan != null){?>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td><?= $kosongan["kosongan_dari"]?></td>
-                                                    <td><?= $kosongan["kosongan_ke"]?></td>
-                                                    <td>Kosongan</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td><?= $data["asal"]?></td>
-                                                    <td><?= $data["tujuan"]?></td>
-                                                    <td><?= $data["muatan"]?></td>
-                                                </tr>
+                                                <?php if($kosongan != 0){?>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td><?= $kosongan["kosongan_dari"]?></td>
+                                                        <td><?= $kosongan["kosongan_ke"]?></td>
+                                                        <td>Kosongan</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2</td>
+                                                        <td><?= $data["asal"]?></td>
+                                                        <td><?= $data["tujuan"]?></td>
+                                                        <td><?= $data["muatan"]?></td>
+                                                    </tr>
+                                                <?php }else{?>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td><?= $data["asal"]?></td>
+                                                        <td><?= $data["tujuan"]?></td>
+                                                        <td><?= $data["muatan"]?></td>
+                                                    </tr>
                                                 <?php }?>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td><?= $data["asal"]?></td>
-                                                    <td><?= $data["tujuan"]?></td>
-                                                    <td><?= $data["muatan"]?></td>
-                                                </tr>
                                             <?php }?>
                                         </tbody>
                                     </table>

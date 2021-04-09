@@ -176,9 +176,7 @@
                                 <th width ="10%" class="text-center" scope="col">No</th>
                                 <th width ="10%" class="text-center" scope="col">No JO</th>
                                 <th width ="17%" class="text-center" scope="col">Customer</th>
-                                <th width ="15%" class="text-center" scope="col">Muatan</th>
-                                <th width ="16%" class="text-center" scope="col">Asal</th>
-                                <th width ="16%" class="text-center" scope="col">Tujuan</th>
+                                <th width ="15%" class="text-center" scope="col">Rute dan Muatan</th>
                                 <th width ="1%" class="text-center" scope="col">Tanggal</th>
                                 <th width ="25%" scope="col">Status</th>
                                 <th width ="5%" scope="col">Detail</th>
@@ -232,7 +230,36 @@
             </div>
         </div>
     </div>
-    
+    <!-- pop up add detail rute paketan -->
+    <div class="modal fade" id="popup-detail-rute-paketan" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+        <div class="modal-dialog modal-md"  role="document"  >
+            <div class="modal-content">
+                <div class="modal-header bg-primary-dark">
+                    <h5 class="font-weight-bold">Detail Rute</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="font-size-sm m-3 text-justify">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="table-data-rute-paketan" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center" scope="col">No Rute</th>
+                                                <th class="text-center" scope="col">Dari</th>
+                                                <th class="text-center" scope="col">Ke</th>
+                                                <th class="text-center" scope="col">Muatan</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end pop up add detail rute paketan -->
     <!-- Bootstrap core JavaScript-->
     <script src="<?=base_url("assets/vendor/jquery/jquery.min.js")?>"></script>
     <script src="<?=base_url("assets/vendor/jquery/jquery.mask.min.js")?>"></script>
@@ -628,13 +655,22 @@
                         "data": "customer_name"
                     },
                     {
-                        "data": "muatan"
-                    },
-                    {
-                        "data": "asal"
-                    },
-                    {
-                        "data": "tujuan"
+                        "data": "paketan_id",
+                        className: 'text-center',
+                        "orderable": false,
+                        render: function(data, type, row) {
+                            if(data!=0){
+                                let html = "<a class='btn btn-light btn-detail-rute-paketan' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-pk='"+data+"'><i class='fas fa-eye'></i></a>";
+                                return html;
+                            }
+                            if(row["kosongan_id"]!=0){
+                                let html = "<a class='btn btn-light btn-detail-rute-paketan-kosong' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-pk='"+row["kosongan_id"]+"'><i class='fas fa-eye'></i></a>";
+                                return html;
+                            }else{
+                                let html = "<a class='btn btn-light btn-detail-rute-paketan-reguler' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-pk='"+row["Jo_id"]+"'><i class='fas fa-eye'></i></a>";
+                                return html;
+                            }
+                        } 
                     },
                     {
                         "data": "tanggal_surat"
@@ -663,7 +699,83 @@
                             return html;
                         }
                     }
-                ]
+                ],   
+                drawCallback: function() {
+                    $('.btn-detail-rute-paketan').click(function() {
+                        let pk = $(this).data('pk');
+                        $("#table-data-rute-paketan tbody").html("");
+                        $.ajax({
+                            type: "GET",
+                            url: "<?php echo base_url('index.php/form/getrutepaketanbyid') ?>",
+                            dataType: "JSON",
+                            data: {
+                                id: pk
+                            },
+                            success: function(data) { //jika ambil data sukses
+                                let html = "";
+                                for(i=0;i<data.length;i++){
+                                    html += "<tr>"+
+                                    "<td>Rute ke-"+(i+1)+"</td>"+
+                                    "<td>"+data[i]["dari"]+"</td>"+
+                                    "<td>"+data[i]["ke"]+"</td>"+
+                                    "<td>"+data[i]["muatan"]+"</td>"+
+                                    "</tr>"
+                                }
+                                $("#table-data-rute-paketan tbody").html(html);
+                            }
+                        });
+                    });
+                    $('.btn-detail-rute-paketan-kosong').click(function() {
+                        let pk = $(this).data('pk');
+                        $("#table-data-rute-paketan tbody").html("");
+                        $.ajax({
+                            type: "GET",
+                            url: "<?php echo base_url('index.php/detail/getkosongan') ?>",
+                            dataType: "JSON",
+                            data: {
+                                id: pk
+                            },
+                            success: function(data) { //jika ambil data sukses
+                                    let html = "";
+                                    html += "<tr>"+
+                                    "<td>Rute ke-1</td>"+
+                                    "<td>"+data["kosongan_dari"]+"</td>"+
+                                    "<td>"+data["kosongan_ke"]+"</td>"+
+                                    "<td>Kosongan</td>"+
+                                    "</tr>";
+                                    html += "<tr>"+
+                                    "<td>Rute ke-2</td>"+
+                                    "<td>"+data["asal"]+"</td>"+
+                                    "<td>"+data["tujuan"]+"</td>"+
+                                    "<td>"+data["muatan"]+"</td>"+
+                                    "</tr>";
+                                $("#table-data-rute-paketan tbody").html(html);
+                            }
+                        });
+                    });
+                    $('.btn-detail-rute-paketan-reguler').click(function() {
+                        let pk = $(this).data('pk');
+                        $("#table-data-rute-paketan tbody").html("");
+                        $.ajax({
+                            type: "GET",
+                            url: "<?php echo base_url('index.php/detail/getjo') ?>",
+                            dataType: "JSON",
+                            data: {
+                                id: pk
+                            },
+                            success: function(data) { //jika ambil data sukses
+                                    let html = "";
+                                    html += "<tr>"+
+                                    "<td>Rute ke-1</td>"+
+                                    "<td>"+data["asal"]+"</td>"+
+                                    "<td>"+data["tujuan"]+"</td>"+
+                                    "<td>"+data["muatan"]+"</td>"+
+                                    "</tr>";
+                                $("#table-data-rute-paketan tbody").html(html);
+                            }
+                        });
+                    });
+                }
             });
         });
     </script>

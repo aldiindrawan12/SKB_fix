@@ -173,7 +173,7 @@ public function cetaklaporanexcel($tanggal,$bulan,$tahun,$status_jo,$asal){
 			$data["asal"] = $asal;
 			$this->load->view("print/invoice_print",$data);
 		}
-		public function data_gaji($supir_id,$upah){
+		public function data_gaji($supir_id,$upah,$bonus){
             if(!$_SESSION["user"]){
     			$this->session->set_flashdata('status-login', 'False');
                 redirect(base_url());
@@ -187,7 +187,7 @@ public function cetaklaporanexcel($tanggal,$bulan,$tahun,$status_jo,$asal){
 			}
 			$data["data_jo_id"] = $data_jo_id;
 			$data["upah"] = $upah;
-			$data["bonus"]=$this->input->post("bonus");
+			$data["bonus_tf"]=$bonus;
 			$this->load->view("print/penggajian_print",$data);
 		}
 		public function memo_tunai($supir_id,$gaji){
@@ -210,6 +210,7 @@ public function cetaklaporanexcel($tanggal,$bulan,$tahun,$status_jo,$asal){
 				"AN"=>$this->input->post("AN"),
 				"Keterangan"=>$this->input->post("Keterangan")
 			];
+			$data["bonus"] = str_replace(".","",$this->input->post("bonus_tf"));
 			$data["gaji"] = $gaji;
 			$data["supir"] = $this->model_home->getsupirbyid($supir_id);
 			$this->load->view("print/memo_tf_print",$data);

@@ -44,7 +44,11 @@
                             <tr>
                                 <td>Nominal</td>
                                 <td>:</td>
-                                <td>Rp. <span id="upah_print"><?= number_format($gaji,2,",",".")?></span></td>
+                                <?php if($bonus!="0"){?>
+                                    <td>Rp. <span id="upah_print"><?= number_format($gaji+$bonus,2,",",".")?></span></td>
+                                <?php }else{?>
+                                    <td>Rp. <span id="upah_print"><?= number_format($gaji,2,",",".")?></span></td>
+                                <?php }?>
                             </tr>
                         </tbody>
                     </table>
@@ -84,6 +88,6 @@
 </body>
 <script>
     window.print();
-    window.location.replace("<?= base_url("index.php/print_berkas/data_gaji/".$supir["supir_id"]."/".$gaji)?>");    
+    window.location.replace("<?= base_url("index.php/print_berkas/data_gaji/".$supir["supir_id"]."/".$gaji."/".$bonus)?>");    
 </script>
 </html>

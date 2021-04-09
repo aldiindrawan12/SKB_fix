@@ -82,15 +82,19 @@
                             </tr>
                             <tr>
                                 <td colspan=8>Bonus</td>
-                                <?php if($upah<0){?>
+                                <?php if($bonus_tf=="0"){
+                                    if($upah<0){?>
                                     <td>Rp.<?= number_format($supir["supir_kasbon"]+($upah-$upah_jo),2,',','.')?></td>
                                 <?php }else{?>
                                     <td>Rp.<?= number_format($upah-$upah_jo+$supir["supir_kasbon"],2,',','.')?></td>
+                                <?php }
+                                }else{?>
+                                    <td>Rp.<?= number_format($bonus_tf,2,',','.')?></td>
                                 <?php }?>
                             </tr>
                             <tr>
                                 <td colspan=8>Grand Total Upah</td>
-                                <td>Rp.<?= number_format($upah,2,',','.')?></td>
+                                <td>Rp.<?= number_format($upah+$bonus_tf,2,',','.')?></td>
                             </tr>
                         </tbody>
                     </table>
@@ -112,7 +116,9 @@
                     upah:<?= $upah?>,
                     supir_id:<?= $supir["supir_id"]?>,
                     supir_kasbon:<?= $supir["supir_kasbon"]?>,
-                    jo_id:data_jo_id
+                    jo_id:data_jo_id,
+                    upah_jo:<?= $upah_jo?>,
+                    bonus_tf:<?= $bonus_tf?>,
                 },
                 success: function(data) {
                     window.print();

@@ -277,6 +277,8 @@ class Detail extends CI_Controller {
                 "supir_id"=>$this->input->get("supir_id"),
                 "supir_kasbon"=>$this->input->get("supir_kasbon"),
                 "upah"=>$this->input->get("upah"),
+                "upah_jo"=>$this->input->get("upah_jo"),
+                "bonus_tf"=>$this->input->get("bonus_tf"),
                 "Jo_id"=>$this->input->get("jo_id")
             );
             $this->model_detail->update_upah($data);

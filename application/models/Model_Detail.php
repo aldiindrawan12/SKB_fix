@@ -96,48 +96,84 @@ class Model_Detail extends CI_model
         $supir_kasbon = $data["supir_kasbon"];
         $grand_upah = ($supir_kasbon-($supir_kasbon+$upah))*(-1);
         //set kasbon supir
-        if($grand_upah < 0){
-            $this->db->set("supir_kasbon",$grand_upah*(-1));
-        }else{
-            $this->db->set("supir_kasbon",0);
-        }
-        $this->db->where("supir_id",$supir_id);
-        $this->db->update("skb_supir");
+            if($grand_upah < 0){
+                $this->db->set("supir_kasbon",$grand_upah*(-1));
+            }else{
+                $this->db->set("supir_kasbon",0);
+            }
+            $this->db->where("supir_id",$supir_id);
+            $this->db->update("skb_supir");
         //end set kasbon supir
 
-        //insert kasbon 
-        if($upah-$supir_kasbon != $upah){
-            if($upah<0){
-                $nominal_bon = $supir_kasbon+$upah;
-            }else{
-                $nominal_bon = $supir_kasbon;
+        //insert pembayaran upah 
+        $this->db->select("pembayaran_upah_id");
+        $pembayaran_upah_id = $this->db->get("skb_pembayaran_upah")->result_array();
+        $isi_pembayaran_upah_id = [];
+        if($pembayaran_upah_id){
+            for($i=0;$i<count($pembayaran_upah_id);$i++){
+                $isi_pembayaran_upah_id[] = $pembayaran_upah_id[$i]["pembayaran_upah_id"];
             }
-            $this->db->select("bon_id");
-            $bon_id = $this->db->get("skb_bon")->result_array();
-            $isi_bon_id = [];
-            for($i=0;$i<count($bon_id);$i++){
-                $isi_bon_id[] = $bon_id[$i]["bon_id"];
-            }
-            date_default_timezone_set('Asia/Jakarta');
-            $data=array(
-                "bon_id"=>max($isi_bon_id)+1,
-                "supir_id"=>$supir_id,
-                "bon_jenis"=>"Potong Gaji",
-                "bon_nominal"=>$nominal_bon,
-                "bon_keterangan"=>"Potongan Kasbon Dari Pembayaran Gaji",
-                "bon_tanggal"=>date("Y-m-d H:i:s")
-            );
-            $this->db->insert("skb_bon",$data);
+        }else{
+            $isi_pembayaran_upah_id[] = 0;
         }
+
+        if($data["bonus_tf"]==0){
+            if($upah<0){
+                $bonus = $supir_kasbon-$upah-$data["upah_jo"];
+            }else{
+                $bonus = $supir_kasbon+$upah-$data["upah_jo"];
+            }
+        }else{
+            $bonus = $data["bonus_tf"];
+            $upah = $upah+$data["bonus_tf"];
+        }
+        date_default_timezone_set('Asia/Jakarta');
+        $data=array(
+            "supir_id"=>$supir_id,
+            "pembayaran_upah_nominal"=>$data["upah_jo"],
+            "pembayaran_upah_bonus"=>$bonus,
+            "pembayaran_upah_bon"=>$supir_kasbon,
+            "pembayaran_upah_total"=>$upah,
+            "pembayaran_upah_tanggal"=>date("Y-m-d H:i:s")
+        );
+        $this->db->insert("skb_pembayaran_upah",$data);
+        //end insert pembayaran upah 
+        
+        //insert kasbon 
+            if($upah-$supir_kasbon != $upah){
+                if($upah<0){
+                    $nominal_bon = $supir_kasbon+$upah;
+                }else{
+                    $nominal_bon = $supir_kasbon;
+                }
+                $this->db->select("bon_id");
+                $bon_id = $this->db->get("skb_bon")->result_array();
+                $isi_bon_id = [];
+                for($i=0;$i<count($bon_id);$i++){
+                    $isi_bon_id[] = $bon_id[$i]["bon_id"];
+                }
+                date_default_timezone_set('Asia/Jakarta');
+                $data=array(
+                    "bon_id"=>max($isi_bon_id)+1,
+                    "supir_id"=>$supir_id,
+                    "bon_jenis"=>"Potong Gaji",
+                    "bon_nominal"=>$nominal_bon,
+                    "bon_keterangan"=>"Potongan Kasbon Dari Pembayaran Gaji",
+                    "bon_tanggal"=>date("Y-m-d H:i:s")
+                );
+                $this->db->insert("skb_bon",$data);
+            }
         //end insert kasbon 
 
         //update status upah pada jo id
-        if($Jo_id != null){
-        for($i=0;$i<count($Jo_id);$i++){
-            $this->db->set("status_upah","Sudah Dibayar");
-            $this->db->where("Jo_id",$Jo_id[$i]);
-            $this->db->update("skb_job_order");
-        }}
+            if($Jo_id != null){
+                for($i=0;$i<count($Jo_id);$i++){
+                    $this->db->set("status_upah","Sudah Dibayar");
+                    // $this->db->set("pembayaran_upah_id",max($isi_pembayaran_upah_id)+1);
+                    $this->db->where("Jo_id",$Jo_id[$i]);
+                    $this->db->update("skb_job_order");
+                }
+            }
         //end update status upah pada jo id
     }
     

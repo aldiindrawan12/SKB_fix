@@ -113,6 +113,7 @@
             <input autocomplete="off" type="text" class="form-control" id="AN" name="AN" required>
             <label for="Norek" class="form-label">No Rek</label>
             <input autocomplete="off" type="text" class="form-control" id="Norek" name="Norek" required>
+            <input autocomplete="off" type="text" class="form-control" id="bonus_tf" name="bonus_tf" value="0" hidden>
         </div>
         <div class="col-md-5 form-group">
             <label for="Keterangan" class="form-label">Keterangan</label>
@@ -141,6 +142,7 @@
         var data_jo_id = [];
         var total = "<?= $upah-$supir['supir_kasbon']?>";
         var bonus = $("#bonus").val();
+        var bonus = $("#bonus").val();
         if(bonus==""){
             bonus="0";
         }
@@ -157,6 +159,7 @@
     function total(){
         var total = "<?= $upah-$supir['supir_kasbon']?>";
         var bonus = $("#bonus").val();
+        $("#bonus_tf").val($("#bonus").val());
         if(bonus==""){
             bonus="0";
         }

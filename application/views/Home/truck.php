@@ -152,7 +152,7 @@
 <!-- end pop up add truck -->
 
 <!-- pop up update truck -->
-<div class="modal fade mt-5 px-5 py-2" id="popup-update-truck" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<div class="modal fade" id="popup-update-truck" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
@@ -209,7 +209,7 @@
 <!-- end pop up update truck -->
 
 <!-- pop up detail kendaraan -->
-<div class="modal fade mt-3 px-3" id="popup-kendaraan" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<div class="modal fade " id="popup-kendaraan" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
@@ -291,12 +291,12 @@
                         </tbody>
                     </table>
                 </div>
-                                    <div class="container w-10">
-                                        <img src="" alt="foto mobil" id="file_foto_detail" class="img-thumbnail">
+                                    <div class="container w-10 text-center">
+                                        <img src="" alt="foto mobil" id="file_foto_detail" class="img-thumbnail " style="width:630px;height:900;">
                                     </div>
                       
-                                    <div class="container w-10">
-                                        <img src="" alt="foto stnk" id="file_stnk_detail" class="img-thumbnail">
+                                    <div class="container w-10 text-center">
+                                        <img src="" alt="foto stnk" id="file_stnk_detail" class="img-thumbnail"style="width:630px;height:900;">
                                     </div>
                       
             </div>

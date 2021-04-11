@@ -23,7 +23,7 @@
                         <th class="text-center" width="11%" scope="col">No Polisi</th>
                         <th class="text-center" width="12%" scope="col">Merk</th>
                         <th class="text-center" width="12%" scope="col">Type</th>
-                        <th class="text-center" width="15%" scope="col">Jenis Kendaraan</th>
+                        <th class="text-center" width="15%" scope="col">Jenis</th>
                         <th class="text-center" width="10%" scope="col">Tahun</th>
                         <th class="text-center" width="17%" scope="col">Pajak Tahunan STNK</th>
                         <th class="text-center" width="30%" scope="col">Aksi</th>

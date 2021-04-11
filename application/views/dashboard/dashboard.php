@@ -64,7 +64,7 @@
                             <tr>
                                 <th class="text-center" width="20%" scope="col">No Polisi</th>
                                 <th class="text-center" width="20%" scope="col">No Ijin BM</th>
-                                <th class="text-center" width="40%" scope="col">Berlaku Ijin BM</th>
+                                <th class="text-center" width="20%" scope="col">Berlaku Ijin BM</th>
                                 <th class="text-center" width="30%" scope="col">Sisa Berlaku</th>
                             </tr>
                         </thead>

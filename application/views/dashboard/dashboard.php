@@ -108,7 +108,7 @@
                             <tr>
                                 <th class="text-center" width="20%" scope="col">Nama</th>
                                 <th class="text-center" width="20%" scope="col">Telp</th>
-                                <th class="text-center" width="20%" scope="col">Alamat</th>
+                                <th class="text-center" width="20%" scope="col">Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -507,7 +507,18 @@
                         "data": "supir_telp"
                     },
                     {
-                        "data": "status_jalan"
+                        "data": "status_jalan",
+                        className: 'text-center',
+                        "orderable": false,
+                            render: function(data, type, row) {
+                                if (data == "Jalan") {
+                                    let html = "<span class='btn-sm btn-block btn-success'><i class='fa fa-fw fa-check mr-2'></i>" + data + "</span>";
+                                    return html;
+                                } else {
+                                    let html = "<span class='btn-sm btn-block btn-warning'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>" + data + "</span>";
+                                    return html;
+                                }
+                            }
                     },
                 ]
             });

@@ -131,8 +131,8 @@
                 <button type="reset" class="btn btn-outline-danger mr-3 float-md-right" onclick="reset_form()">Reset</button>
             </div>
             <?php echo form_close();?>
-            <div class="table-responsive">
-                <table class="table table-bordered" id="Table-Pilih-Merk" width="100%" cellspacing="0">
+            <div class="table-responsive border border-dark py-2">
+                <table class="table table-bordered " id="Table-Pilih-Merk" width="100%" cellspacing="0">
                     <thead>
                         <tr>    
                             <th class="text-center" width="12%" scope="col">No</th>
@@ -143,8 +143,7 @@
                             <th class="text-center" width="30%" scope="col">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody>
-                    </tbody>
+                    
                 </table>
             </div>
         </div>

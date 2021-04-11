@@ -430,7 +430,7 @@
                         className: 'text-center font-weight-bold',
                         "orderable": false,
                         render: function(data, type, row) {
-                            let html ="<a class='btn btn-light btn-pilih-merk' href='javascript:void(0)' data-pk='"+data+"'>Pilih</a>";
+                            let html ="<a class='btn btn-light btn-pilih-merk' href='javascript:void(0)' data-pk='"+data+"'>Pilih <i class='fas fa-check-circle'></i></a>";
                             return html;
                         }
                     }

@@ -108,7 +108,7 @@
                             <input autocomplete="off" type="text" class="form-control" id="mobil_berlaku_kir" name="mobil_berlaku_kir" required onclick="tanggal_berlaku(this)">
                         </div>
                         <div class="form-group">
-                            <label for="mobil_ijin_bongkar" class="form-label font-weight-bold">No Ijin Bongkar</label>
+                            <label for="mobil_ijin_bongkar" class="form-label font-weight-bold">No Izin Bongkar</label>
                             <input autocomplete="off" type="text" class="form-control" id="mobil_ijin_bongkar" name="mobil_ijin_bongkar" required >
                         </div>
                         <div class="form-group">

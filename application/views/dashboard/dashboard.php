@@ -1,7 +1,78 @@
+<div class="info-supir">
+        <div class="card shadow mb-4 ml-2 mr-2">
+            <div class="card-header py-3 text-center">
+            <h6 class="m-0 font-weight-bold btn-facebook disabled h4 p-3 " style="border-radius:10px; ">Informasi Driver</h6>
+            </div>  
+            <div class="card-body row justify-content-md-center small">
+                <div class="table-responsive col-md-6 border border-info rounded p-1">
+                    <div class="card-header py-3 text-center">
+                        <h6 class="m-0 font-weight-bold text-gray-900">Supir Tidak Jalan</h6>
+                    </div>
+                    <table class="table table-bordered" id="Table-Supir-Tidak-Jalan" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th class="text-center" width="20%" scope="col">Nama</th>
+                                <th class="text-center" width="20%" scope="col">Nomor Telepon</th>
+                                <th class="text-center" width="20%" scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-responsive col-md-6 border border-info rounded p-1">
+                    <div class="card-header py-3 text-center">
+                        <h6 class="m-0 font-weight-bold text-gray-900">Berlaku SIM</h6>
+                    </div>
+                    <table class="table table-bordered" id="Table-Supir-Sim" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th class="text-center" width="20%" scope="col">Nama</th>
+                                <th class="text-center" width="15%" scope="col">Telp</th>
+                                <th class="text-center" width="20%" scope="col">No Sim</th>
+                                <th class="text-center" width="20%" scope="col">Berlaku Sim</th>
+                                <th class="text-center" width="25%" scope="col">Sisa Berlaku Sim</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="info-invoice">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 text-center">
+                <h6 class="m-0 font-weight-bold btn-warning disabled h4 p-3 " style="border-radius:10px; background-color:#ffcc29;">Invoice Jatuh Tempo</h6>
+            </div>  
+            <div class="card-body row justify-content-md-center small">
+                <div class="table-responsive col-md-12 border border-primary rounded p-1">
+                    <table class="table table-bordered" id="Table-Invoice-Jatuh-Tempo" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th class="text-center" scope="col">No Invoice</th>
+                                <th class="text-center" scope="col">Customer</th>
+                                <th class="text-center" scope="col">Tgl Invoice</th>
+                                <th class="text-center" scope="col">Tgl Batas Pembayaran</th>
+                                <th class="text-center" scope="col">Jatuh Tempo</th>
+                                <th class="text-center" scope="col">Status Pembayaran</th>
+                                <th class="text-center" scope="col">Grand Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="info-kendaraan"> 
         <div class="card shadow mb-4 ml-2 mr-2">
             <div class="card-header py-3 text-center">  
-                <h6 class="m-0 font-weight-bold btn-facebook disabled h4 p-3 " style="border-radius:10px;">Informasi Kendaraan</h6>
+                <h6 class="m-0 font-weight-bold btn-primary disabled h4 p-3 " style="border-radius:10px; background-color:#c19277;">Informasi Kendaraan</h6>
             </div>  
             <div class="card-body row justify-content-md-center small">
                 <div class="table-responsive col-md-6 border border-primary rounded p-1 mb-3">
@@ -93,75 +164,8 @@
             </div>
         </div>
     </div>
-    <div class="info-supir">
-        <div class="card shadow mb-4 ml-2 mr-2">
-            <div class="card-header py-3 text-center">
-            <h6 class="m-0 font-weight-bold btn-info disabled h4 p-3 " style="border-radius:10px; background-color:#c19277;">Informasi Driver</h6>
-            </div>  
-            <div class="card-body row justify-content-md-center small">
-                <div class="table-responsive col-md-6 border border-info rounded p-1">
-                    <div class="card-header py-3 text-center">
-                        <h6 class="m-0 font-weight-bold text-gray-900">Supir Tidak Jalan</h6>
-                    </div>
-                    <table class="table table-bordered" id="Table-Supir-Tidak-Jalan" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th class="text-center" width="20%" scope="col">Nama</th>
-                                <th class="text-center" width="20%" scope="col">Telp</th>
-                                <th class="text-center" width="20%" scope="col">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="table-responsive col-md-6 border border-info rounded p-1">
-                    <div class="card-header py-3 text-center">
-                        <h6 class="m-0 font-weight-bold text-gray-900">Berlaku SIM</h6>
-                    </div>
-                    <table class="table table-bordered" id="Table-Supir-Sim" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th class="text-center" width="20%" scope="col">Nama</th>
-                                <th class="text-center" width="15%" scope="col">Telp</th>
-                                <th class="text-center" width="20%" scope="col">No Sim</th>
-                                <th class="text-center" width="20%" scope="col">Berlaku Sim</th>
-                                <th class="text-center" width="25%" scope="col">Sisa Berlaku Sim</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="info-invoice">
-        <div class="card shadow mb-4">
-            <div class="card-header py-3 text-center">
-                <h6 class="m-0 font-weight-bold btn-warning disabled h4 p-3 " style="border-radius:10px; background-color:#ffcc29;">Invoice Jatuh Tempo</h6>
-            </div>  
-            <div class="card-body row justify-content-md-center small">
-                <div class="table-responsive col-md-12 border border-primary rounded p-1">
-                    <table class="table table-bordered" id="Table-Invoice-Jatuh-Tempo" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th class="text-center" scope="col">No Invoice</th>
-                                <th class="text-center" scope="col">Customer</th>
-                                <th class="text-center" scope="col">Tgl Invoice</th>
-                                <th class="text-center" scope="col">Tgl Batas Pembayaran</th>
-                                <th class="text-center" scope="col">Jatuh Tempo</th>
-                                <th class="text-center" scope="col">Status Pembayaran</th>
-                                <th class="text-center" scope="col">Grand Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+   
+  
     <div class="info-jo">
         <div class="card shadow mb-4">
             <div class="card-header py-3 text-center">

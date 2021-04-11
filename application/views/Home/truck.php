@@ -112,7 +112,7 @@
                             <input autocomplete="off" type="text" class="form-control" id="mobil_ijin_bongkar" name="mobil_ijin_bongkar" required >
                         </div>
                         <div class="form-group">
-                            <label for="mobil_berlaku_ijin_bongkar" class="form-label font-weight-bold">Berlaku Ijin Bongka</label>
+                            <label for="mobil_berlaku_ijin_bongkar" class="form-label font-weight-bold">Berlaku Izin Bongkar</label>
                             <input autocomplete="off" type="text" class="form-control" id="mobil_berlaku_ijin_bongkar" name="mobil_berlaku_ijin_bongkar" required onclick="tanggal_berlaku(this)">
                         </div>
                         <div class="form-group">
@@ -191,7 +191,7 @@
                             <input autocomplete="off" type="text" class="form-control" id="mobil_ijin_bongkar_update" name="mobil_ijin_bongkar_update" required>
                         </div>
                         <div class="form-group">
-                            <label for="mobil_berlaku_ijin_bongkar_update" class="form-label font-weight-bold">Tgl.Berlaku Ijin Bongkar</label>
+                            <label for="mobil_berlaku_ijin_bongkar_update" class="form-label font-weight-bold">Tgl.Berlaku Izin Bongkar</label>
                             <input autocomplete="off" type="text" class="form-control" id="mobil_berlaku_ijin_bongkar_update" name="mobil_berlaku_ijin_bongkar_update" required onclick="tanggal_berlaku(this)">
                         </div>
                         <div class="form-group">
@@ -285,7 +285,7 @@
                                 <td name="mobil_ijin_bongkar"></td>
                             </tr>
                             <tr>
-                                <td class="font-weight-bold">Berlaku Ijin Bongkar</td>
+                                <td class="font-weight-bold">Berlaku Izin Bongkar</td>
                                 <td name="mobil_berlaku_ijin_bongkar"></td>
                             </tr>
                         </tbody>

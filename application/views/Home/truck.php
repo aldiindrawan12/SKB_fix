@@ -14,7 +14,7 @@
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">Kendaraan</h6>
     </div>
-    <div class="card-body">
+    <div class="card-body small">
         <div class="table-responsive">
             <table class="table table-bordered" id="Table-Truck" width="100%" cellspacing="0">
                 <thead>

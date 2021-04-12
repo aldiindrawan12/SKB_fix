@@ -3505,7 +3505,14 @@
             a.value = '';
             }
             if (fileSize>2000000) {
-                alert('File Harus Kurang Dari 2 MB');
+                Swal.fire({
+                title: "Upload Gagal",
+                icon: "error",
+                text: "Ukuran File Harus Kurang Dari 2 MB",
+                type: "error",
+                
+            });
+               
                 a.value = '';
             }
         }

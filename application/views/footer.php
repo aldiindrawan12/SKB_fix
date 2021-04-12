@@ -3494,10 +3494,9 @@
             var fileSize = a.files[0].size;
             var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
             if (!allowedExtensions.exec(filePath)) {
-                // alert('');
-                
+             
                 Swal.fire({
-                title: "Error",
+                title: "Upload Gagal",
                 icon: "error",
                 text: "File Harus Berupa Gambar JPG,JPEG,PNG",
                 type: "error",

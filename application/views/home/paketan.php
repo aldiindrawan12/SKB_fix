@@ -164,7 +164,7 @@
 
 <!-- pop up add detail rute paketan -->
 <div class="modal fade" id="popup-detail-rute-paketan" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
-    <div class="modal-dialog modal-xl"  role="document"  >
+    <div class="modal-dialog modal-lg"  role="document"  >
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
                 <h5 class="font-weight-bold">Detail Rute</h5>
@@ -191,23 +191,23 @@
                                 <table class="table table-bordered" id="table-detail-paketan" width="100%" cellspacing="0">
                                     <tbody>
                                         <tr>
-                                            <td>Keterangan</td>
+                                            <td class="font-weight-bold">Keterangan</td>
                                             <td><span id="detail-keterangan"></span></td>
                                         </tr>
                                         <tr>
-                                            <td>Tonase</td>
+                                            <td class="font-weight-bold">Tonase</td>
                                             <td><span id="detail-tonase"></span></td>
                                         </tr>
                                         <tr>
-                                            <td>Type Gaji</td>
+                                            <td class="font-weight-bold">Type Gaji</td>
                                             <td><span id="detail-gaji"></span></td>
                                         </tr>
                                         <tr>
-                                            <td>Gaji Fix</td>
+                                            <td class="font-weight-bold">Gaji Fix</td>
                                             <td><span id="detail-gaji-fix"></span></td>
                                         </tr>
                                         <tr>
-                                            <td>Gaji Non-Fix</td>
+                                            <td class="font-weight-bold">Gaji Non-Fix</td>
                                             <td><span id="detail-gaji-nonfix"></span></td>
                                         </tr>
                                     </tbody>

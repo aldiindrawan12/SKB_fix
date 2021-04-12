@@ -3494,8 +3494,16 @@
             var fileSize = a.files[0].size;
             var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
             if (!allowedExtensions.exec(filePath)) {
-                alert('File Harus Berupa Gambar JPG,JPEG,PNG');
-                a.value = '';
+                // alert('');
+                
+                Swal.fire({
+                title: "Error",
+                icon: "error",
+                text: "File Harus Berupa Gambar JPG,JPEG,PNG",
+                type: "error",
+                
+            });
+            a.value = '';
             }
             if (fileSize>2000000) {
                 alert('File Harus Kurang Dari 2 MB');

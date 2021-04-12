@@ -30,8 +30,8 @@
                                 <th class="text-center" width="20%" scope="col">Nama</th>
                                 <th class="text-center" width="15%" scope="col">Telp</th>
                                 <th class="text-center" width="20%" scope="col">No Sim</th>
-                                <th class="text-center" width="20%" scope="col">Berlaku Sim</th>
-                                <th class="text-center" width="25%" scope="col">Sisa Berlaku Sim</th>
+                                <th class="text-center" width="15%" scope="col">Tgl Sim</th>
+                                <th class="text-center" width="30%" scope="col">Sisa Sim</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -322,8 +322,13 @@
                         className: 'text-center',
                         "orderable": false,
                             render: function(data, type, row) {
-                                let html = "<a class='btn btn-block btn-sm btn-warning'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
-                                return html;
+                                if(row["sisa"][0]=="-"){
+                                    let html = "<a class='btn btn-block btn-sm btn-warning'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
+                                    return html;
+                                }else{
+                                    let html = "<a class='btn btn-block btn-sm btn-danger'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
+                                    return html;
+                                }
                             }
                     }
                 ]
@@ -366,8 +371,13 @@
                         className: 'text-center',
                         "orderable": false,
                             render: function(data, type, row) {
-                                let html = "<a class='btn btn-block btn-sm btn-warning'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
-                                return html;
+                                if(row["sisa"][0]=="-"){
+                                    let html = "<a class='btn btn-block btn-sm btn-warning'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
+                                    return html;
+                                }else{
+                                    let html = "<a class='btn btn-block btn-sm btn-danger'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
+                                    return html;
+                                }
                             }
                     }
                 ]
@@ -405,8 +415,13 @@
                         className: 'text-center',
                         "orderable": false,
                             render: function(data, type, row) {
-                                let html = "<a class='btn btn-block btn-sm btn-danger'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
-                                return html;
+                                if(row["sisa"][0]=="-"){
+                                    let html = "<a class='btn btn-block btn-sm btn-warning'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
+                                    return html;
+                                }else{
+                                    let html = "<a class='btn btn-block btn-sm btn-danger'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
+                                    return html;
+                                }
                             }
                     }
                 ]
@@ -444,8 +459,13 @@
                         className: 'text-center',
                         "orderable": false,
                             render: function(data, type, row) {
-                                let html = "<a class='btn btn-block btn-sm btn-danger'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
-                                return html;
+                                if(row["sisa"][0]=="-"){
+                                    let html = "<a class='btn btn-block btn-sm btn-warning'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
+                                    return html;
+                                }else{
+                                    let html = "<a class='btn btn-block btn-sm btn-danger'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
+                                    return html;
+                                }
                             }
                     }
                 ]
@@ -563,8 +583,13 @@
                         className: 'text-center',
                         "orderable": false,
                             render: function(data, type, row) {
-                                let html = "<a class='btn btn-block btn-sm btn-danger'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
-                                return html;
+                                if(row["sisa"][0]=="-"){
+                                    let html = "<a class='btn btn-block btn-sm btn-warning'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
+                                    return html;
+                                }else{
+                                    let html = "<a class='btn btn-block btn-sm btn-danger'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
+                                    return html;
+                                }
                             }
                     }
                 ]

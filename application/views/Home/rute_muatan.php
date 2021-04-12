@@ -361,6 +361,9 @@
         </div>
     </div>
 </div>
+</div>
+</div>
+
 <!-- end pop up detail rute -->
 
 <script>

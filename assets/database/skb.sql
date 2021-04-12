@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
--- https://www.phpmyadmin.net/
+-- version 4.5.1
+-- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 03 Apr 2021 pada 07.33
--- Versi server: 10.4.17-MariaDB
--- Versi PHP: 7.4.15
+-- Generation Time: Apr 12, 2021 at 07:08 PM
+-- Server version: 10.1.9-MariaDB
+-- PHP Version: 7.0.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -24,7 +23,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `skb_akun`
+-- Table structure for table `skb_akun`
 --
 
 CREATE TABLE `skb_akun` (
@@ -35,19 +34,22 @@ CREATE TABLE `skb_akun` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `skb_akun`
+-- Dumping data for table `skb_akun`
 --
 
 INSERT INTO `skb_akun` (`akun_id`, `akun_name`, `akun_role`, `akun_akses`) VALUES
-(14, 'Rizki Bhaskara aa', 'Super User', '[\"1\",\"1\",\"1\",\"1\",\"1\"]'),
-(17, 'aldi indrawan aja', 'Operator', '[\"0\",\"0\",\"1\",\"1\",\"0\"]'),
-(19, 'shanti', 'Operator', '[\"1\",\"0\",\"0\",\"0\",\"0\"]'),
-(20, 'CEO skb', 'Supervisor', '[\"1\",\"1\",\"1\",\"1\",\"1\"]');
+(14, 'Rizki Bhaskara aa', 'Super User', '["1","1","1","1","1"]'),
+(17, 'aldi indrawan aja', 'Operator', '["0","0","1","1","0"]'),
+(19, 'shanti', 'Operator', '["1","0","0","0","0"]'),
+(20, 'CEO skb', 'Supervisor', '["1","1","1","1","1"]'),
+(21, 'supervisor', 'Supervisor', '["1","1","1","1","1"]'),
+(22, 'hallohallo', 'Supervisor', '["1","1","1","1","1"]'),
+(23, 'admin', 'Super User', '["1","1","1","1","1"]');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `skb_bon`
+-- Table structure for table `skb_bon`
 --
 
 CREATE TABLE `skb_bon` (
@@ -60,22 +62,20 @@ CREATE TABLE `skb_bon` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `skb_bon`
+-- Dumping data for table `skb_bon`
 --
 
 INSERT INTO `skb_bon` (`bon_id`, `bon_nominal`, `bon_jenis`, `bon_tanggal`, `bon_keterangan`, `supir_id`) VALUES
-(22, 1500000, 'Pembatalan JO', '2021-03-27 09:21:48', 'Pembatalan JO', 5),
-(23, 3000000, 'Pembatalan JO', '2021-03-27 09:24:00', 'Pembatalan JO', 20),
-(24, 3500000, 'Pembatalan JO', '2021-03-27 10:32:43', 'Pembatalan JO', 5),
-(25, 3500000, 'Pembatalan JO', '2021-03-27 14:44:01', 'Pembatalan JO', 14),
-(26, 5000000, 'Pembayaran', '2021-03-27 22:55:23', 'pembayaran bon', 5),
-(27, 500000, 'Pengajuan', '2021-03-28 21:32:02', 'ok', 15),
-(28, 3500000, 'Pembayaran', '2021-03-31 20:08:25', 'lunas', 14);
+(1, 3000000, 'Pembatalan JO', '2021-04-09 12:32:19', 'Pembatalan JO', 21),
+(2, 1500000, 'Pembayaran', '2021-04-09 12:35:25', 'pengembalian uj', 21),
+(3, 1500000, 'Potong Gaji', '2021-04-09 12:36:20', 'Potongan Kasbon Dari Pembayaran Gaji', 21),
+(4, 500000, 'Pengajuan', '2021-04-09 12:49:23', 'ok', 5),
+(5, 500000, 'Potong Gaji', '2021-04-09 12:49:34', 'Potongan Kasbon Dari Pembayaran Gaji', 5);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `skb_customer`
+-- Table structure for table `skb_customer`
 --
 
 CREATE TABLE `skb_customer` (
@@ -90,36 +90,17 @@ CREATE TABLE `skb_customer` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `skb_customer`
+-- Dumping data for table `skb_customer`
 --
 
 INSERT INTO `skb_customer` (`customer_id`, `customer_name`, `customer_alamat`, `customer_kontak_person`, `customer_telp`, `customer_keterangan`, `status_hapus`, `validasi`) VALUES
-(1, 'PT.Gula ku', '', '', '', '', 'No', 'ACC'),
-(2, 'PT.Gink', '', '', '', '', 'No', 'ACC'),
-(3, 'PT.Gudang Garam', '', '', '', '', 'No', 'ACC'),
-(4, 'PT.AISPS', '', '', '', '', 'No', 'ACC'),
-(5, 'PT.Philip LPG', '', '', '', '', 'No', 'ACC'),
-(6, 'PT.Jaya Bakery', '', '', '', '', 'No', 'ACC'),
-(7, 'PT.Rumah Kayu', '', '', '', '', 'No', 'ACC'),
-(8, 'PT.SMANLA', '', '', '', '', 'No', 'ACC'),
-(9, 'Toko Adel', '', '', '', '', 'No', 'ACC'),
-(10, 'Wood Steirs', '', '', '', '', 'No', 'ACC'),
-(11, 'Toko Buku Dioni', '', '', '', '', 'No', 'ACC'),
-(12, 'Grosir Iyuz', 'jalan pulau damar ', 'iyuz', '089562372136', 'gorsiran', 'YES', 'ACC'),
-(14, 'PT Maju Terang', '', '', '', '', 'YES', 'Pending'),
-(21, 'Mutia Kece', 'Metro Pusat', 'Mutia', '0895232323', 'dari metro', 'YES', 'ACC'),
-(23, 'pt taman indah', 'jalan pulau damar', 'aldi ', '0895620408193', 'bidang taman', 'No', 'ACC'),
-(24, 'aldi', 'lampung', 'aldi indrawan', '009709-09008', 'mantap', 'No', 'ACC'),
-(25, 'galih', 'bandar jaya', 'galih', '0980798080', 'baru', 'No', 'ACC'),
-(26, 'metro gmbi', 'metro pusat', 'andre', '1234124', 'ok', 'No', 'ACC'),
-(27, 'data testing', 'bandar lampung', 'data', '0980980', 'testing', 'No', 'ACC'),
-(28, 'wood steirs cafe', 'jalan urip simoharjo', 'johansyah', '989124123', 'cafe pak ali', 'No', 'Pending'),
-(29, 'sate saleh', 'metro pusar', 'hari', '0897989809', 'jualan sate', 'YES', 'ACC');
+(30, 'PT.Gula Ku', 'Lampung Selatan', 'Aldi', '0895620408193', 'Pabrik Gula', 'No', 'ACC'),
+(31, 'PT Gudang Garam', 'Jalan Way Pangubuan', 'Heri', '089612312317', 'contact person adalah Supervisor', 'No', 'ACC');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `skb_invoice`
+-- Table structure for table `skb_invoice`
 --
 
 CREATE TABLE `skb_invoice` (
@@ -136,20 +117,19 @@ CREATE TABLE `skb_invoice` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `skb_invoice`
+-- Dumping data for table `skb_invoice`
 --
 
 INSERT INTO `skb_invoice` (`invoice_kode`, `customer_id`, `tanggal_invoice`, `batas_pembayaran`, `grand_total`, `total`, `ppn`, `status_bayar`, `total_tonase`, `invoice_keterangan`) VALUES
-('011-PT.Gula ku-02-2021', 1, '2021-03-27', '14', 2805000, 2550000, 255000, 'Lunas', 45, 'gula'),
-('123-PT.Gudang Garam-02-2021', 3, '2021-03-26', '14', 100000, 100000, 0, 'Belum Lunas', 10, 'rokok'),
-('123-PT.Gula ku-02-2021', 1, '2021-03-26', '14', 110000, 100000, 10000, 'Lunas', 10, 'mesin giling'),
-('222-PT.Gula ku-02-2021', 1, '2021-03-26', '2', 660000, 600000, 60000, 'Belum Lunas', 60, 'gula (lampung-medan)'),
-('333-PT.Gula ku-02-2021', 1, '2021-03-26', '14', 385000, 350000, 35000, 'Belum Lunas', 35, 'gula dan tebu dari lampung ke palembang');
+('111-PT Gudang Garam-03-2021', 31, '2021-04-09', '14', 7500000, 7500000, 0, 'Lunas', 10, 'rokok keliling'),
+('111-PT.Gula Ku-03-2021', 30, '2021-04-09', '14', 14850000, 13500000, 1350000, 'Lunas', 10, 'muatan kopi'),
+('213-PT.Gula Ku-03-2021', 30, '2021-04-12', '14', 13500000, 13500000, 0, 'Belum Lunas', 10, 'ok\r\n'),
+('999-PT.Gula Ku-03-2021', 30, '2021-03-12', '14', 5000000, 5000000, 0, 'Belum Lunas', 10, 'ok');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `skb_job_order`
+-- Table structure for table `skb_job_order`
 --
 
 CREATE TABLE `skb_job_order` (
@@ -166,52 +146,59 @@ CREATE TABLE `skb_job_order` (
   `tanggal_surat` date NOT NULL,
   `tanggal_bongkar` date NOT NULL,
   `tonase` int(11) NOT NULL,
-  `keterangan` text DEFAULT NULL,
+  `keterangan` text,
   `upah` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `status` varchar(25) NOT NULL,
   `bonus` int(11) NOT NULL,
   `status_upah` varchar(25) NOT NULL,
-  `tagihan` varchar(20) NOT NULL
+  `pembayaran_upah_id` int(11) NOT NULL,
+  `tagihan` varchar(20) NOT NULL,
+  `kosongan_id` varchar(10) NOT NULL,
+  `uang_kosongan` varchar(20) DEFAULT NULL,
+  `paketan_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `skb_job_order`
+-- Dumping data for table `skb_job_order`
 --
 
-INSERT INTO `skb_job_order` (`Jo_id`, `invoice_id`, `mobil_no`, `supir_id`, `muatan`, `asal`, `tujuan`, `uang_jalan`, `uang_jalan_bayar`, `terbilang`, `tanggal_surat`, `tanggal_bongkar`, `tonase`, `keterangan`, `upah`, `customer_id`, `status`, `bonus`, `status_upah`, `tagihan`) VALUES
-(1, '011-PT.Gula ku-02-2021', 'BE 1510 YY', 5, 'gula', 'gudang lampung', 'gudang bekasi', 1500000, 0, ' Satu Juta Lima Ratus  Ribu  Rupiah', '2021-03-19', '2021-03-22', 10, '<strong>Catatan JO : </strong>hatihati<br><strong>Catatan Konfirmasi : </strong>oke\r\n', 750000, 1, 'Sampai Tujuan', 100000, 'Sudah Dibayar', '10000'),
-(2, '333-PT.Gula ku-02-2021', 'BE 2213 AA', 14, 'gula', 'gudang lampung', 'gudang palembang', 1500000, 0, ' Satu Juta Lima Ratus  Ribu  Rupiah', '2021-03-19', '2021-03-22', 10, '<strong>Catatan JO : </strong>oke<br><strong>Catatan Konfirmasi : </strong>ok', 500000, 1, 'Sampai Tujuan', 250000, 'Sudah Dibayar', '10000'),
-(3, '123-PT.Gula ku-02-2021', 'BE 3422 YI', 15, 'mesin giling', 'gudang bandung', 'gudang jakarta', 1000000, 0, ' Satu Juta  Rupiah', '2021-03-19', '2021-03-19', 10, '<strong>Catatan JO : </strong>weqwe<br><strong>Catatan Konfirmasi : </strong>mantap', 500, 1, 'Sampai Tujuan', 50000, 'Sudah Dibayar', '10000'),
-(4, '123-PT.Gudang Garam-02-2021', 'BE 5530 PQ', 15, 'rokok', 'gudang jakarta', 'gudang palembang', 2500000, 0, ' Dua Juta Lima Ratus  Ribu  Rupiah', '2021-03-19', '2021-03-19', 10, '<strong>Catatan JO : </strong>segera<br><strong>Catatan Konfirmasi : </strong>mantap', 1500000, 3, 'Sampai Tujuan', 150000, 'Sudah Dibayar', '10000'),
-(5, '011-PT.Gula ku-02-2021', 'BE 4321 YI', 15, 'gula', 'gudang bandung', 'gudang lampung', 2500000, 0, ' Dua Juta Lima Ratus  Ribu  Rupiah', '2021-03-19', '2021-03-19', 10, '<strong>Catatan JO : </strong>hati hati bray<br><strong>Catatan Konfirmasi : </strong>mantap', 1500000, 1, 'Sampai Tujuan', 250000, 'Sudah Dibayar', '10000'),
-(6, '222-PT.Gula ku-02-2021', 'BE 3422 YI', 15, 'gula', 'gudang lampung', 'gudang medan', 3000000, 0, ' Tiga Juta  Rupiah', '2021-03-22', '2021-03-22', 10, '<strong>Catatan JO : </strong>asd<br><strong>Catatan Konfirmasi : </strong>oke', 0, 1, 'Sampai Tujuan', 250000, 'Belum Dibayar', '10000'),
-(7, '222-PT.Gula ku-02-2021', 'BE 1211 AI', 5, 'gula', 'gudang lampung', 'gudang medan', 3500000, 0, ' Tiga Juta Lima Ratus  Ribu  Rupiah', '2021-03-22', '2021-03-22', 10, '<strong>Catatan JO : </strong>hati hati<br><strong>Catatan Konfirmasi : </strong>ok', 2000000, 1, 'Sampai Tujuan', 100000, 'Sudah Dibayar', '10000'),
-(8, '222-PT.Gula ku-02-2021', 'BE 2213 AA', 5, 'gula', 'gudang lampung', 'gudang medan', 3000000, 0, ' Tiga Juta  Rupiah', '2021-03-22', '2021-03-22', 25, '<strong>Catatan JO : </strong>hati hati<br><strong>Catatan Konfirmasi : </strong>ok', 1000000, 1, 'Sampai Tujuan', 200000, 'Sudah Dibayar', '10000'),
-(9, '222-PT.Gula ku-02-2021', 'BE 3422 YI', 14, 'gula', 'gudang lampung', 'gudang medan', 3000000, 0, ' Tiga Juta  Rupiah', '2021-03-22', '2021-03-22', 15, '<strong>Catatan JO : </strong>jauh ni kemedan<br><strong>Catatan Konfirmasi : </strong>ok', 1500000, 1, 'Sampai Tujuan', 250000, 'Sudah Dibayar', '10000'),
-(10, '333-PT.Gula ku-02-2021', 'BE 1510 YY', 14, 'tebu', 'gudang lampung', 'gudang palembang', 1500000, 0, ' Satu Juta Lima Ratus  Ribu  Rupiah', '2021-03-22', '2021-03-22', 25, '<strong>Catatan JO : </strong><br><strong>Catatan Konfirmasi : </strong>mantap', 500000, 1, 'Sampai Tujuan', 250000, 'Sudah Dibayar', '10000'),
-(11, '', 'BE 4321 YI', 5, 'gula', 'gudang lampung', 'gudang medan', 3500000, 0, ' Tiga Juta Lima Ratus  Ribu  Rupiah', '2021-03-22', '0000-00-00', 0, 'mantap,hati hati ya', 2000000, 1, 'Dibatalkan', 0, 'Sudah Dibayar', '10000'),
-(12, '', 'BE 2213 AA', 14, 'rokok', 'gudang jakarta', 'gudang palembang', 2000000, 0, ' Dua Juta  Rupiah', '2021-03-22', '0000-00-00', 0, 'ok', 1000000, 3, 'Dibatalkan', 0, 'Belum Dibayar', '10000'),
-(13, '', 'BE 1510 YY', 15, 'gula', 'gudang lampung', 'gudang medan', 3000000, 0, ' Tiga Juta  Rupiah', '2021-03-22', '0000-00-00', 0, 'ok', 1500000, 1, 'Dibatalkan', 0, 'Sudah Dibayar', '10000'),
-(14, '', 'BE 3322 AS', 5, 'mesin giling', 'gudang bandung', 'gudang jakarta', 1500000, 0, ' Satu Juta Lima Ratus  Ribu  Rupiah', '2021-03-22', '0000-00-00', 0, 'ok', 750000, 1, 'Dibatalkan', 0, 'Sudah Dibayar', '10000'),
-(15, '011-PT.Gula ku-02-2021', 'BE 1510 YY', 5, 'gula', 'gudang lampung', 'gudang medan', 3000000, 0, ' Tiga Juta  Rupiah', '2021-03-26', '2021-03-26', 10, '<strong>Catatan JO : </strong>hati-hati<br><strong>Catatan Konfirmasi : </strong>mantap', 1500000, 1, 'Sampai Tujuan', 250000, 'Sudah Dibayar', '10000'),
-(16, '', 'BE 1510 YY', 5, 'mesin giling', 'gudang bandung', 'gudang jakarta', 1000000, 0, ' Satu Juta  Rupiah', '2021-03-27', '2021-03-27', 10, '<strong>Catatan JO : </strong>ok<br><strong>Catatan Konfirmasi : </strong>250k ganti ban', 500000, 1, 'Sampai Tujuan', 250000, 'Sudah Dibayar', '150000'),
-(17, '', 'BE 3322 AS', 14, 'rokok', 'gudang jakarta', 'gudang palembang', 2500000, 0, ' Dua Juta Lima Ratus  Ribu  Rupiah', '2021-03-27', '2021-03-27', 0, '<strong>Catatan JO : </strong><strong>Catatan JO : </strong><strong>Catatan JO : </strong>ambil rokok<br><strong>Catatan Konfirmasi : </strong><br><strong>Catatan Konfirmasi : </strong><br><strong>Catatan Konfirmasi : </strong>', 1500000, 3, 'Dibatalkan', 0, 'Belum Dibayar', ''),
-(18, '011-PT.Gula ku-02-2021', 'BE 1211 AI', 15, 'gula', 'gudang lampung', 'gudang medan', 3500000, 0, ' Tiga Juta Lima Ratus  Ribu  Rupiah', '2021-03-27', '2021-03-27', 15, '<strong>Catatan JO : </strong>jauh ini<br><strong>Catatan Konfirmasi : </strong>laper', 2000000, 1, 'Sampai Tujuan', 100000, 'Sudah Dibayar', '150000'),
-(19, '', 'BE 1510 YY', 5, 'tebu', 'gudang lampung', 'gudang palembang', 1500000, 0, ' Satu Juta Lima Ratus  Ribu  Rupiah', '2021-03-27', '0000-00-00', 0, 'ok', 500000, 1, 'Dibatalkan', 0, 'Belum Dibayar', ''),
-(20, '', 'be 1234 aa', 14, 'rokok', 'gudang jakarta', 'gudang lampung', 2000000, 0, ' Dua Juta  Rupiah', '2021-03-27', '2021-03-27', 10, '<strong>Catatan JO : </strong><br><strong>Catatan Konfirmasi : </strong>mantap', 1000000, 3, 'Sampai Tujuan', 0, 'Sudah Dibayar', '100000'),
-(21, '', 'BE 2213 AA', 20, 'gula', 'gudang lampung', 'gudang medan', 3000000, 0, ' Tiga Juta  Rupiah', '2021-03-27', '0000-00-00', 0, '', 1000000, 1, 'Dibatalkan', 0, 'Belum Dibayar', ''),
-(22, '', 'be 1234 aa', 5, 'gula', 'gudang lampung', 'gudang medan', 3500000, 0, ' Tiga Juta Lima Ratus  Ribu  Rupiah', '2021-03-27', '0000-00-00', 0, 'jauhhhh', 2000000, 1, 'Dibatalkan', 0, 'Belum Dibayar', ''),
-(23, '', 'BE 2213 AA', 5, 'mesin giling', 'gudang bandung', 'gudang jakarta', 1000000, 0, ' Satu Juta  Rupiah', '2021-03-27', '2021-03-27', 15, '<strong>Catatan JO : </strong>mesin nih<br><strong>Catatan Konfirmasi : </strong>tambal ban 100k', 500000, 1, 'Sampai Tujuan', 100000, 'Sudah Dibayar', '100000'),
-(24, '', 'be 1234 aa', 5, 'terigu', 'gudang lampung', 'gudang metro', 1500000, 0, ' Satu Juta Lima Ratus  Ribu  Rupiah', '2021-03-27', '2021-03-27', 15, '<strong>Catatan JO : </strong>ok\r\n<br><strong>Catatan Konfirmasi : </strong>mantap', 1250000, 6, 'Sampai Tujuan', 100000, 'Sudah Dibayar', '4000000'),
-(25, '', 'be 1234 aa', 14, 'gula', 'gudang lampung', 'gudang medan', 3500000, 0, ' Tiga Juta Lima Ratus  Ribu  Rupiah', '2021-03-27', '0000-00-00', 0, 'ok', 1500000, 1, 'Dibatalkan', 0, 'Belum Dibayar', '3500000'),
-(26, '', 'BE 3422 YI', 5, 'tebu', 'gudang lampung', 'gudang palembang', 1500000, 0, ' Satu Juta Lima Ratus  Ribu  Rupiah', '2021-03-27', '2021-03-27', 15, '<strong>Catatan JO : </strong>hati-hati<br><strong>Catatan Konfirmasi : </strong>mantap', 500000, 1, 'Sampai Tujuan', 100000, 'Sudah Dibayar', '9000000'),
-(27, '', 'be 1234 aa', 5, 'gula', 'gudang bandung', 'gudang lampung', 2500000, 2500000, ' Dua Juta Lima Ratus  Ribu  Rupiah', '2021-04-03', '0000-00-00', 0, 'sisa UJ saat Sampai Lampung<br><strong>Catatan Bayar UJ : </strong>sisa saat pulang<br><strong>Catatan Bayar UJ : </strong>500rbu dulu<br><strong>Catatan Bayar UJ : </strong>lunas', 1500000, 1, 'Dalam Perjalanan', 0, 'Belum Dibayar', '10000000');
+INSERT INTO `skb_job_order` (`Jo_id`, `invoice_id`, `mobil_no`, `supir_id`, `muatan`, `asal`, `tujuan`, `uang_jalan`, `uang_jalan_bayar`, `terbilang`, `tanggal_surat`, `tanggal_bongkar`, `tonase`, `keterangan`, `upah`, `customer_id`, `status`, `bonus`, `status_upah`, `pembayaran_upah_id`, `tagihan`, `kosongan_id`, `uang_kosongan`, `paketan_id`) VALUES
+(1, '111-PT.Gula Ku-03-2021', 'BE 1234 YI', 5, '', '', '', 5500000, 5500000, ' Lima Juta Lima Ratus  Ribu  Rupiah', '2021-04-09', '2021-04-09', 10, '<strong>Catatan JO : </strong>Uj di tf<br><strong>Catatan Konfirmasi : </strong>ok', 4000000, 30, 'Sampai Tujuan', 0, 'Sudah Dibayar', 0, '13500000', '0', '0', 2),
+(2, '111-PT Gudang Garam-03-2021', 'BE 1111 Z', 14, 'Rokok', 'Gudang Lelang', 'Gudang Metro', 3000000, 3500000, ' Tiga Juta  Rupiah', '2021-04-09', '2021-04-09', 10, '<strong>Catatan JO : </strong>ok<br><strong>Catatan Bayar UJ : </strong>uang kosongan<br><strong>Catatan Konfirmasi : </strong>ok', 1500000, 31, 'Sampai Tujuan', 0, 'Sudah Dibayar', 0, '7500000', '2', '500000', 0),
+(4, '', 'BE 1 AI', 21, 'Tebu', 'Palembang', 'Jakarta', 3000000, 3000000, ' Tiga Juta  Rupiah', '2021-04-09', '0000-00-00', 0, 'ok', 1500000, 30, 'Dibatalkan', 0, 'Sudah Dibayar', 0, '7500000', '0', '0', 0),
+(5, '999-PT.Gula Ku-03-2021', 'BE 1234 YI', 5, 'gula', 'lampung', 'palembang', 2000000, 2000000, ' Dua Juta  Rupiah', '2021-04-09', '2021-04-09', 10, '<strong>Catatan JO : </strong>ok<br><strong>Catatan Konfirmasi : </strong>mantap', 1000000, 30, 'Sampai Tujuan', 0, 'Sudah Dibayar', 0, '5000000', '0', '0', 0),
+(6, '213-PT.Gula Ku-03-2021', 'BE 1234 YI', 5, '', '', '', 5500000, 6000000, ' Lima Juta Lima Ratus  Ribu  Rupiah', '2021-04-12', '2021-04-12', 10, '<strong>Catatan JO : </strong>ok<br><strong>Catatan Konfirmasi : </strong>sampe\r\n<br><strong>Catatan Bayar UJ : </strong>bonus', 4000000, 30, 'Sampai Tujuan', 0, 'Belum Dibayar', 0, '13500000', '0', '0', 2);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `skb_merk_kendaraan`
+-- Table structure for table `skb_kosongan`
+--
+
+CREATE TABLE `skb_kosongan` (
+  `kosongan_id` int(11) NOT NULL,
+  `kosongan_dari` varchar(50) NOT NULL,
+  `kosongan_ke` varchar(50) NOT NULL,
+  `kosongan_uang` varchar(25) NOT NULL,
+  `status_hapus` varchar(5) NOT NULL,
+  `validasi` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `skb_kosongan`
+--
+
+INSERT INTO `skb_kosongan` (`kosongan_id`, `kosongan_dari`, `kosongan_ke`, `kosongan_uang`, `status_hapus`, `validasi`) VALUES
+(1, 'palembang', 'lampung', '1150000', 'NO', 'ACC'),
+(2, 'Lampung', 'Palembang', '500000', 'NO', 'ACC'),
+(3, 'lampung', 'jakarta', '1500000', 'NO', 'ACC'),
+(4, 'jakarta', 'bandung', '1500000', 'NO', 'ACC');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `skb_merk_kendaraan`
 --
 
 CREATE TABLE `skb_merk_kendaraan` (
@@ -225,19 +212,20 @@ CREATE TABLE `skb_merk_kendaraan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `skb_merk_kendaraan`
+-- Dumping data for table `skb_merk_kendaraan`
 --
 
 INSERT INTO `skb_merk_kendaraan` (`merk_id`, `merk_nama`, `merk_type`, `merk_jenis`, `merk_dump`, `status_hapus`, `validasi`) VALUES
 (1, 'HINO', 'HI123', 'Sedang(Engkel)', 'Ya', 'YES', 'ACC'),
 (2, 'SAN', 'SA123', 'Besar(Tronton)', 'Ya', 'YES', 'ACC'),
-(3, 'HINO', 'HI999', 'Besar(Tronton)', 'Ya', 'NO', 'ACC'),
-(4, 'Mitsubishi', 'MI111', 'Sedang(Engkel)', 'Ya', 'NO', 'ACC');
+(3, 'HINO', 'HI123', 'Box', 'Tidak', 'NO', 'ACC'),
+(4, 'Mitsubishi', 'MI111', 'Sedang(Engkel)', 'Ya', 'NO', 'ACC'),
+(5, 'mitsubishi', 'Wing123', 'Model Wings', 'Ya', 'NO', 'ACC');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `skb_mobil`
+-- Table structure for table `skb_mobil`
 --
 
 CREATE TABLE `skb_mobil` (
@@ -247,6 +235,7 @@ CREATE TABLE `skb_mobil` (
   `status_jalan` varchar(25) NOT NULL,
   `status_hapus` varchar(15) NOT NULL,
   `mobil_keterangan` varchar(255) NOT NULL,
+  `merk_id` int(11) NOT NULL,
   `mobil_merk` varchar(20) NOT NULL,
   `mobil_type` varchar(20) NOT NULL,
   `mobil_dump` varchar(20) NOT NULL,
@@ -260,33 +249,82 @@ CREATE TABLE `skb_mobil` (
   `mobil_berlaku_ijin_bongkar` date DEFAULT NULL,
   `file_foto` varchar(50) NOT NULL,
   `file_stnk` varchar(50) NOT NULL,
-  `mobil_stnk` varchar(25) NOT NULL,
-  `mobil_berlaku_stnk` date DEFAULT NULL
+  `mobil_stnk` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `skb_mobil`
+-- Dumping data for table `skb_mobil`
 --
 
-INSERT INTO `skb_mobil` (`mobil_no`, `mobil_jenis`, `mobil_max_load`, `status_jalan`, `status_hapus`, `mobil_keterangan`, `mobil_merk`, `mobil_type`, `mobil_dump`, `mobil_tahun`, `mobil_berlaku`, `mobil_pajak`, `validasi`, `mobil_kir`, `mobil_berlaku_kir`, `mobil_ijin_bongkar`, `mobil_berlaku_ijin_bongkar`, `file_foto`, `file_stnk`, `mobil_stnk`, `mobil_berlaku_stnk`) VALUES
-('BE 000 Tes', 'Sedang(Engkel)', 1, 'Tidak Jalan', 'YES', 'mobil apa motor', 'honda', 'beat', 'Ya', 2014, '2021-04-01', '2023-04-01', 'ACC', '987654321', '2020-04-01', '567894321', '2021-04-01', '1366_768_4410150952.jpg', '1366_768_4110313382.jpg', '123456789', '2023-04-01'),
-('BE 1211 AI', 'Besar(Tronton)', 10, 'Tidak Jalan', 'YES', 'mana ni mobil', 'SAN', '123SAN', 'Tidak', 2015, '2021-03-31', '2023-03-31', 'ACC', '', NULL, '0', NULL, '', '', '0', NULL),
-('BE 1212 Z', 'Sedang(Engkel)', 10, 'Tidak Jalan', 'NO', 'baru', 'Hino', 'HN123', 'Ya', 2011, '2021-05-31', '2023-05-31', 'ACC', '', NULL, '0', NULL, '', '', '0', NULL),
-('be 1234 aa', 'Besar(Tronton)', 10, 'Jalan', 'YES', 'mantap', 'hino', '123hino', 'Ya', 2011, '2021-05-12', '2022-05-12', 'ACC', '', NULL, '0', NULL, '', '', '0', NULL),
-('BE 1510 YY', 'Sedang(Engkel)', 7, 'Tidak Jalan', 'NO', 'mobil kuat', 'Mitsubishi', 'AA324', 'Ya', 2010, '2021-03-20', '2026-03-20', 'ACC', '', NULL, '0', NULL, '', '', '0', NULL),
-('BE 2213 AA', 'Sedang(Engkel)', 3, 'Jalan', 'NO', '', 'Mitsubishi', 'MIS123', 'Ya', 2017, NULL, NULL, 'ACC', '', NULL, '0', NULL, '', '', '0', NULL),
-('BE 3322 AS', 'Besar(Tronton)', 10, 'Tidak Jalan', 'YES', '', 'HINO', '999HINO', 'Tidak', 2015, NULL, NULL, 'ACC', '', NULL, '0', NULL, '', '', '0', NULL),
-('BE 3422 YI', 'Sedang(Engkel)', 2, 'Tidak Jalan', 'YES', '', 'Xenia', '11Xe', 'Ya', 2012, NULL, NULL, 'ACC', '', NULL, '0', NULL, '', '', '0', NULL),
-('BE 4321 YI', 'Besar(Tronton)', 16, 'Tidak Jalan', 'NO', '', 'Hino', 'HINO123', 'Ya', 2019, NULL, NULL, 'ACC', '', NULL, '0', NULL, '', '', '0', NULL),
-('BE 4566 FA', 'Besar(Tronton)', 20, 'Tidak Jalan', 'YES', '', 'Mitsubishi', '123MIS', 'Tidak', 2014, NULL, NULL, 'ACC', '', NULL, '0', NULL, '', '', '0', NULL),
-('BE 5530 PQ', 'Besar(Tronton)', 10, 'Tidak Jalan', 'NO', '', 'SAN', '111SAN', 'Tidak', 2015, NULL, NULL, 'ACC', '', NULL, '0', NULL, '', '', '0', NULL),
-('BE 9999 ZZ', 'Besar(Tronton)', 15, 'Tidak Jalan', 'NO', 'mobil baru', 'Hino', '123Hino', 'Ya', 2019, '2021-12-23', '2024-12-23', 'ACC', '', NULL, '0', NULL, '', '', '0', NULL),
-('BG 6543 DD', 'Sedang(Engkel)', 4, 'Tidak Jalan', 'NO', '', 'HINO', '11HINO', 'Ya', 2009, NULL, NULL, 'Pending', '', NULL, '0', NULL, '', '', '0', NULL);
+INSERT INTO `skb_mobil` (`mobil_no`, `mobil_jenis`, `mobil_max_load`, `status_jalan`, `status_hapus`, `mobil_keterangan`, `merk_id`, `mobil_merk`, `mobil_type`, `mobil_dump`, `mobil_tahun`, `mobil_berlaku`, `mobil_pajak`, `validasi`, `mobil_kir`, `mobil_berlaku_kir`, `mobil_ijin_bongkar`, `mobil_berlaku_ijin_bongkar`, `file_foto`, `file_stnk`, `mobil_stnk`) VALUES
+('BE 1 AI', 'Box', 10, 'Tidak Jalan', 'NO', 'mobil hino', 3, 'HINO', 'HI123', 'Tidak', 2015, '2022-04-08', '2021-04-08', 'ACC', 'Kir-BE1AI', '2021-03-22', 'BM-BE1AI', '2021-03-29', '6978385-fresh-fruit-hd-wallpapers.jpg', '6978385-fresh-fruit-hd-wallpapers1.jpg', 'BE 1 AI'),
+('BE 1111 Z', 'Sedang(Engkel)', 10, 'Tidak Jalan', 'NO', 'mobil engkel', 4, 'Mitsubishi', 'MI111', 'Ya', 2010, '2023-05-08', '2021-05-08', 'ACC', '87654232', '2021-07-09', '123243456', '2021-11-11', 'Cute_And_Funny.jpg', '1366_768_441015095.jpg', '12324546578'),
+('BE 1234 YI', 'Model Wings', 10, 'Tidak Jalan', 'NO', 'mobul baru ok', 5, 'mitsubishi', 'Wing123', 'Ya', 2018, '2021-04-20', '2022-04-20', 'ACC', '123456789', '2021-04-20', '000000000000000', '2021-05-08', '____soon_____by_sonyrootkit-d4s0wlb.jpg', '1366_768_21027243.jpg', '987654321');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `skb_rute`
+-- Table structure for table `skb_paketan`
+--
+
+CREATE TABLE `skb_paketan` (
+  `paketan_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `jenis_mobil` varchar(50) NOT NULL,
+  `paketan_uj` varchar(25) NOT NULL,
+  `paketan_tagihan` varchar(25) NOT NULL,
+  `paketan_gaji` varchar(25) NOT NULL,
+  `paketan_tonase` varchar(25) NOT NULL,
+  `paketan_gaji_rumusan` varchar(25) NOT NULL,
+  `paketan_keterangan` text NOT NULL,
+  `ritase` varchar(10) NOT NULL,
+  `paketan_status_hapus` varchar(10) NOT NULL,
+  `validasi_paketan` varchar(10) NOT NULL,
+  `paketan_data_rute` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `skb_paketan`
+--
+
+INSERT INTO `skb_paketan` (`paketan_id`, `customer_id`, `jenis_mobil`, `paketan_uj`, `paketan_tagihan`, `paketan_gaji`, `paketan_tonase`, `paketan_gaji_rumusan`, `paketan_keterangan`, `ritase`, `paketan_status_hapus`, `validasi_paketan`, `paketan_data_rute`) VALUES
+(1, 30, 'Besar(Tronton)', '5000000', '10000000', '2500000', '0', '0', 'keliling sumatera', 'Ritase', 'NO', 'ACC', '[{"dari":"lampung","ke":"palembang","muatan":"gula"},{"dari":"palembang","ke":"bengkulu","muatan":"gula"},{"dari":"bengkulu","ke":"lampung","muatan":"tebu"}]'),
+(2, 30, 'Model Wings', '5500000', '13500000', '0', '10', '4000000', '10 ton ke palembang', 'Tonase', 'NO', 'ACC', '[{"dari":"lampung","ke":"palembang","muatan":"kopi"},{"dari":"palembang","ke":"lampung","muatan":"kopi"}]'),
+(3, 31, 'Besar(Tronton)', '15000000', '30000000', '0', '10', '5000000', 'Rute ada 4', 'Tonase', 'NO', 'ACC', '[{"dari":"lampung","ke":"jakarta","muatan":"rokok surya"},{"dari":"jakarta","ke":"bandung","muatan":"rokok mild"},{"dari":"bandung","ke":"jakarta","muatan":"rokok surya"},{"dari":"jakarta","ke":"lampung","muatan":"rokok apa aja"}]'),
+(4, 30, 'Box', '242124214', '12321313', '14124124', '0', '0', 'PATENNNN', 'Ritase', 'NO', 'ACC', '[{"dari":"Bandung","ke":"Cibubur","muatan":"Pop Mie"},{"dari":"Kendal","ke":"Surabaya","muatan":"Coklat"}]'),
+(5, 30, 'Sedang(Engkel)', '1231223', '123213123', '12312313', '0', '0', 'sdadsa', 'Ritase', 'NO', 'ACC', '[{"dari":"Lampung","ke":"Jepara","muatan":"Coklat"},{"dari":"Ombay","ke":"Popay","muatan":"KokaKola"}]'),
+(6, 30, 'Model Wings', '13123232', '12321321', '1232131', '0', '0', 'yoo', 'Ritase', 'NO', 'ACC', '[{"dari":"Jambi","ke":"Lampung ","muatan":"Kopi"},{"dari":"Aceh","ke":"Metro","muatan":"Coklat"}]');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `skb_pembayaran_upah`
+--
+
+CREATE TABLE `skb_pembayaran_upah` (
+  `pembayaran_upah_id` int(11) NOT NULL,
+  `supir_id` int(11) NOT NULL,
+  `pembayaran_upah_nominal` int(11) NOT NULL,
+  `pembayaran_upah_tanggal` date NOT NULL,
+  `pembayaran_upah_bonus` int(11) NOT NULL,
+  `pembayaran_upah_bon` int(11) NOT NULL,
+  `pembayaran_upah_total` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `skb_pembayaran_upah`
+--
+
+INSERT INTO `skb_pembayaran_upah` (`pembayaran_upah_id`, `supir_id`, `pembayaran_upah_nominal`, `pembayaran_upah_tanggal`, `pembayaran_upah_bonus`, `pembayaran_upah_bon`, `pembayaran_upah_total`) VALUES
+(10, 5, 4000000, '2021-04-09', 100000, 0, 4100000),
+(11, 14, 1500000, '2021-04-09', 0, 0, 1500000),
+(12, 21, 1500000, '2021-04-09', 500000, 1500000, 500000),
+(13, 5, 1000000, '2021-04-09', 150000, 500000, 650000);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `skb_rute`
 --
 
 CREATE TABLE `skb_rute` (
@@ -295,6 +333,7 @@ CREATE TABLE `skb_rute` (
   `rute_dari` varchar(50) NOT NULL,
   `rute_ke` varchar(50) NOT NULL,
   `rute_muatan` varchar(50) NOT NULL,
+  `jenis_mobil` varchar(50) NOT NULL,
   `rute_uj_engkel` int(20) NOT NULL,
   `rute_uj_tronton` int(20) NOT NULL,
   `rute_tagihan` int(20) NOT NULL,
@@ -310,30 +349,18 @@ CREATE TABLE `skb_rute` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `skb_rute`
+-- Dumping data for table `skb_rute`
 --
 
-INSERT INTO `skb_rute` (`rute_id`, `customer_id`, `rute_dari`, `rute_ke`, `rute_muatan`, `rute_uj_engkel`, `rute_uj_tronton`, `rute_tagihan`, `rute_gaji_engkel`, `rute_gaji_tronton`, `rute_gaji_engkel_rumusan`, `rute_gaji_tronton_rumusan`, `rute_status_hapus`, `rute_tonase`, `validasi_rute`, `rute_keterangan`, `ritase`) VALUES
-(1, 1, 'gudang lampung', 'gudang palembang', 'gula', 1500000, 1750000, 5000000, 500000, 750000, 0, 0, 'NO', '0', 'ACC', '', ''),
-(2, 3, 'gudang jakarta', 'gudang lampung', 'rokok', 1500000, 2000000, 7500000, 500000, 1000000, 0, 0, 'NO', '0', 'ACC', '', ''),
-(3, 1, 'gudang bandung', 'gudang lampung', 'gula', 2000000, 2500000, 10000000, 1000000, 1500000, 0, 0, 'NO', '0', 'ACC', '', ''),
-(4, 1, 'gudang lampung', 'gudang bekasi', 'gula', 1500000, 2000000, 8000000, 750000, 1000000, 0, 0, 'NO', '0', 'ACC', '', ''),
-(5, 1, 'gudang lampung', 'gudang palembang', 'tebu', 1500000, 2000000, 9000000, 500000, 750000, 0, 0, 'NO', '0', 'ACC', '', ''),
-(6, 1, 'gudang bandung', 'gudang jakarta', 'mesin giling', 1000000, 1500000, 3000000, 500000, 750000, 0, 0, 'NO', '0', 'ACC', '', ''),
-(7, 3, 'gudang jakarta', 'gudang palembang', 'rokok', 2000000, 2500000, 10000000, 1000000, 1500000, 0, 0, 'NO', '0', 'Pending', '', ''),
-(8, 1, 'gudang lampung', 'gudang medan', 'gula', 3000000, 3500000, 1500000, 0, 0, 1500000, 2000000, 'NO', '16', 'ACC', 'ini rute dengan tonase', 'Tonase'),
-(9, 1, 'gudang lampung', 'gudang medan', 'gula', 3000000, 3500000, 3500000, 1000000, 1500000, 0, 0, 'NO', '0', 'ACC', '', ''),
-(10, 2, 'lampung', 'metro', 'komputer', 500000, 750000, 0, 250000, 350000, 0, 0, 'YES', '0', 'ACC', '', ''),
-(11, 6, 'gudang lampung', 'gudang metro', 'terigu', 1000000, 1500000, 4000000, 0, 0, 1000000, 1250000, 'NO', '15', 'Pending', '', ''),
-(12, 27, 'lampung', 'palembang', 'komputer', 1000000, 1500000, 5000000, 0, 0, 500000, 1000000, 'NO', '5', 'ACC', '', ''),
-(13, 5, 'metro', 'lampung', 'lampu', 500000, 750000, 3000000, 500000, 600000, 0, 0, 'NO', '0', 'ACC', '', ''),
-(14, 2, 'metro pusat', 'bandar lampung', 'ac', 750000, 1000000, 2500000, 1000000, 1250000, 0, 0, 'NO', '0', 'ACC', 'ini ritase cuy', 'Ritase'),
-(15, 2, 'lampung', 'jakarta', 'komputer', 1000000, 1500000, 5000000, 0, 0, 1000000, 1500000, 'NO', '16', 'ACC', 'ok', 'Ritase');
+INSERT INTO `skb_rute` (`rute_id`, `customer_id`, `rute_dari`, `rute_ke`, `rute_muatan`, `jenis_mobil`, `rute_uj_engkel`, `rute_uj_tronton`, `rute_tagihan`, `rute_gaji_engkel`, `rute_gaji_tronton`, `rute_gaji_engkel_rumusan`, `rute_gaji_tronton_rumusan`, `rute_status_hapus`, `rute_tonase`, `validasi_rute`, `rute_keterangan`, `ritase`) VALUES
+(16, 30, 'lampung', 'palembang', 'gula', 'Model Wings', 2000000, 0, 5000000, 1000000, NULL, 0, NULL, 'NO', '0', 'ACC', 'rute baru', 'Ritase'),
+(17, 30, 'Palembang', 'Jakarta', 'Tebu', 'Box', 3000000, 0, 7500000, 0, NULL, 1500000, NULL, 'NO', '10', 'ACC', 'ok', 'Tonase'),
+(18, 31, 'Gudang Lelang', 'Gudang Metro', 'Rokok', 'Sedang(Engkel)', 3000000, 0, 7500000, 1500000, NULL, 0, NULL, 'NO', '0', 'ACC', 'muatan rokok', 'Ritase');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `skb_supir`
+-- Table structure for table `skb_supir`
 --
 
 CREATE TABLE `skb_supir` (
@@ -364,22 +391,22 @@ CREATE TABLE `skb_supir` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `skb_supir`
+-- Dumping data for table `skb_supir`
 --
 
 INSERT INTO `skb_supir` (`supir_id`, `supir_name`, `supir_kasbon`, `status_jalan`, `status_hapus`, `supir_alamat`, `supir_telp`, `supir_keterangan`, `supir_ktp`, `supir_sim`, `supir_panggilan`, `status_aktif`, `supir_tgl_aktif`, `supir_tgl_nonaktif`, `supir_tgl_lahir`, `supir_tempat_lahir`, `file_foto`, `file_sim`, `file_ktp`, `darurat_nama`, `darurat_telp`, `darurat_referensi`, `supir_tgl_sim`, `validasi`) VALUES
-(5, 'Dwiki Martin Prasetya', 0, 'Jalan', 'NO', 'bandar lampung', '09849858', 'mantap', '123456789000', '987654321', 'dwiki', 'Aktif', '2021-03-29', NULL, '1995-03-02', 'sukarame', '', '', '', 'iqbal', '0896851736', 'galih(teman)', '0000-00-00', 'ACC'),
+(5, 'Dwiki Martin Prasetya', 0, 'Tidak Jalan', 'NO', 'bandar lampung', '09849858', 'mantap', '123456789000', '987654321', 'dwiki', 'Aktif', '2021-03-29', NULL, '1995-03-02', 'sukarame', '', '', '', 'iqbal', '0896851736', 'galih(teman)', '2021-03-14', 'ACC'),
 (14, 'Sasuke', 0, 'Tidak Jalan', 'NO', 'jalan medan merdeka', '089673737373', 'supir medan nihhh', '18710211211331112', '10238120481203102', 'suke', 'Aktif', '2021-03-29', NULL, '1995-11-02', 'metro', '', '', '', 'naruto', '978968757', 'tsunade(teman)', '2021-05-11', 'ACC'),
-(15, 'Herby', 0, 'Tidak Jalan', 'NO', 'metro pusta', '1243253', 'mantap\r\n', '12341234', '12412312', 'her', 'Non-Aktif', '2021-03-29', '2021-04-01', '1995-05-22', 'Cabang', '', '', '', 'desi', '980906987098', 'rehan(teman)', '2021-07-22', 'ACC'),
+(15, 'Herby', 0, 'Tidak Jalan', 'NO', 'metro pusta', '1243253', 'mantap\r\n', '12341234', '12412312', 'her', 'Aktif', '2021-03-09', NULL, '1995-05-22', 'Cabang', '', '', '', 'desi', '980906987098', 'rehan(teman)', '2021-07-22', 'ACC'),
 (16, 'Rey', 0, 'Tidak Jalan', 'YES', '', '', '', '', '', '', 'Aktif', '2021-03-29', NULL, NULL, '', '', '', '', '', '', '', '0000-00-00', 'ACC'),
 (19, 'aldi indrawan', 0, 'Tidak Jalan', 'YES', 'jalan pulau damar', '0895620408193', 'bebas ni orang', '1823123313', '123123123', 'aldi', 'Aktif', '2021-03-29', NULL, '1995-11-12', 'sukarame', '', '', '', 'shanti', '080970980970', 'riski(teman)', '2022-03-31', 'ACC'),
-(20, 'riski hermawan', 3000000, 'Tidak Jalan', 'NO', 'metro', '08969748', 'supur handal', '123456789', '987654321', 'riski', 'Aktif', '2021-03-31', NULL, '1995-01-01', 'sukarame', '20_foto.jpg', '20_sim.jpg', '20_ktp.png', 'noop', '9080980890', 'iwan(teman)\r\n', '2022-03-11', 'ACC'),
-(21, 'samingun', 0, 'Tidak Jalan', 'NO', 'jalan melati no 38', '089673736262', 'sesepuh nih guys', '1234567890', '0987654321', 'mingun', 'Aktif', '2021-03-28', NULL, '1980-03-31', 'bandar lampung', '____soon_____by_sonyrootkit-d4s0wlb1.jpg', '1366_768_4410252801.jpg', '6856588-fresh-wallpapers1.jpg', 'aini istigh', '09u0869898687', 'hilda eriya', '2023-07-07', 'ACC');
+(20, 'riski hermawan', 0, 'Tidak Jalan', 'NO', 'metro', '08969748', 'supur handal', '123456789', '987654321', 'riski', 'Aktif', '2021-03-31', NULL, '1995-01-01', 'sukarame', '20_foto.jpg', '20_sim.jpg', '20_ktp.png', 'noop', '9080980890', 'iwan(teman)\r\n', '2022-03-11', 'ACC'),
+(21, 'samingun', 0, 'Tidak Jalan', 'NO', 'jalan melati no 38', '089673736262', 'sesepuh nih guys', '1234567890', '0987654321', 'mingun', 'Aktif', '2021-03-12', NULL, '1980-03-31', 'bandar lampung', '____soon_____by_sonyrootkit-d4s0wlb1.jpg', '1366_768_4410252801.jpg', '6856588-fresh-wallpapers1.jpg', 'aini istigh', '09u0869898687', 'hilda eriya', '2021-07-07', 'ACC');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
@@ -390,47 +417,50 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`user_id`, `akun_id`, `username`, `password`) VALUES
 (11, 14, 'bhaskara', '7c4a8d09ca3762af61e59520943dc26494f8941b'),
 (14, 17, 'aldi12', '7c4a8d09ca3762af61e59520943dc26494f8941b'),
 (16, 19, 'shanti12', '7c4a8d09ca3762af61e59520943dc26494f8941b'),
-(17, 20, 'supervisor', '7c4a8d09ca3762af61e59520943dc26494f8941b');
+(17, 20, 'supervisor', '7c4a8d09ca3762af61e59520943dc26494f8941b'),
+(18, 21, 'supervisor', '0f4d09e43d208d5e9222322fbc7091ceea1a78c3'),
+(19, 22, 'hallohallo', '689668308ccb66ff5b9dfb81ff52f94a83c715bd'),
+(20, 23, 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `skb_akun`
+-- Indexes for table `skb_akun`
 --
 ALTER TABLE `skb_akun`
   ADD PRIMARY KEY (`akun_id`);
 
 --
--- Indeks untuk tabel `skb_bon`
+-- Indexes for table `skb_bon`
 --
 ALTER TABLE `skb_bon`
   ADD PRIMARY KEY (`bon_id`),
   ADD KEY `supir_id` (`supir_id`);
 
 --
--- Indeks untuk tabel `skb_customer`
+-- Indexes for table `skb_customer`
 --
 ALTER TABLE `skb_customer`
   ADD PRIMARY KEY (`customer_id`);
 
 --
--- Indeks untuk tabel `skb_invoice`
+-- Indexes for table `skb_invoice`
 --
 ALTER TABLE `skb_invoice`
   ADD PRIMARY KEY (`invoice_kode`),
   ADD KEY `customer_id` (`customer_id`);
 
 --
--- Indeks untuk tabel `skb_job_order`
+-- Indexes for table `skb_job_order`
 --
 ALTER TABLE `skb_job_order`
   ADD PRIMARY KEY (`Jo_id`),
@@ -439,106 +469,131 @@ ALTER TABLE `skb_job_order`
   ADD KEY `customer_id` (`customer_id`);
 
 --
--- Indeks untuk tabel `skb_merk_kendaraan`
+-- Indexes for table `skb_kosongan`
+--
+ALTER TABLE `skb_kosongan`
+  ADD PRIMARY KEY (`kosongan_id`);
+
+--
+-- Indexes for table `skb_merk_kendaraan`
 --
 ALTER TABLE `skb_merk_kendaraan`
   ADD PRIMARY KEY (`merk_id`);
 
 --
--- Indeks untuk tabel `skb_mobil`
+-- Indexes for table `skb_mobil`
 --
 ALTER TABLE `skb_mobil`
   ADD PRIMARY KEY (`mobil_no`);
 
 --
--- Indeks untuk tabel `skb_rute`
+-- Indexes for table `skb_paketan`
+--
+ALTER TABLE `skb_paketan`
+  ADD PRIMARY KEY (`paketan_id`);
+
+--
+-- Indexes for table `skb_pembayaran_upah`
+--
+ALTER TABLE `skb_pembayaran_upah`
+  ADD PRIMARY KEY (`pembayaran_upah_id`);
+
+--
+-- Indexes for table `skb_rute`
 --
 ALTER TABLE `skb_rute`
   ADD PRIMARY KEY (`rute_id`);
 
 --
--- Indeks untuk tabel `skb_supir`
+-- Indexes for table `skb_supir`
 --
 ALTER TABLE `skb_supir`
   ADD PRIMARY KEY (`supir_id`);
 
 --
--- Indeks untuk tabel `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`user_id`),
   ADD KEY `akun_id` (`akun_id`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `skb_akun`
+-- AUTO_INCREMENT for table `skb_akun`
 --
 ALTER TABLE `skb_akun`
-  MODIFY `akun_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
-
+  MODIFY `akun_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 --
--- AUTO_INCREMENT untuk tabel `skb_bon`
+-- AUTO_INCREMENT for table `skb_bon`
 --
 ALTER TABLE `skb_bon`
   MODIFY `bon_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
-
 --
--- AUTO_INCREMENT untuk tabel `skb_customer`
+-- AUTO_INCREMENT for table `skb_customer`
 --
 ALTER TABLE `skb_customer`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
-
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 --
--- AUTO_INCREMENT untuk tabel `skb_job_order`
+-- AUTO_INCREMENT for table `skb_job_order`
 --
 ALTER TABLE `skb_job_order`
   MODIFY `Jo_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
-
 --
--- AUTO_INCREMENT untuk tabel `skb_merk_kendaraan`
+-- AUTO_INCREMENT for table `skb_kosongan`
+--
+ALTER TABLE `skb_kosongan`
+  MODIFY `kosongan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `skb_merk_kendaraan`
 --
 ALTER TABLE `skb_merk_kendaraan`
-  MODIFY `merk_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
+  MODIFY `merk_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
--- AUTO_INCREMENT untuk tabel `skb_rute`
+-- AUTO_INCREMENT for table `skb_paketan`
+--
+ALTER TABLE `skb_paketan`
+  MODIFY `paketan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `skb_pembayaran_upah`
+--
+ALTER TABLE `skb_pembayaran_upah`
+  MODIFY `pembayaran_upah_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+--
+-- AUTO_INCREMENT for table `skb_rute`
 --
 ALTER TABLE `skb_rute`
-  MODIFY `rute_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
+  MODIFY `rute_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
--- AUTO_INCREMENT untuk tabel `skb_supir`
+-- AUTO_INCREMENT for table `skb_supir`
 --
 ALTER TABLE `skb_supir`
   MODIFY `supir_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
-
 --
--- AUTO_INCREMENT untuk tabel `user`
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+--
+-- Constraints for dumped tables
+--
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
---
-
---
--- Ketidakleluasaan untuk tabel `skb_bon`
+-- Constraints for table `skb_bon`
 --
 ALTER TABLE `skb_bon`
   ADD CONSTRAINT `skb_bon_ibfk_1` FOREIGN KEY (`supir_id`) REFERENCES `skb_supir` (`supir_id`);
 
 --
--- Ketidakleluasaan untuk tabel `skb_invoice`
+-- Constraints for table `skb_invoice`
 --
 ALTER TABLE `skb_invoice`
   ADD CONSTRAINT `skb_invoice_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `skb_customer` (`customer_id`);
 
 --
--- Ketidakleluasaan untuk tabel `skb_job_order`
+-- Constraints for table `skb_job_order`
 --
 ALTER TABLE `skb_job_order`
   ADD CONSTRAINT `skb_job_order_ibfk_1` FOREIGN KEY (`mobil_no`) REFERENCES `skb_mobil` (`mobil_no`),
@@ -546,11 +601,10 @@ ALTER TABLE `skb_job_order`
   ADD CONSTRAINT `skb_job_order_ibfk_3` FOREIGN KEY (`customer_id`) REFERENCES `skb_customer` (`customer_id`);
 
 --
--- Ketidakleluasaan untuk tabel `user`
+-- Constraints for table `user`
 --
 ALTER TABLE `user`
   ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`akun_id`) REFERENCES `skb_akun` (`akun_id`) ON DELETE CASCADE;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

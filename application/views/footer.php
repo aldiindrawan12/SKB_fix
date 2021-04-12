@@ -1324,10 +1324,10 @@
                     },
                     {
                         "data": "supir_id",
-                        className: 'text-center font-weight-bold',
+                        className: 'font-weight-bold',
                         "orderable": false,
                         render: function(data, type, row) {
-                            let html = 'Rp.'+rupiah(row["supir_kasbon"])+"<a class='btn btn-light' href='<?= base_url('index.php/detail/detail_report_bon/"+data+"')?>'><i class='fas fa-eye'></i></a>";
+                            let html = 'Rp.'+rupiah(row["supir_kasbon"])+"<a class='btn btn-light float-right' href='<?= base_url('index.php/detail/detail_report_bon/"+data+"')?>'><i class='fas fa-eye'></i></a>";
                             return html;
                         }
                     },
@@ -1347,7 +1347,7 @@
                                     }
                                 });
                                 if(selisih<31){
-                                    let html = "<a class='btn btn-block btn-sm btn-danger active'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
+                                    let html = "<a class='btn btn-block btn-sm btn-danger active'><i class='fa fa-fw fa-exclamation-circle'></i>"+row["sisa"]+"</a>";
                                     return html;
                                 }else{
                                     let html = "<a class='btn btn-block btn-sm btn-success active'><i class='fa fa-fw fa-check mr-2'></i>"+row["sisa"]+"</a>";

@@ -13,8 +13,8 @@
     <div class="card-body">
         <!-- tampilan detail transaksi bon -->
         <div class="container" id="detail-bon-supir">
-            <div class="text-center mb-3 h5">
-                <span><?=$supir?></span>
+            <div class="text-center mb-4 ">
+            <h5 class="font-weight-bolder"><?=$supir?></h5>
             </div>
             <table class="table table-bordered">
                 <thead>
@@ -32,7 +32,7 @@
                             $sisa_bon=0;
                     foreach($transaksi_bon as $value){?>
                         <tr>
-                            <td class=" text-center"><?= $n?></td>
+                            <td class="text-center"><?= $n?></td>
                             <td class=""><?= $value["bon_tanggal"]?></td>
                             <td class=""><?= $value["bon_keterangan"]?></td>
                             <?php if($value["bon_jenis"]=="Pembayaran" || $value["bon_jenis"]=="Potong Gaji"){

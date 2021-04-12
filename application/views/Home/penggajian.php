@@ -21,9 +21,9 @@
                 <thead>
                     <tr>        
                         <th class="text-center" width="3%" scope="col">ID Driver</th>
-                        <th class="text-center" width="10%" scope="col">Nama Driver</th>
-                        <th class="text-center" width="20%" scope="col">Kasbon</th>
-                        <th width="15%" scope="col">Berlaku SIM</th>
+                        <th class="text-center" width="15   %" scope="col">Nama Driver</th>
+                        <th class="text-center" width="15%" scope="col">Kasbon</th>
+                        <th width="12%" scope="col">Berlaku SIM</th>
                         <th width="15%" scope="col">Status Aktif</th>
                         <th width="15%" scope="col">Status Jalan</th>
                         <th width="20%" scope="col">Aksi</th>

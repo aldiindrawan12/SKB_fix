@@ -1347,10 +1347,10 @@
                                     }
                                 });
                                 if(selisih<31){
-                                    let html = "<a class='btn btn-block btn-sm btn-danger'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
+                                    let html = "<a class='btn btn-block btn-sm btn-danger active'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
                                     return html;
                                 }else{
-                                    let html = "<a class='btn btn-block btn-sm btn-success'><i class='fa fa-fw fa-check mr-2'></i>"+row["sisa"]+"</a>";
+                                    let html = "<a class='btn btn-block btn-sm btn-success active'><i class='fa fa-fw fa-check mr-2'></i>"+row["sisa"]+"</a>";
                                     return html;
                                 }
                             }
@@ -1362,7 +1362,7 @@
                         "orderable": false,
                             render: function(data, type, row) {
                                 if (data == "Aktif") {
-                                    let html = "<a class='btn btn-block btn-sm btn-outline-success btn-update-status-aktif-supir' data-pk='"+row['supir_id']+"' data-toggle='modal' data-target='#update_status_aktif_supir' ><i class='fa fa-fw fa-check mr-2'></i>" + data + "</a>";
+                                    let html = "<a class='btn btn-block btn-sm btn-outline-success  btn-update-status-aktif-supir' data-pk='"+row['supir_id']+"' data-toggle='modal' data-target='#update_status_aktif_supir' ><i class='fa fa-fw fa-check mr-2'></i>" + data + "</a>";
                                     return html;
                                 } else {
                                     let html = "<a class='btn btn-block btn-sm btn-outline-danger btn-update-status-aktif-supir' data-pk='"+row['supir_id']+"' data-toggle='modal' data-target='#update_status_aktif_supir' ><i class='fa fa-fw fa-exclamation-circle mr-2'></i>" + data + "</a>";
@@ -1377,10 +1377,10 @@
                         "orderable": false,
                             render: function(data, type, row) {
                                 if (data == "Jalan") {
-                                    let html = "<span class='btn-sm btn-block btn-success'><i class='fa fa-fw fa-check mr-2'></i>" + data + "</span>";
+                                    let html = "<span class='btn-sm btn-block btn-success active'><i class='fa fa-fw fa-check mr-2'></i>" + data + "</span>";
                                     return html;
                                 } else {
-                                    let html = "<span class='btn-sm btn-block btn-warning'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>" + data + "</span>";
+                                    let html = "<span class='btn-sm btn-block btn-warning active'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>" + data + "</span>";
                                     return html;
                                 }
                             }

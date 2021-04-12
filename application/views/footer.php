@@ -121,7 +121,7 @@
                                 return html;
                             }else{
                                 let html = "<a class='btn btn-light btn-detail-truck' href='javascript:void(0)' data-toggle='modal' data-target='#popup-kendaraan' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
-                                "<a class='btn btn-light btn-acc-truck' href='javascript:void(0)' data-pk='"+data+"'>ACC<i class='fas fa-eye'></i></a>";
+                                "<a class='btn btn-light btn-acc-truck' href='javascript:void(0)' data-pk='"+data+"'>ACC <i class='fas fa-check-circle'></i></a>";
                                 return html;
                             }
                         }
@@ -216,13 +216,13 @@
                         let pk = $(this).data('pk');
                         Swal.fire({
                             title: 'ACC Tambah Kendaraan',
-                            icon: "warning",
+                            icon: "question",
                             text: 'Yakin anda ingin ACC Data Kendaraan ini?',
                             showDenyButton: true,
                             denyButtonText: `Batal`,
                             confirmButtonText: 'ACC',
                             denyButtonColor: '#808080',
-                            confirmButtonColor: '#FF0000',
+                            confirmButtonColor: '#4BB543',
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 $.ajax({
@@ -299,7 +299,7 @@
                                 "<a class='btn btn-light btn-delete-merk' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-trash-alt'></i></a>";
                                 return html;
                             }else{
-                                let html ="<a class='btn btn-light btn-acc-merk' href='javascript:void(0)' data-pk='"+data+"'>ACC<i class='fas fa-eye'></i></a>";
+                                let html ="<a class='btn btn-light btn-acc-merk' href='javascript:void(0)' data-pk='"+data+"'>ACC <i class='fas fa-check-circle'></i></a>";
                                 return html;
                             }
                         }
@@ -355,13 +355,13 @@
                         let pk = $(this).data('pk');
                         Swal.fire({
                             title: 'ACC Tambah Merk',
-                            icon: "warning",
+                            icon: "question",
                             text: 'Yakin anda ingin ACC Data Merk ini?',
                             showDenyButton: true,
                             denyButtonText: `Batal`,
                             confirmButtonText: 'ACC',
                             denyButtonColor: '#808080',
-                            confirmButtonColor: '#FF0000',
+                            confirmButtonColor: '#4BB543',
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 $.ajax({
@@ -1313,7 +1313,7 @@
                                 return html;
                             }else{
                                 let html = "<a class='btn btn-light btn-detail-customer' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-customer' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
-                                "<a class='btn btn-light btn-acc-customer' href='javascript:void(0)' data-pk='"+data+"'>ACC<i class='fas fa-eye'></i></a>";
+                                "<a class='btn btn-light btn-acc-customer' href='javascript:void(0)' data-pk='"+data+"'>ACC <i class='fas fa-check-circle'></i></a>";
                                 return html;
                             }
                         }
@@ -1398,13 +1398,13 @@
                         let pk = $(this).data('pk');
                         Swal.fire({
                             title: 'ACC Tambah Customer',
-                            icon: "warning",
+                            icon: "question",
                             text: 'Yakin anda ingin ACC Data Customer ini?',
                             showDenyButton: true,
                             denyButtonText: `Batal`,
                             confirmButtonText: 'ACC',
                             denyButtonColor: '#808080',
-                            confirmButtonColor: '#FF0000',
+                            confirmButtonColor: '#4BB543',
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 $.ajax({
@@ -1599,7 +1599,7 @@
                                 return html;
                             }else{
                                 let html = "<a class='btn btn-light btn-detail-supir' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-supir' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
-                                "<a class='btn btn-light btn-acc-supir' href='javascript:void(0)' data-pk='"+data+"'>ACC<i class='fas fa-eye'></i></a>";
+                                "<a class='btn btn-light btn-acc-supir' href='javascript:void(0)' data-pk='"+data+"'>ACC <i class='fas fa-check-circle'></i></a>";
                                 return html;
                             }
                         }
@@ -1716,13 +1716,13 @@
                         let pk = $(this).data('pk');
                         Swal.fire({
                             title: 'ACC Tambah Driver',
-                            icon: "warning",
+                            icon: "question",
                             text: 'Yakin anda ingin ACC Data Driver ini?',
                             showDenyButton: true,
                             denyButtonText: `Batal`,
                             confirmButtonText: 'ACC',
                             denyButtonColor: '#808080',
-                            confirmButtonColor: '#FF0000',
+                            confirmButtonColor: '#4BB543',
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 $.ajax({
@@ -2385,7 +2385,7 @@
                                 return html;
                             }else{
                                 let html = "<a class='btn btn-light btn-detail-rute' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
-                                "<a class='btn btn-light btn-acc-rute' href='javascript:void(0)' data-pk='"+data+"'>ACC<i class='fas fa-eye'></i></a>";
+                                "<a class='btn btn-light btn-acc-rute' href='javascript:void(0)' data-pk='"+data+"'>ACC <i class='fas fa-check-circle'></i></a>";
                                 return html;
                             }
                         }
@@ -2488,13 +2488,13 @@
                         let pk = $(this).data('pk');
                         Swal.fire({
                             title: 'ACC Tambah Rute dan Muatan',
-                            icon: "warning",
+                            icon: "question",
                             text: 'Yakin anda ingin ACC Data Rute dan Muatan ini?',
                             showDenyButton: true,
                             denyButtonText: `Batal`,
                             confirmButtonText: 'ACC',
                             denyButtonColor: '#808080',
-                            confirmButtonColor: '#FF0000',
+                            confirmButtonColor: '#4BB543',
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 $.ajax({
@@ -2592,7 +2592,7 @@
                                 "<a class='btn btn-light btn-delete-paketan' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
                                 return html;
                             }else{
-                                let html = "<a class='btn btn-light btn-acc-paketan' href='javascript:void(0)' data-pk='"+data+"'>ACC<i class='fas fa-eye'></i></a>";
+                                let html = "<a class='btn btn-light btn-acc-paketan' href='javascript:void(0)' data-pk='"+data+"'>ACC <i class='fas fa-check-circle'></i></a>";
                                 return html;
                             }
                         } 
@@ -2740,13 +2740,13 @@
                         let pk = $(this).data('pk');
                         Swal.fire({
                             title: 'ACC Tambah Rute Paketan',
-                            icon: "warning",
+                            icon: "question",
                             text: 'Yakin anda ingin ACC Data Rute Paketan ini?',
                             showDenyButton: true,
                             denyButtonText: `Batal`,
                             confirmButtonText: 'ACC',
                             denyButtonColor: '#808080',
-                            confirmButtonColor: '#FF0000',
+                            confirmButtonColor: '#4BB543',
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 $.ajax({
@@ -3403,7 +3403,7 @@
                                 "<a class='btn btn-light btn-delete-kosongan' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-trash-alt'></i></a>";
                                 return html;
                             }else{
-                                let html = "<a class='btn btn-light btn-acc-kosongan' href='javascript:void(0)' data-pk='"+data+"'>ACC<i class='fas fa-eye'></i></a>";
+                                let html = "<a class='btn btn-light btn-acc-kosongan' href='javascript:void(0)' data-pk='"+data+"'>ACC <i class='fas fa-check-circle'></i></a>";
                                 return html;
                             }
                         }
@@ -3459,13 +3459,13 @@
                         let pk = $(this).data('pk');
                         Swal.fire({
                             title: 'ACC Tambah Rute Kosongan',
-                            icon: "warning",
+                            icon: "question",
                             text: 'Yakin anda ingin ACC Data Rute Kosongan ini?',
                             showDenyButton: true,
                             denyButtonText: `Batal`,
                             confirmButtonText: 'ACC',
                             denyButtonColor: '#808080',
-                            confirmButtonColor: '#FF0000',
+                            confirmButtonColor: '#4BB543',
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 $.ajax({ //ajax ambil data bon

@@ -32,7 +32,6 @@ class Print_Berkas extends CI_Controller {
 		}
 		$data["paketan"] = $paketan_id;
 		$data["kosongan"] = $kosongan_id;
-        // $this->load->view("print/report_pdf",$data);
         $dompdf = new Dompdf();
 		if($asal=="uangjalan"){
 			$html = $this->load->view("print/report_uang_jalan_pdf",$data,true);
@@ -51,127 +50,112 @@ class Print_Berkas extends CI_Controller {
         $name_file = "JobOrder_".$data["tanggal"].".pdf";
         $dompdf->stream($name_file);
     }
-public function cetaklaporanexcel($tanggal,$bulan,$tahun,$status_jo,$asal){
-    // echo $tahun."-".$bulan."-".$tanggal;
-    $jo = $this->model_print->getjobyperiode($tanggal,$bulan,$tahun,$status_jo);
-    $data["tanggal"] = $tanggal."-".$bulan."-".$tahun;
 
-	$excel = new Spreadsheet();
+	public function cetaklaporanexcel($tanggal,$bulan,$tahun,$status_jo,$asal){
+		$jo = $this->model_print->getjobyperiode($tanggal,$bulan,$tahun,$status_jo);
+		$tanggal = $tanggal."-".$bulan."-".$tahun;
+		$paketan_id = [];
+		$kosongan_id = [];
+		for($i=0;$i<count($jo);$i++){
+			$data_paketan = $this->model_form->getpaketanbyid($jo[$i]["paketan_id"]);
+			$paketan_id[] = $data_paketan;
+			$data_kosongan = $this->model_detail->getkosonganbyid($jo[$i]["kosongan_id"]);
+			$kosongan_id[] = $data_kosongan;
+		}
+		$paketan = $paketan_id;
+		$kosongan = $kosongan_id;
 
-	// 	//set properti
-	$excel->getProperties()->setCreator('PT.Sumber Karya Berkah')
-	->setLastModifiedBy('PT.Sumber Karya Berkah');
-
-		// //set style kolom
-		// $kolom = array(
-		// 	'font' => array('bold' => true),
-		// 	'alignment' => array(
-		// 		'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER, // Set text jadi ditengah secara horizontal (center)
-		// 		'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER // Set text jadi di tengah secara vertical (middle)
-		// 	),
-		// 	'borders' => array(
-		// 		'top' => array('style'  => PHPExcel_Style_Border::BORDER_THIN), //garis tipis
-		// 		'right' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),  //garis tipis
-		// 		'bottom' => array('style'  => PHPExcel_Style_Border::BORDER_THIN), //garis tipis
-		// 		'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN) //garis tipis
-		// 	)
-		// );
-
-		// //set style baris
-		// $baris = array(
-		// 	'alignment' => array(
-		// 		'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER // Set text jadi di tengah secara vertical (middle)
-		// 	),
-		// 	'borders' => array(
-		// 		'top' => array('style'  => PHPExcel_Style_Border::BORDER_THIN), //garis tipis
-		// 		'right' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),  //garis tipis
-		// 		'bottom' => array('style'  => PHPExcel_Style_Border::BORDER_THIN), //garis tipis
-		// 		'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN) //garis tipis
-		// 	)
-		// );
-
-        //set tampilan judul file
-		$excel->setActiveSheetIndex(0)->setCellValue('A1', "DATA JOB ORDER (".$data["tanggal"].")");
-		$excel->getActiveSheet()->mergeCells('A1:H1');
-		$excel->getActiveSheet()->getStyle('A1')->getFont()->setBold(TRUE);
-		$excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(15);
-		// $excel->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-
-		//header tabel
-		$excel->setActiveSheetIndex(0)->setCellValue('A3', "NO JO");
-		$excel->setActiveSheetIndex(0)->setCellValue('B3', "CUSTOMER");
-		$excel->setActiveSheetIndex(0)->setCellValue('C3', "MUATAN");
-		$excel->setActiveSheetIndex(0)->setCellValue('D3', "ASAL");
-		$excel->setActiveSheetIndex(0)->setCellValue('E3', "TUJUAN");
-        $excel->setActiveSheetIndex(0)->setCellValue('F3', "TGL MUAT");
-        $excel->setActiveSheetIndex(0)->setCellValue('G3', "TGL BONGKAR");
-        $excel->setActiveSheetIndex(0)->setCellValue('H3', "UANG JALAN");
-
-		//apply style
-		// $excel->getActiveSheet()->getStyle('A3')->applyFromArray($kolom);
-		// $excel->getActiveSheet()->getStyle('B3')->applyFromArray($kolom);
-		// $excel->getActiveSheet()->getStyle('C3')->applyFromArray($kolom);
-		// $excel->getActiveSheet()->getStyle('D3')->applyFromArray($kolom);
-		// $excel->getActiveSheet()->getStyle('E3')->applyFromArray($kolom);
-        // $excel->getActiveSheet()->getStyle('F3')->applyFromArray($kolom);
-        // $excel->getActiveSheet()->getStyle('G3')->applyFromArray($kolom);
-        // $excel->getActiveSheet()->getStyle('H3')->applyFromArray($kolom);
-
-        //isi tabel
-		$numrow = 4;
+		//generate rute
+		$isi_rute = [];
 		foreach($jo as $value){
-			$excel->setActiveSheetIndex(0)->setCellValue('A'.$numrow, $value["Jo_id"]);
-			$excel->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $value["customer_name"]);
-			$excel->setActiveSheetIndex(0)->setCellValue('C'.$numrow, $value["muatan"]);
-			$excel->setActiveSheetIndex(0)->setCellValue('D'.$numrow, $value["asal"]);
-			$excel->setActiveSheetIndex(0)->setCellValue('E'.$numrow, $value["tujuan"]);
-            $excel->setActiveSheetIndex(0)->setCellValue('F'.$numrow, $value["tanggal_surat"]);
-            $excel->setActiveSheetIndex(0)->setCellValue('G'.$numrow, $value["tanggal_bongkar"]);
-            $excel->setActiveSheetIndex(0)->setCellValue('H'.$numrow, $value["uang_jalan"]);
-			
-			//Apply style
-			// $excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($baris);
-			// $excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($baris);
-			// $excel->getActiveSheet()->getStyle('C'.$numrow)->applyFromArray($baris);
-			// $excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($baris);
-			// $excel->getActiveSheet()->getStyle('E'.$numrow)->applyFromArray($baris);
-            // $excel->getActiveSheet()->getStyle('F'.$numrow)->applyFromArray($baris);
-            // $excel->getActiveSheet()->getStyle('G'.$numrow)->applyFromArray($baris);
-            // $excel->getActiveSheet()->getStyle('H'.$numrow)->applyFromArray($baris);
-			
-			$numrow++; // Tambah BARIS
+			$rute = "";
+			$n=0; 
+			for($i=0;$i<count($paketan);$i++){
+				if($paketan[$i]!=NULL){
+					if($paketan[$i]["paketan_id"] == $value["paketan_id"]){
+						$data_paketan = json_decode($paketan[$i]["paketan_data_rute"],true);
+						$n++;
+						for($j=0;$j<count($data_paketan);$j++){
+							$rute .= $data_paketan[$j]["dari"]."=>".$data_paketan[$j]["ke"]."=>".$data_paketan[$j]["muatan"].";";
+						}
+					}
+					break;
+				}
+			}
+			for($i=0;$i<count($kosongan);$i++){
+				if($kosongan[$i]!=NULL){
+					if($kosongan[$i]["kosongan_id"] == $value["kosongan_id"]){
+						$n++;
+						$rute .= $kosongan[$i]["kosongan_dari"]."=>".$kosongan[$i]["kosongan_ke"]."=>"."kosongan;";
+						$rute .= $value["asal"]."=>".$value["tujuan"]."=>".$value["muatan"];
+					}
+				}
+			}
+			if($n==0){
+				$rute .= $value["asal"]."=>".$value["tujuan"]."=>".$value["muatan"];
+			}
+			$isi_rute[]=$rute;
 		}
 
-		// Set width kolom
-		$excel->getActiveSheet()->getColumnDimension('A')->setWidth(10); // Set width kolom A
-		$excel->getActiveSheet()->getColumnDimension('B')->setWidth(20); // Set width kolom B
-		$excel->getActiveSheet()->getColumnDimension('C')->setWidth(25); // Set width kolom C
-		$excel->getActiveSheet()->getColumnDimension('D')->setWidth(20); // Set width kolom D
-		$excel->getActiveSheet()->getColumnDimension('E')->setWidth(20); // Set width kolom E
-        $excel->getActiveSheet()->getColumnDimension('F')->setWidth(15); // Set width kolom E
-        $excel->getActiveSheet()->getColumnDimension('G')->setWidth(15); // Set width kolom E
-        $excel->getActiveSheet()->getColumnDimension('H')->setWidth(15); // Set width kolom E
-		
-		// tinggi otomatis
-		$excel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);
+		$excel = new Spreadsheet();
 
-		// kertas LANDSCAPE
-		// $excel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+		// 	//set properti
+		$excel->getProperties()->setCreator('PT.Sumber Karya Berkah')
+		->setLastModifiedBy('PT.Sumber Karya Berkah');
 
-		// Set judul file excel nya
-		$excel->getActiveSheet(0)->setTitle("Laporan Data Job Order");
-		$excel->setActiveSheetIndex(0);
+			//set tampilan judul file
+			$excel->setActiveSheetIndex(0)->setCellValue('A1', "DATA JOB ORDER (".$tanggal.")");
+			$excel->getActiveSheet()->mergeCells('A1:H1');
+			$excel->getActiveSheet()->getStyle('A1')->getFont()->setBold(TRUE);
+			$excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(15);
 
-		// Proses file excel
-        $name_file = "JobOrder_".$data["tanggal"].".pdf";
-        $header = 'Content-Disposition: attachment; filename='.$name_file.'.xlsx';
-		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-		header($header);
-		header('Cache-Control: max-age=0');
+			//header tabel
+			$excel->setActiveSheetIndex(0)->setCellValue('A3', "NO JO");
+			$excel->setActiveSheetIndex(0)->setCellValue('B3', "CUSTOMER");
+			$excel->setActiveSheetIndex(0)->setCellValue('C3', "RUTE");
+			$excel->setActiveSheetIndex(0)->setCellValue('D3', "TGL MUAT");
+			$excel->setActiveSheetIndex(0)->setCellValue('E3', "TGL BONGKAR");
+			$excel->setActiveSheetIndex(0)->setCellValue('F3', "UANG JALAN");
 
-		$write = IOFactory::createWriter($excel, 'Xlsx');
-		$write->save('php://output');
-}
+			//isi tabel
+			$numrow = 4;
+			for($i=0;$i<count($jo);$i++){
+				$excel->setActiveSheetIndex(0)->setCellValue('A'.$numrow, $jo[$i]["Jo_id"]);
+				$excel->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $jo[$i]["customer_name"]);
+				$excel->setActiveSheetIndex(0)->setCellValue('C'.$numrow, $isi_rute[$i]);
+				$excel->setActiveSheetIndex(0)->setCellValue('D'.$numrow, $jo[$i]["tanggal_surat"]);
+				$excel->setActiveSheetIndex(0)->setCellValue('E'.$numrow, $jo[$i]["tanggal_bongkar"]);
+				$excel->setActiveSheetIndex(0)->setCellValue('F'.$numrow, "Rp".number_format($jo[$i]["uang_jalan"],2,",","."));
+			
+				$numrow++; // Tambah BARIS
+			}
+
+			// Set width kolom
+			$excel->getActiveSheet()->getColumnDimension('A')->setWidth(10); // Set width kolom A
+			$excel->getActiveSheet()->getColumnDimension('B')->setWidth(20); // Set width kolom B
+			$excel->getActiveSheet()->getColumnDimension('C')->setWidth(35); // Set width kolom C
+			$excel->getActiveSheet()->getColumnDimension('D')->setWidth(15); // Set width kolom D
+			$excel->getActiveSheet()->getColumnDimension('E')->setWidth(15); // Set width kolom E
+			$excel->getActiveSheet()->getColumnDimension('F')->setWidth(15); // Set width kolom E
+			
+			// tinggi otomatis
+			$excel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);
+
+			// Set judul file excel nya
+			$excel->getActiveSheet(0)->setTitle("Laporan Data Job Order");
+			$excel->setActiveSheetIndex(0);
+
+			// Proses file excel
+			$name_file = "JobOrder_".$tanggal;
+			$header = 'Content-Disposition: attachment; filename='.$name_file.'.xlsx';
+			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+			header($header);
+			header('Cache-Control: max-age=0');
+
+			$write = IOFactory::createWriter($excel, 'Xlsx');
+			$write->save('php://output');
+	}
+
 	// fungsi cetak invoice,gaji,memo
 		public function invoice($invoice_id,$asal){
             if(!$_SESSION["user"]){

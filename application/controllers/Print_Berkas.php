@@ -1,14 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require("assets/dom_pdf/autoload.inc.php");
 require("assets/excel/vendor/autoload.php");
+require("assets/html2pdf/autoload.php");
 
-
-use Dompdf\Dompdf;
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use Spipu\Html2Pdf\Html2Pdf;
 
 class Print_Berkas extends CI_Controller {
     public function __construct()
@@ -31,24 +30,17 @@ class Print_Berkas extends CI_Controller {
 			$kosongan_id[] = $data_kosongan;
 		}
 		$data["paketan"] = $paketan_id;
-		$data["kosongan"] = $kosongan_id;
-        $dompdf = new Dompdf();
+		$data["kosongan"] = $kosongan_id;        
+		ob_start();
 		if($asal=="uangjalan"){
-			$html = $this->load->view("print/report_uang_jalan_pdf",$data,true);
+			$this->load->view("print/report_uang_jalan_pdf",$data);
 		}else{
-			$html = $this->load->view("print/report_pdf",$data,true);
+			$this->load->view("print/report_pdf",$data);
 		}
-        $dompdf->loadHtml($html);
-
-        // Setting ukuran dan orientasi kertas
-        $dompdf->setPaper('A4', 'landscape');
-
-        // Rendering dari HTML Ke PDF
-        $dompdf->render();
-
-        // Melakukan output file Pdf
-        $name_file = "JobOrder_".$data["tanggal"].".pdf";
-        $dompdf->stream($name_file);
+	    $html = ob_get_clean();
+		$pdf = new Html2Pdf('P','A4','fr');   
+		$pdf->WriteHTML($html);   
+		$pdf->Output('Data Siswa.pdf', 'D');
     }
 
 	public function cetaklaporanexcel($tanggal,$bulan,$tahun,$status_jo,$asal){

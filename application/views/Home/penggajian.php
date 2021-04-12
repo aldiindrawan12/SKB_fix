@@ -24,8 +24,8 @@
                         <th class="text-center" width="15%" scope="col">Nama Driver</th>
                         <th class="text-center" width="18%" scope="col">Kasbon</th>
                         <th width="12%" scope="col">Berlaku SIM</th>
-                        <th width="13%" scope="col">Status Aktif</th>
                         <th width="13%" scope="col">Status Jalan</th>
+                        <th width="13%" scope="col">Status Aktif</th>
                         <th width="20%" scope="col">Aksi</th>
                     </tr>
                 </thead>

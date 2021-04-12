@@ -1356,21 +1356,7 @@
                             }
 
                     },
-                    {
-                        "data": "status_aktif",
-                        className: 'text-center',
-                        "orderable": false,
-                            render: function(data, type, row) {
-                                if (data == "Aktif") {
-                                    let html = "<a class='btn btn-block btn-sm btn-outline-success  btn-update-status-aktif-supir' data-pk='"+row['supir_id']+"' data-toggle='modal' data-target='#update_status_aktif_supir' ><i class='fa fa-fw fa-check mr-2'></i>" + data + "</a>";
-                                    return html;
-                                } else {
-                                    let html = "<a class='btn btn-block btn-sm btn-outline-danger btn-update-status-aktif-supir' data-pk='"+row['supir_id']+"' data-toggle='modal' data-target='#update_status_aktif_supir' ><i class='fa fa-fw fa-exclamation-circle mr-2'></i>" + data + "</a>";
-                                    return html;
-                                }
-                            }
-
-                    },
+                   
                     {
                         "data": "status_jalan",
                         className: 'text-center',
@@ -1381,6 +1367,21 @@
                                     return html;
                                 } else {
                                     let html = "<span class='btn-sm btn-block btn-warning active'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>" + data + "</span>";
+                                    return html;
+                                }
+                            }
+
+                    },
+                    {
+                        "data": "status_aktif",
+                        className: 'text-center',
+                        "orderable": false,
+                            render: function(data, type, row) {
+                                if (data == "Aktif") {
+                                    let html = "<a class='btn btn-block btn-sm btn-outline-success  btn-update-status-aktif-supir' data-pk='"+row['supir_id']+"' data-toggle='modal' data-target='#update_status_aktif_supir' ><i class='fa fa-fw fa-check mr-2'></i>" + data + "</a>";
+                                    return html;
+                                } else {
+                                    let html = "<a class='btn btn-block btn-sm btn-outline-danger btn-update-status-aktif-supir' data-pk='"+row['supir_id']+"' data-toggle='modal' data-target='#update_status_aktif_supir' ><i class='fa fa-fw fa-exclamation-circle mr-2'></i>" + data + "</a>";
                                     return html;
                                 }
                             }

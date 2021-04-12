@@ -99,6 +99,7 @@
                             <table class="table table-bordered" id="pilih-jo" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
+                                        <th class="text-center" width="" scope="col">Tipe JO</th>
                                         <th class="text-center" width="" scope="col">Rute dan Muatan</th>
                                         <th class="text-center" width="" scope="col">Tgl.Brgkt</th>
                                         <th class="text-center" width="" scope="col">Tgl.Plng</th>

@@ -17,10 +17,21 @@ class Print_Berkas extends CI_Controller {
 		$this->load->model('model_home');//load model
         $this->load->model('model_print');//load model
 		$this->load->model('model_detail');//load model
+		$this->load->model('model_form');//load model
     }
     public function cetaklaporanpdf($tanggal,$bulan,$tahun,$status_jo,$asal){
         $data["jo"] = $this->model_print->getjobyperiode($tanggal,$bulan,$tahun,$status_jo);
         $data["tanggal"] = $tanggal."-".$bulan."-".$tahun;
+		$paketan_id = [];
+		$kosongan_id = [];
+		for($i=0;$i<count($data["jo"]);$i++){
+			$data_paketan = $this->model_form->getpaketanbyid($data["jo"][$i]["paketan_id"]);
+			$paketan_id[] = $data_paketan;
+			$data_kosongan = $this->model_detail->getkosonganbyid($data["jo"][$i]["kosongan_id"]);
+			$kosongan_id[] = $data_kosongan;
+		}
+		$data["paketan"] = $paketan_id;
+		$data["kosongan"] = $kosongan_id;
         // $this->load->view("print/report_pdf",$data);
         $dompdf = new Dompdf();
 		if($asal=="uangjalan"){
@@ -168,6 +179,16 @@ public function cetaklaporanexcel($tanggal,$bulan,$tahun,$status_jo,$asal){
                 redirect(base_url());
             }
 			$data["invoice"] = $this->model_detail->getinvoicebyid(str_replace("%20"," ",$invoice_id));
+            $paketan_id = [];
+            $kosongan_id = [];
+            for($i=0;$i<count($data["invoice"]);$i++){
+                $data_paketan = $this->model_form->getpaketanbyid($data["invoice"][$i]["paketan_id"]);
+                $paketan_id[] = $data_paketan;
+                $data_kosongan = $this->model_detail->getkosonganbyid($data["invoice"][$i]["kosongan_id"]);
+                $kosongan_id[] = $data_kosongan;
+            }
+            $data["paketan"] = $paketan_id;
+            $data["kosongan"] = $kosongan_id;
 			$data["customer"] = $this->model_home->getcustomerbyid($data["invoice"][0]["customer_id"]);
 			$data["invoice_kode"] = $data["invoice"][0]["invoice_kode"];
 			$data["asal"] = $asal;

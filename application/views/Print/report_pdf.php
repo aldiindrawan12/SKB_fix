@@ -37,9 +37,7 @@
                         <tr>
                             <th class="text-center" width="12,5%"  scope="col">No JO</th>
                             <th class="text-center" width="12,5%" scope="col">Customer</th>
-                            <th class="text-center" width="12,5%" scope="col">Muatan</th>
-                            <th class="text-center" width="12,5%" scope="col">Asal</th>
-                            <th class="text-center" width="12,5%" scope="col">Tujuan</th>
+                            <th class="text-center" width="30%" scope="col">Rute</th>
                             <th class="text-center" width="12,5%" scope="col">Tgl Muat</th>
                             <th class="text-center" width="12,5%" scope="col">Tgl Bongkar</th>
                             <th class="text-center" width="12,5%"  scope="col">Uang Jalan</th>
@@ -50,12 +48,39 @@
                         <tr>
                             <th ><?= $value["Jo_id"]?></th>
                             <th ><?= $value["customer_name"]?></th>
-                            <th ><?= $value["muatan"]?></th>
-                            <th ><?= $value["asal"]?></th>
-                            <th ><?= $value["tujuan"]?></th>
+                            <?php $n=0; 
+                            for($i=0;$i<count($paketan);$i++){
+                                if($paketan[$i]!=NULL){
+                                    if($paketan[$i]["paketan_id"] == $value["paketan_id"]){
+                                        $data_paketan = json_decode($paketan[$i]["paketan_data_rute"],true);
+                                        $n++?>
+                                        <td>
+                                        <?php for($j=0;$j<count($data_paketan);$j++){?>
+                                            <?= $data_paketan[$j]["dari"]."=>".$data_paketan[$j]["ke"]."=>".$data_paketan[$j]["muatan"]?>
+                                        <?php }?>
+                                        </td>    
+                                <?php }
+                                break;
+                                }
+                            }?>
+                            <?php 
+                            for($i=0;$i<count($kosongan);$i++){
+                                if($kosongan[$i]!=NULL){
+                                    if($kosongan[$i]["kosongan_id"] == $value["kosongan_id"]){
+                                        $n++?>
+                                        <td>
+                                            <?= $kosongan[$i]["kosongan_dari"]."=>".$kosongan[$i]["kosongan_ke"]."=>"?>kosongan<br>
+                                            <?= $value["asal"]."=>".$value["tujuan"]."=>".$value["muatan"]?><br>
+                                        </td>    
+                                <?php }
+                                }
+                            }?>
+                            <?php if($n==0){?>
+                                <td><?= $value["asal"]."=>".$value["tujuan"]."=>".$value["muatan"]?></td>
+                            <?php }?>
                             <th ><?= $value["tanggal_surat"]?></th>
                             <th ><?= $value["tanggal_bongkar"]?></th>
-                            <th >Rp.<?= $value["uang_jalan"]?></th>
+                            <th >Rp.<?= number_format($value["uang_jalan_bayar"],2,",",".")?></th>
                         </tr>
                     <?php } ?>
                     </tbody>

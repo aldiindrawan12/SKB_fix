@@ -14,6 +14,7 @@
                     <tr>
                         <th width ="10%" class="text-center" scope="col">No JO</th>
                         <th width ="17%" class="text-center" scope="col">Customer</th>
+                        <th width ="17%" class="text-center" scope="col">Tipe JO</th>
                         <th width ="15%" class="text-center" scope="col">Rute dan Muatan</th>
                         <th width ="1%" class="text-center" scope="col">Tanggal</th>
                         <th width ="25%" scope="col">Konfirmasi</th>

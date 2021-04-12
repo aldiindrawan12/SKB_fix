@@ -206,6 +206,8 @@ class Form extends CI_Controller {
                 "upah"=>str_replace(".","",$this->input->post("Upah")),
                 "tagihan"=>str_replace(".","",$this->input->post("Tagihan")),
                 "paketan_id"=>$this->input->post("paketan_id"),
+                "kosongan_id"=>0,
+                "uang_kosongan"=>0
             );
             $this->model_form->insert_JO($data["data"]);
             $data["jo_id"] = max($isi_jo_id)+1;

@@ -31,6 +31,7 @@ class Model_Print extends CI_model
         if($status!="x"){
             $this->db->where("skb_job_order.status",(str_replace("%20"," ",$status)));
         }
+        $this->db->where("status!=","Dibatalkan");
         $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
         $this->db->join("skb_supir", "skb_supir.supir_id = skb_job_order.supir_id", 'left');
         $this->db->join("skb_mobil", "skb_mobil.mobil_no = skb_job_order.mobil_no", 'left');

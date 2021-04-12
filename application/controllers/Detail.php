@@ -58,6 +58,16 @@ class Detail extends CI_Controller {
                 redirect(base_url());
             }
             $data["invoice"] = $this->model_detail->getinvoicebyid(str_replace("%20"," ",$invoice_id));
+            $paketan_id = [];
+            $kosongan_id = [];
+            for($i=0;$i<count($data["invoice"]);$i++){
+                $data_paketan = $this->model_form->getpaketanbyid($data["invoice"][$i]["paketan_id"]);
+                $paketan_id[] = $data_paketan;
+                $data_kosongan = $this->model_detail->getkosonganbyid($data["invoice"][$i]["kosongan_id"]);
+                $kosongan_id[] = $data_kosongan;
+            }
+            $data["paketan"] = $paketan_id;
+            $data["kosongan"] = $kosongan_id;
             $data["customer"] = $this->model_home->getcustomerbyid($data["invoice"][0]["customer_id"]);
             $data["page"] = "Invoice_Customer_page";
             $data["collapse_group"] = "Perintah_Kerja";

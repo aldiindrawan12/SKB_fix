@@ -124,10 +124,13 @@
                             <td colspan=3>
                                 <div class="row ">
                                     <p class="col">Rp.<?= number_format($jo["uang_jalan_bayar"],2,',','.')?></p>
-                                    <a class='btn btn-success btn-sm col-md-4 col'>
-                                        <span>Pembayaran UJ Lunas</span>
-                                    </a>
+                                    <div class="col ">
+                                    <a class='btn btn-sm btn-success col-md-12  active float-right'>
+                                        Pembayaran UJ Lunas
+                                </a>
+                                    </div>
                                 </div>
+                                
                             </td>
                         <?php }else{?>
                             <td colspan=3>

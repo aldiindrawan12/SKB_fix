@@ -35,7 +35,7 @@
 
 <!-- pop up add truck -->
 <div class="modal fade mt-3 px-3 " id="popup-kosongan" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
                 <h5 class="font-weight-bold">Menambah Rute Kosongan</h5>

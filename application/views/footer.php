@@ -862,10 +862,10 @@
                         className: 'text-center',
                             render: function(data, type, row) {
                                 if (data == "Sampai Tujuan") {
-                                    let html = "<span class='btn-sm btn-block btn-success'><i class='fa fa-fw fa-check mr-2'></i>" + data + "</span>";
+                                    let html = "<span class='btn-sm btn-block btn-success active'><i class='fa fa-fw fa-check mr-2'></i>" + data + "</span>";
                                     return html;
                                 } else {
-                                    let html = "<span class='btn-sm btn-block btn-warning'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>" + data + "</span>";
+                                    let html = "<span class='btn-sm btn-block btn-warning active'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>" + data + "</span>";
                                     return html;
                                 }
                             }
@@ -873,6 +873,7 @@
                     {
                         "data": "Jo_id",
                         "orderable": false,
+                        className: 'text-center',
                         render: function(data, type, row) {
                             let html = "<a class='btn btn-light' href='<?= base_url('index.php/detail/detail_jo/"+data+"/report')?>'><i class='fas fa-eye'></i></a>";
                             return html;

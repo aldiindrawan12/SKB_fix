@@ -32,22 +32,22 @@
                             $sisa_bon=0;
                     foreach($transaksi_bon as $value){?>
                         <tr>
-                            <td class="p-1"><?= $n?></td>
-                            <td class="p-1"><?= $value["bon_tanggal"]?></td>
-                            <td class="p-1"><?= $value["bon_keterangan"]?></td>
+                            <td class=" text-center"><?= $n?></td>
+                            <td class=""><?= $value["bon_tanggal"]?></td>
+                            <td class=""><?= $value["bon_keterangan"]?></td>
                             <?php if($value["bon_jenis"]=="Pembayaran" || $value["bon_jenis"]=="Potong Gaji"){
                                 $sisa_bon-=$value["bon_nominal"];?>
-                                <td class="p-1">Rp.<?= number_format($value["bon_nominal"],2,',','.')?></td>
-                                <td class="p-1">Rp.0</td>
+                                <td class="">Rp.<?= number_format($value["bon_nominal"],2,',','.')?></td>
+                                <td class="">Rp.0</td>
                             <?php }else{
                                 $sisa_bon+=$value["bon_nominal"];?>
-                                <td class="p-1">Rp.0</td>
-                                <td class="p-1">Rp.<?= number_format($value["bon_nominal"],2,',','.')?></td>
+                                <td class="">Rp.0</td>
+                                <td class="">Rp.<?= number_format($value["bon_nominal"],2,',','.')?></td>
                             <?php }
                             if($sisa_bon==0){?>
-                                <td class="p-1">Lunas</td>
+                                <td class="">Lunas</td>
                             <?php }else{?>
-                                <td class="p-1">Rp.<?= number_format($sisa_bon,2,',','.')?></td>
+                                <td class="">Rp.<?= number_format($sisa_bon,2,',','.')?></td>
                             <?php }?>
                         </tr>
                     <?php $n++;
@@ -58,6 +58,8 @@
         <!-- end tampilan detail transaksi bon -->
     </div>
 </div>
+</div>
+
 <script>
 function print_bon(){
     var restorepage = document.body.innerHTML;

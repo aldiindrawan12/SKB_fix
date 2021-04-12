@@ -23,7 +23,7 @@
                         <th class="text-center" width="11%" scope="col">Dari</th>
                         <th class="text-center" width="12%" scope="col">Ke</th>
                         <th class="text-center" width="12%" scope="col">Uang Jalan</th>
-                        <th class="text-center" width="30%" scope="col">Aksi</th>
+                        <th class="text-center" width="5%" scope="col">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>

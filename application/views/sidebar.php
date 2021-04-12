@@ -55,7 +55,7 @@
                             <span>Rute dan Muatan</span>
                         </a>
                         <a class="collapse-item" id="Kosongan_page"href="<?=base_url("index.php/home/kosongan")?>">  
-                            <i class="fas fa-weight"></i>
+                        <i class="fas fa-list-alt"></i>
                             <span>Rute Kosongan</span>
                         </a>
                         <a class="collapse-item" id="Paketan_page"href="<?=base_url("index.php/home/paketan")?>">  

@@ -16,15 +16,15 @@
             <div class="text-center mb-3 h5">
                 <span><?=$supir?></span>
             </div>
-            <table class="table table-bordered small">
+            <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th class="p-1">No.</th>
-                        <th class="p-1">Tanggal Transaksi</th>
-                        <th class="p-1">Keterangan</th>
-                        <th class="p-1">Bayar</th>
-                        <th class="p-1">Bon</th>
-                        <th class="p-1">Sisa Bon</th>
+                        <th class="text-center">No.</th>
+                        <th class="text-center">Tanggal Transaksi</th>
+                        <th class="text-center">Keterangan</th>
+                        <th class="text-center">Bayar</th>
+                        <th class="text-center">Bon</th>
+                        <th class="text-center">Sisa Bon</th>
                     </tr>    
                 </thead>
                 <tbody>  

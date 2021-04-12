@@ -144,7 +144,7 @@
                                 </div> -->
                             </div>
                             <div class="form-group">
-                                <label for="rute_keterangan" class="form-label font-weight-bold">keterangan</label>
+                                <label for="rute_keterangan" class="form-label font-weight-bold">Keterangan</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_keterangan" name="rute_keterangan" required>
                             </div>
                         </div>

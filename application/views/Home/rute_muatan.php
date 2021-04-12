@@ -161,7 +161,7 @@
 <!-- end pop up add rute dan muatan -->
 
 <!-- pop up update rute dan muatan -->
-<div class="modal fade px-5 py-5" id="popup-update-rute" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<div class="modal fade" id="popup-update-rute" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
@@ -270,8 +270,8 @@
 <!-- end pop up update rute dan muatan -->
 
 <!-- pop up detail rute -->
-<div class="modal fade mt-5" id="popup-detail-rute" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
+<div class="modal fade" id="popup-detail-rute" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
                 <h5 class="block-title">Detail Rute</h5>

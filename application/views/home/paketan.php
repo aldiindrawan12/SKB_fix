@@ -268,10 +268,7 @@
             </div>
             <div class="font-size-sm m-3 text-justify">
                 <form action="<?= base_url("index.php/form/update_paketan")?>" method="POST">
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-success">Simpan</button>
-                        <button type="reset" class="btn btn-outline-danger" onclick="reset_form()">Reset</button>
-                    </div>
+        
                     <div class="row">
                         <div class="col-md-6 border rounded mr-3 ml-3">
                             <div class="form-group">
@@ -346,6 +343,11 @@
                                 <input autocomplete="off" type="text" class="form-control" id="paketan_keterangan_update" name="paketan_keterangan_update" required>
                             </div>
                         </div>
+                    </div>
+                    <div class="form-group float-right mt-1 mr-1">
+                        
+                        <button type="reset" class="btn btn-outline-danger" onclick="reset_form()">Reset</button>
+                        <button type="submit" class="btn btn-success">Simpan</button>
                     </div>
                 </form>
             </div>

@@ -267,6 +267,10 @@
             <div class="font-size-sm text-justify">
             <div class="row">
                 <div class="col">
+                <div class="text-center btn btn-block btn-facebook active mt-2 mb-2">
+                    <strong><span id="aktif">Aktif</span></strong>
+                    <span id="tgl-aktif">2021-01-22-sekarang</span>
+                </div>
                     <table class="table table-bordered">
                         <tbody>
                             <tr>
@@ -301,8 +305,8 @@
                             <td class="font-weight-bold" style="width: 40%;">Keterangan</td>
                                 <td name="supir_keterangan"></td>
                             </tr>
-                            <tr>
-                                <td colspan=2>Anggota Keluarga Yang Dapat Dihubungi</td>
+                            <tr >
+                                <td class="font-weight-bold text-center" colspan=2>Anggota Keluarga Yang Dapat Dihubungi</td>
                             </tr>
                             <tr>
                                 <td class="font-weight-bold" style="width: 40%;">Nama</td>
@@ -338,12 +342,10 @@
                         </div>
                     </div>
                 </div>     
-                <div class="col-md-12 text-center">
-                    <strong><span id="aktif">Aktif</span></strong>
-                    <span id="tgl-aktif">2021-01-22-sekarang</span>
-                </div>     
+                 
             </div>
             </div>
+               <!--dsini boy  -->
         </div>
     </div>
     </div>

@@ -453,6 +453,74 @@ class Model_Home extends CI_model
         }
     // end Function Invoice
     
+        // Function Invoice Belum Lunas
+        public function count_all_invoice_belum_lunas($customer_id)
+        {
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_invoice.customer_id", 'left');
+     
+            return $this->db->count_all_results("skb_invoice");
+        }
+    
+        public function filter_invoice_belum_lunas($search, $limit, $start, $order_field, $order_ascdesc,$customer_id)
+        {
+            if($customer_id!="x"){
+                $this->db->where("skb_invoice.customer_id",$customer_id);
+            }
+            $this->db->where("status_bayar","Belum Lunas");
+            $this->db->like('invoice_kode', $search);
+            $this->db->order_by($order_field, $order_ascdesc);
+            $this->db->limit($limit, $start);
+
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_invoice.customer_id", 'left');
+            return $this->db->get('skb_invoice')->result_array();
+        }
+    
+        public function count_filter_invoice_belum_lunas($search,$customer_id)
+        {
+            if($customer_id!="x"){
+                $this->db->where("skb_invoice.customer_id",$customer_id);
+            }
+            $this->db->where("status_bayar","Belum Lunas");
+            $this->db->like('invoice_kode', $search);
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_invoice.customer_id", 'left');
+            return $this->db->get('skb_invoice')->num_rows();
+        }
+    // end Function Invoice Belum Lunas
+
+    // Function InvoiceLunas
+        public function count_all_invoice_lunas($customer_id)
+        {
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_invoice.customer_id", 'left');
+     
+            return $this->db->count_all_results("skb_invoice");
+        }
+    
+        public function filter_invoice_lunas($search, $limit, $start, $order_field, $order_ascdesc,$customer_id)
+        {
+            if($customer_id!="x"){
+                $this->db->where("skb_invoice.customer_id",$customer_id);
+            }
+            $this->db->where("status_bayar","Lunas");
+            $this->db->like('invoice_kode', $search);
+            $this->db->order_by($order_field, $order_ascdesc);
+            $this->db->limit($limit, $start);
+
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_invoice.customer_id", 'left');
+            return $this->db->get('skb_invoice')->result_array();
+        }
+    
+        public function count_filter_invoice_lunas($search,$customer_id)
+        {
+            if($customer_id!="x"){
+                $this->db->where("skb_invoice.customer_id",$customer_id);
+            }
+            $this->db->where("status_bayar","Lunas");
+            $this->db->like('invoice_kode', $search);
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_invoice.customer_id", 'left');
+            return $this->db->get('skb_invoice')->num_rows();
+        }
+    // end Function InvoiceLunas
+    
     //  Function Akun
         public function count_all_akun()
         {

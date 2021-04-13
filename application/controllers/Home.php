@@ -447,6 +447,50 @@ class Home extends CI_Controller {
             echo json_encode($callback);
         }
 
+        public function view_invoice_belum_lunas(){
+            $search = $_POST['search']['value'];
+            $limit = $_POST['length'];
+            $start = $_POST['start'];
+            $customer_id = $this->input->post('customer_id');
+            $order_index = $_POST['order'][0]['column'];
+            $order_field = $_POST['columns'][$order_index]['data'];
+            $order_ascdesc = $_POST['order'][0]['dir'];
+            $sql_total = $this->model_home->count_all_invoice_belum_lunas($customer_id);
+            $sql_data = $this->model_home->filter_invoice_belum_lunas($search, $limit, $start, $order_field, $order_ascdesc,$customer_id);
+            $sql_filter = $this->model_home->count_filter_invoice_belum_lunas($search,$customer_id);
+            $callback = array(
+                'draw' => $_POST['draw'],
+                'recordsTotal' => $sql_total,
+                'recordsFiltered' => $sql_filter,
+                'data' => $sql_data
+            );
+
+            header('Content-Type: application/json');
+            echo json_encode($callback);
+        }
+
+        public function view_invoice_lunas(){
+            $search = $_POST['search']['value'];
+            $limit = $_POST['length'];
+            $start = $_POST['start'];
+            $customer_id = $this->input->post('customer_id');
+            $order_index = $_POST['order'][0]['column'];
+            $order_field = $_POST['columns'][$order_index]['data'];
+            $order_ascdesc = $_POST['order'][0]['dir'];
+            $sql_total = $this->model_home->count_all_invoice_lunas($customer_id);
+            $sql_data = $this->model_home->filter_invoice_lunas($search, $limit, $start, $order_field, $order_ascdesc,$customer_id);
+            $sql_filter = $this->model_home->count_filter_invoice_lunas($search,$customer_id);
+            $callback = array(
+                'draw' => $_POST['draw'],
+                'recordsTotal' => $sql_total,
+                'recordsFiltered' => $sql_filter,
+                'data' => $sql_data
+            );
+
+            header('Content-Type: application/json');
+            echo json_encode($callback);
+        }
+        
         public function invoice()
         {
             if(!$_SESSION["user"]){

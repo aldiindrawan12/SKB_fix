@@ -2040,6 +2040,154 @@
     </script>
     <!-- End Invoice -->
 
+<!-- invoice Belum Lunas-->
+<script>
+        $(document).ready(function() {
+            var table = null;
+            table = $('#Table-Invoice-Belum-Lunas').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ordering": true,
+                "order": [
+                    [0, 'asc']
+                ],
+                "ajax": {
+                    "url": "<?php echo base_url('index.php/home/view_invoice_belum_lunas') ?>",
+                    "type": "POST",
+                    'data': function(data) {
+                        data.customer_id = <?= $customer["customer_id"]?>;
+                    }
+                },
+                "deferRender": true,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
+                "columns": [
+                    {
+                        "data": "invoice_kode",
+                        className: 'text-center'
+                    },
+                    {
+                        "data": "customer_name"
+                    },
+                    {
+                        "data": "tanggal_invoice",
+                        className: 'text-center'
+                    },
+                    {
+                        "data": "batas_pembayaran",
+                        className: 'text-center'
+                    },
+                    {
+                        "data": "status_bayar",
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            if (data == "Lunas") {
+                                    let html = "<span class='btn-sm btn-block btn-success'><i class='fa fa-fw fa-check mr-2'></i>" + data + "</span>";
+                                    return html;
+                                } else {
+                                    let html = "<span class='btn-sm btn-block btn-warning'><i class='fa fa fa-fw fa-exclamation-circle mr-2'></i>" + data + "</span>";
+                                    return html;
+                                }
+                        }
+                    },
+                    {
+                        "data": "grand_total",
+                        render: function(data, type, row) {
+                            let html = 'Rp.'+rupiah(data);
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "invoice_kode",
+                        className: 'text-center',
+                        "orderable": false,
+                        render: function(data, type, row) {
+                            let html = "<a class='btn btn-light' href='<?= base_url('index.php/detail/detail_invoice/"+data+"')?>'><i class='fas fa-eye'></i></a>";
+                            return html;
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+    <!-- End Invoice Belum Lunas-->
+
+    <!-- invoice Lunas-->
+    <script>
+        $(document).ready(function() {
+            var table = null;
+            table = $('#Table-Invoice-Lunas').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ordering": true,
+                "order": [
+                    [0, 'asc']
+                ],
+                "ajax": {
+                    "url": "<?php echo base_url('index.php/home/view_invoice_lunas') ?>",
+                    "type": "POST",
+                    'data': function(data) {
+                        data.customer_id = <?= $customer["customer_id"]?>;
+                    }
+                },
+                "deferRender": true,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
+                "columns": [
+                    {
+                        "data": "invoice_kode",
+                        className: 'text-center'
+                    },
+                    {
+                        "data": "customer_name"
+                    },
+                    {
+                        "data": "tanggal_invoice",
+                        className: 'text-center'
+                    },
+                    {
+                        "data": "batas_pembayaran",
+                        className: 'text-center'
+                    },
+                    {
+                        "data": "status_bayar",
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            if (data == "Lunas") {
+                                    let html = "<span class='btn-sm btn-block btn-success'><i class='fa fa-fw fa-check mr-2'></i>" + data + "</span>";
+                                    return html;
+                                } else {
+                                    let html = "<span class='btn-sm btn-block btn-warning'><i class='fa fa fa-fw fa-exclamation-circle mr-2'></i>" + data + "</span>";
+                                    return html;
+                                }
+                        }
+                    },
+                    {
+                        "data": "grand_total",
+                        render: function(data, type, row) {
+                            let html = 'Rp.'+rupiah(data);
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "invoice_kode",
+                        className: 'text-center',
+                        "orderable": false,
+                        render: function(data, type, row) {
+                            let html = "<a class='btn btn-light' href='<?= base_url('index.php/detail/detail_invoice/"+data+"')?>'><i class='fas fa-eye'></i></a>";
+                            return html;
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+    <!-- End Invoice Lunas-->
+    
     <!-- scrip angka rupiah -->
     <script>
             function rupiah(uang){

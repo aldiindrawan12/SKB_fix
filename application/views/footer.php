@@ -1546,11 +1546,16 @@
                                         selisih = tanggal;
                                     }
                                 });
-                                if(selisih<31){
-                                    let html = "<a class='btn btn-block btn-sm btn-danger active'><i class='fa fa-fw fa-exclamation-circle'></i>"+row["sisa"]+"</a>";
-                                    return html;
+                                if(row["sisa"][0]=="-"){
+                                    if(selisih>31){
+                                        let html = "<a class='btn btn-block btn-sm btn-success active'><i class='fa fa-fw fa-exclamation-circle'></i>"+row["sisa"]+"</a>";
+                                        return html;
+                                    }else{
+                                        let html = "<a class='btn btn-block btn-sm btn-warning'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
+                                        return html;
+                                    }
                                 }else{
-                                    let html = "<a class='btn btn-block btn-sm btn-success active'><i class='fa fa-fw fa-check mr-2'></i>"+row["sisa"]+"</a>";
+                                    let html = "<a class='btn btn-block btn-sm btn-danger'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
                                     return html;
                                 }
                             }
@@ -3495,25 +3500,23 @@
             var fileSize = a.files[0].size;
             var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
             if (!allowedExtensions.exec(filePath)) {
-             
                 Swal.fire({
-                title: "Upload Gagal",
-                icon: "error",
-                text: "File Harus Berupa Gambar JPG,JPEG,PNG",
-                type: "error",
-                
-            });
-            a.value = '';
+                    title: "Upload Gagal",
+                    icon: "error",
+                    text: "File Harus Berupa Gambar JPG,JPEG,PNG",
+                    type: "error",
+                    timer: 2000
+                });
+                a.value = '';
             }
             if (fileSize>2000000) {
                 Swal.fire({
-                title: "Upload Gagal",
-                icon: "error",
-                text: "Ukuran File Harus Kurang Dari 2 MB",
-                type: "error",
-                
-            });
-               
+                    title: "Upload Gagal",
+                    icon: "error",
+                    text: "Ukuran File Harus Kurang Dari 2 MB",
+                    type: "error",
+                    timer: 2000
+                });
                 a.value = '';
             }
         }

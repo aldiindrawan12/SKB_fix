@@ -32,15 +32,17 @@ class Print_Berkas extends CI_Controller {
 		$data["paketan"] = $paketan_id;
 		$data["kosongan"] = $kosongan_id;        
 		ob_start();
-		if($asal=="uangjalan"){
+		if($asal=="uang_jalan"){
 			$this->load->view("print/report_uang_jalan_pdf",$data);
+			$pdf_name = 'UJ_'.$data["tanggal"].'.pdf';
 		}else{
 			$this->load->view("print/report_pdf",$data);
+			$pdf_name = 'JO_'.$data["tanggal"].'.pdf';
 		}
 	    $html = ob_get_clean();
 		$pdf = new Html2Pdf('P','A4','fr');   
 		$pdf->WriteHTML($html);   
-		$pdf->Output('Data Siswa.pdf', 'D');
+		$pdf->Output($pdf_name, 'D');
     }
 
 	public function cetaklaporanexcel($tanggal,$bulan,$tahun,$status_jo,$asal){
@@ -87,6 +89,12 @@ class Print_Berkas extends CI_Controller {
 				$rute .= $value["asal"]."=>".$value["tujuan"]."=>".$value["muatan"];
 			}
 			$isi_rute[]=$rute;
+		}
+
+		if($asal=="uang_jalan"){
+			$name_file = 'UJ_'.$tanggal;
+		}else{
+			$name_file = 'JO_'.$tanggal;
 		}
 
 		$excel = new Spreadsheet();
@@ -138,7 +146,6 @@ class Print_Berkas extends CI_Controller {
 			$excel->setActiveSheetIndex(0);
 
 			// Proses file excel
-			$name_file = "JobOrder_".$tanggal;
 			$header = 'Content-Disposition: attachment; filename='.$name_file.'.xlsx';
 			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 			header($header);

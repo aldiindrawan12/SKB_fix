@@ -47,7 +47,7 @@ class Model_Dashboard extends CI_model
                             $hasil_fix[] = $hasil[$i];
                         }
                 }else{
-                        if($hasil[$i]["status_hapus"]=="NO" && $d<31 && $tanggal!=null  && $hasil[$i]["validasi"]=="ACC"){
+                        if($hasil[$i]["status_hapus"]=="NO" && ($tanggal_now>$tanggal || $d<31) && $tanggal!=null  && $hasil[$i]["validasi"]=="ACC"){
                             $hasil_fix[] = $hasil[$i];
                         }
                 }
@@ -87,7 +87,7 @@ class Model_Dashboard extends CI_model
                                 $hasil_fix +=1;
                             }
                     }else{
-                            if($hasil_data[$i]["status_hapus"]=="NO"  && $d<31 && $tanggal!=null && $hasil_data[$i]["validasi"]=="ACC"){
+                            if($hasil_data[$i]["status_hapus"]=="NO"  && ($tanggal_now>$tanggal || $d<31) && $tanggal!=null && $hasil_data[$i]["validasi"]=="ACC"){
                                 $hasil_fix +=1;
                             }
                     }
@@ -129,7 +129,7 @@ class Model_Dashboard extends CI_model
                             $hasil_fix[] = $hasil[$i];
                         }
                 }else{
-                        if($hasil[$i]["status_hapus"]=="NO" && $d<31 && $tanggal!=null  && $hasil[$i]["validasi"]=="ACC"){
+                        if($hasil[$i]["status_hapus"]=="NO" && ($tanggal_now>$tanggal || $d<31) && $tanggal!=null  && $hasil[$i]["validasi"]=="ACC"){
                             $hasil_fix[] = $hasil[$i];
                         }
                 }
@@ -158,7 +158,7 @@ class Model_Dashboard extends CI_model
                             $hasil_fix +=1;
                         }
                 }else{
-                        if($hasil_data[$i]["status_hapus"]=="NO"  && $d<31 && $tanggal!=null && $hasil_data[$i]["validasi"]=="ACC"){
+                        if($hasil_data[$i]["status_hapus"]=="NO"  && ($tanggal_now>$tanggal || $d<31) && $tanggal!=null && $hasil_data[$i]["validasi"]=="ACC"){
                             $hasil_fix +=1;
                         }
                 }

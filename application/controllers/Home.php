@@ -195,7 +195,7 @@ class Home extends CI_Controller {
                 $tgl2 = new DateTime($tanggal);
                 $d = $tgl2->diff($tgl1)->days + 1;
                 if($tanggal_now<$tanggal){
-                    $data[$i]['sisa'] = $d." hari";   
+                    $data[$i]['sisa'] = "-".$d." hari";   
                 }else{
                     $data[$i]['sisa'] = "+".$d." hari";   
                 }

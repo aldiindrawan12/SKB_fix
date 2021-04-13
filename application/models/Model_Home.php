@@ -78,16 +78,7 @@ class Model_Home extends CI_model
                 $this->db->or_like('mobil_type', $search);
                 $this->db->or_like('mobil_tahun', $search);
             }
-
-            // $this->db->where("status_hapus","NO");
-            // if($_SESSION["role"]=="Supervisor"){
-            //     $this->db->where("validasi","Pending");
-            // }else{
-            //     $this->db->where("validasi","ACC");
-            // }
             $this->db->order_by($order_field, $order_ascdesc);
-            // $this->db->limit($limit, $start);
-            // return $this->db->get('skb_mobil')->result_array();
             $hasil = $this->db->get('skb_mobil')->result_array();
             $hasil_fix = [];
             for($i=0;$i<count($hasil);$i++){
@@ -113,13 +104,6 @@ class Model_Home extends CI_model
                 $this->db->or_like('mobil_type', $search);
                 $this->db->or_like('mobil_tahun', $search);
             }
-            // $this->db->where("status_hapus","NO");
-            // if($_SESSION["role"]=="Supervisor"){
-            //     $this->db->where("validasi","Pending");
-            // }else{
-            //     $this->db->where("validasi","ACC");
-            // }
-            // return $this->db->get('skb_mobil')->num_rows();
             $hasil_data = $this->db->get('skb_mobil')->result_array();
                 $hasil_fix = 0;
                 for($i=0;$i<count($hasil_data);$i++){
@@ -313,10 +297,10 @@ class Model_Home extends CI_model
 
 
     //  Function Customer
-        public function count_all_customer()
+        public function count_all_customer($asal)
         {
             $this->db->where("status_hapus","NO");
-            if($_SESSION["role"]=="Supervisor"){
+            if($_SESSION["role"]=="Supervisor" && $asal!="viewcustomerinvoice"){
                 $this->db->where("validasi","Pending");
             }else{
                 $this->db->where("validasi","ACC");
@@ -324,12 +308,12 @@ class Model_Home extends CI_model
             return $this->db->count_all_results("skb_customer");
         }
 
-        public function filter_customer($search, $limit, $start, $order_field, $order_ascdesc)
+        public function filter_customer($asal,$search, $limit, $start, $order_field, $order_ascdesc)
         {
             // $this->db->like('customer_id', $search);
             $this->db->where("status_hapus","NO");
             $this->db->like('customer_name', $search);
-            if($_SESSION["role"]=="Supervisor"){
+            if($_SESSION["role"]=="Supervisor" && $asal!="viewcustomerinvoice"){
                 $this->db->where("validasi","Pending");
             }else{
                 $this->db->where("validasi","ACC");
@@ -339,12 +323,12 @@ class Model_Home extends CI_model
             return $this->db->get('skb_customer')->result_array();
         }
 
-        public function count_filter_customer($search)
+        public function count_filter_customer($asal,$search)
         {
             // $this->db->like('customer_id', $search);
             $this->db->where("status_hapus","NO");
             $this->db->like('customer_name', $search);
-            if($_SESSION["role"]=="Supervisor"){
+            if($_SESSION["role"]=="Supervisor" && $asal!="viewcustomerinvoice"){
                 $this->db->where("validasi","Pending");
             }else{
                 $this->db->where("validasi","ACC");
@@ -354,10 +338,10 @@ class Model_Home extends CI_model
     //  end Function Customer
 
     //  Function Supir
-        public function count_all_supir()
+        public function count_all_supir($asal)
         {
             $this->db->where("status_hapus","NO");
-            if($_SESSION["role"]=="Supervisor"){
+            if($_SESSION["role"]=="Supervisor" && $asal=="viewsupir"){
                 $this->db->where("validasi","Pending");
             }else{
                 $this->db->where("validasi","ACC");
@@ -365,12 +349,12 @@ class Model_Home extends CI_model
             return $this->db->count_all_results("skb_supir");
         }
 
-        public function filter_supir($search, $limit, $start, $order_field, $order_ascdesc)
+        public function filter_supir($asal,$search, $limit, $start, $order_field, $order_ascdesc)
         {
             // $this->db->like('supir_id', $search);
             $this->db->like('supir_name', $search);
             $this->db->where("status_hapus","NO");
-            if($_SESSION["role"]=="Supervisor"){
+            if($_SESSION["role"]=="Supervisor" && $asal=="viewsupir"){
                 $this->db->where("validasi","Pending");
             }else{
                 $this->db->where("validasi","ACC");
@@ -381,12 +365,12 @@ class Model_Home extends CI_model
             return $this->db->get('skb_supir')->result_array();
         }
 
-        public function count_filter_supir($search)
+        public function count_filter_supir($asal,$search)
         {
             // $this->db->like('supir_id', $search);
             $this->db->like('supir_name', $search);
             $this->db->where("status_hapus","NO");
-            if($_SESSION["role"]=="Supervisor"){
+            if($_SESSION["role"]=="Supervisor" && $asal=="viewsupir"){
                 $this->db->where("validasi","Pending");
             }else{
                 $this->db->where("validasi","ACC");
@@ -469,74 +453,6 @@ class Model_Home extends CI_model
         }
     // end Function Invoice
     
-    // Function Invoice Belum Lunas
-        public function count_all_invoice_belum_lunas($customer_id)
-        {
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_invoice.customer_id", 'left');
-     
-            return $this->db->count_all_results("skb_invoice");
-        }
-    
-        public function filter_invoice_belum_lunas($search, $limit, $start, $order_field, $order_ascdesc,$customer_id)
-        {
-            if($customer_id!="x"){
-                $this->db->where("skb_invoice.customer_id",$customer_id);
-            }
-            $this->db->where("status_bayar","Belum Lunas");
-            $this->db->like('invoice_kode', $search);
-            $this->db->order_by($order_field, $order_ascdesc);
-            $this->db->limit($limit, $start);
-
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_invoice.customer_id", 'left');
-            return $this->db->get('skb_invoice')->result_array();
-        }
-    
-        public function count_filter_invoice_belum_lunas($search,$customer_id)
-        {
-            if($customer_id!="x"){
-                $this->db->where("skb_invoice.customer_id",$customer_id);
-            }
-            $this->db->where("status_bayar","Belum Lunas");
-            $this->db->like('invoice_kode', $search);
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_invoice.customer_id", 'left');
-            return $this->db->get('skb_invoice')->num_rows();
-        }
-    // end Function Invoice Belum Lunas
-
-    // Function InvoiceLunas
-        public function count_all_invoice_lunas($customer_id)
-        {
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_invoice.customer_id", 'left');
-     
-            return $this->db->count_all_results("skb_invoice");
-        }
-    
-        public function filter_invoice_lunas($search, $limit, $start, $order_field, $order_ascdesc,$customer_id)
-        {
-            if($customer_id!="x"){
-                $this->db->where("skb_invoice.customer_id",$customer_id);
-            }
-            $this->db->where("status_bayar","Lunas");
-            $this->db->like('invoice_kode', $search);
-            $this->db->order_by($order_field, $order_ascdesc);
-            $this->db->limit($limit, $start);
-
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_invoice.customer_id", 'left');
-            return $this->db->get('skb_invoice')->result_array();
-        }
-    
-        public function count_filter_invoice_lunas($search,$customer_id)
-        {
-            if($customer_id!="x"){
-                $this->db->where("skb_invoice.customer_id",$customer_id);
-            }
-            $this->db->where("status_bayar","Lunas");
-            $this->db->like('invoice_kode', $search);
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_invoice.customer_id", 'left');
-            return $this->db->get('skb_invoice')->num_rows();
-        }
-    // end Function InvoiceLunas
-    
     //  Function Akun
         public function count_all_akun()
         {
@@ -563,13 +479,13 @@ class Model_Home extends CI_model
     //  end Function Akun
 
     // Function rute
-        public function count_all_rute($customer)
+        public function count_all_rute($asal,$customer)
         {
             if($customer!="x"){
                 $this->db->where("skb_rute.customer_id",$customer);
             }
             $this->db->where("skb_rute.rute_status_hapus","No");
-            if($_SESSION["role"]=="Supervisor"){
+            if($_SESSION["role"]=="Supervisor" && $asal!="addjo"){
                 $this->db->where("skb_rute.validasi_rute","Pending");
             }else{
                 $this->db->where("skb_rute.validasi_rute","ACC");
@@ -578,7 +494,7 @@ class Model_Home extends CI_model
             return $this->db->count_all_results("skb_rute");
         }
 
-        public function filter_rute($customer,$search, $order_field, $order_ascdesc)
+        public function filter_rute($asal,$customer,$search, $order_field, $order_ascdesc)
         {
             if($search!=""){
                 $this->db->like('rute_id', $search);
@@ -592,7 +508,7 @@ class Model_Home extends CI_model
             $hasil = $this->db->get('skb_rute')->result_array();
             $hasil_fix = [];
             for($i=0;$i<count($hasil);$i++){
-                if($_SESSION["role"]=="Supervisor"){
+                if($_SESSION["role"]=="Supervisor" && $asal!="addjo"){
                     if($customer=='x'){
                         if($hasil[$i]["rute_status_hapus"]=="NO" && $hasil[$i]["validasi_rute"]=="Pending"){
                             $hasil_fix[] = $hasil[$i];
@@ -617,7 +533,7 @@ class Model_Home extends CI_model
             return $hasil_fix;
         }
 
-        public function count_filter_rute($customer,$search)
+        public function count_filter_rute($asal,$customer,$search)
         {
             if($search!=""){
                 $this->db->like('rute_id', $search);
@@ -630,7 +546,7 @@ class Model_Home extends CI_model
             $hasil_data = $this->db->get('skb_rute')->result_array();
                 $hasil_fix = 0;
                 for($i=0;$i<count($hasil_data);$i++){
-                    if($_SESSION["role"]=="Supervisor"){
+                    if($_SESSION["role"]=="Supervisor" && $asal!="addjo"){
                         if($customer=="x"){
                             if($hasil_data[$i]["rute_status_hapus"]=="NO" && $hasil_data[$i]["validasi_rute"]=="Pending"){
                                 $hasil_fix +=1;
@@ -707,11 +623,11 @@ class Model_Home extends CI_model
         }
     //akhir function-fiunction datatable JO
 
-    //function-fiunction datatable truck
-        public function count_all_merk()
+    //function-fiunction datatable merk
+        public function count_all_merk($asal)
         {
             $this->db->where("status_hapus","NO");
-            if($_SESSION["role"]=="Supervisor"){
+            if($_SESSION["role"]=="Supervisor" && $asal!="addtruck" ){
                 $this->db->where("validasi","Pending");
             }else{
                 $this->db->where("validasi","ACC");
@@ -719,7 +635,7 @@ class Model_Home extends CI_model
             return $this->db->count_all_results("skb_merk_kendaraan");
         }
 
-        public function filter_merk($search, $order_field, $order_ascdesc)
+        public function filter_merk($asal,$search, $order_field, $order_ascdesc)
         {
             if($search!=""){
                 $this->db->like('merk_nama', $search);
@@ -730,7 +646,7 @@ class Model_Home extends CI_model
             $hasil = $this->db->get('skb_merk_kendaraan')->result_array();
             $hasil_fix = [];
             for($i=0;$i<count($hasil);$i++){
-                if($_SESSION["role"]=="Supervisor"){
+                if($_SESSION["role"]=="Supervisor" && $asal!="addtruck"){
                     if($hasil[$i]["status_hapus"]=="NO" && $hasil[$i]["validasi"]=="Pending"){
                         $hasil_fix[] = $hasil[$i];
                     }
@@ -743,7 +659,7 @@ class Model_Home extends CI_model
             return $hasil_fix;   
         }
 
-        public function count_filter_merk($search)
+        public function count_filter_merk($asal,$search)
         {
             if($search!=""){
                 $this->db->like('merk_nama', $search);
@@ -753,7 +669,7 @@ class Model_Home extends CI_model
             $hasil_data = $this->db->get('skb_merk_kendaraan')->result_array();
                 $hasil_fix = 0;
                 for($i=0;$i<count($hasil_data);$i++){
-                    if($_SESSION["role"]=="Supervisor"){
+                    if($_SESSION["role"]=="Supervisor" && $asal!="addtruck"){
                         if($hasil_data[$i]["status_hapus"]=="NO" && $hasil_data[$i]["validasi"]=="Pending"){
                             $hasil_fix +=1;
                         }
@@ -765,7 +681,7 @@ class Model_Home extends CI_model
                 }
                 return $hasil_fix;
         }
-    //akhir function-fiunction datatable truck
+    //akhir function-fiunction datatable merk
 
     //function-fiunction datatable kosongan
         public function count_all_kosongan()
@@ -826,13 +742,13 @@ class Model_Home extends CI_model
     //akhir function-fiunction datatable kosongan
 
     //function-fiunction datatable paketan
-        public function count_all_paketan($customer)
+        public function count_all_paketan($asal,$customer)
         {
             if($customer!="x"){
                 $this->db->where("skb_paketan.customer_id",$customer);
             }
             $this->db->where("paketan_status_hapus","NO");
-            if($_SESSION["role"]=="Supervisor"){
+            if($_SESSION["role"]=="Supervisor" && $asal!="addjo"){
                 $this->db->where("validasi_paketan","Pending");
             }else{
                 $this->db->where("validasi_paketan","ACC");
@@ -840,7 +756,7 @@ class Model_Home extends CI_model
             return $this->db->count_all_results("skb_paketan");
         }
 
-        public function filter_paketan($customer,$search, $order_field, $order_ascdesc)
+        public function filter_paketan($asal,$customer,$search, $order_field, $order_ascdesc)
         {
             if($search!=""){
                 $this->db->like('customer_name', $search);
@@ -851,7 +767,7 @@ class Model_Home extends CI_model
             $hasil = $this->db->get('skb_paketan')->result_array();
             $hasil_fix = [];
             for($i=0;$i<count($hasil);$i++){
-                if($_SESSION["role"]=="Supervisor"){
+                if($_SESSION["role"]=="Supervisor" && $asal!="addjo"){
                     if($customer=='x'){
                         if($hasil[$i]["paketan_status_hapus"]=="NO" && $hasil[$i]["validasi_paketan"]=="Pending"){
                             $hasil_fix[] = $hasil[$i];
@@ -876,7 +792,7 @@ class Model_Home extends CI_model
             return $hasil_fix;   
         }
 
-        public function count_filter_paketan($customer,$search)
+        public function count_filter_paketan($asal,$customer,$search)
         {
             if($search!=""){
                 $this->db->like('customer_name', $search);
@@ -886,7 +802,7 @@ class Model_Home extends CI_model
             $hasil_data = $this->db->get('skb_paketan')->result_array();
                 $hasil_fix = 0;
                 for($i=0;$i<count($hasil_data);$i++){
-                    if($_SESSION["role"]=="Supervisor"){
+                    if($_SESSION["role"]=="Supervisor" && $asal!="addjo"){
                         if($customer=='x'){
                             if($hasil_data[$i]["paketan_status_hapus"]=="NO" && $hasil_data[$i]["validasi_paketan"]=="Pending"){
                                 $hasil_fix +=1;

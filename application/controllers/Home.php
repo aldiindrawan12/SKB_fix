@@ -119,7 +119,7 @@ class Home extends CI_Controller {
     //end fungsi untuk JO
 
     // Customer
-        public function view_Customer(){
+        public function view_Customer($asal){
             $search = $_POST['search']['value'];
             $limit = $_POST['length'];
             $start = $_POST['start'];
@@ -128,9 +128,9 @@ class Home extends CI_Controller {
             $order_index = $_POST['order'][0]['column'];
             $order_field = $_POST['columns'][$order_index]['data'];
             $order_ascdesc = $_POST['order'][0]['dir'];
-            $sql_total = $this->model_home->count_all_Customer();
-            $sql_data = $this->model_home->filter_Customer($search, $limit, $start, $order_field, $order_ascdesc);
-            $sql_filter = $this->model_home->count_filter_Customer($search);
+            $sql_total = $this->model_home->count_all_Customer($asal);
+            $sql_data = $this->model_home->filter_Customer($asal,$search, $limit, $start, $order_field, $order_ascdesc);
+            $sql_filter = $this->model_home->count_filter_Customer($asal,$search);
             $data = array();
             for($i=0;$i<count($sql_data);$i++){
                 array_push($data, $sql_data[$i]);
@@ -170,7 +170,7 @@ class Home extends CI_Controller {
     // end Customer
 
     // Supir
-        public function view_Supir(){
+        public function view_Supir($asal){
             $search = $_POST['search']['value'];
             $limit = $_POST['length'];
             $start = $_POST['start'];
@@ -179,9 +179,9 @@ class Home extends CI_Controller {
             $order_index = $_POST['order'][0]['column'];
             $order_field = $_POST['columns'][$order_index]['data'];
             $order_ascdesc = $_POST['order'][0]['dir'];
-            $sql_total = $this->model_home->count_all_supir();
-            $sql_data = $this->model_home->filter_supir($search, $limit, $start, $order_field, $order_ascdesc);
-            $sql_filter = $this->model_home->count_filter_supir($search);
+            $sql_total = $this->model_home->count_all_supir($asal);
+            $sql_data = $this->model_home->filter_supir($asal,$search, $limit, $start, $order_field, $order_ascdesc);
+            $sql_filter = $this->model_home->count_filter_supir($asal,$search);
 
             $data = array();
             for($i=0;$i<count($sql_data);$i++){
@@ -447,50 +447,6 @@ class Home extends CI_Controller {
             echo json_encode($callback);
         }
 
-        public function view_invoice_belum_lunas(){
-            $search = $_POST['search']['value'];
-            $limit = $_POST['length'];
-            $start = $_POST['start'];
-            $customer_id = $this->input->post('customer_id');
-            $order_index = $_POST['order'][0]['column'];
-            $order_field = $_POST['columns'][$order_index]['data'];
-            $order_ascdesc = $_POST['order'][0]['dir'];
-            $sql_total = $this->model_home->count_all_invoice_belum_lunas($customer_id);
-            $sql_data = $this->model_home->filter_invoice_belum_lunas($search, $limit, $start, $order_field, $order_ascdesc,$customer_id);
-            $sql_filter = $this->model_home->count_filter_invoice_belum_lunas($search,$customer_id);
-            $callback = array(
-                'draw' => $_POST['draw'],
-                'recordsTotal' => $sql_total,
-                'recordsFiltered' => $sql_filter,
-                'data' => $sql_data
-            );
-
-            header('Content-Type: application/json');
-            echo json_encode($callback);
-        }
-
-        public function view_invoice_lunas(){
-            $search = $_POST['search']['value'];
-            $limit = $_POST['length'];
-            $start = $_POST['start'];
-            $customer_id = $this->input->post('customer_id');
-            $order_index = $_POST['order'][0]['column'];
-            $order_field = $_POST['columns'][$order_index]['data'];
-            $order_ascdesc = $_POST['order'][0]['dir'];
-            $sql_total = $this->model_home->count_all_invoice_lunas($customer_id);
-            $sql_data = $this->model_home->filter_invoice_lunas($search, $limit, $start, $order_field, $order_ascdesc,$customer_id);
-            $sql_filter = $this->model_home->count_filter_invoice_lunas($search,$customer_id);
-            $callback = array(
-                'draw' => $_POST['draw'],
-                'recordsTotal' => $sql_total,
-                'recordsFiltered' => $sql_filter,
-                'data' => $sql_data
-            );
-
-            header('Content-Type: application/json');
-            echo json_encode($callback);
-        }
-
         public function invoice()
         {
             if(!$_SESSION["user"]){
@@ -593,15 +549,15 @@ class Home extends CI_Controller {
             $this->load->view('home/rute_muatan');
             $this->load->view('footer');
         }
-        public function view_rute(){
+        public function view_rute($asal){
             $search = $_POST['search']['value'];
             $customer = $this->input->post('customer');
             $order_index = $_POST['order'][0]['column'];
             $order_field = $_POST['columns'][$order_index]['data'];
             $order_ascdesc = $_POST['order'][0]['dir'];
-            $sql_total = $this->model_home->count_all_rute($customer);
-            $sql_data = $this->model_home->filter_rute($customer,$search,$order_field, $order_ascdesc);
-            $sql_filter = $this->model_home->count_filter_rute($customer,$search);
+            $sql_total = $this->model_home->count_all_rute($asal,$customer);
+            $sql_data = $this->model_home->filter_rute($asal,$customer,$search,$order_field, $order_ascdesc);
+            $sql_filter = $this->model_home->count_filter_rute($asal,$customer,$search);
             $data = array();
             for($i=0;$i<count($sql_data);$i++){
                 array_push($data, $sql_data[$i]);
@@ -623,7 +579,7 @@ class Home extends CI_Controller {
         }
     // end rute dan muatan
 
-    //fungsi untuk truk
+    //fungsi untuk merk
         public function merk()
         {
             if(!$_SESSION["user"]){
@@ -642,14 +598,14 @@ class Home extends CI_Controller {
             $this->load->view('home/merk');
             $this->load->view('footer');
         }
-        public function view_merk(){
+        public function view_merk($asal){
             $search = $_POST['search']['value'];
             $order_index = $_POST['order'][0]['column'];
             $order_field = $_POST['columns'][$order_index]['data'];
             $order_ascdesc = $_POST['order'][0]['dir'];
-            $sql_total = $this->model_home->count_all_merk();
-            $sql_data = $this->model_home->filter_merk($search, $order_field, $order_ascdesc);
-            $sql_filter = $this->model_home->count_filter_merk($search);
+            $sql_total = $this->model_home->count_all_merk($asal);
+            $sql_data = $this->model_home->filter_merk($asal,$search, $order_field, $order_ascdesc);
+            $sql_filter = $this->model_home->count_filter_merk($asal,$search);
             $data = array();
             for($i=0;$i<count($sql_data);$i++){
                 array_push($data, $sql_data[$i]);
@@ -669,7 +625,7 @@ class Home extends CI_Controller {
             header('Content-Type: application/json');
             echo json_encode($callback);
         }
-    //end fungsi untuk truk
+    //end fungsi untuk merk
 
     //fungsi untuk kosongan
         public function kosongan()
@@ -737,15 +693,15 @@ class Home extends CI_Controller {
             $this->load->view('home/paketan');
             $this->load->view('footer');
         }
-        public function view_paketan(){
+        public function view_paketan($asal){
             $search = $_POST['search']['value'];
             $customer = $this->input->post('customer');
             $order_index = $_POST['order'][0]['column'];
             $order_field = $_POST['columns'][$order_index]['data'];
             $order_ascdesc = $_POST['order'][0]['dir'];
-            $sql_total = $this->model_home->count_all_paketan($customer);
-            $sql_data = $this->model_home->filter_paketan($customer,$search, $order_field, $order_ascdesc);
-            $sql_filter = $this->model_home->count_filter_paketan($customer,$search);
+            $sql_total = $this->model_home->count_all_paketan($asal,$customer);
+            $sql_data = $this->model_home->filter_paketan($asal,$customer,$search, $order_field, $order_ascdesc);
+            $sql_filter = $this->model_home->count_filter_paketan($asal,$customer,$search);
             $data = array();
             for($i=0;$i<count($sql_data);$i++){
                 array_push($data, $sql_data[$i]);

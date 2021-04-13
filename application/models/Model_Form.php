@@ -321,9 +321,11 @@ class Model_Form extends CI_model
         $this->db->update("skb_akun");
     }
 
-    public function update_konfigurasi($akun_id,$data_konfigurasi){
-        $data_konfigurasi=json_encode($data_konfigurasi);
-        $this->db->set("akun_akses",$data_konfigurasi);
+    public function update_konfigurasi($akun_id,$konfigurasi){
+        // $data_konfigurasi=json_encode($data_konfigurasi);
+        $konfigurasi=json_encode($konfigurasi);
+        $this->db->set("akses",$konfigurasi);
+        // $this->db->set("akun_akses",$data_konfigurasi);
         $this->db->where("akun_id",$akun_id);
         $this->db->update("skb_akun");
     }
@@ -402,28 +404,30 @@ class Model_Form extends CI_model
         }
     // end fungsi untuk form joborder
 
-    public function count_all_jo($customer_id)
-    {
-        $this->db->where("customer_id",$customer_id);
-        $this->db->where("status","Sampai Tujuan");
-        $this->db->where("invoice_id","");
-        return $this->db->count_all_results("skb_job_order");
-    }
+    //fungsi untuk datatables pilih jo untuk invoice
+        public function count_all_jo($customer_id)
+        {
+            $this->db->where("customer_id",$customer_id);
+            $this->db->where("status","Sampai Tujuan");
+            $this->db->where("invoice_id","");
+            return $this->db->count_all_results("skb_job_order");
+        }
 
-    public function filter_jo($order_field, $order_ascdesc,$customer_id)
-    {
-        $this->db->where("customer_id",$customer_id);
-        $this->db->where("status","Sampai Tujuan");
-        $this->db->where("invoice_id","");
-        $this->db->order_by($order_field, $order_ascdesc);
-        return $this->db->get('skb_job_order')->result_array();
-    }
+        public function filter_jo($order_field, $order_ascdesc,$customer_id)
+        {
+            $this->db->where("customer_id",$customer_id);
+            $this->db->where("status","Sampai Tujuan");
+            $this->db->where("invoice_id","");
+            $this->db->order_by($order_field, $order_ascdesc);
+            return $this->db->get('skb_job_order')->result_array();
+        }
 
-    public function count_filter_jo($customer_id)
-    {
-        $this->db->where("customer_id",$customer_id);
-        $this->db->where("status","Sampai Tujuan");
-        $this->db->where("invoice_id","");
-        return $this->db->get('skb_job_order')->num_rows();
-    }
+        public function count_filter_jo($customer_id)
+        {
+            $this->db->where("customer_id",$customer_id);
+            $this->db->where("status","Sampai Tujuan");
+            $this->db->where("invoice_id","");
+            return $this->db->get('skb_job_order')->num_rows();
+        }
+    // end fungsi untuk datatables pilih jo untuk invoice
 }

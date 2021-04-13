@@ -21,7 +21,7 @@ class Home extends CI_Controller {
             $data["page"] = "JO_page";
             $data["collapse_group"] = "Perintah_Kerja";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
-            if(json_decode($data["akun_akses"]["akun_akses"])[1]==0){
+            if(json_decode($data["akun_akses"]["akses"])[1]==0){
                 redirect(base_url());
             }
             $this->load->view('header',$data);
@@ -39,7 +39,7 @@ class Home extends CI_Controller {
             $data["page"] = "Konfirmasi_JO_page";
             $data["collapse_group"] = "Perintah_Kerja";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
-            if(json_decode($data["akun_akses"]["akun_akses"])[1]==0){
+            if(json_decode($data["akun_akses"]["akses"])[2]==0){
                 redirect(base_url());
             }
             $this->load->view('header',$data);
@@ -159,7 +159,7 @@ class Home extends CI_Controller {
             $data["page"] = "Customer_page";
             $data["collapse_group"] = "Master_Data";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
-            if(json_decode($data["akun_akses"]["akun_akses"])[0]==0){
+            if(json_decode($data["akun_akses"]["akses"])[0]==0){
                 redirect(base_url());
             }
             $this->load->view('header',$data);
@@ -222,7 +222,7 @@ class Home extends CI_Controller {
             $data["page"] = "Supir_page";
             $data["collapse_group"] = "Master_Data";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
-            if(json_decode($data["akun_akses"]["akun_akses"])[0]==0){
+            if(json_decode($data["akun_akses"]["akses"])[0]==0){
                 redirect(base_url());
             }
             $this->load->view('header',$data);
@@ -242,7 +242,7 @@ class Home extends CI_Controller {
             $data["page"] = "Gaji_page";
             $data["collapse_group"] = "Penggajian";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
-            if(json_decode($data["akun_akses"]["akun_akses"])[2]==0){
+            if(json_decode($data["akun_akses"]["akses"])[6]==0){
                 redirect(base_url());
             }
             $this->load->view('header',$data);
@@ -262,7 +262,7 @@ class Home extends CI_Controller {
             $data["page"] = "Laporan_Gaji_page";
             $data["collapse_group"] = "Laporan";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
-            if(json_decode($data["akun_akses"]["akun_akses"])[3]==0){
+            if(json_decode($data["akun_akses"]["akses"])[9]==0){
                 redirect(base_url());
             }
             $this->load->view('header',$data);
@@ -282,7 +282,7 @@ class Home extends CI_Controller {
             $data["page"] = "Laporan_Bon_page";
             $data["collapse_group"] = "Laporan";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
-            if(json_decode($data["akun_akses"]["akun_akses"])[0]==0){
+            if(json_decode($data["akun_akses"]["akses"])[10]==0){
                 redirect(base_url());
             }
             $this->load->view('header',$data);
@@ -302,7 +302,7 @@ class Home extends CI_Controller {
             $data["page"] = "Bon_page";
             $data["collapse_group"] = "Penggajian";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
-            if(json_decode($data["akun_akses"]["akun_akses"])[2]==0){
+            if(json_decode($data["akun_akses"]["akses"])[5]==0){
                 redirect(base_url());
             }
             $this->load->view('header',$data);
@@ -344,7 +344,7 @@ class Home extends CI_Controller {
             $data["page"] = "Kendaraan_page";
             $data["collapse_group"] = "Master_Data";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
-            if(json_decode($data["akun_akses"]["akun_akses"])[0]==0){
+            if(json_decode($data["akun_akses"]["akses"])[0]==0){
                 redirect(base_url());
             }
             $this->load->view('header',$data);
@@ -394,7 +394,7 @@ class Home extends CI_Controller {
             $data["page"] = "Laporan_page";
             $data["collapse_group"] = "Laporan";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
-            if(json_decode($data["akun_akses"]["akun_akses"])[3]==0){
+            if(json_decode($data["akun_akses"]["akses"])[7]==0){
                 redirect(base_url());
             }
             $this->load->view('header',$data);
@@ -414,7 +414,7 @@ class Home extends CI_Controller {
             $data["page"] = "Laporan_Uang_Jalan_page";
             $data["collapse_group"] = "Laporan";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
-            if(json_decode($data["akun_akses"]["akun_akses"])[3]==0){
+            if(json_decode($data["akun_akses"]["akses"])[8]==0){
                 redirect(base_url());
             }
             $this->load->view('header',$data);
@@ -457,7 +457,7 @@ class Home extends CI_Controller {
             $data["collapse_group"] = "Perintah_Kerja";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             $data["customer"] = $this->model_home->getcustomer();
-            if(json_decode($data["akun_akses"]["akun_akses"])[1]==0){
+            if(json_decode($data["akun_akses"]["akses"])[3]==0){
                 redirect(base_url());
             }
             $this->load->view('header',$data);
@@ -476,7 +476,7 @@ class Home extends CI_Controller {
             $data["collapse_group"] = "Perintah_Kerja";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             $data["customer"] = $this->model_home->getcustomer();
-            if(json_decode($data["akun_akses"]["akun_akses"])[1]==0){
+            if(json_decode($data["akun_akses"]["akses"])[4]==0){
                 redirect(base_url());
             }
             $this->load->view('header',$data);
@@ -496,7 +496,7 @@ class Home extends CI_Controller {
             $data["page"] = "Akun_page";
             $data["collapse_group"] = "Konfigurasi";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
-            if(json_decode($data["akun_akses"]["akun_akses"])[4]==0){
+            if(json_decode($data["akun_akses"]["akses"])[11]==0){
                 redirect(base_url());
             }
             $this->load->view('header',$data);
@@ -541,7 +541,7 @@ class Home extends CI_Controller {
             // $data["satuan"] = $this->model_home->getallsatuan();
             $data["customer"] = $this->model_home->getcustomer();
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
-            if(json_decode($data["akun_akses"]["akun_akses"])[0]==0){
+            if(json_decode($data["akun_akses"]["akses"])[0]==0){
                 redirect(base_url());
             }
             $this->load->view('header',$data);
@@ -590,7 +590,7 @@ class Home extends CI_Controller {
             $data["page"] = "Merk_page";
             $data["collapse_group"] = "Master_Data";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
-            if(json_decode($data["akun_akses"]["akun_akses"])[0]==0){
+            if(json_decode($data["akun_akses"]["akses"])[0]==0){
                 redirect(base_url());
             }
             $this->load->view('header',$data);
@@ -637,7 +637,7 @@ class Home extends CI_Controller {
             $data["page"] = "Kosongan_page";
             $data["collapse_group"] = "Master_Data";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
-            if(json_decode($data["akun_akses"]["akun_akses"])[0]==0){
+            if(json_decode($data["akun_akses"]["akses"])[0]==0){
                 redirect(base_url());
             }
             $this->load->view('header',$data);
@@ -685,7 +685,7 @@ class Home extends CI_Controller {
             $data["collapse_group"] = "Master_Data";
             $data["customer"] = $this->model_home->getcustomer();
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
-            if(json_decode($data["akun_akses"]["akun_akses"])[0]==0){
+            if(json_decode($data["akun_akses"]["akses"])[0]==0){
                 redirect(base_url());
             }
             $this->load->view('header',$data);

@@ -23,6 +23,9 @@ class Form extends CI_Controller {
             $data["page"] = "JO_page";
             $data["collapse_group"] = "Perintah_Kerja";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            if(json_decode($data["akun_akses"]["akses"])[1]==0){
+                redirect(base_url());
+            }
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('form/joborder');
@@ -40,6 +43,9 @@ class Form extends CI_Controller {
             $data["page"] = "JO_page";
             $data["collapse_group"] = "Perintah_Kerja";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            if(json_decode($data["akun_akses"]["akses"])[1]==0){
+                redirect(base_url());
+            }
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('form/joborderpaketan');
@@ -55,6 +61,9 @@ class Form extends CI_Controller {
             $data["page"] = "Bon_page";
             $data["collapse_group"] = "Penggajian";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            if(json_decode($data["akun_akses"]["akses"])[5]==0){
+                redirect(base_url());
+            }
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('form/form_bon',$data);
@@ -730,25 +739,6 @@ class Form extends CI_Controller {
             $data = $this->model_form->getakunbyid($akun_id);
             echo json_encode($data);
         }
-        public function konfigurasi($akun_id){
-            if(!$_SESSION["user"]){
-                $this->session->set_flashdata('status-login', 'False');
-                redirect(base_url());
-            }
-            $data["akun"]=$this->model_form->getakunbyid($akun_id);
-            $data["page"] = "Akun_page";
-            $data["collapse_group"] = "Konfigurasi";
-            $this->load->view('header',$data);
-            $this->load->view('sidebar');
-            $this->load->view('form/konfigurasi',$data);
-            $this->load->view('footer');
-        }   
-        public function update_konfigurasi($akun_id){
-            $data_konfigurasi = [$this->input->post("cek1"),$this->input->post("cek2"),$this->input->post("cek3"),
-            $this->input->post("cek4"),$this->input->post("cek5")];
-            $this->model_form->update_konfigurasi($akun_id,$data_konfigurasi);
-            redirect(base_url("index.php/home/akun"));
-        }
         public function update_jo_status($supir,$mobil){
             if($this->input->post("status")!="Dibatalkan"){
                 $data_jo = $this->model_home->getjobyid($this->input->post("jo_id"));
@@ -857,5 +847,35 @@ class Form extends CI_Controller {
         $tgl2 = new DateTime($tanggal_sim);
         $d = $tgl2->diff($tgl1)->days + 1;
         echo $d;
+    }
+
+    public function konfigurasi($akun_id){
+        if(!$_SESSION["user"]){
+            $this->session->set_flashdata('status-login', 'False');
+            redirect(base_url());
+        }
+        $data["akun"]=$this->model_form->getakunbyid($akun_id);
+        $data["page"] = "Akun_page";
+        $data["collapse_group"] = "Konfigurasi";
+        $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+        if(json_decode($data["akun_akses"]["akses"])[12]==0){
+            redirect(base_url());
+        }
+        $this->load->view('header',$data);
+        $this->load->view('sidebar');
+        $this->load->view('form/konfigurasi',$data);
+        $this->load->view('footer');
+    }
+
+    public function update_konfigurasi($akun_id){
+        $konfigurasi = [$this->input->post("cekpage1"),$this->input->post("cekpage2"),$this->input->post("cekpage3"),
+        $this->input->post("cekpage4"),$this->input->post("cekpage5"),$this->input->post("cekpage6"),
+        $this->input->post("cekpage7"),$this->input->post("cekpage8"),$this->input->post("cekpage9"),
+        $this->input->post("cekpage10"),$this->input->post("cekpage11"),$this->input->post("cekpage12")];
+        for($i=0;$i<count($konfigurasi);$i++){
+            echo $konfigurasi[$i]."<br>";
+        }
+        $this->model_form->update_konfigurasi($akun_id,$konfigurasi);
+        redirect(base_url("index.php/home/akun"));
     }
 }

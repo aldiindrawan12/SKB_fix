@@ -212,13 +212,25 @@
         $("#"+page).addClass("active");
         var collapse_group = '<?= $collapse_group?>';
         $("#"+collapse_group).addClass("show");
-        var konfigurasi = <?= $akun_akses["akun_akses"]?>;
-        var HR = ["HR_Master_Data","HR_Perintah_Kerja","HR_Penggajian","HR_Laporan","HR_Konfigurasi"];
-        var LI = ["LI_Master_Data","LI_Perintah_Kerja","LI_Penggajian","LI_Laporan","LI_Konfigurasi"];
-        for(i=0;i<konfigurasi.length;i++){
-            if(konfigurasi[i]==0){
-                $("#"+HR[i]).hide();
-                $("#"+LI[i]).hide();
+        // var konfigurasi = <?= $akun_akses["akun_akses"]?>;
+        var konfigurasi_page = <?= $akun_akses["akses"]?>;
+        // var HR = ["HR_Master_Data","HR_Perintah_Kerja","HR_Penggajian","HR_Laporan","HR_Konfigurasi"];
+        // var LI = ["LI_Master_Data","LI_Perintah_Kerja","LI_Penggajian","LI_Laporan","LI_Konfigurasi"];
+        var page = ["x","JO_page","Konfirmasi_JO_page","Invoice_page","Invoice_Customer_page","Bon_page","Gaji_page",
+        "Laporan_page","Laporan_Uang_Jalan_page","Laporan_Gaji_page","Laporan_Bon_page","Akun_page"];
+        // for(i=0;i<konfigurasi.length;i++){
+        //     if(konfigurasi[i]==0){
+        //         $("#"+HR[i]).hide();
+        //         $("#"+LI[i]).hide();
+        //     }
+        // }
+        if(konfigurasi_page[0]==0){
+            $("#HR_Master_Data").hide();
+            $("#LI_Master_Data").hide();
+        }
+        for(i=0;i<konfigurasi_page.length;i++){
+            if(konfigurasi_page[i]==0){
+                $("#"+page[i]).hide();
             }
         }
     }

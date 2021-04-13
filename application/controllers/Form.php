@@ -858,7 +858,7 @@ class Form extends CI_Controller {
         $data["page"] = "Akun_page";
         $data["collapse_group"] = "Konfigurasi";
         $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
-        if(json_decode($data["akun_akses"]["akses"])[12]==0){
+        if(json_decode($data["akun_akses"]["akses"])[11]==0){
             redirect(base_url());
         }
         $this->load->view('header',$data);

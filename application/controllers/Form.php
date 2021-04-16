@@ -872,9 +872,9 @@ class Form extends CI_Controller {
         $this->input->post("cekpage4"),$this->input->post("cekpage5"),$this->input->post("cekpage6"),
         $this->input->post("cekpage7"),$this->input->post("cekpage8"),$this->input->post("cekpage9"),
         $this->input->post("cekpage10"),$this->input->post("cekpage11"),$this->input->post("cekpage12")];
-        for($i=0;$i<count($konfigurasi);$i++){
-            echo $konfigurasi[$i]."<br>";
-        }
+        // for($i=0;$i<count($konfigurasi);$i++){
+        //     echo $konfigurasi[$i]."<br>";
+        // }
         $this->model_form->update_konfigurasi($akun_id,$konfigurasi);
         redirect(base_url("index.php/home/akun"));
     }

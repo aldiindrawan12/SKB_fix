@@ -120,13 +120,13 @@
                     </tr>
                     <tr>
                         <td class="font-weight-bold " style="width: 25%;">Uang Jalan Terbayar</td>
-                        <?php if($jo["uang_jalan_bayar"]>=$jo["uang_jalan"]+$jo["uang_kosongan"]){?>
+                        <?php if($jo["uang_jalan_bayar"]>=$jo["uang_jalan"]+$jo["uang_kosongan"] && $jo["status"]=="Dibatalkan"){?>
                             <td colspan=3>
                                 <div class="row ">
                                     <p class="col">Rp.<?= number_format($jo["uang_jalan_bayar"],2,',','.')?></p>
                                     <div class="col ">
                                     <a class='btn btn-sm btn-success col-md-12  active float-right'>
-                                        Pembayaran UJ Lunas
+                                        Pembayaran UJ Lunas atau Dibatalkan
                                 </a>
                                     </div>
                                 </div>

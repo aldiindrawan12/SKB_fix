@@ -771,7 +771,7 @@ class Form extends CI_Controller {
                 "bon_id"=>max($isi_bon_id)+1,
                 "supir_id"=>$data_jo["supir_id"],
                 "bon_jenis"=>"Pembatalan JO",
-                "bon_nominal"=>$data_jo["uang_jalan"],
+                "bon_nominal"=>$data_jo["uang_jalan_bayar"],
                 "bon_keterangan"=>"Pembatalan JO",
                 "bon_tanggal"=>date("Y-m-d H:i:s")
             );

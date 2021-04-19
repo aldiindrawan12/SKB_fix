@@ -256,7 +256,7 @@ class Form extends CI_Controller {
             $data_akun=array(
                 "akun_name"=>$this->input->post("nama"),
                 "akun_role"=>$this->input->post("role"),
-                "akun_akses"=>'["1","1","1","1","1"]'
+                "akses"=>'["1","1","1","1","1","1","1","1","1","1","1","1"]'
             );
             $this->model_form->insert_akun($data_akun);
             $akun = $this->model_form->getakunbyname($data_akun["akun_name"]);

@@ -283,7 +283,7 @@ class Form extends CI_Controller {
                 "status_hapus"=>"No",
                 "validasi"=>"Pending"
             );
-            echo var_dump($data);
+            // echo var_dump($data);
             $this->model_form->insert_customer($data);
 			$this->session->set_flashdata('status-add-customer', 'Berhasil');
             redirect(base_url("index.php/home/customer"));

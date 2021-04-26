@@ -225,6 +225,13 @@ class Print_Berkas extends CI_Controller {
                 redirect(base_url());
             }
 			$data["data"] = $this->model_home->getjobyid($jo_id);
+			if($data["data"]["paketan_id"]==0){
+				$data["tipe_jo"] = "reguler";
+				$data["kosongan"] = $this->model_detail->getkosonganbyid($data["data"]["kosongan_id"]);
+			}else{
+				$data["paketan"] = $this->model_form->getpaketanbyid($data["data"]["paketan_id"]);
+				$data["tipe_jo"] = "paketan";
+			}
 			$data["jo_id"] = $data["data"]["Jo_id"];
 			$data["asal"] = "detail";
             $data["supir"] = $this->model_home->getsupirbyid($data["data"]["supir_id"]);

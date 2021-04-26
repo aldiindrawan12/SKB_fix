@@ -385,7 +385,7 @@
                 if(data.length==0){
                     $('#jenis_mobil').append('<option class="font-w700" disabled="disabled" selected value="">Kosong</option>'); 
                 }else{
-                    $('#jenis_mobil').append('<option class="font-w700" disabled="disabled" selected value="">Muatan</option>'); 
+                    $('#jenis_mobil').append('<option class="font-w700" disabled="disabled" selected value="">Jenis Mobil</option>'); 
                     for(i=0;i<data.length;i++){
                         if(!isi_jenis.includes(data[i]["mobil_jenis"])){
                             $('#jenis_mobil').append('<option value="'+data[i]["mobil_jenis"]+'">'+data[i]["mobil_jenis"]+'</option>'); 

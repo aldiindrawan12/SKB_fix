@@ -4,7 +4,7 @@ class Model_Home extends CI_model
 {
     public function gettruck() //all truck
     {
-        return $this->db->get_where("skb_mobil",array("status_hapus"=>"NO"))->result_array();
+        return $this->db->get_where("skb_mobil",array("status_hapus"=>"NO","validasi"=>"ACC"))->result_array();
     }
 
     public function getmerk() //all truck
@@ -19,7 +19,7 @@ class Model_Home extends CI_model
 
     public function getcustomer() //all customer
     {
-        return $this->db->get("skb_customer")->result_array();
+        return $this->db->get_where("skb_customer",array("validasi"=>"ACC"))->result_array();
     }
 
     public function getcustomerbyid($customer_id) //customer by ID
@@ -29,12 +29,12 @@ class Model_Home extends CI_model
 
     public function getsupir() //all supir
     {
-        return $this->db->get_where("skb_supir",array("status_hapus"=>"NO","status_aktif"=>"Aktif"))->result_array();
+        return $this->db->get_where("skb_supir",array("status_hapus"=>"NO","status_aktif"=>"Aktif","validasi"=>"ACC"))->result_array();
     }
 
     public function getkosongan() //all kosongan
     {
-        return $this->db->get_where("skb_kosongan",array("status_hapus"=>"NO"))->result_array();
+        return $this->db->get_where("skb_kosongan",array("status_hapus"=>"NO","validasi"=>"ACC"))->result_array();
     }
 
     public function getkosonganbyid($kosongan_id) //kosongan by id
@@ -453,7 +453,7 @@ class Model_Home extends CI_model
         }
     // end Function Invoice
     
-        // Function Invoice Belum Lunas
+    // Function Invoice Belum Lunas
         public function count_all_invoice_belum_lunas($customer_id)
         {
             $this->db->join("skb_customer", "skb_customer.customer_id = skb_invoice.customer_id", 'left');

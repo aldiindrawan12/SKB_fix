@@ -108,7 +108,7 @@ class Model_Form extends CI_model
 
     public function update_jo_status($data,$supir,$mobil){
         $this->db->set("tonase",$data["tonase"]);
-        $this->db->set("bonus",$data["bonus"]);
+        // $this->db->set("bonus",$data["bonus"]);
         $this->db->set("keterangan",$data["keterangan"]);
         $this->db->set("status",$data["status"]);
         $this->db->set("tanggal_bongkar",$data["tanggal_bongkar"]);
@@ -357,7 +357,7 @@ class Model_Form extends CI_model
             return $this->db->get("skb_rute")->result_array();
         }
         public function getmobilbyjenis($mobil_jenis){
-            return $this->db->get_where("skb_mobil",array("mobil_jenis"=>$mobil_jenis,"status_jalan"=>"Tidak Jalan"))->result_array();
+            return $this->db->get_where("skb_mobil",array("mobil_jenis"=>$mobil_jenis,"status_jalan"=>"Tidak Jalan","validasi"=>"ACC"))->result_array();
         }
         public function getallmobil(){
             return $this->db->get_where("skb_mobil",array("status_hapus"=>"No"))->result_array();

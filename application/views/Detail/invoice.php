@@ -17,7 +17,7 @@
                 </div>
                 <div class="card-body">
                     <a class="btn btn-primary" onclick="cetak_invoice()"><span class="small">Cetak Invoice</span></a>
-                    <?php if($invoice[0]["status_bayar"] == "Belum Lunas"){?>
+                    <?php if($invoice[0]["status_bayar"] == "Belum Lunas" && ($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User")){?>
                         <a class="btn btn-warning" data-toggle="modal" data-target="#popup-konfirmasi-status" href="" id="<?= $invoice[0]["invoice_kode"]?>" onclick="update_status(this)"><span class="small">Tandai Lunas</span></a>
                     <?php }?>
                     <table class="w-50 mt-4">

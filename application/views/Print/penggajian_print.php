@@ -128,7 +128,7 @@
                     bonus_tf:<?= $bonus_tf?>,
                 },
                 success: function(data) {
-                    window.print();
+                    // window.print();
                     window.location = "<?= base_url("index.php/home/gaji")?>";
                 }
             });

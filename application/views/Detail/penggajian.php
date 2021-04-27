@@ -11,7 +11,7 @@
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-center">Data Upah Supir</h6>
         </div>
-        <div class="card-body">
+        <div class="card-body" id="identitas">
             <table class="w-50">
                 <tbody>
                     <tr>
@@ -27,7 +27,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="card-body">
+        <div class="card-body" id="rincian">
             <div class="table-responsive">
                 <table class="table table-bordered table-striped" id="Table-Penggajian" width="100%" cellspacing="0">
                     <thead>
@@ -103,7 +103,7 @@
 
 
 <div class="container">
-    <!-- <button onclick="sudah_bayar()" class="btn btn-success">Tandai Sudah Bayar</button> -->
+    <button onclick="print_rincian()" class="btn btn-success">Cetak Rincian Gaji</button>
     <!-- button print memo tunai -->
     <button onclick="print_memo_tf()" class="btn btn-primary">Cetak Memo Transfer</button>
     <button onclick="print_memo_tunai()" class="btn btn-primary">Cetak Memo Tunai</button>
@@ -143,7 +143,20 @@
         if(data_jo_id.length==0){
             alert("Tidak Ada Gaji");
         }else{
-            $("#form-rekening").show();
+            Swal.fire({
+                title: 'Bayar Upah',
+                text:'Yakin anda ingin membayar upah ini?',
+                showDenyButton: true,
+                denyButtonText: `Batal`,
+                confirmButtonText: 'Yakin',
+                denyButtonColor: '#808080',
+                confirmButtonColor: 'green',
+                icon: "question",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $("#form-rekening").show();
+                }
+            })
         }
     }
     function print_memo_tunai(){
@@ -161,7 +174,20 @@
         if(data_jo_id.length==0){
             alert("Tidak Ada Gaji");
         }else{
-            window.location.replace("<?= base_url("index.php/print_berkas/memo_tunai/".$supir["supir_id"]."/")?>"+(parseInt(total)+parseInt(bonus_int)));    
+            Swal.fire({
+                title: 'Bayar Upah',
+                text:'Yakin anda ingin membayar upah ini?',
+                showDenyButton: true,
+                denyButtonText: `Batal`,
+                confirmButtonText: 'Yakin',
+                denyButtonColor: '#808080',
+                confirmButtonColor: 'green',
+                icon: "question",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.replace("<?= base_url("index.php/print_berkas/memo_tunai/".$supir["supir_id"]."/")?>"+(parseInt(total)+parseInt(bonus_int)));    
+                }
+            })
         }
     }
     function total(){
@@ -177,5 +203,20 @@
     }
     function uang(a){
         $( '#'+a.id ).mask('000.000.000', {reverse: true});
+    }
+    function print_rincian(){
+        var data_jo_id = [];
+        <?php for($i=0;$i<count($jo);$i++){?>
+            data_jo_id.push(<?= $jo[$i]["Jo_id"]?>)
+        <?php }?>
+        if(data_jo_id.length==0){
+            alert("Tidak Ada Gaji");
+        }else{
+            var restorepage = document.body.innerHTML;
+            var printcontent = document.getElementById('identitas').innerHTML+document.getElementById('rincian').innerHTML;
+            document.body.innerHTML = printcontent;
+            window.print();
+            document.body.innerHTML = restorepage;
+        }
     }
 </script>

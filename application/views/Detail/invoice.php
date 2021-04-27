@@ -1,3 +1,10 @@
+<?php
+    function change_tanggal($data){
+        $data_tanggal = explode('-', $data);
+        $tanggal = $data_tanggal[2].'-'.$data_tanggal[1].'-'.$data_tanggal[0];
+        return $tanggal;
+    }
+?>
 <!-- Basic Card Example -->
 <div class="card shadow mb-4 ml-5 mr-5 py-2 px-2">
     <div class="card-header py-3">
@@ -28,7 +35,7 @@
                             <tr>
                                 <td width="35%">Tanggal</td>
                                 <td width="5%">:</td>
-                                <td><?= $invoice[0]["tanggal_invoice"]?></td>
+                                <td><?= change_tanggal($invoice[0]["tanggal_invoice"])?></td>
                             </tr>
                             <tr>
                                 <td width="35%">Batas Pembayaran</td>
@@ -70,8 +77,8 @@
                             <tbody>
                             <?php foreach($invoice as $value){?>
                                 <tr>
-                                    <td><?= $value["tanggal_surat"]?></td>
-                                    <td><?= $value["tanggal_bongkar"]?></td>
+                                    <td><?= change_tanggal($value["tanggal_surat"])?></td>
+                                    <td><?= change_tanggal($value["tanggal_bongkar"])?></td>
                                     <td><?= $value["mobil_no"]?></td>
                                     <?php $n=0; 
                                         for($i=0;$i<count($paketan);$i++){

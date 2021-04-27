@@ -1,3 +1,10 @@
+<?php
+    function change_tanggal($data){
+        $data_tanggal = explode('-', $data);
+        $tanggal = $data_tanggal[2].'-'.$data_tanggal[1].'-'.$data_tanggal[0];
+        return $tanggal;
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -137,7 +144,7 @@
                                 <td><?= $data["keterangan"]?></td>
                             </tr>
                             <tr>
-                                <td colspan=3>Bandar Lampung,<?= $data["tanggal_surat"]?></td>
+                                <td colspan=3>Bandar Lampung,<?= change_tanggal($data["tanggal_surat"])?></td>
                             </tr>
                             <tr>
                                 <td colspan=3><hr></td>

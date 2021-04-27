@@ -22,7 +22,7 @@
                 <table class="" id="" width="100%" cellspacing="0">
                     <tbody>
                         <tr>
-                            <td colspan=3>Bandar Lampung,<?= date("Y-m-d")?></td>
+                            <td colspan=3>Bandar Lampung,<?= date("d-m-Y")?></td>
                         </tr>
                         <tr>
                             <td width="30%">Telah Terima Dari</td>

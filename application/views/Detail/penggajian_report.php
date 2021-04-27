@@ -1,3 +1,10 @@
+<?php
+    function change_tanggal($data){
+        $data_tanggal = explode('-', $data);
+        $tanggal = $data_tanggal[2].'-'.$data_tanggal[1].'-'.$data_tanggal[0];
+        return $tanggal;
+    }
+?>
 <!-- tampilan detail penggajian supir -->
 <div class="container small">
     <div class="card shadow mb-2">
@@ -50,7 +57,7 @@
                         ?>
                         <tr>
                             <td><?= $value["pembayaran_upah_id"]?></td>
-                            <td><?= $value["pembayaran_upah_tanggal"]?></td>
+                            <td><?= change_tanggal($value["pembayaran_upah_tanggal"])?></td>
                             <td>Rp.<?= number_format($value["pembayaran_upah_nominal"],2,",",".")?></td>
                             <td>Rp.<?= number_format($value["pembayaran_upah_bonus"],2,",",".")?></td>
                             <td>Rp.<?= number_format($value["pembayaran_upah_bon"],2,",",".")?></td>

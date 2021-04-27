@@ -316,7 +316,10 @@
                     },
                     {
                         "data": "mobil_berlaku",
-                        className: 'text-center'
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            return change_tanggal(data);
+                        }
                     },{
                         "data": "mobil_berlaku",
                         className: 'text-center',
@@ -365,7 +368,10 @@
                     },
                      {
                         "data": "mobil_pajak",
-                        className: 'text-center'
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            return change_tanggal(data);
+                        }
                     },{
                         "data": "mobil_pajak",
                         className: 'text-center',
@@ -409,7 +415,10 @@
                     },
                     {
                         "data": "mobil_berlaku_kir",
-                        className: 'text-center'
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            return change_tanggal(data);
+                        }
                     },{
                         "data": "mobil_berlaku_kir",
                         className: 'text-center',
@@ -453,7 +462,10 @@
                     },
                     {
                         "data": "mobil_berlaku_ijin_bongkar",
-                        className: 'text-center'
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            return change_tanggal(data);
+                        }
                     },{
                         "data": "mobil_berlaku_ijin_bongkar",
                         className: 'text-center',
@@ -549,7 +561,7 @@
             });
         });
     </script>
-        <script> //script datatables kendaraan
+    <script> //script datatables kendaraan
         $(document).ready(function() {
             var table = null;
             table = $('#Table-Supir-Sim').DataTable({
@@ -576,7 +588,10 @@
                         "data": "supir_sim"
                     },
                     {
-                        "data": "supir_tgl_sim"
+                        "data": "supir_tgl_sim",
+                        render: function(data, type, row) {
+                            return change_tanggal(data);
+                        }
                     },
                     {
                         "data": "supir_tgl_sim",
@@ -622,14 +637,16 @@
                     },
                     {
                         "data": "tanggal_invoice",
-                        className: 'text-center'
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            return change_tanggal(data);
+                        }
                     },
                     {
                         "data": "batas_pembayaran",
                         className: 'text-center',
                         render: function(data, type, row) {
-                            let html = row["tgl_batas_pembayaran"];
-                            return html;
+                            return change_tanggal(row["tgl_batas_pembayaran"]);
                         }
                     },
                     {
@@ -714,7 +731,10 @@
                         } 
                     },
                     {
-                        "data": "tanggal_surat"
+                        "data": "tanggal_surat",
+                        render: function(data, type, row) {
+                            return change_tanggal(data);
+                        }
                     },
                     {
                         "data": "status",
@@ -838,4 +858,11 @@
         }
     </script>
     <!-- end script angka rupiah -->
+    <script>
+        function change_tanggal(data){
+            var data_tanggal = data.split("-");
+            var tanggal = data_tanggal[2]+"-"+data_tanggal[1]+"-"+data_tanggal[0];
+            return tanggal;
+        }
+    </script>
     

@@ -1,3 +1,10 @@
+<?php
+    function change_tanggal($data){
+        $data_tanggal = explode('-', $data);
+        $tanggal = $data_tanggal[2].'-'.$data_tanggal[1].'-'.$data_tanggal[0];
+        return $tanggal;
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -76,8 +83,8 @@
                             <?php if($n==0){?>
                                 <td><?= $value["asal"]."=>".$value["tujuan"]."=>".$value["muatan"]?></td>
                             <?php }?>
-                            <th ><?= $value["tanggal_surat"]?></th>
-                            <th ><?= $value["tanggal_bongkar"]?></th>
+                            <th ><?= change_tanggal($value["tanggal_surat"])?></th>
+                            <th ><?= change_tanggal($value["tanggal_bongkar"])?></th>
                             <th >Rp.<?= number_format($value["uang_jalan_bayar"],2,",",".")?></th>
                         </tr>
                     <?php } ?>

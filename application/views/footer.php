@@ -106,7 +106,10 @@
                     },
                     {
                         "data": "mobil_berlaku",
-                        className: 'text-center'
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            return change_tanggal(data);
+                        }
                     },
                     {
                         "data": "mobil_no",
@@ -176,14 +179,14 @@
                                 $('td[name="mobil_type"]').text(data["mobil_type"]); //set value
                                 $('td[name="mobil_dump"]').text(data["mobil_dump"]); //set value
                                 $('td[name="mobil_tahun"]').text(data["mobil_tahun"]); //set value
-                                $('td[name="mobil_berlaku"]').text(data["mobil_berlaku"]); //set value
-                                $('td[name="mobil_pajak"]').text(data["mobil_pajak"]); //set value
+                                $('td[name="mobil_berlaku"]').text(change_tanggal(data["mobil_berlaku"])); //set value
+                                $('td[name="mobil_pajak"]').text(change_tanggal(data["mobil_pajak"])); //set value
                                 $('#file_foto_detail').attr('src','<?= base_url("assets/berkas/kendaraan/")?>'+data["file_foto"]);
                                 $('#file_stnk_detail').attr('src','<?= base_url("assets/berkas/kendaraan/")?>'+data["file_stnk"]);
                                 $('td[name="mobil_stnk"]').text(data["mobil_stnk"]); //set value
-                                $('td[name="mobil_berlaku_kir"]').text(data["mobil_berlaku_kir"]); //set value
+                                $('td[name="mobil_berlaku_kir"]').text(change_tanggal(data["mobil_berlaku_kir"])); //set value
                                 $('td[name="mobil_kir"]').text(data["mobil_kir"]); //set value
-                                $('td[name="mobil_berlaku_ijin_bongkar"]').text(data["mobil_berlaku_ijin_bongkar"]); //set value
+                                $('td[name="mobil_berlaku_ijin_bongkar"]').text(change_tanggal(data["mobil_berlaku_ijin_bongkar"])); //set value
                                 $('td[name="mobil_ijin_bongkar"]').text(data["mobil_ijin_bongkar"]); //set value
 
                             }
@@ -527,7 +530,10 @@
                         } 
                     },
                     {
-                        "data": "tanggal_surat"
+                        "data": "tanggal_surat",
+                        render: function(data, type, row) {
+                            return change_tanggal(data);
+                        }
                     },
                     {
                         "data": "status",
@@ -696,7 +702,10 @@
                         } 
                     },
                     {
-                        "data": "tanggal_surat"
+                        "data": "tanggal_surat",
+                        render: function(data, type, row) {
+                            return change_tanggal(data);
+                        }
                     },
                     {
                         "data": "status",
@@ -855,7 +864,10 @@
                         } 
                     },
                     {
-                        "data": "tanggal_surat"
+                        "data": "tanggal_surat",
+                        render: function(data, type, row) {
+                            return change_tanggal(data);
+                        }
                     },
                     {
                         "data": "status",
@@ -1200,7 +1212,13 @@
                     },
                     {
                         "data": "bon_tanggal",
-                        className: 'text-center'    
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            var date_time = data.split(" ");
+                            var data_tanggal = date_time[0].split("-");
+                            var tanggal = data_tanggal[2]+"-"+data_tanggal[1]+"-"+data_tanggal[0]+" "+date_time[1];
+                            return tanggal;
+                        }
                     },
                     {
                         "data": "bon_jenis",
@@ -1244,7 +1262,10 @@
                                 $('td[name="supir"]').text(data["supir_name"]); //set value
                                 $('td[name="jenis"]').text(data["bon_jenis"]); //set value
                                 $('td[name="nominal"]').text("Rp."+rupiah(data["bon_nominal"])); //set value
-                                $('td[name="tanggal"]').text(data["bon_tanggal"]); //set value
+                                var date_time = data["bon_tanggal"].split(" ");
+                                var data_tanggal = date_time[0].split("-");
+                                var tanggal = data_tanggal[2]+"-"+data_tanggal[1]+"-"+data_tanggal[0]+" "+date_time[1];
+                                $('td[name="tanggal"]').text(tanggal); //set value
                                 $('td[name="keterangan"]').text(data["bon_keterangan"]); //set value
                                 // alert(data["supir_id"]+data["supir_name"]+data["bon_id"]+data["bon_jenis"]+data["bon_nominal"]);
                             }
@@ -1667,20 +1688,19 @@
                                 id: pk
                             },
                             success: function(data) { //jika ambil data sukses
-                            // alert(data);
                                 $('td[name="supir_name"]').text(data["supir_name"]+" ("+data["supir_panggilan"]+")"); //set value
                                 $('td[name="supir_alamat"]').text(data["supir_alamat"]); //set value
-                                $('td[name="supir_ttl"]').text(data["supir_tempat_lahir"]+","+data["supir_tgl_lahir"]); //set value
+                                $('td[name="supir_ttl"]').text(data["supir_tempat_lahir"]+","+change_tanggal(data["supir_tgl_lahir"])); //set value
                                 $('td[name="supir_telp"]').text(data["supir_telp"]); //set value
                                 $('td[name="supir_ktp"]').text(data["supir_ktp"]); //set value
-                                $('td[name="supir_sim"]').text(data["supir_sim"]+" (s/d "+data["supir_tgl_sim"]+")"); //set value
+                                $('td[name="supir_sim"]').text(data["supir_sim"]+" (s/d "+change_tanggal(data["supir_tgl_sim"])+")"); //set value
                                 $('td[name="supir_kasbon"]').text("Rp."+rupiah(data["supir_kasbon"])); //set value
                                 $('td[name="supir_keterangan"]').text(data["supir_keterangan"]); //set value
                                 $('#aktif').text(data["status_aktif"]); //set value
                                 if(data["status_aktif"]=="Aktif"){
-                                    $('#tgl-aktif').text(data["supir_tgl_aktif"]+" - Sekarang"); //set value
+                                    $('#tgl-aktif').text(change_tanggal(data["supir_tgl_aktif"])+" - Sekarang"); //set value
                                 }else{
-                                    $('#tgl-aktif').text(data["supir_tgl_aktif"]+" - "+data["supir_tgl_nonaktif"]); //set value
+                                    $('#tgl-aktif').text(change_tanggal(data["supir_tgl_aktif"])+" - "+change_tanggal(data["supir_tgl_nonaktif"])); //set value
                                 }
                                 $('td[name="darurat_nama"]').text(data["darurat_nama"]); //set value
                                 $('td[name="darurat_referensi"]').text(data["darurat_referensi"]); //set value
@@ -1996,7 +2016,10 @@
                     },
                     {
                         "data": "tanggal_invoice",
-                        className: 'text-center'
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            return change_tanggal(data);
+                        }
                     },
                     {
                         "data": "batas_pembayaran",
@@ -2040,8 +2063,8 @@
     </script>
     <!-- End Invoice -->
 
-<!-- invoice Belum Lunas-->
-<script>
+    <!-- invoice Belum Lunas-->
+    <script>
         $(document).ready(function() {
             var table = null;
             table = $('#Table-Invoice-Belum-Lunas').DataTable({
@@ -2073,7 +2096,10 @@
                     },
                     {
                         "data": "tanggal_invoice",
-                        className: 'text-center'
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            return change_tanggal(data);
+                        }
                     },
                     {
                         "data": "batas_pembayaran",
@@ -2147,7 +2173,10 @@
                     },
                     {
                         "data": "tanggal_invoice",
-                        className: 'text-center'
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            return change_tanggal(data);
+                        }
                     },
                     {
                         "data": "batas_pembayaran",
@@ -2982,12 +3011,12 @@
             });
             //proses tanggal
             var date = new Date();
-            if(date.getMonth()<10){
-                $("#invoice_tgl").val(date.getFullYear()+"-0"+date.getMonth()+"-"+date.getDate());
-                $("#update_status_tanggal_nonaktif").val(date.getFullYear()+"-0"+date.getMonth()+"-"+date.getDate());
+            if((date.getMonth()+1)<10){
+                $("#invoice_tgl").val(date.getFullYear()+"-0"+(date.getMonth()+1)+"-"+date.getDate());
+                $("#update_status_tanggal_nonaktif").val(date.getFullYear()+"-0"+(date.getMonth()+1)+"-"+date.getDate());
             }else{
-                $("#invoice_tgl").val(date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate());
-                $("#update_status_tanggal_nonaktif").val(date.getFullYear()+"-0"+date.getMonth()+"-"+date.getDate());
+                $("#invoice_tgl").val(date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate());
+                $("#update_status_tanggal_nonaktif").val(date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate());
             }
         });
     </script>
@@ -3062,9 +3091,15 @@
                         } 
                     },
                     {
-                        "data": "tanggal_surat"
+                        "data": "tanggal_surat",
+                        render: function(data, type, row) {
+                            return change_tanggal(data);
+                        }
                     },{
-                        "data": "tanggal_bongkar"
+                        "data": "tanggal_bongkar",
+                        render: function(data, type, row) {
+                            return change_tanggal(data);
+                        }
                     },{
                         "data": "tonase"
                     },{
@@ -3712,6 +3747,14 @@
         });
     </script>
     <!-- End pilih rute paketan untuk jo paketan-->
+
+    <script>
+        function change_tanggal(data){
+            var data_tanggal = data.split("-");
+            var tanggal = data_tanggal[2]+"-"+data_tanggal[1]+"-"+data_tanggal[0];
+            return tanggal;
+        }
+    </script>
 </body>
 
 </html>

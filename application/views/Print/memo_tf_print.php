@@ -24,7 +24,7 @@
                             <tr>
                                 <td>Tanggal</td>
                                 <td>:</td>
-                                <td><?= date("Y-m-d")?></td>
+                                <td><?= date("d-m-Y")?></td>
                             </tr>
                             <tr>
                                 <td>Bank</td>

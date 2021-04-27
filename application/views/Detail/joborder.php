@@ -1,3 +1,10 @@
+<?php
+    function change_tanggal($data){
+        $data_tanggal = explode('-', $data);
+        $tanggal = $data_tanggal[2].'-'.$data_tanggal[1].'-'.$data_tanggal[0];
+        return $tanggal;
+    }
+?>
 <!-- Basic Card Example -->
 <div class="card shadow mb-4 ml-5 mr-5 py-2 px-2">
     <div class="card-header py-3">
@@ -83,11 +90,11 @@
                     </tr>
                     <tr>
                         <td class="font-weight-bold" style="width: 25%;">Tanggal Berangkat</td>
-                        <td colspan=3><?= $jo["tanggal_surat"] ?></td>
+                        <td colspan=3><?= change_tanggal($jo["tanggal_surat"]) ?></td>
                     </tr>
                     <tr>
                         <td class="font-weight-bold" style="width: 25%;">Tanggal Bongkar</td>
-                        <td colspan=3><?= $jo["tanggal_bongkar"] ?></td>
+                        <td colspan=3><?= change_tanggal($jo["tanggal_bongkar"]) ?></td>
                     </tr>
                     <tr>
                         <td class="font-weight-bold" style="width: 25%;">Status</td>

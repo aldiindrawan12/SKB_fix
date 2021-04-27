@@ -1,3 +1,10 @@
+<?php
+    function change_tanggal($data){
+        $data_tanggal = explode('-', $data);
+        $tanggal = $data_tanggal[2].'-'.$data_tanggal[1].'-'.$data_tanggal[0];
+        return $tanggal;
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,8 +67,8 @@
                             ?>
                             <tr>
                                 <td><?= $value["Jo_id"]?></td>
-                                <td><?= $value["tanggal_surat"]?></td>
-                                <td><?= $value["tanggal_bongkar"]?></td>
+                                <td><?= change_tanggal($value["tanggal_surat"])?></td>
+                                <td><?= change_tanggal($value["tanggal_bongkar"])?></td>
                                 <td><?= $value["muatan"]?></td>
                                 <td><?= $value["asal"]?></td>
                                 <td><?= $value["tujuan"]?></td>

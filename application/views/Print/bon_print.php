@@ -1,3 +1,11 @@
+<?php
+    function change_tanggal($data){
+        $date_time = explode(' ', $data);
+        $data_tanggal = explode('-', $date_time[0]);
+        $tanggal = $data_tanggal[2].'-'.$data_tanggal[1].'-'.$data_tanggal[0]." ".$date_time[1];
+        return $tanggal;
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,7 +30,7 @@
                     <table class="" id="" width="100%" cellspacing="0">
                         <tbody>
                             <tr>
-                                <td colspan=3>Bandar Lampung,<?= $data["bon_tanggal"]?></td>
+                                <td colspan=3>Bandar Lampung,<?= change_tanggal($data["bon_tanggal"])?></td>
                             </tr>
                             <tr>
                                 <td colspan=3><strong>#<?= $bon_id?></strong></td>

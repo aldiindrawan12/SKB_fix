@@ -120,7 +120,7 @@
                         "orderable": false,
                         render: function(data, type, row) {
                             var role_user = "<?=$_SESSION['role']?>";
-                            if(role_user!="Supervisor"){
+                            if(role_user!="Supervisor" && role_user!="Super User"){
                                 let html = "<a class='btn btn-light btn-detail-truck' href='javascript:void(0)' data-toggle='modal' data-target='#popup-kendaraan' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
                                 "<a class='btn btn-light btn-update-truck' href='javascript:void(0)' data-toggle='modal' data-target='#popup-update-truck' data-pk='"+data+"'><i class='fas fa-pen-square'></i></a> || "+
                                 "<a class='btn btn-light btn-delete-truck' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-trash-alt'></i></a>";
@@ -304,7 +304,7 @@
                         "orderable": false,
                         render: function(data, type, row) {
                             var role_user = "<?=$_SESSION['role']?>";
-                            if(role_user!="Supervisor"){
+                            if(role_user!="Supervisor" && role_user!="Super User"){
                                 let html ="<a class='btn btn-light btn-update-merk' href='javascript:void(0)' data-toggle='modal' data-target='#popup-update-merk' data-pk='"+data+"'><i class='fas fa-pen-square'></i></a> || "+
                                 "<a class='btn btn-light btn-delete-merk' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-trash-alt'></i></a>";
                                 return html;
@@ -1339,7 +1339,7 @@
                         "orderable": false,
                         render: function(data, type, row) {
                             var role_user = "<?=$_SESSION['role']?>";
-                            if(role_user!="Supervisor"){
+                            if(role_user!="Supervisor" && role_user!="Super User"){
                                 let html = "<a class='btn btn-light btn-detail-customer' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-customer' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
                                 "<a class='btn btn-light btn-update-customer' data-toggle='modal' data-target='#popup-update-customer' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
                                 "<a class='btn btn-light btn-delete-customer' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
@@ -1633,7 +1633,7 @@
                         "orderable": false,
                         render: function(data, type, row) {
                             var role_user = "<?=$_SESSION['role']?>";
-                            if(role_user!="Supervisor"){
+                            if(role_user!="Supervisor" && role_user!="Super User"){
                                 let html = "<a class='btn btn-light btn-detail-supir' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-supir' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
                                 "<a class='btn btn-light btn-update-supir' data-toggle='modal' data-target='#popup-update-supir' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
                                 "<a class='btn btn-light btn-delete-supir' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
@@ -2431,7 +2431,7 @@
                         "orderable": false,
                         render: function(data, type, row) {
                             var role_user = "<?=$_SESSION['role']?>";
-                            if(role_user!="Supervisor"){
+                            if(role_user!="Supervisor" && role_user!="Super User"){
                                 let html = "<a class='btn btn-light btn-detail-rute' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
                                 "<a class='btn btn-light btn-update-rute' data-toggle='modal' data-target='#popup-update-rute' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
                                 "<a class='btn btn-light btn-delete-rute' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
@@ -2635,7 +2635,7 @@
                         }
                     },
                     {
-                        "data": "validasi",
+                        "data": "validasi_paketan",
                         className: 'text-center'
                     },
                     {
@@ -2644,7 +2644,7 @@
                         "orderable": false,
                         render: function(data, type, row) {
                             var role_user = "<?=$_SESSION['role']?>";
-                            if(role_user!="Supervisor"){
+                            if(role_user!="Supervisor" && role_user!="Super User"){
                                 let html = "<a class='btn btn-light btn-update-paketan' data-toggle='modal' data-target='#popup-update-paketan' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
                                 "<a class='btn btn-light btn-delete-paketan' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
                                 return html;
@@ -3465,7 +3465,7 @@
                         "orderable": false,
                         render: function(data, type, row) {
                             var role_user = "<?=$_SESSION['role']?>";
-                            if(role_user!="Supervisor"){
+                            if(role_user!="Supervisor" && role_user!="Super User"){
                                 let html = "<a class='btn btn-light btn-update-kosongan' href='javascript:void(0)' data-toggle='modal' data-target='#popup-update-kosongan' data-pk='"+data+"'><i class='fas fa-pen-square'></i></a> || "+
                                 "<a class='btn btn-light btn-delete-kosongan' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-trash-alt'></i></a>";
                                 return html;

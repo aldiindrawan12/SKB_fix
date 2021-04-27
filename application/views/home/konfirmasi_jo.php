@@ -52,7 +52,7 @@
                             </div>
                             <div class="konfirmasi" style="display:none">
                                 <div class="form-group">
-                                    <label for="tonase" class="form-label">Muatan akhir</label>
+                                    <label for="tonase" class="form-label">Muatan akhir (Tonase)</label>
                                     <input autocomplete="off" class="form-control" type="text" name="tonase" id="tonase" onkeyup="uang()">    
                                 </div>
                                 <div class="form-group">

@@ -143,7 +143,7 @@
                             <td colspan=3>
                                 <div class="row ">
                                     <p class="col">Rp.<?= number_format($jo["uang_jalan_bayar"],2,',','.')?></p>
-                                    <a class='btn btn-primary btn-sm col-md-4' data-toggle="modal" data-target="#update_ju">
+                                    <a class='btn btn-primary btn-sm col-md-4' data-toggle="modal" data-target="#update_ju" onclick="sisa_uj(<?= $jo['uang_jalan']+$jo['uang_kosongan']-$jo['uang_jalan_bayar']?>)">
                                         <span>Konfirmasi Bayar UJ</span>
                                     </a>
                                 </div>
@@ -164,14 +164,6 @@
                     <tr>
                         <td colspan=3>Muatan Tonase : <?= $jo["tonase"]?></td>
                     </tr>
-                    <!-- <tr class="text-center">
-                        <td colspan=3><strong>Upah Supir</strong></td>
-                    </tr>
-                    <tr>
-                        <td>Upah : Rp.<?= number_format($jo["upah"],2,',','.')?></td>
-                        <td>Bonus : Rp.<?= number_format($jo["bonus"],2,',','.')?></td>
-                        <td>Jumlah : Rp.<?= number_format($jo["bonus"]+$jo["upah"],2,',','.')?></td>
-                    </tr> -->
                 </tbody>
             </table>
         </div>
@@ -193,6 +185,7 @@
             </div>
             <div class="font-size-sm m-3 text-justify">
                 <form action="<?php echo base_url("index.php/detail/updateUJ/").$jo["Jo_id"]?>" method="POST">
+                    <small>Sisa Uang Jalan Belum Dibayar = Rp.<span id="sisa_uj"></span></small>
                     <div class="mb-3 row">
                         <label for="uang_jalan_bayar" class="col-sm-5 col-form-label">Nominal Uang Jalan Yang Dibayar</label>
                         <div class="col-sm-6">
@@ -202,7 +195,7 @@
                     <div class="mb-3 row">
                         <label for="Keterangan" class="col-sm-5 col-form-label">Keterangan</label>
                         <div class="col-sm-6">
-                            <input autocomplete="off" class="form-control" type="text" name="Keterangan" id="Keterangan" onkeyup="uang()" required>    
+                            <input autocomplete="off" class="form-control" type="text" name="Keterangan" id="Keterangan" required>    
                         </div>
                     </div>
                     <div class="float-right mr-5 px-3 mt-2">
@@ -217,5 +210,18 @@
 <script>
     function uang(a){
         $( '#'+a.id ).mask('000.000.000', {reverse: true});
+        var sisa = '<?= $jo['uang_jalan']+$jo['uang_kosongan']-$jo['uang_jalan_bayar']?>';
+        var uang_bayar = $("#uang_jalan_bayar").val().split(".");
+        var uang_bayar_fix = "";
+        for(i=0;i<uang_bayar.length;i++){
+            uang_bayar_fix += uang_bayar[i];
+        }
+        if(parseInt(sisa)<parseInt(uang_bayar_fix)){
+            alert('Jumlah Pembayaran UJ Harus Lebih Kecil Dari Rp.'+ rupiah(sisa));
+            $( '#uang_jalan_bayar' ).val("");
+        }
+    }
+    function sisa_uj(sisa){
+        $("#sisa_uj").text(rupiah(sisa));
     }
 </script>

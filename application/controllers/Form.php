@@ -742,7 +742,7 @@ class Form extends CI_Controller {
         public function update_jo_status($supir,$mobil){
             if($this->input->post("status")!="Dibatalkan"){
                 $data_jo = $this->model_home->getjobyid($this->input->post("jo_id"));
-                $keterangan = "<strong>Catatan JO : </strong>".$data_jo["keterangan"]."<br><strong>Catatan Konfirmasi : </strong>".$this->input->post("Keterangan");
+                $keterangan = $data_jo["keterangan"]."<br>".$this->input->post("Keterangan");
                 $data = array(
                     "jo_id" => $this->input->post("jo_id"),
                     "status" => $this->input->post("status"),

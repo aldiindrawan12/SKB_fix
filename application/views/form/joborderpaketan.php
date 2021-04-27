@@ -20,6 +20,24 @@
                             <?php } ?>
                         </select>
                     </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="Table-Pilih-Rute-Paketan" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>    
+                                    <th class="text-center" scope="col">No</th>
+                                    <th class="text-center" scope="col">Nama Customer</th>
+                                    <th class="text-center" scope="col">Rute</th>
+                                    <th class="text-center" scope="col">Jenis Mobil</th>
+                                    <th class="text-center" scope="col">Ritase/Tonase</th>
+                                    <th class="text-center" scope="col">Uang Jalan</th>
+                                    <th class="text-center" scope="col">Inv./Tagihan</th>
+                                    <th class="text-center" width="20%" scope="col">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                     <div class="col-md-3 col-md-offset-4 mb-4">
                         <label class="form-label font-weight-bold" for="Jenis">Jenis Mobil</label>
                         <input autocomplete="off" type="text" class="form-control" name="Jenis" id="Jenis" required readonly>
@@ -89,24 +107,6 @@
                     </div>
                 </form>
                 <!-- end form Job Order Baru -->
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="Table-Pilih-Rute-Paketan" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>    
-                                <th class="text-center" scope="col">No</th>
-                                <th class="text-center" scope="col">Nama Customer</th>
-                                <th class="text-center" scope="col">Rute</th>
-                                <th class="text-center" scope="col">Jenis Mobil</th>
-                                <th class="text-center" scope="col">Ritase/Tonase</th>
-                                <th class="text-center" scope="col">Uang Jalan</th>
-                                <th class="text-center" scope="col">Inv./Tagihan</th>
-                                <th class="text-center" width="20%" scope="col">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
             </div>
         </div>
     </div>

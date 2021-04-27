@@ -24,6 +24,7 @@
                         <th class="text-center" width="12%" scope="col">Type</th>
                         <th class="text-center" width="12%" scope="col">Jenis</th>
                         <th class="text-center" width="15%" scope="col">Dump</th>
+                        <th class="text-center" width="15%" scope="col">Status Validasi</th>
                         <th class="text-center" width="30%" scope="col">Aksi</th>
                     </tr>
                 </thead>

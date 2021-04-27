@@ -2,60 +2,62 @@
 // error_reporting(0);
 class Model_Home extends CI_model
 {
-    public function gettruck() //all truck
-    {
-        return $this->db->get_where("skb_mobil",array("status_hapus"=>"NO","validasi"=>"ACC"))->result_array();
-    }
+    //function get
+        public function gettruck() //all truck
+        {
+            return $this->db->get_where("skb_mobil",array("status_hapus"=>"NO","validasi"=>"ACC"))->result_array();
+        }
 
-    public function getmerk() //all truck
-    {
-        return $this->db->get_where("skb_merk_kendaraan",array("status_hapus"=>"NO"))->result_array();
-    }
+        public function getmerk() //all truck
+        {
+            return $this->db->get_where("skb_merk_kendaraan",array("status_hapus"=>"NO"))->result_array();
+        }
 
-    public function getmobilbyid($mobil_no) //mobil by ID
-    {
-        return $this->db->get_where("skb_mobil",array("mobil_no"=>$mobil_no))->row_array();
-    }
+        public function getmobilbyid($mobil_no) //mobil by ID
+        {
+            return $this->db->get_where("skb_mobil",array("mobil_no"=>$mobil_no))->row_array();
+        }
 
-    public function getcustomer() //all customer
-    {
-        return $this->db->get_where("skb_customer",array("validasi"=>"ACC"))->result_array();
-    }
+        public function getcustomer() //all customer
+        {
+            return $this->db->get_where("skb_customer",array("validasi"=>"ACC"))->result_array();
+        }
 
-    public function getcustomerbyid($customer_id) //customer by ID
-    {
-        return $this->db->get_where("skb_customer",array("customer_id"=>$customer_id))->row_array();
-    }
+        public function getcustomerbyid($customer_id) //customer by ID
+        {
+            return $this->db->get_where("skb_customer",array("customer_id"=>$customer_id))->row_array();
+        }
 
-    public function getsupir() //all supir
-    {
-        return $this->db->get_where("skb_supir",array("status_hapus"=>"NO","status_aktif"=>"Aktif","validasi"=>"ACC"))->result_array();
-    }
+        public function getsupir() //all supir
+        {
+            return $this->db->get_where("skb_supir",array("status_hapus"=>"NO","status_aktif"=>"Aktif","validasi"=>"ACC"))->result_array();
+        }
 
-    public function getkosongan() //all kosongan
-    {
-        return $this->db->get_where("skb_kosongan",array("status_hapus"=>"NO","validasi"=>"ACC"))->result_array();
-    }
+        public function getkosongan() //all kosongan
+        {
+            return $this->db->get_where("skb_kosongan",array("status_hapus"=>"NO","validasi"=>"ACC"))->result_array();
+        }
 
-    public function getkosonganbyid($kosongan_id) //kosongan by id
-    {
-        return $this->db->get_where("skb_kosongan",array("status_hapus"=>"NO","kosongan_id"=>$kosongan_id))->row_array();
-    }
+        public function getkosonganbyid($kosongan_id) //kosongan by id
+        {
+            return $this->db->get_where("skb_kosongan",array("status_hapus"=>"NO","kosongan_id"=>$kosongan_id))->row_array();
+        }
 
-    public function getsupirbyid($supir_id) //supir by id
-    {
-        return $this->db->get_where("skb_supir",array("supir_id"=>$supir_id))->row_array();
-    }
+        public function getsupirbyid($supir_id) //supir by id
+        {
+            return $this->db->get_where("skb_supir",array("supir_id"=>$supir_id))->row_array();
+        }
 
-    public function getjo() //all JO
-    {
-        return $this->db->get("skb_job_order")->result_array();
-    }
+        public function getjo() //all JO
+        {
+            return $this->db->get("skb_job_order")->result_array();
+        }
 
-    public function getjobyid($jo_id) //JO by ID
-    {
-        return $this->db->get_where("skb_job_order",array("Jo_id"=>$jo_id))->row_array();
-    }
+        public function getjobyid($jo_id) //JO by ID
+        {
+            return $this->db->get_where("skb_job_order",array("Jo_id"=>$jo_id))->row_array();
+        }
+    //end funcction get
 
      //function-fiunction datatable truck
         public function count_all_truck()
@@ -87,7 +89,7 @@ class Model_Home extends CI_model
                         $hasil_fix[] = $hasil[$i];
                     }
                 }else{
-                    if($hasil[$i]["status_hapus"]=="NO" && $hasil[$i]["validasi"]=="ACC"){
+                    if($hasil[$i]["status_hapus"]=="NO"){
                         $hasil_fix[] = $hasil[$i];
                     }
                 }
@@ -112,7 +114,7 @@ class Model_Home extends CI_model
                             $hasil_fix +=1;
                         }
                     }else{
-                        if($hasil_data[$i]["status_hapus"]=="NO" && $hasil_data[$i]["validasi"]=="ACC"){
+                        if($hasil_data[$i]["status_hapus"]=="NO"){
                             $hasil_fix +=1;
                         }
                     }
@@ -302,8 +304,6 @@ class Model_Home extends CI_model
             $this->db->where("status_hapus","NO");
             if($_SESSION["role"]=="Supervisor" && $asal!="viewcustomerinvoice"){
                 $this->db->where("validasi","Pending");
-            }else{
-                $this->db->where("validasi","ACC");
             }
             return $this->db->count_all_results("skb_customer");
         }
@@ -315,8 +315,6 @@ class Model_Home extends CI_model
             $this->db->like('customer_name', $search);
             if($_SESSION["role"]=="Supervisor" && $asal!="viewcustomerinvoice"){
                 $this->db->where("validasi","Pending");
-            }else{
-                $this->db->where("validasi","ACC");
             }
             $this->db->order_by($order_field, $order_ascdesc);
             $this->db->limit($limit, $start);
@@ -330,8 +328,6 @@ class Model_Home extends CI_model
             $this->db->like('customer_name', $search);
             if($_SESSION["role"]=="Supervisor" && $asal!="viewcustomerinvoice"){
                 $this->db->where("validasi","Pending");
-            }else{
-                $this->db->where("validasi","ACC");
             }
             return $this->db->get('skb_customer')->num_rows();
         }
@@ -343,8 +339,6 @@ class Model_Home extends CI_model
             $this->db->where("status_hapus","NO");
             if($_SESSION["role"]=="Supervisor" && $asal=="viewsupir"){
                 $this->db->where("validasi","Pending");
-            }else{
-                $this->db->where("validasi","ACC");
             }
             return $this->db->count_all_results("skb_supir");
         }
@@ -356,8 +350,6 @@ class Model_Home extends CI_model
             $this->db->where("status_hapus","NO");
             if($_SESSION["role"]=="Supervisor" && $asal=="viewsupir"){
                 $this->db->where("validasi","Pending");
-            }else{
-                $this->db->where("validasi","ACC");
             }
             // $this->db->or_like('status_jalan', $search);
             $this->db->order_by($order_field, $order_ascdesc);
@@ -372,8 +364,6 @@ class Model_Home extends CI_model
             $this->db->where("status_hapus","NO");
             if($_SESSION["role"]=="Supervisor" && $asal=="viewsupir"){
                 $this->db->where("validasi","Pending");
-            }else{
-                $this->db->where("validasi","ACC");
             }
             // $this->db->or_like('status_jalan', $search);
             return $this->db->get('skb_supir')->num_rows();
@@ -555,8 +545,6 @@ class Model_Home extends CI_model
             $this->db->where("skb_rute.rute_status_hapus","No");
             if($_SESSION["role"]=="Supervisor" && $asal!="addjo"){
                 $this->db->where("skb_rute.validasi_rute","Pending");
-            }else{
-                $this->db->where("skb_rute.validasi_rute","ACC");
             }
             $this->db->join("skb_customer", "skb_customer.customer_id = skb_rute.customer_id", 'left');
             return $this->db->count_all_results("skb_rute");
@@ -588,11 +576,11 @@ class Model_Home extends CI_model
                     }
                 }else{
                     if($customer=='x'){
-                        if($hasil[$i]["rute_status_hapus"]=="NO" && $hasil[$i]["validasi_rute"]=="ACC"){
+                        if($hasil[$i]["rute_status_hapus"]=="NO"){
                             $hasil_fix[] = $hasil[$i];
                         }
                     }else{
-                        if($hasil[$i]["customer_id"]==$customer && $hasil[$i]["rute_status_hapus"]=="NO" && $hasil[$i]["validasi_rute"]=="ACC"){
+                        if($hasil[$i]["customer_id"]==$customer && $hasil[$i]["rute_status_hapus"]=="NO"){
                             $hasil_fix[] = $hasil[$i];
                         }
                     }
@@ -626,11 +614,11 @@ class Model_Home extends CI_model
                         }
                     }else{
                         if($customer=="x"){
-                            if($hasil_data[$i]["rute_status_hapus"]=="NO" && $hasil_data[$i]["validasi_rute"]=="ACC"){
+                            if($hasil_data[$i]["rute_status_hapus"]=="NO"){
                                 $hasil_fix +=1;
                             }
                         }else{
-                            if($hasil_data[$i]["customer_id"]==$customer && $hasil_data[$i]["rute_status_hapus"]=="NO" && $hasil_data[$i]["validasi_rute"]=="ACC"){
+                            if($hasil_data[$i]["customer_id"]==$customer && $hasil_data[$i]["rute_status_hapus"]=="NO"){
                                 $hasil_fix +=1;
                             }
                         }
@@ -697,8 +685,6 @@ class Model_Home extends CI_model
             $this->db->where("status_hapus","NO");
             if($_SESSION["role"]=="Supervisor" && $asal!="addtruck" ){
                 $this->db->where("validasi","Pending");
-            }else{
-                $this->db->where("validasi","ACC");
             }
             return $this->db->count_all_results("skb_merk_kendaraan");
         }
@@ -719,7 +705,7 @@ class Model_Home extends CI_model
                         $hasil_fix[] = $hasil[$i];
                     }
                 }else{
-                    if($hasil[$i]["status_hapus"]=="NO" && $hasil[$i]["validasi"]=="ACC"){
+                    if($hasil[$i]["status_hapus"]=="NO"){
                         $hasil_fix[] = $hasil[$i];
                     }
                 }
@@ -742,7 +728,7 @@ class Model_Home extends CI_model
                             $hasil_fix +=1;
                         }
                     }else{
-                        if($hasil_data[$i]["status_hapus"]=="NO" && $hasil_data[$i]["validasi"]=="ACC"){
+                        if($hasil_data[$i]["status_hapus"]=="NO"){
                             $hasil_fix +=1;
                         }
                     }
@@ -757,8 +743,6 @@ class Model_Home extends CI_model
             $this->db->where("status_hapus","NO");
             if($_SESSION["role"]=="Supervisor"){
                 $this->db->where("validasi","Pending");
-            }else{
-                $this->db->where("validasi","ACC");
             }
             return $this->db->count_all_results("skb_kosongan");
         }
@@ -778,7 +762,7 @@ class Model_Home extends CI_model
                         $hasil_fix[] = $hasil[$i];
                     }
                 }else{
-                    if($hasil[$i]["status_hapus"]=="NO" && $hasil[$i]["validasi"]=="ACC"){
+                    if($hasil[$i]["status_hapus"]=="NO"){
                         $hasil_fix[] = $hasil[$i];
                     }
                 }
@@ -800,7 +784,7 @@ class Model_Home extends CI_model
                             $hasil_fix +=1;
                         }
                     }else{
-                        if($hasil_data[$i]["status_hapus"]=="NO" && $hasil_data[$i]["validasi"]=="ACC"){
+                        if($hasil_data[$i]["status_hapus"]=="NO"){
                             $hasil_fix +=1;
                         }
                     }
@@ -847,11 +831,11 @@ class Model_Home extends CI_model
                     }
                 }else{
                     if($customer=='x'){
-                        if($hasil[$i]["paketan_status_hapus"]=="NO" && $hasil[$i]["validasi_paketan"]=="ACC"){
+                        if($hasil[$i]["paketan_status_hapus"]=="NO"){
                             $hasil_fix[] = $hasil[$i];
                         }
                     }else{
-                        if($hasil[$i]["customer_id"]==$customer && $hasil[$i]["paketan_status_hapus"]=="NO" && $hasil[$i]["validasi_paketan"]=="ACC"){
+                        if($hasil[$i]["customer_id"]==$customer && $hasil[$i]["paketan_status_hapus"]=="NO"){
                             $hasil_fix[] = $hasil[$i];
                         }
                     }
@@ -882,11 +866,11 @@ class Model_Home extends CI_model
                         }
                     }else{
                         if($customer=='x'){
-                            if($hasil_data[$i]["paketan_status_hapus"]=="NO" && $hasil_data[$i]["validasi_paketan"]=="ACC"){
+                            if($hasil_data[$i]["paketan_status_hapus"]=="NO"){
                                 $hasil_fix +=1;
                             }
                         }else{
-                            if($hasil_data[$i]["customer_id"]==$customer && $hasil_data[$i]["paketan_status_hapus"]=="NO" && $hasil_data[$i]["validasi_paketan"]=="ACC"){
+                            if($hasil_data[$i]["customer_id"]==$customer && $hasil_data[$i]["paketan_status_hapus"]=="NO"){
                                 $hasil_fix +=1;
                             }
                         }

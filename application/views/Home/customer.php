@@ -25,6 +25,7 @@
                         <th class="text-center" scope="col">Alamat</th>
                         <th class="text-center" scope="col">Contact Person</th>
                         <th class="text-center" scope="col">Telp./HP</th>
+                        <th class="text-center" scope="col">Status Validasi</th>
                         <th class="text-center" scope="col">Aksi</th>
                     </tr>
                 </thead>

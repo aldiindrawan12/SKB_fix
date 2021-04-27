@@ -28,6 +28,7 @@
                         <th class="text-center" scope="col">Muatan</th>
                         <th class="text-center" scope="col">Uang Jalan</th>
                         <th class="text-center" scope="col">Inv./Tagihan</th>
+                        <th class="text-center" scope="col">Status Validasi</th>
                         <th class="text-center" width="20%" scope="col">Aksi</th>
                     </tr>
                 </thead>
@@ -87,10 +88,6 @@
                                 <label for="rute_uj_engkel" class="form-label font-weight-bold">Uang Jalan</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_uj_engkel" name="rute_uj_engkel" required onkeyup="uang(this)">
                             </div>
-                            <!-- <div class="form-group">
-                                <label for="rute_uj_tronton" class="form-label font-weight-bold">Uj.Tronton</label>
-                                <input autocomplete="off" type="text" class="form-control" id="rute_uj_tronton" name="rute_uj_tronton" required onkeyup="uang(this)">
-                            </div> -->
                             <small class="font-weight-bold">Detail Keuangan</small>
                             <hr>
                             <div class="form-group">
@@ -128,20 +125,12 @@
                                     <label for="rute_gaji_engkel" class="form-label font-weight-bold">Gaji(FIX)</label>
                                     <input autocomplete="off" type="text" class="form-control" id="rute_gaji_engkel" name="rute_gaji_engkel" onkeyup="uang(this)">
                                 </div>
-                                <!-- <div class="form-group">
-                                    <label for="rute_gaji_tronton" class="form-label font-weight-bold">Gaji Tronton(FIX)</label>
-                                    <input autocomplete="off" type="text" class="form-control" id="rute_gaji_tronton" name="rute_gaji_tronton" onkeyup="uang(this)">
-                                </div> -->
                             </div>
                             <div class="Non-Fix" style="display:none">
                                 <div class="form-group">
                                     <label for="rute_gaji_engkel_rumusan" class="form-label font-weight-bold">Gaji Rumusan(Non-FIX)</label>
                                     <input autocomplete="off" type="text" class="form-control" id="rute_gaji_engkel_rumusan" name="rute_gaji_engkel_rumusan" onkeyup="uang(this)">
                                 </div>
-                                <!-- <div class="form-group">
-                                    <label for="rute_gaji_tronton_rumusan" class="form-label font-weight-bold">Gaji Tronton(Non-FIX)</label>
-                                    <input autocomplete="off" type="text" class="form-control" id="rute_gaji_tronton_rumusan" name="rute_gaji_tronton_rumusan" onkeyup="uang(this)">
-                                </div> -->
                             </div>
                             <div class="form-group">
                                 <label for="rute_keterangan" class="form-label font-weight-bold">Keterangan</label>
@@ -204,9 +193,6 @@
                             <div class="form-group">
                                 <label for="jenis_mobil_update" class="form-label font-weight-bold ">Jenis Mobil</label> 
                                 <input autocomplete="off" type="text" class="form-control"  name="jenis_mobil_update" id="jenis_mobil_update" readonly>
-                                <!-- <select name="jenis_mobil_update" id="jenis_mobil_update" class="form-control mb-4" required>
-                                    <option class="font-w700" disabled="disabled" selected value="">Jenis Mobil</option>
-                                </select> -->
                             </div>
                             <small class="font-weight-bold">Detail Uang Jalan (Uj)</small>
                             <hr>
@@ -214,20 +200,11 @@
                                 <label for="rute_uj_engkel_update" class="form-label font-weight-bold">Uang Jalan</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_uj_engkel_update" name="rute_uj_engkel_update" required onkeyup="uang(this)">
                             </div>
-                            <!-- <div class="form-group">
-                                <label for="rute_uj_tronton_update" class="form-label font-weight-bold">Uj.Tronton</label>
-                                <input autocomplete="off" type="text" class="form-control" id="rute_uj_tronton_update" name="rute_uj_tronton_update" required onkeyup="uang(this)">
-                            </div> -->
                             <small class="font-weight-bold">Detail Keuangan</small>
                             <hr>
                             <div class="form-group">
                                 <label class="form-label font-weight-bold" for="Ritase_update">Ritase/Tonase</label>
                                 <input autocomplete="off" type="text" class="form-control" name="Ritase_update" id="Ritase_update" required readonly>
-                                <!-- <select name="Ritase_update" id="Ritase_update" class="form-control" required>
-                                    <option class="font-w700" disabled="disabled" selected value="">Ritase/Tonase</option>
-                                    <option class="font-w700" value="Ritase">Ritase</option>
-                                    <option class="font-w700" value="Tonase">Tonase</option>
-                                </select> -->
                             </div>
                             <div class="form-group">
                                 <label for="rute_tagihan_update" class="form-label font-weight-bold">Inv./Tagihan</label>
@@ -241,18 +218,10 @@
                                 <label for="rute_gaji_engkel_update" class="form-label font-weight-bold">Gaji(Fix)</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_gaji_engkel_update" name="rute_gaji_engkel_update" required onkeyup="uang(this)">
                             </div>
-                            <!-- <div class="form-group">
-                                <label for="rute_gaji_tronton_update" class="form-label font-weight-bold">Gaji Tronton(Fix)</label>
-                                <input autocomplete="off" type="text" class="form-control" id="rute_gaji_tronton_update" name="rute_gaji_tronton_update" required onkeyup="uang(this)"> -->
-                            <!-- </div> -->
                             <div class="form-group">
                                 <label for="rute_gaji_engkel_rumusan_update" class="form-label font-weight-bold">Gaji Rumusan(Non-Fix)</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_gaji_engkel_rumusan_update" name="rute_gaji_engkel_rumusan_update" required onkeyup="uang(this)">
                             </div>
-                            <!-- <div class="form-group">
-                                <label for="rute_gaji_tronton_rumusan_update" class="form-label font-weight-bold">Gaji Tronton(Non-Fix)</label>
-                                <input autocomplete="off" type="text" class="form-control" id="rute_gaji_tronton_rumusan_update" name="rute_gaji_tronton_rumusan_update" required onkeyup="uang(this)">
-                            </div> -->
                             <div class="form-group">
                                 <label for="rute_keterangan_update" class="form-label font-weight-bold">keterangan</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_keterangan_update" name="rute_keterangan_update">
@@ -317,10 +286,6 @@
                                 <label for="rute_uj_engkel_detail" class="form-label font-weight-bold">Uang Jalan</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_uj_engkel_detail" name="rute_uj_engkel_detail" readonly>
                             </div>
-                            <!-- <div class="form-group">
-                                <label for="rute_uj_tronton_detail" class="form-label font-weight-bold">Uj.Tronton</label>
-                                <input autocomplete="off" type="text" class="form-control" id="rute_uj_tronton_detail" name="rute_uj_tronton_detail" readonly>
-                            </div> -->
                             <small class="font-weight-bold">Detail Keuangan</small>
                             <hr>
                             <div class="form-group">
@@ -339,18 +304,10 @@
                                 <label for="rute_gaji_engkel_detail" class="form-label font-weight-bold">Gaji(Fix)</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_gaji_engkel_detail" name="rute_gaji_engkel_detail" readonly>
                             </div>
-                            <!-- <div class="form-group">
-                                <label for="rute_gaji_tronton_detail" class="form-label font-weight-bold">Gaji Tronton(Fix)</label>
-                                <input autocomplete="off" type="text" class="form-control" id="rute_gaji_tronton_detail" name="rute_gaji_tronton_detail" readonly>
-                            </div> -->
                             <div class="form-group">
                                 <label for="rute_gaji_engkel_rumusan_detail" class="form-label font-weight-bold">Gaji Rumusan(Non-Fix)</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_gaji_engkel_rumusan_detail" name="rute_gaji_engkel_rumusan_detail" readonly>
                             </div>
-                            <!-- <div class="form-group">
-                                <label for="rute_gaji_tronton_rumusan_detail" class="form-label font-weight-bold">Gaji Tronton(Non-Fix)</label>
-                                <input autocomplete="off" type="text" class="form-control" id="rute_gaji_tronton_rumusan_detail" name="rute_gaji_tronton_rumusan_detail" readonly>
-                            </div> -->
                             <div class="form-group">
                                 <label for="rute_keterangan_detail" class="form-label font-weight-bold">keterangan</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_keterangan_detail" name="rute_keterangan_detail" readonly>

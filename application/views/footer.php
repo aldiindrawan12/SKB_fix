@@ -99,7 +99,6 @@
                     {
                         "data": "mobil_jenis"
                     },
-                    
                     {
                         "data": "mobil_tahun",
                         className: 'text-center'
@@ -110,6 +109,10 @@
                         render: function(data, type, row) {
                             return change_tanggal(data);
                         }
+                    },
+                    {
+                        "data": "validasi",
+                        className: 'text-center'
                     },
                     {
                         "data": "mobil_no",
@@ -289,6 +292,10 @@
                     
                     {
                         "data": "merk_dump",
+                        className: 'text-center'
+                    },
+                    {
+                        "data": "validasi",
                         className: 'text-center'
                     },
                     {
@@ -1323,6 +1330,10 @@
                         "data": "customer_telp"
                     },
                     {
+                        "data": "validasi",
+                        className: 'text-center'
+                    },
+                    {
                         "data": "customer_id",
                         className: 'text-center',
                         "orderable": false,
@@ -1582,7 +1593,6 @@
                             }
 
                     },
-                   
                     {
                         "data": "status_jalan",
                         className: 'text-center',
@@ -1612,6 +1622,10 @@
                                 }
                             }
 
+                    },
+                    {
+                        "data": "validasi",
+                        className: 'text-center'
                     },
                     {
                         "data": "supir_id",
@@ -2408,6 +2422,10 @@
                         }
                     },
                     {
+                        "data": "validasi_rute",
+                        className: 'text-center'
+                    },
+                    {
                         "data": "rute_id",
                         className: 'text-center',
                         "orderable": false,
@@ -2615,6 +2633,10 @@
                             let html = 'Rp.'+rupiah(data);
                             return html;
                         }
+                    },
+                    {
+                        "data": "validasi",
+                        className: 'text-center'
                     },
                     {
                         "data": "paketan_id",
@@ -3432,6 +3454,10 @@
                             let html = "Rp."+rupiah(data);
                             return html;
                         }
+                    },
+                    {
+                        "data": "validasi",
+                        className: 'text-center'
                     },
                     {
                         "data": "kosongan_id",

@@ -343,7 +343,7 @@ class Model_Home extends CI_model
         public function count_all_supir($asal)
         {
             $this->db->where("status_hapus","NO");
-            if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewsupir"){
+            if(($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User") && $asal=="viewsupir"){
                 $this->db->where("validasi","Pending");
             }else{
                 $this->db->where("validasi","ACC");
@@ -356,7 +356,7 @@ class Model_Home extends CI_model
             // $this->db->like('supir_id', $search);
             $this->db->like('supir_name', $search);
             $this->db->where("status_hapus","NO");
-            if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewsupir"){
+            if(($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User") && $asal=="viewsupir"){
                 $this->db->where("validasi","Pending");
             }else{
                 $this->db->where("validasi","ACC");
@@ -372,7 +372,7 @@ class Model_Home extends CI_model
             // $this->db->like('supir_id', $search);
             $this->db->like('supir_name', $search);
             $this->db->where("status_hapus","NO");
-            if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewsupir"){
+            if(($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User") && $asal=="viewsupir"){
                 $this->db->where("validasi","Pending");
             }else{
                 $this->db->where("validasi","ACC");

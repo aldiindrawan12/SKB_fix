@@ -81,7 +81,8 @@
                             <td>Rp.<?= number_format($upah,2,',','.')?></td>
                         </tr>
                         <tr>
-                            <td colspan=8>Total Bon Terhutang</td>
+                            <td colspan=6>Total Bon Terhutang Rp.<?= number_format($supir["supir_kasbon"],2,',','.')?></td>
+                            <td colspan=2>Potong Kasbon</td>
                             <td>Rp.<?= number_format($supir["supir_kasbon"],2,',','.')?></td>
                         </tr>
                         <tr>
@@ -177,34 +178,4 @@
     function uang(a){
         $( '#'+a.id ).mask('000.000.000', {reverse: true});
     }
-    // function sudah_bayar(){
-    //     var data_jo_id = [];
-    //     var total = "<?= $upah-$supir['supir_kasbon']?>";
-    //     var bonus = $("#bonus").val();
-    //     if(bonus==""){
-    //         bonus="0";
-    //     }
-    //     var bonus_int = bonus.replaceAll(".","");
-    //     <?php for($i=0;$i<count($jo);$i++){?>
-    //         data_jo_id.push(<?= $jo[$i]["Jo_id"]?>)
-    //     <?php }?>
-    //     if(data_jo_id.length==0){
-    //         alert("Tidak Ada Gaji");
-    //     }else{
-    //         $.ajax({
-    //             type: "GET",
-    //             url: "<?php echo base_url('index.php/detail/update_upah') ?>",
-    //             dataType: "text",
-    //             data: {
-    //                 upah:parseInt(total)+parseInt(bonus_int),
-    //                 supir_id:<?= $supir["supir_id"]?>,
-    //                 supir_kasbon:<?= $supir["supir_kasbon"]?>,
-    //                 jo_id:data_jo_id
-    //             },
-    //             success: function(data) {
-    //                 window.location.replace("<?= base_url("index.php/home/gaji")?>");    
-    //             }
-    //         });   
-    //     }     
-    // }
 </script>

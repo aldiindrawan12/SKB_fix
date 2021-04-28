@@ -20,6 +20,10 @@
                             <?php } ?>
                         </select>
                     </div>
+                    <div class="col-md-3 col-md-offset-4 mb-4">
+                        <label for="tanggal_jo" class="form-label font-weight-bold">Tanggal</label>
+                        <input autocomplete="off" type="text" class="form-control" id="tanggal_jo" name="tanggal_jo" required onclick="tanggal_berlaku(this)">
+                    </div>
                     <div class="table-responsive">
                         <table class="table table-bordered" id="Table-Pilih-Rute-Paketan" width="100%" cellspacing="0">
                             <thead>

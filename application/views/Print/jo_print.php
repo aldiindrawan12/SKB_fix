@@ -56,46 +56,34 @@
                                 <td width="30%">Rute</td>
                                 <td width="5%">:</td>
                                 <td>
-                                    <table class="table table-bordered small">
-                                        <thead>
-                                            <tr>
-                                                <th>No Rute</th>
-                                                <th>Dari</th>
-                                                <th>Ke</th>
-                                                <th>Muatan</th>
-                                            </tr>
-                                        </thead>
+                                    <table class="small">
                                         <tbody>
                                             <?php if($tipe_jo=="paketan"){?>
                                                 <?php $data_rute = json_decode($paketan["paketan_data_rute"],true);?>
                                                 <?php for($i=0;$i<count($data_rute);$i++){?>
                                                     <tr>
-                                                        <td>Rute ke-<?= $i+1?></td>
                                                         <td><?= $data_rute[$i]["dari"]?></td>
-                                                        <td><?= $data_rute[$i]["ke"]?></td>
-                                                        <td><?= $data_rute[$i]["muatan"]?></td>
+                                                        <td>-<?= $data_rute[$i]["ke"]?></td>
+                                                        <td> (<?= $data_rute[$i]["muatan"]?>)</td>
                                                     </tr>
                                                 <?php }?>
                                             <?php }else{?>
                                                 <?php if($kosongan != 0){?>
                                                     <tr>
-                                                        <td>1</td>
                                                         <td><?= $kosongan["kosongan_dari"]?></td>
-                                                        <td><?= $kosongan["kosongan_ke"]?></td>
-                                                        <td>Kosongan</td>
+                                                        <td>-<?= $kosongan["kosongan_ke"]?></td>
+                                                        <td> (Kosongan)</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>2</td>
                                                         <td><?= $data["asal"]?></td>
-                                                        <td><?= $data["tujuan"]?></td>
-                                                        <td><?= $data["muatan"]?></td>
+                                                        <td>-<?= $data["tujuan"]?></td>
+                                                        <td> (<?= $data["muatan"]?>)</td>
                                                     </tr>
                                                 <?php }else{?>
                                                     <tr>
-                                                        <td>1</td>
                                                         <td><?= $data["asal"]?></td>
-                                                        <td><?= $data["tujuan"]?></td>
-                                                        <td><?= $data["muatan"]?></td>
+                                                        <td>-<?= $data["tujuan"]?></td>
+                                                        <td> (<?= $data["muatan"]?>)</td>
                                                     </tr>
                                                 <?php }?>
                                             <?php }?>

@@ -2804,6 +2804,8 @@
             var merk = '<?= $this->session->flashdata('status-add-merk'); ?>';
             var update_merk = '<?= $this->session->flashdata('status-update-merk'); ?>';
             var delete_merk = '<?= $this->session->flashdata('status-delete-merk'); ?>';
+            var supir_jo = '<?= $this->session->flashdata('supir_jo'); ?>';
+            var mobil_jo = '<?= $this->session->flashdata('mobil_jo'); ?>';
             if(login == "Berhasil"){
                 Swal.fire({
                         title: "Berhasil Login",
@@ -2818,6 +2820,24 @@
                         title: "Berhasil",
                         icon: "success",
                         text: "Menambahkan akun baru",
+                        type: "success",
+                        timer: 2000
+                    });
+            }
+            if(supir_jo == "Berhasil"){
+                Swal.fire({
+                        title: "Berhasil",
+                        icon: "success",
+                        text: "Mengubah Supir",
+                        type: "success",
+                        timer: 2000
+                    });
+            }
+            if(mobil_jo == "Berhasil"){
+                Swal.fire({
+                        title: "Berhasil",
+                        icon: "success",
+                        text: "Mengubah Mobil",
                         type: "success",
                         timer: 2000
                     });

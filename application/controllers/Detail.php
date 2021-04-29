@@ -13,6 +13,16 @@ class Detail extends CI_Controller {
     // end contruck
 
     //fungsi untuk Detail JO dan invoice
+        public function updatesupirjo($jo_id,$supir_id_old){
+            $this->model_detail->updatesupirjo($jo_id,$this->input->post("Supir"),$supir_id_old);
+    		$this->session->set_flashdata('supir_jo', 'Berhasil');
+            redirect(base_url("index.php/detail/detail_jo/".$jo_id."/JO"));
+        }
+        public function updatemobiljo($jo_id,$mobil_no_old){
+            $this->model_detail->updatemobiljo($jo_id,$this->input->post("Mobil"),str_replace("%20"," ",$mobil_no_old));
+    		$this->session->set_flashdata('mobil_jo', 'Berhasil');
+            redirect(base_url("index.php/detail/detail_jo/".$jo_id."/JO"));
+        }
         public function detail_jo($Jo_id,$asal)
         {
             if(!$_SESSION["user"]){
@@ -23,6 +33,8 @@ class Detail extends CI_Controller {
             $data["customer"] = $this->model_home->getcustomerbyid($data["jo"]["customer_id"]);
             $data["mobil"] = $this->model_home->getmobilbyid($data["jo"]["mobil_no"]);
             $data["supir"] = $this->model_home->getsupirbyid($data["jo"]["supir_id"]);
+            $data["all_supir"] = $this->model_detail->getsupir();
+            $data["all_mobil"] = $this->model_detail->getmobil($data["mobil"]["mobil_jenis"]);
             if($asal=="JO"){
                 $data["page"] = "JO_page";
                 $data["collapse_group"] = "Perintah_Kerja";

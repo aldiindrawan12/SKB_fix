@@ -188,4 +188,40 @@ class Model_Detail extends CI_model
         $this->db->where("mobil_no",str_replace("%20"," ",$mobil_no));
         $this->db->update("skb_mobil");
     }
+
+    //fungsi untuk update supir dan mobil JO
+    public function getsupir(){
+        return $this->db->get_where("skb_supir",array("status_jalan"=>"Tidak Jalan","status_hapus"=>"NO","status_aktif"=>"Aktif","validasi"=>"ACC"))->result_array();
+    }
+    public function getmobil($mobil_jenis){
+        return $this->db->get_where("skb_mobil",array("status_jalan"=>"Tidak Jalan","status_hapus"=>"NO","validasi"=>"ACC","mobil_jenis"=>$mobil_jenis))->result_array();
+    }
+    public function updatesupirjo($jo_id,$supir_id,$supir_id_old){
+        $this->db->where("Jo_id",$jo_id);
+        $this->db->set("supir_id",$supir_id);
+        $this->db->update("skb_job_order");
+
+        $this->db->where("supir_id",$supir_id);
+        $this->db->set("status_jalan","Jalan");
+        $this->db->update("skb_supir");
+
+        $this->db->where("supir_id",$supir_id_old);
+        $this->db->set("status_jalan","Tidak Jalan");
+        $this->db->update("skb_supir");
+    }
+
+    public function updatemobiljo($jo_id,$mobil_no,$mobil_no_old){
+        $this->db->where("Jo_id",$jo_id);
+        $this->db->set("mobil_no",$mobil_no);
+        $this->db->update("skb_job_order");
+
+        $this->db->where("mobil_no",$mobil_no);
+        $this->db->set("status_jalan","Jalan");
+        $this->db->update("skb_mobil");
+
+        $this->db->where("mobil_no",$mobil_no_old);
+        $this->db->set("status_jalan","Tidak Jalan");
+        $this->db->update("skb_mobil");
+    }
+    //end fungsi untuk update supir dan mobil JO
 }

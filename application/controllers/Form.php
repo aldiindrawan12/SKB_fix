@@ -164,8 +164,15 @@ class Form extends CI_Controller {
                 $kosongan_id = $kosongan["kosongan_id"];
                 $uang_kosongan = $kosongan["kosongan_uang"];
             }
+            //generate jo id
+            $new_jo_id = "";
+            for($i=0;$i<7-strlen(max($isi_jo_id)+1);$i++){
+                $new_jo_id .= "0";
+            }
+            $new_jo_id = $new_jo_id.(max($isi_jo_id)+1);
+            //end generate jo id
             $data["data"]=array(
-                "Jo_id"=>max($isi_jo_id)+1,
+                "Jo_id"=>$new_jo_id,
                 "mobil_no"=>$this->input->post("Kendaraan"),
                 "supir_id"=>$this->input->post("Supir"),
                 "muatan"=>$this->input->post("Muatan"),
@@ -186,7 +193,7 @@ class Form extends CI_Controller {
                 "uang_kosongan" =>$uang_kosongan
             );
             $this->model_form->insert_JO($data["data"]);
-            $data["jo_id"] = max($isi_jo_id)+1;
+            $data["jo_id"] = $new_jo_id;
             $data["asal"] = "insert";
             $data["tipe_jo"] = "reguler";
             $data["kosongan"] = $this->model_detail->getkosonganbyid($data["data"]["kosongan_id"]);
@@ -200,8 +207,15 @@ class Form extends CI_Controller {
             for($i=0;$i<count($jo_id);$i++){
                 $isi_jo_id[] = $jo_id[$i]["Jo_id"];
             }
+            //generate jo id
+            $new_jo_id = "";
+            for($i=0;$i<7-strlen(max($isi_jo_id)+1);$i++){
+                $new_jo_id .= "0";
+            }
+            $new_jo_id = $new_jo_id.(max($isi_jo_id)+1);
+            //end generate jo id
             $data["data"]=array(
-                "Jo_id"=>max($isi_jo_id)+1,
+                "Jo_id"=>$new_jo_id,
                 "mobil_no"=>$this->input->post("Kendaraan"),
                 "supir_id"=>$this->input->post("Supir"),
                 "uang_jalan"=>str_replace(".","",$this->input->post("Uang")),
@@ -219,7 +233,7 @@ class Form extends CI_Controller {
                 "uang_kosongan"=>0
             );
             $this->model_form->insert_JO($data["data"]);
-            $data["jo_id"] = max($isi_jo_id)+1;
+            $data["jo_id"] = $new_jo_id;
             $data["asal"] = "insert";
             $data["tipe_jo"] = "paketan";
             $data["paketan"] = $this->model_form->getpaketanbyid($this->input->post("paketan_id"));

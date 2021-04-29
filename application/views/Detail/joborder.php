@@ -38,6 +38,9 @@
                             <?php }else{?>
                                 <p class="font-size-sm font-weight-bold">Reguler</p>
                             <?php }?>
+                            <hr>
+                            <p class="font-weight-bold badge badge-primary">Operator</p>
+                            <p class="font-size-sm font-weight-bold"><?= $jo["user"] ?></p>
                         </td>
                         <td class="font-weight-bold" style="width: 25%;">Rute Muatan</td>
                         <td colspan=3>

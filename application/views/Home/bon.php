@@ -74,6 +74,10 @@
                         <td class="font-weight-bold" style="width: 20%;">Keterangan</td>
                         <td name="keterangan"></td>
                     </tr>
+                    <tr>
+                        <td class="font-weight-bold" style="width: 20%;">Operator</td>
+                        <td name="operator"></td>
+                    </tr>
                 </tbody>
             </table>
             </div>

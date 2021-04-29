@@ -58,6 +58,11 @@
                                 <td width="5%">:</td>
                                 <td><?= $invoice[0]["invoice_keterangan"]?></td>
                             </tr>
+                            <tr>
+                                <td width="35%">Operator</td>
+                                <td width="5%">:</td>
+                                <td><?= $invoice[0]["user_invoice"]?></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

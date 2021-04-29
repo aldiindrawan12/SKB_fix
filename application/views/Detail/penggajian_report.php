@@ -37,6 +37,7 @@
                     <thead>
                         <tr>
                             <th class="text-center" width="5%" scope="col">No Pembayaran</th>
+                            <th class="text-center" width="15%" scope="col">Operator</th>
                             <th class="text-center" width="10%" scope="col">Tgl Pembayaran</th>
                             <th class="text-center" width="13%" scope="col">Nominal</th>
                             <th class="text-center" width="10%" scope="col">Bonus</th>
@@ -57,6 +58,7 @@
                         ?>
                         <tr>
                             <td><?= $value["pembayaran_upah_id"]?></td>
+                            <td><?= $value["user"]?></td>
                             <td><?= change_tanggal($value["pembayaran_upah_tanggal"])?></td>
                             <td>Rp.<?= number_format($value["pembayaran_upah_nominal"],2,",",".")?></td>
                             <td>Rp.<?= number_format($value["pembayaran_upah_bonus"],2,",",".")?></td>
@@ -66,7 +68,7 @@
                         </tr>
                     <?php } ?>
                         <tr>
-                            <td colspan=2>Grand Total</td>
+                            <td colspan=3>Grand Total</td>
                             <td>Rp.<?= number_format($nominal,2,',','.')?></td>
                             <td>Rp.<?= number_format($bonus,2,',','.')?></td>
                             <td>Rp.<?= number_format($bon,2,',','.')?></td>

@@ -1274,7 +1274,7 @@
                                 var tanggal = data_tanggal[2]+"-"+data_tanggal[1]+"-"+data_tanggal[0]+" "+date_time[1];
                                 $('td[name="tanggal"]').text(tanggal); //set value
                                 $('td[name="keterangan"]').text(data["bon_keterangan"]); //set value
-                                // alert(data["supir_id"]+data["supir_name"]+data["bon_id"]+data["bon_jenis"]+data["bon_nominal"]);
+                                $('td[name="operator"]').text(data["user"]); //set value
                             }
                         });
                     });

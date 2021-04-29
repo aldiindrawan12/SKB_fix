@@ -102,7 +102,8 @@ class Form extends CI_Controller {
                 "grand_total"=>$this->input->post("invoice_grand_total"),
                 "batas_pembayaran"=>$this->input->post("invoice_payment"),
                 "invoice_keterangan"=>$this->input->post("invoice_keterangan"),
-                "status_bayar"=>"Belum Lunas"
+                "status_bayar"=>"Belum Lunas",
+                "user_invoice"=>$_SESSION["user"]
             );
             $data_jo = explode(",",$this->input->post("data_jo"));
             $this->model_form->insert_invoice($data,$data_jo);
@@ -190,7 +191,8 @@ class Form extends CI_Controller {
                 "tagihan"=>str_replace(".","",$this->input->post("Tagihan")),
                 "kosongan_id"=>$kosongan_id,
                 "paketan_id"=>0,
-                "uang_kosongan" =>$uang_kosongan
+                "uang_kosongan" =>$uang_kosongan,
+                "user"=>$_SESSION["user"]
             );
             $this->model_form->insert_JO($data["data"]);
             $data["jo_id"] = $new_jo_id;
@@ -230,7 +232,8 @@ class Form extends CI_Controller {
                 "tagihan"=>str_replace(".","",$this->input->post("Tagihan")),
                 "paketan_id"=>$this->input->post("paketan_id"),
                 "kosongan_id"=>0,
-                "uang_kosongan"=>0
+                "uang_kosongan"=>0,
+                "user"=>$_SESSION["user"]
             );
             $this->model_form->insert_JO($data["data"]);
             $data["jo_id"] = $new_jo_id;
@@ -256,7 +259,8 @@ class Form extends CI_Controller {
                 "bon_jenis"=>$this->input->post("Jenis"),
                 "bon_nominal"=>str_replace(".","",$this->input->post("Nominal")),
                 "bon_keterangan"=>$this->input->post("Keterangan"),
-                "bon_tanggal"=>date("Y-m-d H:i:s")
+                "bon_tanggal"=>date("Y-m-d H:i:s"),
+                "user"=>$_SESSION["user"]
             );
             $data["bon_id"] = max($isi_bon_id)+1;
             $this->model_form->insert_bon($data["data"]);

@@ -67,22 +67,8 @@ class Model_Detail extends CI_model
         $this->db->where("status_upah","Belum Dibayar");
         $this->db->where("upah!=","0");
         $this->db->join("skb_supir","skb_supir.supir_id=skb_job_order.supir_id","left");
-        return $this->db->get_where("skb_job_order",array("skb_job_order.supir_id"=>$supir_id))->result_array();
+        return $this->db->get_where("skb_job_order",array("skb_job_order.supir_id"=>$supir_id,"skb_job_order.status"=>"Sampai Tujuan"))->result_array();
     }
-
-    // public function getjobbysupirbayar($supir_id){ //JO by supir upah lunas
-    //     $this->db->where("status_upah","Sudah Dibayar");
-    //     $this->db->where("upah!=","0");
-    //     $this->db->join("skb_supir","skb_supir.supir_id=skb_job_order.supir_id","left");
-    //     return $this->db->get_where("skb_job_order",array("skb_job_order.supir_id"=>$supir_id))->result_array();
-    // }
-
-    // public function getjobbysupirbelumbayar($supir_id){ //JO by supir updah belum lunas
-    //     $this->db->where("status_upah","Belum Dibayar");
-    //     $this->db->where("upah!=","0");
-    //     $this->db->join("skb_supir","skb_supir.supir_id=skb_job_order.supir_id","left");
-    //     return $this->db->get_where("skb_job_order",array("skb_job_order.supir_id"=>$supir_id))->result_array();
-    // }
 
     public function getpembayaranupah($supir_id){
         $this->db->join("skb_supir","skb_supir.supir_id=skb_pembayaran_upah.supir_id","left");
@@ -139,7 +125,8 @@ class Model_Detail extends CI_model
             "pembayaran_upah_bonus"=>$bonus,
             "pembayaran_upah_bon"=>$supir_kasbon,
             "pembayaran_upah_total"=>$upah,
-            "pembayaran_upah_tanggal"=>date("Y-m-d H:i:s")
+            "pembayaran_upah_tanggal"=>date("Y-m-d H:i:s"),
+            "user"=>$_SESSION["user"]
         );
         $this->db->insert("skb_pembayaran_upah",$data);
         //end insert pembayaran upah 

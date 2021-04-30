@@ -630,40 +630,40 @@ class Form extends CI_Controller {
             echo $kosongan_id;
         }
 
-        public function accsupir(){
+        public function accsupir($validasi){
             $supir_id = $this->input->get("id");
-            $this->model_form->accsupir($supir_id);
+            $this->model_form->accsupir($supir_id,$validasi);
             echo $supir_id;
         }
         
-        public function acckosongan(){
+        public function acckosongan($validasi){
             $kosongan_id = $this->input->get("id");
-            $this->model_form->acckosongan($kosongan_id);
+            $this->model_form->acckosongan($kosongan_id,$validasi);
             echo $kosongan_id;
         }
-        public function acccustomer(){
+        public function acccustomer($validasi){
             $customer_id = $this->input->get("id");
-            $this->model_form->acccustomer($customer_id);
+            $this->model_form->acccustomer($customer_id,$validasi);
             echo $customer_id;
         }
-        public function acctruck(){
+        public function acctruck($validasi){
             $truck_id = $this->input->get("id");
-            $this->model_form->acctruck($truck_id);
+            $this->model_form->acctruck($truck_id,$validasi);
             echo $truck_id;
         }
-        public function accrute(){
+        public function accrute($validasi){
             $rute_id = $this->input->get("id");
-            $this->model_form->accrute($rute_id);
+            $this->model_form->accrute($rute_id,$validasi);
             echo $rute_id;
         }
-        public function accpaketan(){
+        public function accpaketan($validasi){
             $paketan_id = $this->input->get("id");
-            $this->model_form->accpaketan($paketan_id);
+            $this->model_form->accpaketan($paketan_id,$validasi);
             echo $paketan_id;
         }
-        public function accmerk(){
+        public function accmerk($validasi){
             $merk_id = $this->input->get("id");
-            $this->model_form->accmerk($merk_id);
+            $this->model_form->accmerk($merk_id,$validasi);
             echo $merk_id;
         }
         public function deletecustomer(){

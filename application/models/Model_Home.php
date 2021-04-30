@@ -343,10 +343,10 @@ class Model_Home extends CI_model
         public function count_all_supir($asal)
         {
             $this->db->where("status_hapus","NO");
-            if(($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User") && $asal=="viewsupir"){
-                $this->db->where("validasi","Pending");
-            }else{
+            if($asal!="viewsupir"){
                 $this->db->where("validasi","ACC");
+            }else if(($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User") && $asal=="viewsupir"){
+                $this->db->where("validasi","Pending");
             }
             return $this->db->count_all_results("skb_supir");
         }
@@ -356,10 +356,10 @@ class Model_Home extends CI_model
             // $this->db->like('supir_id', $search);
             $this->db->like('supir_name', $search);
             $this->db->where("status_hapus","NO");
-            if(($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User") && $asal=="viewsupir"){
-                $this->db->where("validasi","Pending");
-            }else{
+            if($asal!="viewsupir"){
                 $this->db->where("validasi","ACC");
+            }else if(($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User") && $asal=="viewsupir"){
+                $this->db->where("validasi","Pending");
             }
             // $this->db->or_like('status_jalan', $search);
             $this->db->order_by($order_field, $order_ascdesc);
@@ -372,10 +372,10 @@ class Model_Home extends CI_model
             // $this->db->like('supir_id', $search);
             $this->db->like('supir_name', $search);
             $this->db->where("status_hapus","NO");
-            if(($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User") && $asal=="viewsupir"){
-                $this->db->where("validasi","Pending");
-            }else{
+            if($asal!="viewsupir"){
                 $this->db->where("validasi","ACC");
+            }else if(($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User") && $asal=="viewsupir"){
+                $this->db->where("validasi","Pending");
             }
             // $this->db->or_like('status_jalan', $search);
             return $this->db->get('skb_supir')->num_rows();
@@ -703,7 +703,7 @@ class Model_Home extends CI_model
             $this->db->where("status_hapus","NO");
             if($asal=="addtruck"){
                 $this->db->where("validasi","ACC");
-            }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewtruck"){
+            }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewmerk"){
                 $this->db->where("validasi","Pending");
             }
             return $this->db->count_all_results("skb_merk_kendaraan");
@@ -724,7 +724,7 @@ class Model_Home extends CI_model
                     if($hasil[$i]["status_hapus"]=="NO" && $hasil[$i]["validasi"]=="ACC"){
                         $hasil_fix[] = $hasil[$i];
                     }
-                }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewtruck"){
+                }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewmerk"){
                     if($hasil[$i]["status_hapus"]=="NO" && $hasil[$i]["validasi"]=="Pending"){
                         $hasil_fix[] = $hasil[$i];
                     }
@@ -749,7 +749,7 @@ class Model_Home extends CI_model
                         if($hasil_data[$i]["status_hapus"]=="NO" && $hasil_data[$i]["validasi"]=="ACC"){
                             $hasil_fix +=1;
                         }
-                    }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewtruck"){
+                    }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewmerk"){
                         if($hasil_data[$i]["status_hapus"]=="NO" && $hasil_data[$i]["validasi"]=="Pending"){
                             $hasil_fix +=1;
                         }

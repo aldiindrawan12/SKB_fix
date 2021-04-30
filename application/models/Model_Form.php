@@ -64,44 +64,44 @@ class Model_Form extends CI_model
         return $this->db->insert("skb_job_order", $data);
     }
 
-    public function accsupir($supir_id){
-        $this->db->set("validasi","ACC");
+    public function accsupir($supir_id,$validasi){
+        $this->db->set("validasi",$validasi);
         $this->db->where("supir_id",$supir_id);
         $this->db->update("skb_supir");
     }
 
-    public function acckosongan($kosongan_id){
-        $this->db->set("validasi","ACC");
+    public function acckosongan($kosongan_id,$validasi){
+        $this->db->set("validasi",$validasi);
         $this->db->where("kosongan_id",$kosongan_id);
         $this->db->update("skb_kosongan");
     }
 
-    public function acccustomer($customer_id){
-        $this->db->set("validasi","ACC");
+    public function acccustomer($customer_id,$validasi){
+        $this->db->set("validasi",$validasi);
         $this->db->where("customer_id",$customer_id);
         $this->db->update("skb_customer");
     }
 
-    public function acctruck($truck_id){
-        $this->db->set("validasi","ACC");
+    public function acctruck($truck_id,$validasi){
+        $this->db->set("validasi",$validasi);
         $this->db->where("mobil_no",$truck_id);
         $this->db->update("skb_mobil");
     }
 
-    public function accrute($rute_id){
-        $this->db->set("validasi_rute","ACC");
+    public function accrute($rute_id,$validasi){
+        $this->db->set("validasi_rute",$validasi);
         $this->db->where("rute_id",$rute_id);
         $this->db->update("skb_rute");
     }
 
-    public function accpaketan($paketan_id){
-        $this->db->set("validasi_paketan","ACC");
+    public function accpaketan($paketan_id,$validasi){
+        $this->db->set("validasi_paketan",$validasi);
         $this->db->where("paketan_id",$paketan_id);
         $this->db->update("skb_paketan");
     }
 
-    public function accmerk($merk_id){
-        $this->db->set("validasi","ACC");
+    public function accmerk($merk_id,$validasi){
+        $this->db->set("validasi",$validasi);
         $this->db->where("merk_id",$merk_id);
         $this->db->update("skb_merk_kendaraan");
     }

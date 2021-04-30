@@ -225,7 +225,8 @@
                             icon: "question",
                             text: 'Yakin anda ingin ACC Data Kendaraan ini?',
                             showDenyButton: true,
-                            denyButtonText: `Batal`,
+                            showCancelButton:true,
+                            denyButtonText: `Tolak`,
                             confirmButtonText: 'ACC',
                             denyButtonColor: '#808080',
                             confirmButtonColor: '#4BB543',
@@ -233,7 +234,7 @@
                             if (result.isConfirmed) {
                                 $.ajax({
                                     type: "GET",
-                                    url: "<?php echo base_url('index.php/form/acctruck') ?>",
+                                    url: "<?php echo base_url('index.php/form/acctruck/ACC') ?>",
                                     dataType: "text",
                                     data: {
                                         id: pk
@@ -242,7 +243,18 @@
                                         location.reload();
                                     }
                                 });
-                            }else{
+                            }else if(result.isDenied){
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/acctruck/Ditolak') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
                             }
                         })
                     });
@@ -296,7 +308,10 @@
                     },
                     {
                         "data": "validasi",
-                        className: 'text-center'
+                        render: function(data, type, row) {
+                            let html = "<span class='small'>Tambah = "+data+"<br>Edit = "+row['validasi_edit']+"<br>Hapus = "+row['validasi_delete']+"</span>";
+                            return html;
+                        }
                     },
                     {
                         "data": "merk_id",
@@ -304,13 +319,15 @@
                         "orderable": false,
                         render: function(data, type, row) {
                             var role_user = "<?=$_SESSION['role']?>";
-                            if(role_user!="Supervisor" && role_user!="Super User"){
+                            if(role_user!="Supervisor" && role_user!="Super User" && row["validasi"]!="Pending" && row["validasi"]!="Ditolak"){
                                 let html ="<a class='btn btn-light btn-update-merk' href='javascript:void(0)' data-toggle='modal' data-target='#popup-update-merk' data-pk='"+data+"'><i class='fas fa-pen-square'></i></a> || "+
                                 "<a class='btn btn-light btn-delete-merk' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-trash-alt'></i></a>";
                                 return html;
-                            }else{
-                                let html ="<a class='btn btn-light btn-acc-merk' href='javascript:void(0)' data-pk='"+data+"'>ACC <i class='fas fa-check-circle'></i></a>";
+                            }else if(role_user=="Supervisor" || role_user=="Super User"){
+                                let html ="<a class='btn btn-light small btn-acc-merk' href='javascript:void(0)' data-pk='"+data+"'>ACC <i class='fas fa-check-circle'></i></a>";
                                 return html;
+                            }else{
+                                return "";
                             }
                         }
                     }
@@ -322,6 +339,7 @@
                             title: 'Hapus Merk',
                             text:'Yakin anda akan menghapus data Merk ini?',
                             showDenyButton: true,
+                            showCancelButton:true,
                             denyButtonText: `Batal`,
                             denyButtonColor: '#808080',
                             confirmButtonText: 'Hapus',
@@ -368,7 +386,8 @@
                             icon: "question",
                             text: 'Yakin anda ingin ACC Data Merk ini?',
                             showDenyButton: true,
-                            denyButtonText: `Batal`,
+                            showCancelButton:true,
+                            denyButtonText: `Tolak`,
                             confirmButtonText: 'ACC',
                             denyButtonColor: '#808080',
                             confirmButtonColor: '#4BB543',
@@ -376,7 +395,7 @@
                             if (result.isConfirmed) {
                                 $.ajax({
                                     type: "GET",
-                                    url: "<?php echo base_url('index.php/form/accmerk') ?>",
+                                    url: "<?php echo base_url('index.php/form/accmerk/ACC') ?>",
                                     dataType: "text",
                                     data: {
                                         id: pk
@@ -385,7 +404,18 @@
                                         location.reload();
                                     }
                                 });
-                            }else{
+                            }else if(result.isDenied){
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/accmerk/Ditolak') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
                             }
                         })
                     });
@@ -1371,9 +1401,6 @@
                                 $("#customer_alamat_update").val(data["customer_alamat"]);
                                 $("#customer_kontak_person_update").val(data["customer_kontak_person"]);
                                 $("#customer_telp_update").val(data["customer_telp"]);
-                                // $("#customer_bank_update").val(data["customer_bank"]);
-                                // $("#customer_rekening_update").val(data["customer_rekening"]);
-                                // $("#customer_AN_update").val(data["customer_AN"]);
                                 $("#customer_keterangan_update").val(data["customer_keterangan"]);
                             }
                         });
@@ -1393,9 +1420,6 @@
                                 $('td[name="customer_kontak_person"]').text(data["customer_kontak_person"]); //set value
                                 $('td[name="customer_telp"]').text(data["customer_telp"]); //set value
                                 $('td[name="customer_keterangan"]').text(data["customer_keterangan"]); //set value
-                                // $('td[name="customer_bank"]').text(data["customer_bank"]); //set value
-                                // $('td[name="customer_rekening"]').text(data["customer_rekening"]); //set value
-                                // $('td[name="customer_AN"]').text(data["customer_AN"]); //set value
                             }
                         });
                     }); 
@@ -1406,6 +1430,7 @@
                             title: 'Hapus Customer',
                             text:'Yakin anda ingin menghapus customer ini?',
                             showDenyButton: true,
+                            showCancelButton:true,
                             denyButtonText: `Batal`,
                             confirmButtonText: 'Hapus',
                             denyButtonColor: '#808080',
@@ -1434,7 +1459,8 @@
                             icon: "question",
                             text: 'Yakin anda ingin ACC Data Customer ini?',
                             showDenyButton: true,
-                            denyButtonText: `Batal`,
+                            showCancelButton:true,
+                            denyButtonText: `Tolak`,
                             confirmButtonText: 'ACC',
                             denyButtonColor: '#808080',
                             confirmButtonColor: '#4BB543',
@@ -1442,7 +1468,7 @@
                             if (result.isConfirmed) {
                                 $.ajax({
                                     type: "GET",
-                                    url: "<?php echo base_url('index.php/form/acccustomer') ?>",
+                                    url: "<?php echo base_url('index.php/form/acccustomer/ACC') ?>",
                                     dataType: "text",
                                     data: {
                                         id: pk
@@ -1451,7 +1477,18 @@
                                         location.reload();
                                     }
                                 });
-                            }else{
+                            }else if(result.isDenied){
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/acccustomer/Ditolak') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
                             }
                         })
                     });
@@ -1759,7 +1796,8 @@
                             icon: "question",
                             text: 'Yakin anda ingin ACC Data Driver ini?',
                             showDenyButton: true,
-                            denyButtonText: `Batal`,
+                            showCancelButton:true,
+                            denyButtonText: `Tolak`,
                             confirmButtonText: 'ACC',
                             denyButtonColor: '#808080',
                             confirmButtonColor: '#4BB543',
@@ -1767,7 +1805,7 @@
                             if (result.isConfirmed) {
                                 $.ajax({
                                     type: "GET",
-                                    url: "<?php echo base_url('index.php/form/accsupir') ?>",
+                                    url: "<?php echo base_url('index.php/form/accsupir/ACC') ?>",
                                     dataType: "text",
                                     data: {
                                         id: pk
@@ -1776,7 +1814,18 @@
                                         location.reload();
                                     }
                                 });
-                            }else{
+                            }else if(result.isDenied){
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/accsupir/Ditolak') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
                             }
                         })
                     });
@@ -2499,7 +2548,8 @@
                             icon: "question",
                             text: 'Yakin anda ingin ACC Data Rute dan Muatan ini?',
                             showDenyButton: true,
-                            denyButtonText: `Batal`,
+                            showCancelButton:true,
+                            denyButtonText: `Tolak`,
                             confirmButtonText: 'ACC',
                             denyButtonColor: '#808080',
                             confirmButtonColor: '#4BB543',
@@ -2507,7 +2557,7 @@
                             if (result.isConfirmed) {
                                 $.ajax({
                                     type: "GET",
-                                    url: "<?php echo base_url('index.php/form/accrute') ?>",
+                                    url: "<?php echo base_url('index.php/form/accrute/ACC') ?>",
                                     dataType: "text",
                                     data: {
                                         id: pk
@@ -2516,7 +2566,18 @@
                                         location.reload();
                                     }
                                 });
-                            }else{
+                            }else if(result.isDenied){
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/accrute/Ditolak') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
                             }
                         })
                     });
@@ -2755,7 +2816,8 @@
                             icon: "question",
                             text: 'Yakin anda ingin ACC Data Rute Paketan ini?',
                             showDenyButton: true,
-                            denyButtonText: `Batal`,
+                            showCancelButton: true,
+                            denyButtonText: `Tolak`,
                             confirmButtonText: 'ACC',
                             denyButtonColor: '#808080',
                             confirmButtonColor: '#4BB543',
@@ -2763,7 +2825,7 @@
                             if (result.isConfirmed) {
                                 $.ajax({
                                     type: "GET",
-                                    url: "<?php echo base_url('index.php/form/accpaketan') ?>",
+                                    url: "<?php echo base_url('index.php/form/accpaketan/ACC') ?>",
                                     dataType: "text",
                                     data: {
                                         id: pk
@@ -2772,7 +2834,18 @@
                                         location.reload();
                                     }
                                 });
-                            }else{
+                            }else if(result.isDenied){
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/accpaketan/Ditolak') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
                             }
                         })
                     });
@@ -3504,7 +3577,8 @@
                             icon: "question",
                             text: 'Yakin anda ingin ACC Data Rute Kosongan ini?',
                             showDenyButton: true,
-                            denyButtonText: `Batal`,
+                            showCancelButton:true,
+                            denyButtonText: `Tolak`,
                             confirmButtonText: 'ACC',
                             denyButtonColor: '#808080',
                             confirmButtonColor: '#4BB543',
@@ -3512,7 +3586,7 @@
                             if (result.isConfirmed) {
                                 $.ajax({ //ajax ambil data bon
                                     type: "GET",
-                                    url: "<?php echo base_url('index.php/form/acckosongan') ?>",
+                                    url: "<?php echo base_url('index.php/form/acckosongan/ACC') ?>",
                                     dataType: "JSON",
                                     data: {
                                         id: pk
@@ -3521,7 +3595,18 @@
                                         location.reload();
                                     }
                                 });
-                            }else{
+                            }else if(result.isDenied){
+                                $.ajax({ //ajax ambil data bon
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/acckosongan/Ditolak') ?>",
+                                    dataType: "JSON",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) { //jika ambil data sukses
+                                        location.reload();
+                                    }
+                                });
                             }
                         })
                     });

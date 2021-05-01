@@ -312,8 +312,7 @@
                 jo_id:data_jo_id,
             },
             success: function(data) {
-                alert(data);
-                // window.location = "<?= base_url("index.php/home/gaji")?>";
+                window.location = "<?= base_url("index.php/home/gaji")?>";
             }
         });
     }

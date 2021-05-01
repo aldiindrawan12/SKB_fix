@@ -161,47 +161,6 @@ class Print_Berkas extends CI_Controller {
 			$data["asal"] = $asal;
 			$this->load->view("print/invoice_print",$data);
 		}
-		public function data_gaji($supir_id,$upah,$bonus){
-            if(!$_SESSION["user"]){
-    			$this->session->set_flashdata('status-login', 'False');
-                redirect(base_url());
-            }
-			$data["jo"] = $this->model_detail->getjobbysupir($supir_id);
-			$data["supir"] = $this->model_home->getsupirbyid($supir_id);
-			//update upah
-			$data_jo_id = [];
-			for($i=0;$i<count($data["jo"]);$i++){
-				$data_jo_id[] = $data["jo"][$i]["Jo_id"];
-			}
-			$data["data_jo_id"] = $data_jo_id;
-			$data["upah"] = $upah;
-			$data["bonus_tf"]=$bonus;
-			$this->load->view("print/penggajian_print",$data);
-		}
-		public function memo_tunai($supir_id,$gaji){
-            if(!$_SESSION["user"]){
-    			$this->session->set_flashdata('status-login', 'False');
-                redirect(base_url());
-            }
-			$data["gaji"] = $gaji;
-			$data["supir"] = $this->model_home->getsupirbyid($supir_id);
-			$this->load->view("print/memo_tunai_print",$data);
-		}
-		public function memo_tf($supir_id,$gaji){
-            if(!$_SESSION["user"]){
-    			$this->session->set_flashdata('status-login', 'False');
-                redirect(base_url());
-            }
-			$data["data"]=[
-				"Bank"=>$this->input->post("Bank"),
-				"Norek"=>$this->input->post("Norek"),
-				"AN"=>$this->input->post("AN"),
-				"Keterangan"=>$this->input->post("Keterangan")
-			];
-			$data["gaji"] = $gaji;
-			$data["supir"] = $this->model_home->getsupirbyid($supir_id);
-			$this->load->view("print/memo_tf_print",$data);
-		}
 		public function uang_jalan($jo_id){
             if(!$_SESSION["user"]){
     			$this->session->set_flashdata('status-login', 'False');

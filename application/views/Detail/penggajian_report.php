@@ -59,7 +59,7 @@
                         ?>
                         <tr>
                             <td><?= $value["pembayaran_upah_id"]?></td>
-                            <td><?= $value["user"]?></td>
+                            <td><?= $value["user_upah"]?></td>
                             <td><?= change_tanggal($value["pembayaran_upah_tanggal"])?></td>
                             <td>Rp.<?= number_format($value["pembayaran_upah_nominal"],2,",",".")?></td>
                             <td>Rp.<?= number_format($value["pembayaran_upah_bonus"],2,",",".")?></td>

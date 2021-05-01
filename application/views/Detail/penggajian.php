@@ -201,59 +201,59 @@
 <!-- end memo tf -->
 
 <!-- memo tunai -->
-<div class="container" style="display:none">
-    <div class="w-50" id="cetak_tunai">
-        <div class="text-center">
-            <span class="h3">Memo Tunai</span>
-            <hr>
-        </div>
-        <div>
-            <div class="table-responsive">
-                <table class="" id="" width="100%" cellspacing="0">
-                    <tbody>
-                        <tr>
-                            <td colspan=3>Bandar Lampung,<span id="tunai_tanggal"></span></td>
-                        </tr>
-                        <tr>
-                            <td width="30%">Telah Terima Dari</td>
-                            <td width="5%">:</td>
-                            <td>Sumber Berkah Jaya</td>
-                        </tr>
-                        <tr>
-                            <td width="30%">Sebesar</td>
-                            <td width="5%">:</td>
-                            <td>Rp.<span id="tunai_gaji"></span></td>
-                        </tr>
-                        <tr>
-                            <td width="30%">Untuk</td>
-                            <td width="5%">:</td>
-                            <td>Pembayaran Gaji/Upah tunai</td>
-                        </tr>
-                        <tr>
-                            <td colspan=3><hr></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table width="100%">
-                    <tbody>
-                        <tr class="text-center">
-                            <td width="25%">Mengetahui,</td>
-                            <td width="25%">Menyetujui,</td>
-                            <td width="25%">Kasir,</td>
-                            <td width="25%" >Supir</td>
-                        </tr>
-                        <tr class="text-center" style="height:200px">
-                            <td width="25%">(...............)</td>
-                            <td width="25%">(...............)</td>
-                            <td width="25%">(...............)</td>
-                            <td width="25%">(<span id="tunai_supir"></span>)</td>
-                        </tr>
-                    </tbody>
-                </table>
+    <div class="container" style="display:none">
+        <div class="w-50" id="cetak_tunai">
+            <div class="text-center">
+                <span class="h3">Memo Tunai</span>
+                <hr>
+            </div>
+            <div>
+                <div class="table-responsive">
+                    <table class="" id="" width="100%" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td colspan=3>Bandar Lampung,<span id="tunai_tanggal"></span></td>
+                            </tr>
+                            <tr>
+                                <td width="30%">Telah Terima Dari</td>
+                                <td width="5%">:</td>
+                                <td>Sumber Berkah Jaya</td>
+                            </tr>
+                            <tr>
+                                <td width="30%">Sebesar</td>
+                                <td width="5%">:</td>
+                                <td>Rp.<span id="tunai_gaji"></span></td>
+                            </tr>
+                            <tr>
+                                <td width="30%">Untuk</td>
+                                <td width="5%">:</td>
+                                <td>Pembayaran Gaji/Upah tunai</td>
+                            </tr>
+                            <tr>
+                                <td colspan=3><hr></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table width="100%">
+                        <tbody>
+                            <tr class="text-center">
+                                <td width="25%">Mengetahui,</td>
+                                <td width="25%">Menyetujui,</td>
+                                <td width="25%">Kasir,</td>
+                                <td width="25%" >Supir</td>
+                            </tr>
+                            <tr class="text-center" style="height:200px">
+                                <td width="25%">(...............)</td>
+                                <td width="25%">(...............)</td>
+                                <td width="25%">(...............)</td>
+                                <td width="25%">(<span id="tunai_supir"></span>)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
 <!-- end memo tunai -->
 <script>
     function isi_rekening(){
@@ -264,7 +264,14 @@
         var AN = $("#AN").val();
         var Norek = $("#Norek").val();
         var Keterangan = $("#Keterangan").val();
-        $("#tf_tanggal").text("tanggal");
+        var date = new Date();
+        var date_now = "";
+        if((date.getMonth()+1)<10){
+            date_now = date.getDate()+"-0"+(date.getMonth()+1)+"-"+date.getFullYear();
+        }else{
+            date_now = date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear();
+        }
+        $("#tf_tanggal").text(date_now);
         $("#tf_bank").text(Bank);
         $("#tf_norek").text(Norek);
         $("#tf_an").text(AN);
@@ -279,6 +286,14 @@
         $("#form-rekening").hide();
     }
     function print_memo_tunai(){
+        var date = new Date();
+        var date_now = "";
+        if((date.getMonth()+1)<10){
+            date_now = date.getDate()+"-0"+(date.getMonth()+1)+"-"+date.getFullYear();
+        }else{
+            date_now = date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear();
+        }
+        $("#tunai_tanggal").text(date_now);
         $("#tunai_supir").text("<?= $supir["supir_name"]?>");
         $("#tunai_gaji").text("<?= $pilih_jo["gaji_grand_total"]?>");
         var restorepage = document.body.innerHTML;

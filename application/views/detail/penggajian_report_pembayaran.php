@@ -24,6 +24,11 @@
                         <td width="5%">:</td>
                         <td><?= $supir["supir_name"]?></td>
                     </tr>
+                    <tr>
+                        <td width="25%">Nama Operator</td>
+                        <td width="5%">:</td>
+                        <td><?= $pembayaran_upah[0]["user_upah"]?></td>
+                    </tr>
                 </tbody>
             </table>
         </div>

@@ -447,7 +447,6 @@
                             title: 'Hapus Merk',
                             text:'Yakin anda akan menghapus data Merk ini?',
                             showDenyButton: true,
-                            showCancelButton:true,
                             denyButtonText: `Batal`,
                             denyButtonColor: '#808080',
                             confirmButtonText: 'Hapus',
@@ -1635,7 +1634,6 @@
                             title: 'Hapus Customer',
                             text:'Yakin anda ingin menghapus customer ini?',
                             showDenyButton: true,
-                            showCancelButton:true,
                             denyButtonText: `Batal`,
                             confirmButtonText: 'Hapus',
                             denyButtonColor: '#808080',
@@ -2807,7 +2805,7 @@
                         "data": "validasi_rute",
                         className: 'text-center',
                         render: function(data, type, row) {
-                            let html = "<span class='small'>Tambah = "+data+"<br>Edit = "+row['validasi_rute_edit']+"<br>Hapus = "+row['validasi_rute_delete']+"</span>";
+                            let html = "<span>Tambah = "+data+"<br>Edit = "+row['validasi_rute_edit']+"<br>Hapus = "+row['validasi_rute_delete']+"</span>";
                             return html;
                         }
                     },
@@ -2819,7 +2817,7 @@
                             var role_user = "<?=$_SESSION['role']?>";
                             let html = "";
                             if(role_user!="Supervisor" && role_user!="Super User" && row["validasi_rute"]!="Pending" && row["validasi_rute"]!="Ditolak"){
-                                if(row["validasi"]!="Pending" && row["validasi_edit"]!="Pending" && row["validasi_delete"]!="Pending"){
+                                if(row["validasi_rute"]!="Pending" && row["validasi_rute_edit"]!="Pending" && row["validasi_rute_delete"]!="Pending"){
                                     html += "<a class='btn btn-light btn-detail-rute' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
                                     "<a class='btn btn-light btn-update-rute' data-toggle='modal' data-target='#popup-update-rute' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
                                     "<a class='btn btn-light btn-delete-rute' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
@@ -3140,8 +3138,8 @@
                         render: function(data, type, row) {
                             var role_user = "<?=$_SESSION['role']?>";
                             let html = "";
-                            if(role_user!="Supervisor" && role_user!="Super User" && row["validasi_rute"]!="Pending" && row["validasi_rute"]!="Ditolak"){
-                                if(row["validasi"]!="Pending" && row["validasi_edit"]!="Pending" && row["validasi_delete"]!="Pending"){
+                            if(role_user!="Supervisor" && role_user!="Super User" && row["validasi_paketan"]!="Pending" && row["validasi_paketan"]!="Ditolak"){
+                                if(row["validasi_paketan"]!="Pending" && row["validasi_paketan_edit"]!="Pending" && row["validasi_paketan_delete"]!="Pending"){
                                     html += "<a class='btn btn-light btn-update-paketan' data-toggle='modal' data-target='#popup-update-paketan' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
                                     "<a class='btn btn-light btn-delete-paketan' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
                                     return html;
@@ -3553,9 +3551,9 @@
             }
             if(delete_supir == "Berhasil"){
                 Swal.fire({
-                        title: "Berhasil",
+                        title: "Berhasil Request Hapus",
                         icon: "success",
-                        text: "Menghapus data driver",
+                        text: "Silakan Menunggu Validasi Supervisor",
                         type: "error",
                         timer: 2000
                     });
@@ -3571,9 +3569,9 @@
             }
             if(delete_kendaraan == "Berhasil"){
                 Swal.fire({
-                        title: "Berhasil",
+                        title: "Berhasil Request Hapus",
                         icon: "success",
-                        text: "Menghapus data kendaraan",
+                        text: "Silakan Menunggu Validasi Supervisor",
                         type: "error",
                         timer: 2000
                     });
@@ -3598,18 +3596,18 @@
             }
             if(delete_satuan == "Berhasil"){
                 Swal.fire({
-                        title: "Berhasil",
+                        title: "Berhasil Request Hapus",
                         icon: "success",
-                        text: "Menghapus data rute dan muatan",
+                        text: "Silakan Menunggu Validasi Supervisor",
                         type: "error",
                         timer: 2000
                     });
             }
             if(delete_customer == "Berhasil"){
                 Swal.fire({
-                        title: "Berhasil",
+                        title: "Berhasil Request Hapus",
                         icon: "success",
-                        text: "Menghapus data customer",
+                        text: "Silakan Menunggu Validasi Supervisor",
                         type: "error",
                         timer: 2000
                     });
@@ -3634,9 +3632,9 @@
             }
             if(delete_merk == "Berhasil"){
                 Swal.fire({
-                        title: "Berhasil",
+                        title: "Berhasil Request Hapus",
                         icon: "success",
-                        text: "Menghapus data merk",
+                        text: "Silakan Menunggu Validasi Supervisor",
                         type: "error",
                         timer: 2000
                     });

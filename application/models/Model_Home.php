@@ -10,6 +10,7 @@ class Model_Home extends CI_model
 
         public function getmerk() //all truck
         {
+            // ,"validasi"=>"ACC","validasi_edit"=>"ACC","validasi_delete"=>"ACC"
             return $this->db->get_where("skb_merk_kendaraan",array("status_hapus"=>"NO"))->result_array();
         }
 
@@ -20,7 +21,7 @@ class Model_Home extends CI_model
 
         public function getcustomer() //all customer
         {
-            return $this->db->get_where("skb_customer",array("validasi"=>"ACC","status_hapus"=>"NO"))->result_array();
+            return $this->db->get_where("skb_customer",array("validasi"=>"ACC","status_hapus"=>"NO","validasi"=>"ACC","validasi_edit"=>"ACC","validasi_delete"=>"ACC"))->result_array();
         }
 
         public function getcustomerbyid($customer_id) //customer by ID
@@ -30,12 +31,12 @@ class Model_Home extends CI_model
 
         public function getsupir() //all supir
         {
-            return $this->db->get_where("skb_supir",array("status_hapus"=>"NO","status_aktif"=>"Aktif","validasi"=>"ACC"))->result_array();
+            return $this->db->get_where("skb_supir",array("status_hapus"=>"NO","status_aktif"=>"Aktif","validasi"=>"ACC","validasi_edit"=>"ACC","validasi_delete"=>"ACC"))->result_array();
         }
 
         public function getkosongan() //all kosongan
         {
-            return $this->db->get_where("skb_kosongan",array("status_hapus"=>"NO","validasi"=>"ACC"))->result_array();
+            return $this->db->get_where("skb_kosongan",array("status_hapus"=>"NO","validasi"=>"ACC","validasi_edit"=>"ACC","validasi_delete"=>"ACC"))->result_array();
         }
 
         public function getkosonganbyid($kosongan_id) //kosongan by id
@@ -571,6 +572,8 @@ class Model_Home extends CI_model
             $this->db->where("skb_rute.rute_status_hapus","No");
             if($asal=="addjo"){
                 $this->db->where("skb_rute.validasi_rute","ACC");
+                $this->db->where("skb_rute.validasi_rute_edit","ACC");
+                $this->db->where("skb_rute.validasi_rute_delete","ACC");
             }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewrute"){
                 $this->db->where("validasi_rute","Pending");
                 $this->db->or_where("validasi_rute_edit","Pending");
@@ -719,10 +722,12 @@ class Model_Home extends CI_model
             $this->db->where("status_hapus","NO");
             if($asal=="addtruck"){
                 $this->db->where("validasi","ACC");
+                $this->db->where("validasi_edit","ACC");
+                $this->db->where("validasi_delete","ACC");
             }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewmerk"){
                 $this->db->where("validasi","Pending");
-                $this->db->where("validasi_edit","Pending");
-                $this->db->where("validasi_delete","Pending");
+                $this->db->or_where("validasi_edit","Pending");
+                $this->db->or_where("validasi_delete","Pending");
             }
             return $this->db->count_all_results("skb_merk_kendaraan");
         }
@@ -739,7 +744,7 @@ class Model_Home extends CI_model
             $hasil_fix = [];
             for($i=0;$i<count($hasil);$i++){
                 if($asal=="addtruck"){
-                    if($hasil[$i]["status_hapus"]=="NO" && $hasil[$i]["validasi"]=="ACC"){
+                    if($hasil[$i]["status_hapus"]=="NO" && $hasil[$i]["validasi"]=="ACC" && $hasil[$i]["validasi_edit"]=="ACC" && $hasil[$i]["validasi_delete"]=="ACC"){
                         $hasil_fix[] = $hasil[$i];
                     }
                 }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewmerk"){
@@ -764,7 +769,7 @@ class Model_Home extends CI_model
                 $hasil_fix = 0;
                 for($i=0;$i<count($hasil_data);$i++){
                     if($asal=="addtruck"){
-                        if($hasil_data[$i]["status_hapus"]=="NO" && $hasil_data[$i]["validasi"]=="ACC"){
+                        if($hasil_data[$i]["status_hapus"]=="NO" && $hasil_data[$i]["validasi"]=="ACC"  && $hasil_data[$i]["validasi_edit"]=="ACC"  && $hasil_data[$i]["validasi_delete"]=="ACC"){
                             $hasil_fix +=1;
                         }
                     }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewmerk"){

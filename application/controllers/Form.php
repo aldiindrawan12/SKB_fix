@@ -142,6 +142,8 @@ class Form extends CI_Controller {
                 "paketan_gaji_rumusan"=>$paketan_gaji_rumusan,
                 "paketan_status_hapus"=>"NO",
                 "validasi_paketan"=>"Pending",
+                "validasi_paketan_edit"=>"ACC",
+                "validasi_paketan_delete"=>"ACC",
                 "paketan_keterangan"=>$this->input->post("paketan_keterangan"),
                 "paketan_data_rute"=>json_encode($data_rute),
                 "ritase"=>$this->input->post("Ritase")
@@ -295,11 +297,10 @@ class Form extends CI_Controller {
                 "customer_kontak_person"=>$this->input->post("customer_kontak_person"),
                 "customer_telp"=>$this->input->post("customer_telp"),
                 "customer_keterangan"=>$this->input->post("customer_keterangan"),
-                // "customer_bank"=>$this->input->post("customer_bank"),
-                // "customer_rekening"=>$this->input->post("customer_rekening"),
-                // "customer_AN"=>$this->input->post("customer_AN"),
                 "status_hapus"=>"No",
-                "validasi"=>"Pending"
+                "validasi"=>"Pending",
+                "validasi_edit"=>"ACC",
+                "validasi_delete"=>"ACC",
             );
             // echo var_dump($data);
             $this->model_form->insert_customer($data);
@@ -347,6 +348,8 @@ class Form extends CI_Controller {
                 "darurat_referensi"=>$this->input->post("darurat_referensi"),
                 "supir_tgl_sim"=>$this->input->post("supir_tgl_sim"),
                 "validasi"=>"Pending",
+                "validasi_edit"=>"ACC",
+                "validasi_delete"=>"ACC",
             );
             // echo var_dump($data)."<br><br>";
             $this->model_form->insert_supir($data);
@@ -388,6 +391,8 @@ class Form extends CI_Controller {
                 "mobil_berlaku_kir"=>$this->input->post("mobil_berlaku_kir"),
                 "mobil_berlaku_ijin_bongkar"=>$this->input->post("mobil_berlaku_ijin_bongkar"),
                 "validasi"=>"Pending",
+                "validasi_edit"=>"ACC",
+                "validasi_delete"=>"ACC",
                 "file_foto"=>$file_foto,
                 "file_stnk"=>$file_stnk
             );
@@ -404,7 +409,9 @@ class Form extends CI_Controller {
                 "kosongan_ke"=>$this->input->post("kosongan_ke"),
                 "kosongan_uang"=>str_replace(".","",$this->input->post("kosongan_uang")),
                 "status_hapus"=>"NO",
-                "validasi"=>"Pending"
+                "validasi"=>"Pending",
+                "validasi_edit"=>"ACC",
+                "validasi_delete"=>"ACC",
             );
             // echo var_dump($data);
             $this->model_form->insert_kosongan($data);
@@ -420,6 +427,8 @@ class Form extends CI_Controller {
                 "merk_dump"=>$this->input->post("merk_dump"),
                 "status_hapus"=>"NO",
                 "validasi"=>"Pending",
+                "validasi_edit"=>"ACC",
+                "validasi_delete"=>"ACC",
             );
             // echo var_dump($data);
             $this->model_form->insert_merk($data);
@@ -457,6 +466,8 @@ class Form extends CI_Controller {
                 // "rute_gaji_tronton_rumusan"=>$rute_gaji_tronton_rumusan,
                 "rute_status_hapus"=>"NO",
                 "validasi_rute"=>"Pending",
+                "validasi_rute_edit"=>"ACC",
+                "validasi_rute_delete"=>"ACC",
                 "rute_keterangan"=>$this->input->post("rute_keterangan"),
                 "ritase"=>$this->input->post("Ritase")
             );
@@ -467,7 +478,7 @@ class Form extends CI_Controller {
         }
     // end fungsi insert
     
-    // fungsi lain
+    // fungsi update
         public function update_rute(){
             $data=array(
                 "customer_id"=>$this->input->post("customer_id_update"),
@@ -569,7 +580,6 @@ class Form extends CI_Controller {
             $this->session->set_flashdata('status-update-merk', 'Berhasil');
             redirect(base_url("index.php/home/merk"));
         }
-        
         public function update_customer(){
             $data = array(
                 "customer_id" => $this->input->post("customer_id_update"),
@@ -604,6 +614,71 @@ class Form extends CI_Controller {
             $this->session->set_flashdata('status-update-akun', 'Berhasil');
             redirect(base_url("index.php/home/akun"));
         }
+        public function update_jo_status($supir,$mobil){
+            if($this->input->post("status")!="Dibatalkan"){
+                $data_jo = $this->model_home->getjobyid($this->input->post("jo_id"));
+                $keterangan = $data_jo["keterangan"]."<br>".$this->input->post("Keterangan");
+                $data = array(
+                    "jo_id" => $this->input->post("jo_id"),
+                    "status" => $this->input->post("status"),
+                    "tonase"=>$this->input->post("tonase"),
+                    // "bonus"=>str_replace(".","",$this->input->post("bonus")),
+                    "keterangan"=>$keterangan,
+                    "tanggal_bongkar"=>date('Y-m-d'),
+                );
+                // echo var_dump($data);
+                $this->model_form->update_jo_status($data,$supir,$mobil);
+                redirect(base_url("index.php/home/konfirmasi_jo"));
+            }else{
+                $this->updatejobatal($this->input->post("jo_id"));
+            }
+        }
+        public function updatejobatal($Jo_id){
+            $data_jo = $this->model_home->getjobyid($Jo_id);
+            $data["data_jo"]=$data_jo;
+            $bon_id = $this->model_form->getbonid();
+            $isi_bon_id = [];
+            for($i=0;$i<count($bon_id);$i++){
+                $isi_bon_id[] = $bon_id[$i]["bon_id"];
+            }
+            date_default_timezone_set('Asia/Jakarta');
+            $data["data"]=array(
+                "bon_id"=>max($isi_bon_id)+1,
+                "supir_id"=>$data_jo["supir_id"],
+                "bon_jenis"=>"Pembatalan JO",
+                "bon_nominal"=>$data_jo["uang_jalan_bayar"],
+                "bon_keterangan"=>"Pembatalan JO",
+                "bon_tanggal"=>date("Y-m-d H:i:s")
+            );
+            $data["bon_id"] = max($isi_bon_id)+1;
+            $this->model_form->insert_bon($data["data"]);
+            $this->model_detail->update_jo_dibatalkan($data_jo["Jo_id"],$data_jo["supir_id"],$data_jo["mobil_no"],$data_jo["uang_jalan"]);
+            $data["supir"] = $this->model_home->getsupirbyid($data["data"]["supir_id"]);
+            $data["asal"] = "batal JO";
+            $this->load->view("print/bon_print",$data);
+        }
+        public function update_status_aktif_supir(){
+            $data = array(
+                "supir_id"=>$this->input->post("update_status_supir_id"),
+                "supir_tgl_nonaktif"=>$this->input->post("update_status_tanggal_nonaktif"),
+                "status_aktif"=>$this->input->post("update_status_status_aktif")
+            );
+            $this->model_form->update_status_aktif_supir($data);
+            redirect(base_url("index.php/home/penggajian"));
+        }
+        public function update_konfigurasi($akun_id){
+            $konfigurasi = [$this->input->post("cekpage1"),$this->input->post("cekpage2"),$this->input->post("cekpage3"),
+            $this->input->post("cekpage4"),$this->input->post("cekpage5"),$this->input->post("cekpage6"),
+            $this->input->post("cekpage7"),$this->input->post("cekpage8"),$this->input->post("cekpage9"),
+            $this->input->post("cekpage10"),$this->input->post("cekpage11"),$this->input->post("cekpage12")];
+            // for($i=0;$i<count($konfigurasi);$i++){
+            //     echo $konfigurasi[$i]."<br>";
+            // }
+            $this->model_form->update_konfigurasi($akun_id,$konfigurasi);
+            redirect(base_url("index.php/home/akun"));
+        }
+    //end fungsi update
+    //fungsi delete
         public function deletesupir(){
             $supir_id = $this->input->get("id");
             $this->model_form->deletesupir($supir_id);
@@ -622,14 +697,38 @@ class Form extends CI_Controller {
             $this->session->set_flashdata('status-delete-merk', 'Berhasil');
             echo $merk_id;
         }
-
         public function deletekosongan(){
             $kosongan_id = $this->input->get("id");
             $this->model_form->deletekosongan($kosongan_id);
             $this->session->set_flashdata('status-delete-kosongan', 'Berhasil');
             echo $kosongan_id;
         }
-
+        public function deletecustomer(){
+            $customer_id = $this->input->get("id");
+            $this->model_form->deletecustomer($customer_id);
+            $this->session->set_flashdata('status-delete-customer', 'Berhasil');
+            echo $customer_id;
+        }
+        public function deleterute(){
+            $rute_id = $this->input->get("id");
+            $this->model_form->deleterute($rute_id);
+            $this->session->set_flashdata('status-delete-satuan', 'Berhasil');
+            echo $rute_id;
+        }
+        public function deleteakun(){
+            $akun_id = $this->input->get("id");
+            $this->model_form->deleteakun($akun_id);
+            $this->session->set_flashdata('status-delete-akun', 'Berhasil');
+            echo $akun_id;
+        }
+        public function deletetruck(){
+            $mobil_no = $this->input->get("id");
+            $this->model_form->deletetruck($mobil_no);
+            $this->session->set_flashdata('status-delete-kendaraan', 'Berhasil');
+            echo $mobil_no;
+        }
+    //end fungsi delete
+    //fungsi acc
         public function accsupir($validasi){
             $supir_id = $this->input->get("id");
             $this->model_form->accsupir($supir_id,$validasi);
@@ -700,30 +799,8 @@ class Form extends CI_Controller {
             $this->model_form->accdeletemerk($merk_id,$validasi);
             echo $merk_id;
         }
-        public function deletecustomer(){
-            $customer_id = $this->input->get("id");
-            $this->model_form->deletecustomer($customer_id);
-            $this->session->set_flashdata('status-delete-customer', 'Berhasil');
-            echo $customer_id;
-        }
-        public function deleterute(){
-            $rute_id = $this->input->get("id");
-            $this->model_form->deleterute($rute_id);
-            $this->session->set_flashdata('status-delete-satuan', 'Berhasil');
-            echo $rute_id;
-        }
-        public function deleteakun(){
-            $akun_id = $this->input->get("id");
-            $this->model_form->deleteakun($akun_id);
-            $this->session->set_flashdata('status-delete-akun', 'Berhasil');
-            echo $akun_id;
-        }
-        public function deletetruck(){
-            $mobil_no = $this->input->get("id");
-            $this->model_form->deletetruck($mobil_no);
-            $this->session->set_flashdata('status-delete-kendaraan', 'Berhasil');
-            echo $mobil_no;
-        }
+    //end fungsi acc
+    //fungsi get
         public function getsupirname(){
             $supir_id = $this->input->get("id");
             $supir = $this->model_form->getsupirname($supir_id);
@@ -748,6 +825,18 @@ class Form extends CI_Controller {
             $mobil = $this->model_form->getallmobil();
             echo json_encode($mobil);
         }
+        public function getbonsupir(){
+            $supir_id = $this->input->get('id');
+            $data = $this->model_form->getbonbysupir($supir_id);
+            echo $data["supir_kasbon"];
+        }
+        public function getakunbyid(){
+            $akun_id = $this->input->get('id');
+            $data = $this->model_form->getakunbyid($akun_id);
+            echo json_encode($data);
+        }
+    //end fungsi get
+    //fungsi lain
         public function generate_terbilang($uang){
             $uang = abs($uang);
             $huruf = array("", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "sebelas");
@@ -778,61 +867,6 @@ class Form extends CI_Controller {
             }else{
                 echo "";
             }
-        }
-        function getbonsupir()
-        {
-            $supir_id = $this->input->get('id');
-            $data = $this->model_form->getbonbysupir($supir_id);
-            echo $data["supir_kasbon"];
-        }
-        function getakunbyid()
-        {
-            $akun_id = $this->input->get('id');
-            $data = $this->model_form->getakunbyid($akun_id);
-            echo json_encode($data);
-        }
-        public function update_jo_status($supir,$mobil){
-            if($this->input->post("status")!="Dibatalkan"){
-                $data_jo = $this->model_home->getjobyid($this->input->post("jo_id"));
-                $keterangan = $data_jo["keterangan"]."<br>".$this->input->post("Keterangan");
-                $data = array(
-                    "jo_id" => $this->input->post("jo_id"),
-                    "status" => $this->input->post("status"),
-                    "tonase"=>$this->input->post("tonase"),
-                    // "bonus"=>str_replace(".","",$this->input->post("bonus")),
-                    "keterangan"=>$keterangan,
-                    "tanggal_bongkar"=>date('Y-m-d'),
-                );
-                // echo var_dump($data);
-                $this->model_form->update_jo_status($data,$supir,$mobil);
-                redirect(base_url("index.php/home/konfirmasi_jo"));
-            }else{
-                $this->updatejobatal($this->input->post("jo_id"));
-            }
-        }
-        public function updatejobatal($Jo_id){
-            $data_jo = $this->model_home->getjobyid($Jo_id);
-            $data["data_jo"]=$data_jo;
-            $bon_id = $this->model_form->getbonid();
-            $isi_bon_id = [];
-            for($i=0;$i<count($bon_id);$i++){
-                $isi_bon_id[] = $bon_id[$i]["bon_id"];
-            }
-            date_default_timezone_set('Asia/Jakarta');
-            $data["data"]=array(
-                "bon_id"=>max($isi_bon_id)+1,
-                "supir_id"=>$data_jo["supir_id"],
-                "bon_jenis"=>"Pembatalan JO",
-                "bon_nominal"=>$data_jo["uang_jalan_bayar"],
-                "bon_keterangan"=>"Pembatalan JO",
-                "bon_tanggal"=>date("Y-m-d H:i:s")
-            );
-            $data["bon_id"] = max($isi_bon_id)+1;
-            $this->model_form->insert_bon($data["data"]);
-            $this->model_detail->update_jo_dibatalkan($data_jo["Jo_id"],$data_jo["supir_id"],$data_jo["mobil_no"],$data_jo["uang_jalan"]);
-            $data["supir"] = $this->model_home->getsupirbyid($data["data"]["supir_id"]);
-            $data["asal"] = "batal JO";
-            $this->load->view("print/bon_print",$data);
         }
     //end fungsi lain
 
@@ -882,17 +916,6 @@ class Form extends CI_Controller {
             echo json_encode($rute);        
         }
     // end fungsi form joborder
-
-    public function update_status_aktif_supir(){
-        $data = array(
-            "supir_id"=>$this->input->post("update_status_supir_id"),
-            "supir_tgl_nonaktif"=>$this->input->post("update_status_tanggal_nonaktif"),
-            "status_aktif"=>$this->input->post("update_status_status_aktif")
-        );
-        $this->model_form->update_status_aktif_supir($data);
-        redirect(base_url("index.php/home/penggajian"));
-    }
-
     public function generate_selisih_tanggal($tanggal_sim){
         $tanggal_now = date("Y-m-d");
         $tgl1 = new DateTime($tanggal_now);
@@ -919,15 +942,5 @@ class Form extends CI_Controller {
         $this->load->view('footer');
     }
 
-    public function update_konfigurasi($akun_id){
-        $konfigurasi = [$this->input->post("cekpage1"),$this->input->post("cekpage2"),$this->input->post("cekpage3"),
-        $this->input->post("cekpage4"),$this->input->post("cekpage5"),$this->input->post("cekpage6"),
-        $this->input->post("cekpage7"),$this->input->post("cekpage8"),$this->input->post("cekpage9"),
-        $this->input->post("cekpage10"),$this->input->post("cekpage11"),$this->input->post("cekpage12")];
-        // for($i=0;$i<count($konfigurasi);$i++){
-        //     echo $konfigurasi[$i]."<br>";
-        // }
-        $this->model_form->update_konfigurasi($akun_id,$konfigurasi);
-        redirect(base_url("index.php/home/akun"));
-    }
+    
 }

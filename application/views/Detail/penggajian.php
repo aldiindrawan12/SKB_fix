@@ -299,21 +299,34 @@
         <?php for($i=0;$i<count($data_jo_id);$i++){?>
             data_jo_id.push("<?= $data_jo_id[$i]?>");
         <?php }?>
-        $.ajax({
-            type: "GET",
-            url: "<?php echo base_url('index.php/detail/update_upah') ?>",
-            dataType: "text",
-            data: {
-                gaji_grand_total:"<?= $pilih_jo["gaji_grand_total"]?>",
-                gaji_total:"<?= $pilih_jo["gaji_total"]?>",
-                supir_id:"<?= $supir["supir_id"]?>",
-                kasbon:"<?= $pilih_jo["kasbon"]?>",
-                bonus:"<?= $pilih_jo["bonus"]?>",
-                jo_id:data_jo_id,
-            },
-            success: function(data) {
-                window.location = "<?= base_url("index.php/home/gaji")?>";
-            }
-        });
+        Swal.fire({
+                title: 'konfirmasi Pembayaran Gaji',
+                text:'Apakah Pembayaran Gaji Sudah Selesai?',
+                showDenyButton: true,
+                denyButtonText: `Batal`,
+                confirmButtonText: 'Ya,Selesai',
+                denyButtonColor: '#808080',
+                confirmButtonColor: 'green',
+                icon: "question",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "GET",
+                        url: "<?php echo base_url('index.php/detail/update_upah') ?>",
+                        dataType: "text",
+                        data: {
+                            gaji_grand_total:"<?= $pilih_jo["gaji_grand_total"]?>",
+                            gaji_total:"<?= $pilih_jo["gaji_total"]?>",
+                            supir_id:"<?= $supir["supir_id"]?>",
+                            kasbon:"<?= $pilih_jo["kasbon"]?>",
+                            bonus:"<?= $pilih_jo["bonus"]?>",
+                            jo_id:data_jo_id,
+                        },
+                        success: function(data) {
+                            window.location = "<?= base_url("index.php/home/gaji")?>";
+                        }
+                    });      
+                }
+            })
     }
 </script>

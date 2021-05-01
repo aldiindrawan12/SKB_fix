@@ -37,4 +37,14 @@ class Model_Print extends CI_model
         $this->db->join("skb_mobil", "skb_mobil.mobil_no = skb_job_order.mobil_no", 'left');
         return $this->db->get('skb_job_order')->result_array();
         }
+
+        public function getkosongan() //all kosongan
+        {
+            return $this->db->get("skb_kosongan")->result_array();
+        }
+
+        public function getpaketan() //all paketan
+        {
+            return $this->db->get("skb_paketan")->result_array();
+        }
 }

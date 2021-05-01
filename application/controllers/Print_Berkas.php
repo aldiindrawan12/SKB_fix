@@ -198,7 +198,6 @@ class Print_Berkas extends CI_Controller {
 				"AN"=>$this->input->post("AN"),
 				"Keterangan"=>$this->input->post("Keterangan")
 			];
-			$data["bonus"] = str_replace(".","",$this->input->post("bonus_tf"));
 			$data["gaji"] = $gaji;
 			$data["supir"] = $this->model_home->getsupirbyid($supir_id);
 			$this->load->view("print/memo_tf_print",$data);

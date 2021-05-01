@@ -259,7 +259,30 @@ class Detail extends CI_Controller {
     			$this->session->set_flashdata('status-login', 'False');
                 redirect(base_url());
             }
-            $data["jo"] = $this->model_detail->getjobbysupir($supir_id);
+            if($this->input->post("bonus")==""){
+                $bonus=0;
+            }else{
+                $bonus=$this->input->post("bonus");
+            }
+            if($this->input->post("kasbon")==""){
+                $kasbon=0;
+            }else{
+                $kasbon = $this->input->post("kasbon");
+            }
+            $data["pilih_jo"] = array(
+                "jo_id" => $this->input->post("jo"),
+                "gaji_total" => $this->input->post("gaji_total"),
+                "gaji_grand_total" => $this->input->post("gaji_grand_total"),
+                "bonus" => $bonus,
+                "kasbon" => $kasbon
+            );
+            $data_jo = [];
+            $data_jo_form = explode(",",$this->input->post("jo"));
+            for($i=0;$i<count($data_jo_form);$i++){
+                $jo = $this->model_home->getjobyid($data_jo_form[$i]);
+                $data_jo[] = $jo;
+            }
+            $data["jo"]=$data_jo;
             $data["supir"] = $this->model_home->getsupirbyid($supir_id);
             $data["page"] = "Gaji_page";
             $data["collapse_group"] = "Penggajian";
@@ -271,6 +294,25 @@ class Detail extends CI_Controller {
             $this->load->view('sidebar');
             $this->load->view('detail/penggajian',$data);
             $this->load->view('footer');
+        }
+
+        public function pilih_gaji($supir_id)
+        {
+            if(!$_SESSION["user"]){
+    			$this->session->set_flashdata('status-login', 'False');
+                redirect(base_url());
+            }
+            $data["jo"] = $this->model_detail->getjobbysupir($supir_id);
+            $data["supir"] = $this->model_home->getsupirbyid($supir_id);
+            $data["page"] = "Gaji_page";
+            $data["collapse_group"] = "Penggajian";
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            if(json_decode($data["akun_akses"]["akses"])[6]==0){
+                redirect(base_url());
+            }
+            $this->load->view('header',$data);
+            $this->load->view('sidebar');
+            $this->load->view('detail/pilih_gaji',$data);
         }
 
         public function detail_penggajian_report($supir_id)
@@ -296,14 +338,14 @@ class Detail extends CI_Controller {
         public function update_upah(){
             $data = array(
                 "supir_id"=>$this->input->get("supir_id"),
-                "supir_kasbon"=>$this->input->get("supir_kasbon"),
-                "upah"=>$this->input->get("upah"),
-                "upah_jo"=>$this->input->get("upah_jo"),
-                "bonus_tf"=>$this->input->get("bonus_tf"),
+                "kasbon"=>str_replace(".","",$this->input->get("kasbon")),
+                "gaji_grand_total"=>str_replace(".","",$this->input->get("gaji_grand_total")),
+                "gaji_total"=>str_replace(".","",$this->input->get("gaji_total")),
+                "bonus"=>str_replace(".","",$this->input->get("bonus")),
                 "Jo_id"=>$this->input->get("jo_id")
             );
             $this->model_detail->update_upah($data);
-            echo $data["supir_id"];
+            echo $data["supir_id"]."=".$data["kasbon"]."=".$data["gaji_grand_total"]."=".$data["gaji_total"]."=".$data["bonus"];
         }
     //end fungsi untuk Detail penggajian
     

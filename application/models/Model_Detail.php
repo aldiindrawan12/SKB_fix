@@ -83,12 +83,13 @@ class Model_Detail extends CI_model
     public function update_upah($data){ //update upah saat bayar gaji/upah
         $supir_id = $data["supir_id"];
         $Jo_id = $data["Jo_id"];
-        $upah = $data["upah"];
-        $supir_kasbon = $data["supir_kasbon"];
-        $grand_upah = ($supir_kasbon-($supir_kasbon+$upah))*(-1);
+        $gaji_grand_total = $data["gaji_grand_total"];
+        $gaji_total = $data["gaji_total"];
+        $kasbon = $data["kasbon"];
+        $bonus = $data["bonus"];
         //set kasbon supir
-            if($grand_upah < 0){
-                $this->db->set("supir_kasbon",$grand_upah*(-1));
+            if($gaji_grand_total < 0){
+                $this->db->set("supir_kasbon",$gaji_grand_total*(-1));
             }else{
                 $this->db->set("supir_kasbon",0);
             }
@@ -107,24 +108,13 @@ class Model_Detail extends CI_model
         }else{
             $isi_pembayaran_upah_id[] = 0;
         }
-
-        if($data["bonus_tf"]==0){
-            if($upah<0){
-                $bonus = $supir_kasbon-$upah-$data["upah_jo"];
-            }else{
-                $bonus = $supir_kasbon+$upah-$data["upah_jo"];
-            }
-        }else{
-            $bonus = $data["bonus_tf"];
-            $upah = $upah+$data["bonus_tf"];
-        }
         date_default_timezone_set('Asia/Jakarta');
         $data=array(
             "supir_id"=>$supir_id,
-            "pembayaran_upah_nominal"=>$data["upah_jo"],
+            "pembayaran_upah_nominal"=>$gaji_total,
             "pembayaran_upah_bonus"=>$bonus,
-            "pembayaran_upah_bon"=>$supir_kasbon,
-            "pembayaran_upah_total"=>$upah,
+            "pembayaran_upah_bon"=>$kasbon,
+            "pembayaran_upah_total"=>$gaji_grand_total,
             "pembayaran_upah_tanggal"=>date("Y-m-d H:i:s"),
             "user"=>$_SESSION["user"]
         );
@@ -132,12 +122,6 @@ class Model_Detail extends CI_model
         //end insert pembayaran upah 
         
         //insert kasbon 
-            if($upah-$supir_kasbon != $upah){
-                if($upah<0){
-                    $nominal_bon = $supir_kasbon+$upah;
-                }else{
-                    $nominal_bon = $supir_kasbon;
-                }
                 $this->db->select("bon_id");
                 $bon_id = $this->db->get("skb_bon")->result_array();
                 $isi_bon_id = [];
@@ -149,19 +133,18 @@ class Model_Detail extends CI_model
                     "bon_id"=>max($isi_bon_id)+1,
                     "supir_id"=>$supir_id,
                     "bon_jenis"=>"Potong Gaji",
-                    "bon_nominal"=>$nominal_bon,
+                    "bon_nominal"=>$kasbon,
                     "bon_keterangan"=>"Potongan Kasbon Dari Pembayaran Gaji",
                     "bon_tanggal"=>date("Y-m-d H:i:s")
                 );
                 $this->db->insert("skb_bon",$data);
-            }
         //end insert kasbon 
 
         //update status upah pada jo id
             if($Jo_id != null){
                 for($i=0;$i<count($Jo_id);$i++){
                     $this->db->set("status_upah","Sudah Dibayar");
-                    // $this->db->set("pembayaran_upah_id",max($isi_pembayaran_upah_id)+1);
+                    $this->db->set("pembayaran_upah_id",max($isi_pembayaran_upah_id)+1);
                     $this->db->where("Jo_id",$Jo_id[$i]);
                     $this->db->update("skb_job_order");
                 }

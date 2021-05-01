@@ -112,6 +112,8 @@
     var asal = '<?= $asal?>';
     if(asal=="insert"){ 
         window.location.replace("<?= base_url("index.php/home/bon")?>");
+    }else if(asal="batal JO"){
+        window.location.replace("<?= base_url("index.php/home/konfirmasi_jo/")?>");
     }else{
         window.location.replace("<?= base_url("index.php/detail/detail_jo/").$data_jo["Jo_id"]."/JO"?>");
     }

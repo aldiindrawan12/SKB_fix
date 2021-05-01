@@ -87,17 +87,14 @@ class Model_Detail extends CI_model
 
     public function update_upah($data){ //update upah saat bayar gaji/upah
         $supir_id = $data["supir_id"];
+        $supir = $this->db->get_where("skb_supir",array("supir_id"=>$supir_id))->row_array();
         $Jo_id = $data["Jo_id"];
         $gaji_grand_total = $data["gaji_grand_total"];
         $gaji_total = $data["gaji_total"];
         $kasbon = $data["kasbon"];
         $bonus = $data["bonus"];
         //set kasbon supir
-            if($gaji_grand_total < 0){
-                $this->db->set("supir_kasbon",$gaji_grand_total*(-1));
-            }else{
-                $this->db->set("supir_kasbon",0);
-            }
+            $this->db->set("supir_kasbon",$supir["supir_kasbon"]-$kasbon);
             $this->db->where("supir_id",$supir_id);
             $this->db->update("skb_supir");
         //end set kasbon supir
@@ -120,13 +117,14 @@ class Model_Detail extends CI_model
             "pembayaran_upah_bonus"=>$bonus,
             "pembayaran_upah_bon"=>$kasbon,
             "pembayaran_upah_total"=>$gaji_grand_total,
-            "pembayaran_upah_tanggal"=>date("Y-m-d H:i:s"),
-            "user"=>$_SESSION["user"]
+            "pembayaran_upah_tanggal"=>date("Y-m-d"),
+            "user_upah"=>$_SESSION["user"]
         );
         $this->db->insert("skb_pembayaran_upah",$data);
         //end insert pembayaran upah 
         
         //insert kasbon 
+            if($kasbon>0){
                 $this->db->select("bon_id");
                 $bon_id = $this->db->get("skb_bon")->result_array();
                 $isi_bon_id = [];
@@ -143,6 +141,7 @@ class Model_Detail extends CI_model
                     "bon_tanggal"=>date("Y-m-d H:i:s")
                 );
                 $this->db->insert("skb_bon",$data);
+            }
         //end insert kasbon 
 
         //update status upah pada jo id

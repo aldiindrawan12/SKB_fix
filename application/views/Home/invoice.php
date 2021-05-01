@@ -2,8 +2,6 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-3">
         <h1 class="h4 mb-0 text-gray-800  ">Buat Invoice</h1>
     </div> 
-    
-
     <!-- form invoice -->
     <div class="card shadow mb-2">
         <div class="card-body">
@@ -78,44 +76,39 @@
                         <label for="invoice_keterangan" class="form-label font-weight-bold">Keterangan</label>
                         <textarea class="form-control" name="invoice_keterangan" id="invoice_keterangan" rows="11" required></textarea>
                     </div>
-
-
                 </div>
             </div>
             <div class="col">
                 <button type="submit" class="btn btn-success float-right mt-3">Simpan</button>
             </div>
         </form>
-    
     </div>
     <!-- end form invoice -->
-
 </div>
 
-                <!-- table invoice -->
-                <div class="card shadow mb-5">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="pilih-jo" width="100%" cellspacing="0">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center" width="" scope="col">Tipe JO</th>
-                                        <th class="text-center" width="" scope="col">Rute dan Muatan</th>
-                                        <th class="text-center" width="" scope="col">Tgl.Brgkt</th>
-                                        <th class="text-center" width="" scope="col">Tgl.Plng</th>
-                                        <th class="text-center" width="" scope="col">Tonase</th>
-                                        <th class="text-center" width="" scope="col">Inv./Tagihan</th>
-                                        <th class="text-center" width="" scope="col">Pilih</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <!-- end table invoice -->
-                </div>
+<!-- table invoice -->
+<div class="card shadow mb-5">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="pilih-jo" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th class="text-center" width="" scope="col">Tipe JO</th>
+                        <th class="text-center" width="" scope="col">Rute dan Muatan</th>
+                        <th class="text-center" width="" scope="col">Tgl.Brgkt</th>
+                        <th class="text-center" width="" scope="col">Tgl.Plng</th>
+                        <th class="text-center" width="" scope="col">Tonase</th>
+                        <th class="text-center" width="" scope="col">Inv./Tagihan</th>
+                        <th class="text-center" width="" scope="col">Pilih</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
+<!-- end table invoice -->
 <!-- pop up add detail rute paketan -->
 <div class="modal fade" id="popup-detail-rute-paketan" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-md"  role="document"  >
@@ -127,20 +120,20 @@
                 </button>
             </div>
             <div class="font-size-sm m-3 text-justify">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="table-data-rute-paketan" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-center" scope="col">No Rute</th>
-                                            <th class="text-center" scope="col">Dari</th>
-                                            <th class="text-center" scope="col">Ke</th>
-                                            <th class="text-center" scope="col">Muatan</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="table-data-rute-paketan" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th class="text-center" scope="col">No Rute</th>
+                                <th class="text-center" scope="col">Dari</th>
+                                <th class="text-center" scope="col">Ke</th>
+                                <th class="text-center" scope="col">Muatan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

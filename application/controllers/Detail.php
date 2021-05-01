@@ -335,6 +335,26 @@ class Detail extends CI_Controller {
             $this->load->view('footer');
         }
 
+        public function detail_penggajian_report_pembayaran($supir_id,$pembayaran_id)
+        {
+            if(!$_SESSION["user"]){
+    			$this->session->set_flashdata('status-login', 'False');
+                redirect(base_url());
+            }
+            $data["pembayaran_upah"] = $this->model_detail->getpembayaranupahbyid($pembayaran_id);
+            $data["supir"] = $this->model_home->getsupirbyid($supir_id);
+            $data["page"] = "Laporan_Gaji_page";
+            $data["collapse_group"] = "Laporan";
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            if(json_decode($data["akun_akses"]["akses"])[9]==0){
+                redirect(base_url());
+            }
+            $this->load->view('header',$data);
+            $this->load->view('sidebar');
+            $this->load->view('detail/penggajian_report_pembayaran',$data);
+            $this->load->view('footer');
+        }
+
         public function update_upah(){
             $data = array(
                 "supir_id"=>$this->input->get("supir_id"),

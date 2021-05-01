@@ -23,7 +23,7 @@
         <div class="card-body row" id="rincian">
             <div class="col-md-5 ">
                 <form action="<?= base_url("index.php/detail/detail_penggajian/").$supir["supir_id"]?>" method="POST">
-                    <input type="text" name="jo" id="jo" required>
+                    <input type="text" name="jo" id="jo" required hidden>
                     <div class="form-group row">
                         <label for="gaji_total" class="col-form-label col-sm-7 font-weight-bold">Total</label>
                         <div class="col-sm-5">

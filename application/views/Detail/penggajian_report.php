@@ -43,6 +43,7 @@
                             <th class="text-center" width="10%" scope="col">Bonus</th>
                             <th class="text-center" width="10%" scope="col">Potong Kasbon</th>
                             <th class="text-center" width="10%" scope="col">Total</th>
+                            <th class="text-center" width="10%" scope="col">Detail</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -65,6 +66,7 @@
                             <td>Rp.<?= number_format($value["pembayaran_upah_bon"],2,",",".")?></td>
                             <td>Rp.<?= number_format($value["pembayaran_upah_nominal"]+$value["pembayaran_upah_bonus"]-
                             $value["pembayaran_upah_bon"],2,',','.') ?></td>
+                            <td class="text-center"><a class='btn btn-light' href='<?= base_url('index.php/detail/detail_penggajian_report_pembayaran/'.$supir["supir_id"]."/".$value["pembayaran_upah_id"])?>'><i class='fas fa-eye'></i></a></td>
                         </tr>
                     <?php } ?>
                         <tr>

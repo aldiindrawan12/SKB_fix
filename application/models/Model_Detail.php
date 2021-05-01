@@ -75,6 +75,11 @@ class Model_Detail extends CI_model
         return $this->db->get_where("skb_pembayaran_upah",array("skb_pembayaran_upah.supir_id"=>$supir_id))->result_array();
     }
 
+    public function getpembayaranupahbyid($pembayaran_id){
+        $this->db->join("skb_job_order","skb_job_order.pembayaran_upah_id=skb_pembayaran_upah.pembayaran_upah_id","left");
+        return $this->db->get_where("skb_pembayaran_upah",array("skb_pembayaran_upah.pembayaran_upah_id"=>$pembayaran_id))->result_array();
+    }
+
     public function getinvoicebyjo($jo_id){ //invoice by JO
         $this->db->join("skb_job_order","skb_job_order.Jo_id=skb_invoice.jo_id","left");
         return $this->db->get_where("skb_invoice",array("skb_invoice.jo_id"=>$jo_id))->row_array();

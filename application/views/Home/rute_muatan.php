@@ -21,7 +21,7 @@
                 <thead>
                     <tr>
                         <th class="text-center" scope="col">No</th>
-                        <th class="text-center" scope="col">ID Rute</th>
+                        <!-- <th class="text-center" scope="col">ID Rute</th> -->
                         <th class="text-center" scope="col">Nama Customer</th>
                         <th class="text-center" scope="col">Dari</th>
                         <th class="text-center" scope="col">Ke</th>
@@ -29,7 +29,7 @@
                         <th class="text-center" scope="col">Uang Jalan</th>
                         <th class="text-center" scope="col">Inv./Tagihan</th>
                         <th class="text-center" scope="col">Status Validasi</th>
-                        <th class="text-center" width="20%" scope="col">Aksi</th>
+                        <th class="text-center" width="15%" scope="col">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>

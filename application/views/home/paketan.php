@@ -21,14 +21,14 @@
                 <thead>
                     <tr>
                         <th class="text-center" width="5%" scope="col">No</th>
-                        <th class="text-center" width="20%" scope="col">Nama Customer</th>
+                        <th class="text-center" width="15%" scope="col">Nama Customer</th>
                         <th class="text-center" width="5%" scope="col">Rute</th>
-                        <th class="text-center" width="15%" scope="col">Jenis Mobil</th>
-                        <th class="text-center" width="12%" scope="col">Ritase/Tonase</th>
-                        <th class="text-center" width="15%" scope="col">Uang Jalan</th>
-                        <th class="text-center" width="15%" scope="col">Inv./Tagihan</th>
+                        <th class="text-center" width="10%" scope="col">Jenis Mobil</th>
+                        <th class="text-center" width="10%" scope="col">Ritase/Tonase</th>
+                        <th class="text-center" width="10%" scope="col">Uang Jalan</th>
+                        <th class="text-center" width="10%" scope="col">Inv./Tagihan</th>
                         <th class="text-center" width="15%" scope="col">Status Validasi</th> 
-                        <th class="text-center" width="12%" scope="col">Aksi</th>
+                        <th class="text-center" width="15%" scope="col">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>

@@ -20,7 +20,7 @@ class Model_Home extends CI_model
 
         public function getcustomer() //all customer
         {
-            return $this->db->get_where("skb_customer",array("validasi"=>"ACC"))->result_array();
+            return $this->db->get_where("skb_customer",array("validasi"=>"ACC","status_hapus"=>"NO"))->result_array();
         }
 
         public function getcustomerbyid($customer_id) //customer by ID
@@ -65,6 +65,8 @@ class Model_Home extends CI_model
             $this->db->where("status_hapus","NO");
             if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User"){
                 $this->db->where("validasi","Pending");
+                $this->db->or_where("validasi_edit","Pending");
+                $this->db->or_where("validasi_delete","Pending");
             }else{
                 $this->db->where("validasi","ACC");
             }
@@ -85,7 +87,7 @@ class Model_Home extends CI_model
             $hasil_fix = [];
             for($i=0;$i<count($hasil);$i++){
                 if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User"){
-                    if($hasil[$i]["status_hapus"]=="NO" && $hasil[$i]["validasi"]=="Pending"){
+                    if($hasil[$i]["status_hapus"]=="NO" && $hasil[$i]["validasi"]=="Pending" || $hasil[$i]["validasi_edit"]=="Pending" || $hasil[$i]["validasi_delete"]=="Pending"){
                         $hasil_fix[] = $hasil[$i];
                     }
                 }else{
@@ -110,7 +112,7 @@ class Model_Home extends CI_model
                 $hasil_fix = 0;
                 for($i=0;$i<count($hasil_data);$i++){
                     if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User"){
-                        if($hasil_data[$i]["status_hapus"]=="NO" && $hasil_data[$i]["validasi"]=="Pending"){
+                        if($hasil_data[$i]["status_hapus"]=="NO" && $hasil_data[$i]["validasi"]=="Pending" || $hasil_data[$i]["validasi_edit"]=="Pending" || $hasil_data[$i]["validasi_delete"]=="Pending"){
                             $hasil_fix +=1;
                         }
                     }else{
@@ -306,6 +308,8 @@ class Model_Home extends CI_model
                 $this->db->where("validasi","ACC");
             }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewcustomer"){
                 $this->db->where("validasi","Pending");
+                $this->db->or_where("validasi_edit","Pending");
+                $this->db->or_where("validasi_delete","Pending");
             }
             return $this->db->count_all_results("skb_customer");
         }
@@ -319,6 +323,8 @@ class Model_Home extends CI_model
                 $this->db->where("validasi","ACC");
             }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewcustomer"){
                 $this->db->where("validasi","Pending");
+                $this->db->or_where("validasi_edit","Pending");
+                $this->db->or_where("validasi_delete","Pending");
             }
             $this->db->order_by($order_field, $order_ascdesc);
             $this->db->limit($limit, $start);
@@ -334,6 +340,8 @@ class Model_Home extends CI_model
                 $this->db->where("validasi","ACC");
             }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewcustomer"){
                 $this->db->where("validasi","Pending");
+                $this->db->or_where("validasi_edit","Pending");
+                $this->db->or_where("validasi_delete","Pending");
             }
             return $this->db->get('skb_customer')->num_rows();
         }
@@ -347,6 +355,8 @@ class Model_Home extends CI_model
                 $this->db->where("validasi","ACC");
             }else if(($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User") && $asal=="viewsupir"){
                 $this->db->where("validasi","Pending");
+                $this->db->or_where("validasi_edit","Pending");
+                $this->db->or_where("validasi_delete","Pending");
             }
             return $this->db->count_all_results("skb_supir");
         }
@@ -360,6 +370,8 @@ class Model_Home extends CI_model
                 $this->db->where("validasi","ACC");
             }else if(($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User") && $asal=="viewsupir"){
                 $this->db->where("validasi","Pending");
+                $this->db->or_where("validasi_edit","Pending");
+                $this->db->or_where("validasi_delete","Pending");
             }
             // $this->db->or_like('status_jalan', $search);
             $this->db->order_by($order_field, $order_ascdesc);
@@ -376,6 +388,8 @@ class Model_Home extends CI_model
                 $this->db->where("validasi","ACC");
             }else if(($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User") && $asal=="viewsupir"){
                 $this->db->where("validasi","Pending");
+                $this->db->or_where("validasi_edit","Pending");
+                $this->db->or_where("validasi_delete","Pending");
             }
             // $this->db->or_like('status_jalan', $search);
             return $this->db->get('skb_supir')->num_rows();
@@ -558,7 +572,9 @@ class Model_Home extends CI_model
             if($asal=="addjo"){
                 $this->db->where("skb_rute.validasi_rute","ACC");
             }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewrute"){
-                $this->db->where("validasi","Pending");
+                $this->db->where("validasi_rute","Pending");
+                $this->db->or_where("validasi_rute_edit","Pending");
+                $this->db->or_where("validasi_rute_delete","Pending");
             }
             $this->db->join("skb_customer", "skb_customer.customer_id = skb_rute.customer_id", 'left');
             return $this->db->count_all_results("skb_rute");
@@ -580,21 +596,21 @@ class Model_Home extends CI_model
             for($i=0;$i<count($hasil);$i++){
                 if($asal=="addjo"){
                     if($customer=='x'){
-                        if($hasil[$i]["rute_status_hapus"]=="NO" && $hasil[$i]["validasi_rute"]=="ACC"){
+                        if($hasil[$i]["rute_status_hapus"]=="NO" && $hasil[$i]["validasi_rute"]=="ACC" && $hasil[$i]["validasi_rute_edit"]=="ACC" && $hasil[$i]["validasi_rute_delete"]=="ACC"){
                             $hasil_fix[] = $hasil[$i];
                         }
                     }else{
-                        if($hasil[$i]["customer_id"]==$customer && $hasil[$i]["rute_status_hapus"]=="NO" && $hasil[$i]["validasi_rute"]=="ACC"){
+                        if($hasil[$i]["customer_id"]==$customer && $hasil[$i]["rute_status_hapus"]=="NO" && $hasil[$i]["validasi_rute"]=="ACC" && $hasil[$i]["validasi_rute_edit"]=="ACC" && $hasil[$i]["validasi_rute_delete"]=="ACC"){
                             $hasil_fix[] = $hasil[$i];
                         }
                     }
                 }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewrute"){
                     if($customer=='x'){
-                        if($hasil[$i]["rute_status_hapus"]=="NO" && $hasil[$i]["validasi_rute"]=="Pending"){
+                        if($hasil[$i]["rute_status_hapus"]=="NO" && $hasil[$i]["validasi_rute"]=="Pending" || $hasil[$i]["validasi_rute_edit"]=="Pending" || $hasil[$i]["validasi_rute_delete"]=="Pending"){
                             $hasil_fix[] = $hasil[$i];
                         }
                     }else{
-                        if($hasil[$i]["customer_id"]==$customer && $hasil[$i]["rute_status_hapus"]=="NO" && $hasil[$i]["validasi_rute"]=="Pending"){
+                        if($hasil[$i]["customer_id"]==$customer && $hasil[$i]["rute_status_hapus"]=="NO" && $hasil[$i]["validasi_rute"]=="Pending" || $hasil[$i]["validasi_rute_edit"]=="Pending" || $hasil[$i]["validasi_rute_delete"]=="Pending"){
                             $hasil_fix[] = $hasil[$i];
                         }
                     }
@@ -620,21 +636,21 @@ class Model_Home extends CI_model
                 for($i=0;$i<count($hasil_data);$i++){
                     if($asal=="addjo"){
                         if($customer=="x"){
-                            if($hasil_data[$i]["rute_status_hapus"]=="NO" && $hasil_data[$i]["validasi_rute"]=="ACC"){
+                            if($hasil_data[$i]["rute_status_hapus"]=="NO" && $hasil_data[$i]["validasi_rute"]=="ACC" && $hasil_data[$i]["validasi_rute_edit"]=="ACC" && $hasil_data[$i]["validasi_rute_delete"]=="ACC"){
                                 $hasil_fix +=1;
                             }
                         }else{
-                            if($hasil_data[$i]["customer_id"]==$customer && $hasil_data[$i]["rute_status_hapus"]=="NO" && $hasil_data[$i]["validasi_rute"]=="ACC"){
+                            if($hasil_data[$i]["customer_id"]==$customer && $hasil_data[$i]["rute_status_hapus"]=="NO" && $hasil_data[$i]["validasi_rute"]=="ACC" && $hasil_data[$i]["validasi_rute_edit"]=="ACC" && $hasil_data[$i]["validasi_rute_delete"]=="ACC"){
                                 $hasil_fix +=1;
                             }
                         }
                     }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewrute"){
                         if($customer=="x"){
-                            if($hasil_data[$i]["rute_status_hapus"]=="NO" &&  $hasil_data[$i]["validasi_rute"]=="Pending"){
+                            if($hasil_data[$i]["rute_status_hapus"]=="NO" &&  $hasil_data[$i]["validasi_rute"]=="Pending" || $hasil_data[$i]["validasi_rute_edit"]=="Pending" || $hasil_data[$i]["validasi_rute_delete"]=="Pending"){
                                 $hasil_fix +=1;
                             }
                         }else{
-                            if($hasil_data[$i]["customer_id"]==$customer && $hasil_data[$i]["rute_status_hapus"]=="NO" &&  $hasil_data[$i]["validasi_rute"]=="Pending"){
+                            if($hasil_data[$i]["customer_id"]==$customer && $hasil_data[$i]["rute_status_hapus"]=="NO" &&  $hasil_data[$i]["validasi_rute"]=="Pending" || $hasil_data[$i]["validasi_rute_edit"]=="Pending" || $hasil_data[$i]["validasi_rute_delete"]=="Pending"){
                                 $hasil_fix +=1;
                             }
                         }
@@ -705,6 +721,8 @@ class Model_Home extends CI_model
                 $this->db->where("validasi","ACC");
             }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewmerk"){
                 $this->db->where("validasi","Pending");
+                $this->db->where("validasi_edit","Pending");
+                $this->db->where("validasi_delete","Pending");
             }
             return $this->db->count_all_results("skb_merk_kendaraan");
         }
@@ -725,7 +743,7 @@ class Model_Home extends CI_model
                         $hasil_fix[] = $hasil[$i];
                     }
                 }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewmerk"){
-                    if($hasil[$i]["status_hapus"]=="NO" && $hasil[$i]["validasi"]=="Pending"){
+                    if($hasil[$i]["status_hapus"]=="NO" && $hasil[$i]["validasi"]=="Pending" || $hasil[$i]["validasi_edit"]=="Pending" || $hasil[$i]["validasi_delete"]=="Pending"){
                         $hasil_fix[] = $hasil[$i];
                     }
                 }else{
@@ -750,7 +768,7 @@ class Model_Home extends CI_model
                             $hasil_fix +=1;
                         }
                     }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewmerk"){
-                        if($hasil_data[$i]["status_hapus"]=="NO" && $hasil_data[$i]["validasi"]=="Pending"){
+                        if($hasil_data[$i]["status_hapus"]=="NO" && $hasil_data[$i]["validasi"]=="Pending" || $hasil_data[$i]["validasi_edit"]=="Pending" || $hasil_data[$i]["validasi_delete"]=="Pending"){
                             $hasil_fix +=1;
                         }
                     }else{
@@ -767,6 +785,8 @@ class Model_Home extends CI_model
             $this->db->where("status_hapus","NO");
             if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User"){
                 $this->db->where("validasi","Pending");
+                $this->db->or_where("validasi_edit","Pending");
+                $this->db->or_where("validasi_delete","Pending");
             }
             return $this->db->count_all_results("skb_kosongan");
         }
@@ -782,7 +802,7 @@ class Model_Home extends CI_model
             $hasil_fix = [];
             for($i=0;$i<count($hasil);$i++){
                 if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User"){
-                    if($hasil[$i]["status_hapus"]=="NO" && $hasil[$i]["validasi"]=="Pending"){
+                    if($hasil[$i]["status_hapus"]=="NO" && $hasil[$i]["validasi"]=="Pending" || $hasil[$i]["validasi_edit"]=="Pending" || $hasil[$i]["validasi_delete"]=="Pending"){
                         $hasil_fix[] = $hasil[$i];
                     }
                 }else{
@@ -804,7 +824,7 @@ class Model_Home extends CI_model
                 $hasil_fix = 0;
                 for($i=0;$i<count($hasil_data);$i++){
                     if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User"){
-                        if($hasil_data[$i]["status_hapus"]=="NO" && $hasil_data[$i]["validasi"]=="Pending"){
+                        if($hasil_data[$i]["status_hapus"]=="NO" && $hasil_data[$i]["validasi"]=="Pending" || $hasil_data[$i]["validasi_edit"]=="Pending" || $hasil_data[$i]["validasi_delete"]=="Pending"){
                             $hasil_fix +=1;
                         }
                     }else{
@@ -828,6 +848,8 @@ class Model_Home extends CI_model
                 $this->db->where("validasi_paketan","ACC");
             }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewpaketan"){
                 $this->db->where("validasi_paketan","Pending");
+                $this->db->or_where("validasi_paketan_edit","Pending");
+                $this->db->or_where("validasi_paketan_delete","Pending");
             }
             return $this->db->count_all_results("skb_paketan");
         }
@@ -845,21 +867,21 @@ class Model_Home extends CI_model
             for($i=0;$i<count($hasil);$i++){
                 if($asal=="addjo"){
                     if($customer=='x'){
-                        if($hasil[$i]["paketan_status_hapus"]=="NO" && $hasil[$i]["validasi_paketan"]=="ACC"){
+                        if($hasil[$i]["paketan_status_hapus"]=="NO" && $hasil[$i]["validasi_paketan"]=="ACC" && $hasil[$i]["validasi_paketan_edit"]=="ACC" && $hasil[$i]["validasi_paketan_delete"]=="ACC"){
                             $hasil_fix[] = $hasil[$i];
                         }
                     }else{
-                        if($hasil[$i]["customer_id"]==$customer && $hasil[$i]["paketan_status_hapus"]=="NO" && $hasil[$i]["validasi_paketan"]=="ACC"){
+                        if($hasil[$i]["customer_id"]==$customer && $hasil[$i]["paketan_status_hapus"]=="NO" && $hasil[$i]["validasi_paketan"]=="ACC" && $hasil[$i]["validasi_paketan_edit"]=="ACC" && $hasil[$i]["validasi_paketan_delete"]=="ACC"){
                             $hasil_fix[] = $hasil[$i];
                         }
                     }
                 }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewpaketan"){
                     if($customer=='x'){
-                        if($hasil[$i]["paketan_status_hapus"]=="NO" && $hasil[$i]["validasi_paketan"]=="Pending"){
+                        if($hasil[$i]["paketan_status_hapus"]=="NO" && $hasil[$i]["validasi_paketan"]=="Pending" || $hasil[$i]["validasi_paketan_edit"]=="Pending" || $hasil[$i]["validasi_paketan_delete"]=="Pending"){
                             $hasil_fix[] = $hasil[$i];
                         }
                     }else{
-                        if($hasil[$i]["customer_id"]==$customer && $hasil[$i]["paketan_status_hapus"]=="NO" && $hasil[$i]["validasi_paketan"]=="Pending"){
+                        if($hasil[$i]["customer_id"]==$customer && $hasil[$i]["paketan_status_hapus"]=="NO" && $hasil[$i]["validasi_paketan"]=="Pending" || $hasil[$i]["validasi_paketan_edit"]=="Pending" || $hasil[$i]["validasi_paketan_delete"]=="Pending"){
                             $hasil_fix[] = $hasil[$i];
                         }
                     }
@@ -882,21 +904,21 @@ class Model_Home extends CI_model
                 for($i=0;$i<count($hasil_data);$i++){
                     if($asal=="addjo"){
                         if($customer=='x'){
-                            if($hasil_data[$i]["paketan_status_hapus"]=="NO" && $hasil_data[$i]["validasi_paketan"]=="ACC"){
+                            if($hasil_data[$i]["paketan_status_hapus"]=="NO" && $hasil_data[$i]["validasi_paketan"]=="ACC" && $hasil_data[$i]["validasi_paketan_edit"]=="ACC" && $hasil_data[$i]["validasi_paketan_delete"]=="ACC"){
                                 $hasil_fix +=1;
                             }
                         }else{
-                            if($hasil_data[$i]["customer_id"]==$customer && $hasil_data[$i]["paketan_status_hapus"]=="NO" && $hasil_data[$i]["validasi_paketan"]=="ACC"){
+                            if($hasil_data[$i]["customer_id"]==$customer && $hasil_data[$i]["paketan_status_hapus"]=="NO" && $hasil_data[$i]["validasi_paketan"]=="ACC" && $hasil_data[$i]["validasi_paketan_edit"]=="ACC" && $hasil_data[$i]["validasi_paketan_delete"]=="ACC"){
                                 $hasil_fix +=1;
                             }
                         }
                     }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewpaketan"){
                         if($customer=='x'){
-                            if($hasil_data[$i]["paketan_status_hapus"]=="NO" && $hasil_data[$i]["validasi_paketan"]=="Pending"){
+                            if($hasil_data[$i]["paketan_status_hapus"]=="NO" && $hasil_data[$i]["validasi_paketan"]=="Pending" || $hasil_data[$i]["validasi_paketan_edit"]=="Pending" || $hasil_data[$i]["validasi_paketan_delete"]=="Pending"){
                                 $hasil_fix +=1;
                             }
                         }else{
-                            if($hasil_data[$i]["customer_id"]==$customer && $hasil_data[$i]["paketan_status_hapus"]=="NO" && $hasil_data[$i]["validasi_paketan"]=="Pending"){
+                            if($hasil_data[$i]["customer_id"]==$customer && $hasil_data[$i]["paketan_status_hapus"]=="NO" && $hasil_data[$i]["validasi_paketan"]=="Pending" || $hasil_data[$i]["validasi_paketan_edit"]=="Pending" || $hasil_data[$i]["validasi_paketan_delete"]=="Pending"){
                                 $hasil_fix +=1;
                             }
                         }

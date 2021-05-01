@@ -112,7 +112,11 @@
                     },
                     {
                         "data": "validasi",
-                        className: 'text-center'
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            let html = "<span>Tambah = "+data+"<br>Edit = "+row['validasi_edit']+"<br>Hapus = "+row['validasi_delete']+"</span>";
+                            return html;
+                        }
                     },
                     {
                         "data": "mobil_no",
@@ -120,15 +124,28 @@
                         "orderable": false,
                         render: function(data, type, row) {
                             var role_user = "<?=$_SESSION['role']?>";
-                            if(role_user!="Supervisor" && role_user!="Super User"){
-                                let html = "<a class='btn btn-light btn-detail-truck' href='javascript:void(0)' data-toggle='modal' data-target='#popup-kendaraan' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
-                                "<a class='btn btn-light btn-update-truck' href='javascript:void(0)' data-toggle='modal' data-target='#popup-update-truck' data-pk='"+data+"'><i class='fas fa-pen-square'></i></a> || "+
-                                "<a class='btn btn-light btn-delete-truck' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-trash-alt'></i></a>";
+                            let html = "";
+                            if(role_user!="Supervisor" && role_user!="Super User" && row["validasi"]!="Pending" && row["validasi"]!="Ditolak"){
+                                if(row["validasi"]!="Pending" && row["validasi_edit"]!="Pending" && row["validasi_delete"]!="Pending"){
+                                    html += "<a class='btn btn-light btn-detail-truck' href='javascript:void(0)' data-toggle='modal' data-target='#popup-kendaraan' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
+                                    "<a class='btn btn-light btn-update-truck' href='javascript:void(0)' data-toggle='modal' data-target='#popup-update-truck' data-pk='"+data+"'><i class='fas fa-pen-square'></i></a> || "+
+                                    "<a class='btn btn-light btn-delete-truck' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-trash-alt'></i></a>";
+                                    return html;
+                                }
+                                return html;
+                            }else if(role_user=="Supervisor" || role_user=="Super User"){
+                                if(row["validasi"]=="Pending"){
+                                    html +="<a class='btn btn-success btn-sm btn-acc-truck' href='javascript:void(0)' data-pk='"+data+"'>ACC Tambah<i class='fas fa-check-circle'></i></a><br>";
+                                }
+                                if(row["validasi_edit"]=="Pending"){
+                                    html += "<a class='btn btn-primary btn-sm btn-acc-edit-truck' href='javascript:void(0)' data-pk='"+data+"'>ACC Edit<i class='fas fa-check-circle'></i></a><br>";
+                                }
+                                if(row["validasi_delete"]=="Pending"){
+                                    html += "<a class='btn btn-danger btn-sm btn-acc-delete-truck' href='javascript:void(0)' data-pk='"+data+"'>ACC Delete<i class='fas fa-check-circle'></i></a><br>";    
+                                }
                                 return html;
                             }else{
-                                let html = "<a class='btn btn-light btn-detail-truck' href='javascript:void(0)' data-toggle='modal' data-target='#popup-kendaraan' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
-                                "<a class='btn btn-light btn-acc-truck' href='javascript:void(0)' data-pk='"+data+"'>ACC <i class='fas fa-check-circle'></i></a>";
-                                return html;
+                                return "";
                             }
                         }
                     }
@@ -258,6 +275,86 @@
                             }
                         })
                     });
+                    $('.btn-acc-edit-truck').click(function() {
+                        let pk = $(this).data('pk');
+                        Swal.fire({
+                            title: 'ACC Edit Data Kendaraan',
+                            icon: "question",
+                            text: 'Yakin anda ingin ACC Edit Data Kendaraan ini?',
+                            showDenyButton: true,
+                            showCancelButton:true,
+                            denyButtonText: `Tolak`,
+                            confirmButtonText: 'ACC',
+                            denyButtonColor: '#808080',
+                            confirmButtonColor: '#4BB543',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/accedittruck/ACC') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }else if(result.isDenied){
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/accedittruck/Ditolak') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        })
+                    });
+                    $('.btn-acc-delete-truck').click(function() {
+                        let pk = $(this).data('pk');
+                        Swal.fire({
+                            title: 'ACC Hapus Data Kendaraan',
+                            icon: "question",
+                            text: 'Yakin anda ingin ACC Hapus Data Kendaraan ini?',
+                            showDenyButton: true,
+                            showCancelButton:true,
+                            denyButtonText: `Tolak`,
+                            confirmButtonText: 'ACC',
+                            denyButtonColor: '#808080',
+                            confirmButtonColor: '#4BB543',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/accdeletetruck/ACC') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }else if(result.isDenied){
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/accdeletetruck/Ditolak') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        })
+                    });
                 },
                 
             });
@@ -319,12 +416,23 @@
                         "orderable": false,
                         render: function(data, type, row) {
                             var role_user = "<?=$_SESSION['role']?>";
+                            let html = "";
                             if(role_user!="Supervisor" && role_user!="Super User" && row["validasi"]!="Pending" && row["validasi"]!="Ditolak"){
-                                let html ="<a class='btn btn-light btn-update-merk' href='javascript:void(0)' data-toggle='modal' data-target='#popup-update-merk' data-pk='"+data+"'><i class='fas fa-pen-square'></i></a> || "+
-                                "<a class='btn btn-light btn-delete-merk' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-trash-alt'></i></a>";
+                                if(row["validasi"]!="Pending" && row["validasi_edit"]!="Pending" && row["validasi_delete"]!="Pending"){
+                                    html +="<a class='btn btn-light btn-update-merk' href='javascript:void(0)' data-toggle='modal' data-target='#popup-update-merk' data-pk='"+data+"'><i class='fas fa-pen-square'></i></a> || "+
+                                    "<a class='btn btn-light btn-delete-merk' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-trash-alt'></i></a>";
+                                }
                                 return html;
                             }else if(role_user=="Supervisor" || role_user=="Super User"){
-                                let html ="<a class='btn btn-light small btn-acc-merk' href='javascript:void(0)' data-pk='"+data+"'>ACC <i class='fas fa-check-circle'></i></a>";
+                                if(row["validasi"]=="Pending"){
+                                    html +="<a class='btn btn-success btn-sm btn-acc-merk' href='javascript:void(0)' data-pk='"+data+"'>ACC Tambah<i class='fas fa-check-circle'></i></a><br>";
+                                }
+                                if(row["validasi_edit"]=="Pending"){
+                                    html += "<a class='btn btn-primary btn-sm btn-acc-edit-merk' href='javascript:void(0)' data-pk='"+data+"'>ACC Edit<i class='fas fa-check-circle'></i></a><br>";
+                                }
+                                if(row["validasi_delete"]=="Pending"){
+                                    html += "<a class='btn btn-danger btn-sm btn-acc-delete-merk' href='javascript:void(0)' data-pk='"+data+"'>ACC Delete<i class='fas fa-check-circle'></i></a><br>";    
+                                }
                                 return html;
                             }else{
                                 return "";
@@ -408,6 +516,86 @@
                                 $.ajax({
                                     type: "GET",
                                     url: "<?php echo base_url('index.php/form/accmerk/Ditolak') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        })
+                    });
+                    $('.btn-acc-edit-merk').click(function() {
+                        let pk = $(this).data('pk');
+                        Swal.fire({
+                            title: 'ACC Edit Data Merk',
+                            icon: "question",
+                            text: 'Yakin anda ingin ACC Edit Data Merk ini?',
+                            showDenyButton: true,
+                            showCancelButton:true,
+                            denyButtonText: `Tolak`,
+                            confirmButtonText: 'ACC',
+                            denyButtonColor: '#808080',
+                            confirmButtonColor: '#4BB543',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/acceditmerk/ACC') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }else if(result.isDenied){
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/acceditmerk/Ditolak') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        })
+                    });
+                    $('.btn-acc-delete-merk').click(function() {
+                        let pk = $(this).data('pk');
+                        Swal.fire({
+                            title: 'ACC Hapus Data Merk',
+                            icon: "question",
+                            text: 'Yakin anda ingin ACC Hapus Data Merk ini?',
+                            showDenyButton: true,
+                            showCancelButton:true,
+                            denyButtonText: `Tolak`,
+                            confirmButtonText: 'ACC',
+                            denyButtonColor: '#808080',
+                            confirmButtonColor: '#4BB543',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/accdeletemerk/ACC') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }else if(result.isDenied){
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/accdeletemerk/Ditolak') ?>",
                                     dataType: "text",
                                     data: {
                                         id: pk
@@ -1361,7 +1549,11 @@
                     },
                     {
                         "data": "validasi",
-                        className: 'text-center'
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            let html = "<span class='small'>Tambah = "+data+"<br>Edit = "+row['validasi_edit']+"<br>Hapus = "+row['validasi_delete']+"</span>";
+                            return html;
+                        }
                     },
                     {
                         "data": "customer_id",
@@ -1369,15 +1561,28 @@
                         "orderable": false,
                         render: function(data, type, row) {
                             var role_user = "<?=$_SESSION['role']?>";
-                            if(role_user!="Supervisor" && role_user!="Super User"){
-                                let html = "<a class='btn btn-light btn-detail-customer' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-customer' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
-                                "<a class='btn btn-light btn-update-customer' data-toggle='modal' data-target='#popup-update-customer' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
-                                "<a class='btn btn-light btn-delete-customer' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
+                            let html = "";
+                            if(role_user!="Supervisor" && role_user!="Super User" && row["validasi"]!="Pending" && row["validasi"]!="Ditolak"){
+                                if(row["validasi"]!="Pending" && row["validasi_edit"]!="Pending" && row["validasi_delete"]!="Pending"){
+                                    html += "<a class='btn btn-light btn-detail-customer' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-customer' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
+                                    "<a class='btn btn-light btn-update-customer' data-toggle='modal' data-target='#popup-update-customer' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
+                                    "<a class='btn btn-light btn-delete-customer' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
+                                    return html;
+                                }
+                                return html;
+                            }else if(role_user=="Supervisor" || role_user=="Super User"){
+                                if(row["validasi"]=="Pending"){
+                                    html +="<a class='btn btn-success btn-sm btn-acc-customer' href='javascript:void(0)' data-pk='"+data+"'>ACC Tambah<i class='fas fa-check-circle'></i></a><br>";
+                                }
+                                if(row["validasi_edit"]=="Pending"){
+                                    html += "<a class='btn btn-primary btn-sm btn-acc-edit-customer' href='javascript:void(0)' data-pk='"+data+"'>ACC Edit<i class='fas fa-check-circle'></i></a><br>";
+                                }
+                                if(row["validasi_delete"]=="Pending"){
+                                    html += "<a class='btn btn-danger btn-sm btn-acc-delete-customer' href='javascript:void(0)' data-pk='"+data+"'>ACC Delete<i class='fas fa-check-circle'></i></a><br>";    
+                                }
                                 return html;
                             }else{
-                                let html = "<a class='btn btn-light btn-detail-customer' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-customer' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
-                                "<a class='btn btn-light btn-acc-customer' href='javascript:void(0)' data-pk='"+data+"'>ACC <i class='fas fa-check-circle'></i></a>";
-                                return html;
+                                return "";
                             }
                         }
                     }
@@ -1481,6 +1686,86 @@
                                 $.ajax({
                                     type: "GET",
                                     url: "<?php echo base_url('index.php/form/acccustomer/Ditolak') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        })
+                    });
+                    $('.btn-acc-edit-customer').click(function() {
+                        let pk = $(this).data('pk');
+                        Swal.fire({
+                            title: 'ACC Edit Data Customer',
+                            icon: "question",
+                            text: 'Yakin anda ingin ACC Edit Data Customer ini?',
+                            showDenyButton: true,
+                            showCancelButton:true,
+                            denyButtonText: `Tolak`,
+                            confirmButtonText: 'ACC',
+                            denyButtonColor: '#808080',
+                            confirmButtonColor: '#4BB543',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/acceditcustomer/ACC') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }else if(result.isDenied){
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/acceditcustomer/Ditolak') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        })
+                    });
+                    $('.btn-acc-delete-customer').click(function() {
+                        let pk = $(this).data('pk');
+                        Swal.fire({
+                            title: 'ACC Hapus Data Customer',
+                            icon: "question",
+                            text: 'Yakin anda ingin ACC Hapus Data Customer ini?',
+                            showDenyButton: true,
+                            showCancelButton:true,
+                            denyButtonText: `Tolak`,
+                            confirmButtonText: 'ACC',
+                            denyButtonColor: '#808080',
+                            confirmButtonColor: '#4BB543',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/accdeletecustomer/ACC') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }else if(result.isDenied){
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/accdeletecustomer/Ditolak') ?>",
                                     dataType: "text",
                                     data: {
                                         id: pk
@@ -1662,7 +1947,11 @@
                     },
                     {
                         "data": "validasi",
-                        className: 'text-center'
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            let html = "<span class='small'>Tambah = "+data+"<br>Edit = "+row['validasi_edit']+"<br>Hapus = "+row['validasi_delete']+"</span>";
+                            return html;
+                        }
                     },
                     {
                         "data": "supir_id",
@@ -1670,15 +1959,28 @@
                         "orderable": false,
                         render: function(data, type, row) {
                             var role_user = "<?=$_SESSION['role']?>";
-                            if(role_user!="Supervisor" && role_user!="Super User"){
-                                let html = "<a class='btn btn-light btn-detail-supir' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-supir' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
-                                "<a class='btn btn-light btn-update-supir' data-toggle='modal' data-target='#popup-update-supir' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
-                                "<a class='btn btn-light btn-delete-supir' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
+                            let html = "";
+                            if(role_user!="Supervisor" && role_user!="Super User" && row["validasi"]!="Pending" && row["validasi"]!="Ditolak"){
+                                if(row["validasi"]!="Pending" && row["validasi_edit"]!="Pending" && row["validasi_delete"]!="Pending"){
+                                    html += "<a class='btn btn-light btn-detail-supir' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-supir' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
+                                    "<a class='btn btn-light btn-update-supir' data-toggle='modal' data-target='#popup-update-supir' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
+                                    "<a class='btn btn-light btn-delete-supir' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
+                                    return html;
+                                }
+                                return html;
+                            }else if(role_user=="Supervisor" || role_user=="Super User"){
+                                if(row["validasi"]=="Pending"){
+                                    html +="<a class='btn btn-success btn-sm btn-acc-supir' href='javascript:void(0)' data-pk='"+data+"'>ACC Tambah<i class='fas fa-check-circle'></i></a><br>";
+                                }
+                                if(row["validasi_edit"]=="Pending"){
+                                    html += "<a class='btn btn-primary btn-sm btn-acc-edit-supir' href='javascript:void(0)' data-pk='"+data+"'>ACC Edit<i class='fas fa-check-circle'></i></a><br>";
+                                }
+                                if(row["validasi_delete"]=="Pending"){
+                                    html += "<a class='btn btn-danger btn-sm btn-acc-delete-supir' href='javascript:void(0)' data-pk='"+data+"'>ACC Delete<i class='fas fa-check-circle'></i></a><br>";    
+                                }
                                 return html;
                             }else{
-                                let html = "<a class='btn btn-light btn-detail-supir' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-supir' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
-                                "<a class='btn btn-light btn-acc-supir' href='javascript:void(0)' data-pk='"+data+"'>ACC <i class='fas fa-check-circle'></i></a>";
-                                return html;
+                                return "";
                             }
                         }
                     }
@@ -1818,6 +2120,86 @@
                                 $.ajax({
                                     type: "GET",
                                     url: "<?php echo base_url('index.php/form/accsupir/Ditolak') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        })
+                    });
+                    $('.btn-acc-edit-supir').click(function() {
+                        let pk = $(this).data('pk');
+                        Swal.fire({
+                            title: 'ACC Edit Data Driver',
+                            icon: "question",
+                            text: 'Yakin anda ingin ACC Edit Data Driver ini?',
+                            showDenyButton: true,
+                            showCancelButton:true,
+                            denyButtonText: `Tolak`,
+                            confirmButtonText: 'ACC',
+                            denyButtonColor: '#808080',
+                            confirmButtonColor: '#4BB543',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/acceditsupir/ACC') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }else if(result.isDenied){
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/acceditsupir/Ditolak') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        })
+                    });
+                    $('.btn-acc-delete-supir').click(function() {
+                        let pk = $(this).data('pk');
+                        Swal.fire({
+                            title: 'ACC Hapus Data Driver',
+                            icon: "question",
+                            text: 'Yakin anda ingin ACC Hapus Data Driver ini?',
+                            showDenyButton: true,
+                            showCancelButton:true,
+                            denyButtonText: `Tolak`,
+                            confirmButtonText: 'ACC',
+                            denyButtonColor: '#808080',
+                            confirmButtonColor: '#4BB543',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/accdeletesupir/ACC') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }else if(result.isDenied){
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/accdeletesupir/Ditolak') ?>",
                                     dataType: "text",
                                     data: {
                                         id: pk
@@ -2380,10 +2762,6 @@
                 },
                 "deferRender": true,
                 "paging":false,
-                // "aLengthMenu": [
-                //     [5, 10, 30, 50, 100],
-                //     [5, 10, 30, 50, 100]
-                // ],
                 "columns": [
                     {
                         "data": "rute_id",
@@ -2393,10 +2771,10 @@
                             return html;
                         }
                     },
-                    {
-                        "data": "rute_id",
-                        className: 'text-center'
-                    },
+                    // {
+                    //     "data": "rute_id",
+                    //     className: 'text-center'
+                    // },
                     {
                         "data": "customer_name"
                     },
@@ -2427,7 +2805,11 @@
                     },
                     {
                         "data": "validasi_rute",
-                        className: 'text-center'
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            let html = "<span class='small'>Tambah = "+data+"<br>Edit = "+row['validasi_rute_edit']+"<br>Hapus = "+row['validasi_rute_delete']+"</span>";
+                            return html;
+                        }
                     },
                     {
                         "data": "rute_id",
@@ -2435,15 +2817,28 @@
                         "orderable": false,
                         render: function(data, type, row) {
                             var role_user = "<?=$_SESSION['role']?>";
-                            if(role_user!="Supervisor" && role_user!="Super User"){
-                                let html = "<a class='btn btn-light btn-detail-rute' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
-                                "<a class='btn btn-light btn-update-rute' data-toggle='modal' data-target='#popup-update-rute' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
-                                "<a class='btn btn-light btn-delete-rute' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
+                            let html = "";
+                            if(role_user!="Supervisor" && role_user!="Super User" && row["validasi_rute"]!="Pending" && row["validasi_rute"]!="Ditolak"){
+                                if(row["validasi"]!="Pending" && row["validasi_edit"]!="Pending" && row["validasi_delete"]!="Pending"){
+                                    html += "<a class='btn btn-light btn-detail-rute' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
+                                    "<a class='btn btn-light btn-update-rute' data-toggle='modal' data-target='#popup-update-rute' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
+                                    "<a class='btn btn-light btn-delete-rute' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
+                                    return html;
+                                }
+                                return html;
+                            }else if(role_user=="Supervisor" || role_user=="Super User"){
+                                if(row["validasi_rute"]=="Pending"){
+                                    html +="<a class='btn btn-success btn-sm btn-acc-rute' href='javascript:void(0)' data-pk='"+data+"'>ACC Tambah<i class='fas fa-check-circle'></i></a><br>";
+                                }
+                                if(row["validasi_rute_edit"]=="Pending"){
+                                    html += "<a class='btn btn-primary btn-sm btn-acc-edit-rute' href='javascript:void(0)' data-pk='"+data+"'>ACC Edit<i class='fas fa-check-circle'></i></a><br>";
+                                }
+                                if(row["validasi_rute_delete"]=="Pending"){
+                                    html += "<a class='btn btn-danger btn-sm btn-acc-delete-rute' href='javascript:void(0)' data-pk='"+data+"'>ACC Delete<i class='fas fa-check-circle'></i></a><br>";    
+                                }
                                 return html;
                             }else{
-                                let html = "<a class='btn btn-light btn-detail-rute' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
-                                "<a class='btn btn-light btn-acc-rute' href='javascript:void(0)' data-pk='"+data+"'>ACC <i class='fas fa-check-circle'></i></a>";
-                                return html;
+                                return "";
                             }
                         }
                         
@@ -2581,6 +2976,86 @@
                             }
                         })
                     });
+                    $('.btn-acc-edit-rute').click(function() {
+                        let pk = $(this).data('pk');
+                        Swal.fire({
+                            title: 'ACC Edit Data Rute dan Muatan',
+                            icon: "question",
+                            text: 'Yakin anda ingin ACC Edit Data Rute dan Muatan ini?',
+                            showDenyButton: true,
+                            showCancelButton:true,
+                            denyButtonText: `Tolak`,
+                            confirmButtonText: 'ACC',
+                            denyButtonColor: '#808080',
+                            confirmButtonColor: '#4BB543',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/acceditrute/ACC') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }else if(result.isDenied){
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/acceditrute/Ditolak') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        })
+                    });
+                    $('.btn-acc-delete-rute').click(function() {
+                        let pk = $(this).data('pk');
+                        Swal.fire({
+                            title: 'ACC Hapus Rute dan Muatan',
+                            icon: "question",
+                            text: 'Yakin anda ingin ACC Hapsu Data Rute dan Muatan ini?',
+                            showDenyButton: true,
+                            showCancelButton:true,
+                            denyButtonText: `Tolak`,
+                            confirmButtonText: 'ACC',
+                            denyButtonColor: '#808080',
+                            confirmButtonColor: '#4BB543',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/accdeleterute/ACC') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }else if(result.isDenied){
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/accdeleterute/Ditolak') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        })
+                    });
                 }
             });
         });
@@ -2652,7 +3127,11 @@
                     },
                     {
                         "data": "validasi_paketan",
-                        className: 'text-center'
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            let html = "<span>Tambah = "+data+"<br>Edit = "+row['validasi_paketan_edit']+"<br>Hapus = "+row['validasi_paketan_delete']+"</span>";
+                            return html;
+                        }  
                     },
                     {
                         "data": "paketan_id",
@@ -2660,13 +3139,27 @@
                         "orderable": false,
                         render: function(data, type, row) {
                             var role_user = "<?=$_SESSION['role']?>";
-                            if(role_user!="Supervisor" && role_user!="Super User"){
-                                let html = "<a class='btn btn-light btn-update-paketan' data-toggle='modal' data-target='#popup-update-paketan' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
-                                "<a class='btn btn-light btn-delete-paketan' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
+                            let html = "";
+                            if(role_user!="Supervisor" && role_user!="Super User" && row["validasi_rute"]!="Pending" && row["validasi_rute"]!="Ditolak"){
+                                if(row["validasi"]!="Pending" && row["validasi_edit"]!="Pending" && row["validasi_delete"]!="Pending"){
+                                    html += "<a class='btn btn-light btn-update-paketan' data-toggle='modal' data-target='#popup-update-paketan' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
+                                    "<a class='btn btn-light btn-delete-paketan' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
+                                    return html;
+                                }
+                                return html;
+                            }else if(role_user=="Supervisor" || role_user=="Super User"){
+                                if(row["validasi_paketan"]=="Pending"){
+                                    html +="<a class='btn btn-success btn-sm btn-acc-paketan' href='javascript:void(0)' data-pk='"+data+"'>ACC Tambah<i class='fas fa-check-circle'></i></a><br>";
+                                }
+                                if(row["validasi_paketan_edit"]=="Pending"){
+                                    html += "<a class='btn btn-primary btn-sm btn-acc-edit-paketan' href='javascript:void(0)' data-pk='"+data+"'>ACC Edit<i class='fas fa-check-circle'></i></a><br>";
+                                }
+                                if(row["validasi_paketan_delete"]=="Pending"){
+                                    html += "<a class='btn btn-danger btn-sm btn-acc-delete-paketan' href='javascript:void(0)' data-pk='"+data+"'>ACC Delete<i class='fas fa-check-circle'></i></a><br>";    
+                                }
                                 return html;
                             }else{
-                                let html = "<a class='btn btn-light btn-acc-paketan' href='javascript:void(0)' data-pk='"+data+"'>ACC <i class='fas fa-check-circle'></i></a>";
-                                return html;
+                                return "";
                             }
                         } 
                     }
@@ -2838,6 +3331,86 @@
                                 $.ajax({
                                     type: "GET",
                                     url: "<?php echo base_url('index.php/form/accpaketan/Ditolak') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        })
+                    });
+                    $('.btn-acc-edit-paketan').click(function() {
+                        let pk = $(this).data('pk');
+                        Swal.fire({
+                            title: 'ACC Edit Data Rute Paketan',
+                            icon: "question",
+                            text: 'Yakin anda ingin ACC Edit Data Rute Paketan ini?',
+                            showDenyButton: true,
+                            showCancelButton: true,
+                            denyButtonText: `Tolak`,
+                            confirmButtonText: 'ACC',
+                            denyButtonColor: '#808080',
+                            confirmButtonColor: '#4BB543',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/acceditpaketan/ACC') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }else if(result.isDenied){
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/acceditpaketan/Ditolak') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        })
+                    });
+                    $('.btn-acc-delete-paketan').click(function() {
+                        let pk = $(this).data('pk');
+                        Swal.fire({
+                            title: 'ACC Hapus Data Rute Paketan',
+                            icon: "question",
+                            text: 'Yakin anda ingin ACC Hapus Data Rute Paketan ini?',
+                            showDenyButton: true,
+                            showCancelButton: true,
+                            denyButtonText: `Tolak`,
+                            confirmButtonText: 'ACC',
+                            denyButtonColor: '#808080',
+                            confirmButtonColor: '#4BB543',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/accdeletepaketan/ACC') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        location.reload();
+                                    }
+                                });
+                            }else if(result.isDenied){
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/accdeletepaketan/Ditolak') ?>",
                                     dataType: "text",
                                     data: {
                                         id: pk
@@ -3505,7 +4078,11 @@
                     },
                     {
                         "data": "validasi",
-                        className: 'text-center'
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            let html = "<span class='small'>Tambah = "+data+"<br>Edit = "+row['validasi_edit']+"<br>Hapus = "+row['validasi_delete']+"</span>";
+                            return html;
+                        }   
                     },
                     {
                         "data": "kosongan_id",
@@ -3513,13 +4090,27 @@
                         "orderable": false,
                         render: function(data, type, row) {
                             var role_user = "<?=$_SESSION['role']?>";
-                            if(role_user!="Supervisor" && role_user!="Super User"){
-                                let html = "<a class='btn btn-light btn-update-kosongan' href='javascript:void(0)' data-toggle='modal' data-target='#popup-update-kosongan' data-pk='"+data+"'><i class='fas fa-pen-square'></i></a> || "+
-                                "<a class='btn btn-light btn-delete-kosongan' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-trash-alt'></i></a>";
+                            let html = "";
+                            if(role_user!="Supervisor" && role_user!="Super User" && row["validasi"]!="Pending" && row["validasi"]!="Ditolak"){
+                                if(row["validasi"]!="Pending" && row["validasi_edit"]!="Pending" && row["validasi_delete"]!="Pending"){
+                                    html += "<a class='btn btn-light btn-update-kosongan' href='javascript:void(0)' data-toggle='modal' data-target='#popup-update-kosongan' data-pk='"+data+"'><i class='fas fa-pen-square'></i></a> || "+
+                                    "<a class='btn btn-light btn-delete-kosongan' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-trash-alt'></i></a>";
+                                    return html;
+                                }
+                                return html;
+                            }else if(role_user=="Supervisor" || role_user=="Super User"){
+                                if(row["validasi"]=="Pending"){
+                                    html +="<a class='btn btn-success btn-sm btn-acc-kosongan' href='javascript:void(0)' data-pk='"+data+"'>ACC Tambah<i class='fas fa-check-circle'></i></a><br>";
+                                }
+                                if(row["validasi_edit"]=="Pending"){
+                                    html += "<a class='btn btn-primary btn-sm btn-acc-edit-kosongan' href='javascript:void(0)' data-pk='"+data+"'>ACC Edit<i class='fas fa-check-circle'></i></a><br>";
+                                }
+                                if(row["validasi_delete"]=="Pending"){
+                                    html += "<a class='btn btn-danger btn-sm btn-acc-delete-kosongan' href='javascript:void(0)' data-pk='"+data+"'>ACC Delete<i class='fas fa-check-circle'></i></a><br>";    
+                                }
                                 return html;
                             }else{
-                                let html = "<a class='btn btn-light btn-acc-kosongan' href='javascript:void(0)' data-pk='"+data+"'>ACC <i class='fas fa-check-circle'></i></a>";
-                                return html;
+                                return "";
                             }
                         }
                     }
@@ -3599,6 +4190,86 @@
                                 $.ajax({ //ajax ambil data bon
                                     type: "GET",
                                     url: "<?php echo base_url('index.php/form/acckosongan/Ditolak') ?>",
+                                    dataType: "JSON",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) { //jika ambil data sukses
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        })
+                    });
+                    $('.btn-acc-edit-kosongan').click(function() {
+                        let pk = $(this).data('pk');
+                        Swal.fire({
+                            title: 'ACC Edit Data Rute Kosongan',
+                            icon: "question",
+                            text: 'Yakin anda ingin ACC Edit Data Rute Kosongan ini?',
+                            showDenyButton: true,
+                            showCancelButton:true,
+                            denyButtonText: `Tolak`,
+                            confirmButtonText: 'ACC',
+                            denyButtonColor: '#808080',
+                            confirmButtonColor: '#4BB543',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({ //ajax ambil data bon
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/acceditkosongan/ACC') ?>",
+                                    dataType: "JSON",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) { //jika ambil data sukses
+                                        location.reload();
+                                    }
+                                });
+                            }else if(result.isDenied){
+                                $.ajax({ //ajax ambil data bon
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/acceditkosongan/Ditolak') ?>",
+                                    dataType: "JSON",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) { //jika ambil data sukses
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        })
+                    });
+                    $('.btn-acc-delete-kosongan').click(function() {
+                        let pk = $(this).data('pk');
+                        Swal.fire({
+                            title: 'ACC Hapus Data Rute Kosongan',
+                            icon: "question",
+                            text: 'Yakin anda ingin ACC Hapus Data Rute Kosongan ini?',
+                            showDenyButton: true,
+                            showCancelButton:true,
+                            denyButtonText: `Tolak`,
+                            confirmButtonText: 'ACC',
+                            denyButtonColor: '#808080',
+                            confirmButtonColor: '#4BB543',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({ //ajax ambil data bon
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/accdeletekosongan/ACC') ?>",
+                                    dataType: "JSON",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) { //jika ambil data sukses
+                                        location.reload();
+                                    }
+                                });
+                            }else if(result.isDenied){
+                                $.ajax({ //ajax ambil data bon
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/accdeletekosongan/Ditolak') ?>",
                                     dataType: "JSON",
                                     data: {
                                         id: pk

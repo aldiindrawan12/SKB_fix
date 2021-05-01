@@ -70,8 +70,30 @@ class Model_Form extends CI_model
         $this->db->update("skb_supir");
     }
 
+    public function accdeletesupir($supir_id,$validasi){
+        if($validasi=="Ditolak"){
+            $this->db->set("status_hapus","NO");
+        }else{
+            $this->db->set("status_hapus","YES");
+        }
+        $this->db->set("validasi_delete","ACC");
+        $this->db->where("supir_id",$supir_id);
+        $this->db->update("skb_supir");
+    }
+
     public function acckosongan($kosongan_id,$validasi){
         $this->db->set("validasi",$validasi);
+        $this->db->where("kosongan_id",$kosongan_id);
+        $this->db->update("skb_kosongan");
+    }
+
+    public function accdeletekosongan($kosongan_id,$validasi){
+        if($validasi=="Ditolak"){
+            $this->db->set("status_hapus","NO");
+        }else{
+            $this->db->set("status_hapus","YES");
+        }
+        $this->db->set("validasi_delete","ACC");
         $this->db->where("kosongan_id",$kosongan_id);
         $this->db->update("skb_kosongan");
     }
@@ -82,14 +104,47 @@ class Model_Form extends CI_model
         $this->db->update("skb_customer");
     }
 
+    public function accdeletecustomer($customer_id,$validasi){
+        if($validasi=="Ditolak"){
+            $this->db->set("status_hapus","NO");
+        }else{
+            $this->db->set("status_hapus","YES");
+        }
+        $this->db->set("validasi_delete","ACC");
+        $this->db->where("customer_id",$customer_id);
+        $this->db->update("skb_customer");
+    }
+
     public function acctruck($truck_id,$validasi){
         $this->db->set("validasi",$validasi);
         $this->db->where("mobil_no",$truck_id);
         $this->db->update("skb_mobil");
     }
 
+    public function accdeletetruck($mobil_no,$validasi){
+        if($validasi=="Ditolak"){
+            $this->db->set("status_hapus","NO");
+        }else{
+            $this->db->set("status_hapus","YES");
+        }
+        $this->db->set("validasi_delete","ACC");
+        $this->db->where("mobil_no",$mobil_no);
+        $this->db->update("skb_mobil");
+    }
+
     public function accrute($rute_id,$validasi){
         $this->db->set("validasi_rute",$validasi);
+        $this->db->where("rute_id",$rute_id);
+        $this->db->update("skb_rute");
+    }
+
+    public function accdeleterute($rute_id,$validasi){
+        if($validasi=="Ditolak"){
+            $this->db->set("rute_status_hapus","NO");
+        }else{
+            $this->db->set("rute_status_hapus","YES");
+        }
+        $this->db->set("validasi_rute_delete","ACC");
         $this->db->where("rute_id",$rute_id);
         $this->db->update("skb_rute");
     }
@@ -100,8 +155,30 @@ class Model_Form extends CI_model
         $this->db->update("skb_paketan");
     }
 
+    public function accdeletepaketan($paketan_id,$validasi){
+        if($validasi=="Ditolak"){
+            $this->db->set("paketan_status_hapus","NO");
+        }else{
+            $this->db->set("paketan_status_hapus","YES");
+        }
+        $this->db->set("validasi_paketan_delete","ACC");
+        $this->db->where("paketan_id",$paketan_id);
+        $this->db->update("skb_paketan");
+    }
+
     public function accmerk($merk_id,$validasi){
         $this->db->set("validasi",$validasi);
+        $this->db->where("merk_id",$merk_id);
+        $this->db->update("skb_merk_kendaraan");
+    }
+
+    public function accdeletemerk($merk_id,$validasi){
+        if($validasi=="Ditolak"){
+            $this->db->set("status_hapus","NO");
+        }else{
+            $this->db->set("status_hapus","YES");
+        }
+        $this->db->set("validasi_delete","ACC");
         $this->db->where("merk_id",$merk_id);
         $this->db->update("skb_merk_kendaraan");
     }

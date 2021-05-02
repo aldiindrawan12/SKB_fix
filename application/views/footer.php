@@ -3784,8 +3784,8 @@
                                         var tonase = parseInt(data["tonase"]);
                                         var total = parseInt(data["tagihan"]);
                                     }else{
-                                        var tonase = parseInt($("#invoice_tonase").val())+parseInt(data["tonase"]);
-                                        var total = parseInt($("#invoice_total").val())+parseInt(data["tagihan"]);
+                                        var tonase = parseInt($("#invoice_tonase").val().replaceAll(".",""))+parseInt(data["tonase"]);
+                                        var total = parseInt($("#invoice_total").val().replaceAll(".",""))+parseInt(data["tagihan"]);
                                     }
                                     if($("#invoice_ppn").val()=="Ya"){
                                         var ppn = total*0.1;
@@ -3793,23 +3793,23 @@
                                         var ppn = 0;
                                     }
                                     var grand_total=total+ppn;
-                                    $("#invoice_tonase").val(tonase);
-                                    $("#invoice_total").val(total);
-                                    $("#invoice_ppn_nilai").val(ppn);
-                                    $("#invoice_grand_total").val(grand_total);
+                                    $("#invoice_tonase").val(rupiah(tonase));
+                                    $("#invoice_total").val(rupiah(total));
+                                    $("#invoice_ppn_nilai").val(rupiah(ppn));
+                                    $("#invoice_grand_total").val(rupiah(grand_total));
                                 }else{
-                                    var tonase = parseInt($("#invoice_tonase").val())-parseInt(data["tonase"]);
-                                    var total = parseInt($("#invoice_total").val())-parseInt(data["tagihan"]);
-                                    $("#invoice_tonase").val(tonase);
-                                    $("#invoice_total").val(total);
+                                    var tonase = parseInt($("#invoice_tonase").val().replaceAll(".",""))-parseInt(data["tonase"]);
+                                    var total = parseInt($("#invoice_total").val().replaceAll(".",""))-parseInt(data["tagihan"]);
+                                    $("#invoice_tonase").val(rupiah(tonase));
+                                    $("#invoice_total").val(rupiah(total));
                                     if($("#invoice_ppn").val()=="Ya"){
                                         var ppn = total*0.1;
                                     }else{
                                         var ppn = 0;
                                     }
                                     var grand_total=total+ppn;
-                                    $("#invoice_ppn_nilai").val(ppn);
-                                    $("#invoice_grand_total").val(grand_total);
+                                    $("#invoice_ppn_nilai").val(rupiah(ppn));
+                                    $("#invoice_grand_total").val(rupiah(grand_total));
                                 }
                             }
                         });
@@ -3894,7 +3894,7 @@
                 table.ajax.reload();
             });
             $("#invoice_ppn").change(function() {
-                var total = $("#invoice_total").val();
+                var total = $("#invoice_total").val().replaceAll(".","");
                 if(total!=""){
                     if($("#invoice_ppn").val()=="Ya"){
                         var ppn=total*0.1;
@@ -3902,8 +3902,8 @@
                         var ppn=0;
                     }
                     var grand_total=parseInt(total)+parseInt(ppn);
-                    $("#invoice_ppn_nilai").val(ppn);
-                    $("#invoice_grand_total").val(grand_total);
+                    $("#invoice_ppn_nilai").val(rupiah(ppn));
+                    $("#invoice_grand_total").val(rupiah(grand_total));
                 }
             });
         });

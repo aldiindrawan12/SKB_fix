@@ -739,6 +739,12 @@ class Form extends CI_Controller {
             $this->model_form->accdeletesupir($supir,$validasi);
             echo $supir;
         }
+        public function acceditsupir($validasi){
+            $supir_id = $this->input->get("id");
+            $this->model_form->acceditsupir($supir_id,$validasi);
+            echo $supir_id;
+        }
+
         public function acckosongan($validasi){
             $kosongan_id = $this->input->get("id");
             $this->model_form->acckosongan($kosongan_id,$validasi);
@@ -749,6 +755,12 @@ class Form extends CI_Controller {
             $this->model_form->accdeletekosongan($kosongan_id,$validasi);
             echo $kosongan_id;
         }
+        public function acceditkosongan($validasi){
+            $kosongan_id = $this->input->get("id");
+            $this->model_form->acceditkosongan($kosongan_id,$validasi);
+            echo $kosongan_id;
+        }
+
         public function acccustomer($validasi){
             $customer_id = $this->input->get("id");
             $this->model_form->acccustomer($customer_id,$validasi);
@@ -759,6 +771,12 @@ class Form extends CI_Controller {
             $this->model_form->accdeletecustomer($customer_id,$validasi);
             echo $customer_id;
         }
+        public function acceditcustomer($validasi){
+            $customer_id = $this->input->get("id");
+            $this->model_form->acceditcustomer($customer_id,$validasi);
+            echo $customer_id;
+        }
+
         public function acctruck($validasi){
             $truck_id = $this->input->get("id");
             $this->model_form->acctruck($truck_id,$validasi);
@@ -769,6 +787,12 @@ class Form extends CI_Controller {
             $this->model_form->accdeletetruck($mobil_no,$validasi);
             echo $mobil_no;
         }
+        public function accedittruck($validasi){
+            $mobil_no = $this->input->get("id");
+            $this->model_form->accedittruck($mobil_no,$validasi);
+            echo $mobil_no;
+        }
+
         public function accrute($validasi){
             $rute_id = $this->input->get("id");
             $this->model_form->accrute($rute_id,$validasi);
@@ -779,6 +803,12 @@ class Form extends CI_Controller {
             $this->model_form->accdeleterute($rute_id,$validasi);
             echo $rute_id;
         }
+        public function acceditrute($validasi){
+            $rute_id = $this->input->get("id");
+            $this->model_form->acceditrute($rute_id,$validasi);
+            echo $rute_id;
+        }
+
         public function accpaketan($validasi){
             $paketan_id = $this->input->get("id");
             $this->model_form->accpaketan($paketan_id,$validasi);
@@ -789,6 +819,12 @@ class Form extends CI_Controller {
             $this->model_form->accdeletepaketan($paketan_id,$validasi);
             echo $paketan_id;
         }
+        public function acceditpaketan($validasi){
+            $paketan_id = $this->input->get("id");
+            $this->model_form->acceditpaketan($paketan_id,$validasi);
+            echo $paketan_id;
+        }
+
         public function accmerk($validasi){
             $merk_id = $this->input->get("id");
             $this->model_form->accmerk($merk_id,$validasi);
@@ -797,6 +833,11 @@ class Form extends CI_Controller {
         public function accdeletemerk($validasi){
             $merk_id = $this->input->get("id");
             $this->model_form->accdeletemerk($merk_id,$validasi);
+            echo $merk_id;
+        }
+        public function acceditmerk($validasi){
+            $merk_id = $this->input->get("id");
+            $this->model_form->acceditmerk($merk_id,$validasi);
             echo $merk_id;
         }
     //end fungsi acc

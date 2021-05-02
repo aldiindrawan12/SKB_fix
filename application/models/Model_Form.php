@@ -123,6 +123,19 @@ class Model_Form extends CI_model
             $this->db->where("supir_id",$supir_id);
             $this->db->update("skb_supir");
         }
+        public function acceditsupir($supir_id,$validasi){
+            $data_supir = $this->db->get_where("skb_supir",array("supir_id"=>$supir_id))->row_array();
+            $temp_supir = json_decode($data_supir["temp_supir"],true);
+            $this->db->set("temp_supir","");
+            $this->db->set("validasi_edit","ACC");
+            $this->db->where("supir_id",$supir_id);
+            if($validasi=="Ditolak"){
+                $this->db->update("skb_supir");
+            }else{
+                $this->db->update("skb_supir",$temp_supir);
+            }
+        }
+
         public function acckosongan($kosongan_id,$validasi){
             $this->db->set("validasi",$validasi);
             $this->db->where("kosongan_id",$kosongan_id);
@@ -138,6 +151,19 @@ class Model_Form extends CI_model
             $this->db->where("kosongan_id",$kosongan_id);
             $this->db->update("skb_kosongan");
         }
+        public function acceditkosongan($kosongan_id,$validasi){
+            $data_kosongan = $this->db->get_where("skb_kosongan",array("kosongan_id"=>$kosongan_id))->row_array();
+            $temp_kosongan = json_decode($data_kosongan["temp_kosongan"],true);
+            $this->db->set("temp_kosongan","");
+            $this->db->set("validasi_edit","ACC");
+            $this->db->where("kosongan_id",$kosongan_id);
+            if($validasi=="Ditolak"){
+                $this->db->update("skb_kosongan");
+            }else{
+                $this->db->update("skb_kosongan",$temp_kosongan);
+            }
+        }
+
         public function acccustomer($customer_id,$validasi){
             $this->db->set("validasi",$validasi);
             $this->db->where("customer_id",$customer_id);
@@ -153,6 +179,19 @@ class Model_Form extends CI_model
             $this->db->where("customer_id",$customer_id);
             $this->db->update("skb_customer");
         }
+        public function acceditcustomer($customer_id,$validasi){
+            $data_customer = $this->db->get_where("skb_customer",array("customer_id"=>$customer_id))->row_array();
+            $temp_customer = json_decode($data_customer["temp_customer"],true);
+            $this->db->set("temp_customer","");
+            $this->db->set("validasi_edit","ACC");
+            $this->db->where("customer_id",$customer_id);
+            if($validasi=="Ditolak"){
+                $this->db->update("skb_customer");
+            }else{
+                $this->db->update("skb_customer",$temp_customer);
+            }
+        }
+
         public function acctruck($truck_id,$validasi){
             $this->db->set("validasi",$validasi);
             $this->db->where("mobil_no",$truck_id);
@@ -168,6 +207,19 @@ class Model_Form extends CI_model
             $this->db->where("mobil_no",$mobil_no);
             $this->db->update("skb_mobil");
         }
+        public function accedittruck($mobil_no,$validasi){
+            $data_mobil = $this->db->get_where("skb_mobil",array("mobil_no"=>$mobil_no))->row_array();
+            $temp_mobil = json_decode($data_mobil["temp_mobil"],true);
+            $this->db->set("temp_mobil","");
+            $this->db->set("validasi_edit","ACC");
+            $this->db->where("mobil_no",$mobil_no);
+            if($validasi=="Ditolak"){
+                $this->db->update("skb_mobil");
+            }else{
+                $this->db->update("skb_mobil",$temp_mobil);
+            }
+        }
+
         public function accrute($rute_id,$validasi){
             $this->db->set("validasi_rute",$validasi);
             $this->db->where("rute_id",$rute_id);
@@ -183,6 +235,19 @@ class Model_Form extends CI_model
             $this->db->where("rute_id",$rute_id);
             $this->db->update("skb_rute");
         }
+        public function acceditrute($rute_id,$validasi){
+            $data_rute = $this->db->get_where("skb_rute",array("rute_id"=>$rute_id))->row_array();
+            $temp_rute = json_decode($data_rute["temp_rute"],true);
+            $this->db->set("temp_rute","");
+            $this->db->set("validasi_rute_edit","ACC");
+            $this->db->where("rute_id",$rute_id);
+            if($validasi=="Ditolak"){
+                $this->db->update("skb_rute");
+            }else{
+                $this->db->update("skb_rute",$temp_rute);
+            }
+        }
+
         public function accpaketan($paketan_id,$validasi){
             $this->db->set("validasi_paketan",$validasi);
             $this->db->where("paketan_id",$paketan_id);
@@ -198,6 +263,19 @@ class Model_Form extends CI_model
             $this->db->where("paketan_id",$paketan_id);
             $this->db->update("skb_paketan");
         }
+        public function acceditpaketan($paketan_id,$validasi){
+            $data_paketan = $this->db->get_where("skb_paketan",array("paketan_id"=>$paketan_id))->row_array();
+            $temp_paketan = json_decode($data_paketan["temp_paketan"],true);
+            $this->db->set("temp_paketan","");
+            $this->db->set("validasi_paketan_edit","ACC");
+            $this->db->where("paketan_id",$paketan_id);
+            if($validasi=="Ditolak"){
+                $this->db->update("skb_paketan");
+            }else{
+                $this->db->update("skb_paketan",$temp_paketan);
+            }
+        }
+
         public function accmerk($merk_id,$validasi){
             $this->db->set("validasi",$validasi);
             $this->db->where("merk_id",$merk_id);
@@ -212,6 +290,27 @@ class Model_Form extends CI_model
             $this->db->set("validasi_delete","ACC");
             $this->db->where("merk_id",$merk_id);
             $this->db->update("skb_merk_kendaraan");
+        }
+        public function acceditmerk($merk_id,$validasi){
+            $data_merk = $this->db->get_where("skb_merk_kendaraan",array("merk_id"=>$merk_id))->row_array();
+            $temp_merk = json_decode($data_merk["temp_merk"],true);
+            $this->db->set("temp_merk","");
+            $this->db->set("validasi_edit","ACC");
+            $this->db->where("merk_id",$merk_id);
+            if($validasi=="Ditolak"){
+                $this->db->update("skb_merk_kendaraan");
+            }else{
+                $this->db->update("skb_merk_kendaraan",$temp_merk);
+                
+                $data_truck = array(
+                    "mobil_merk" => $temp_merk["merk_nama"],
+                    "mobil_type" => $temp_merk["merk_type"],
+                    "mobil_jenis" => $temp_merk["merk_jenis"],
+                    "mobil_dump" => $temp_merk["merk_dump"]
+                );
+                $this->db->where("merk_id",$merk_id);
+                $this->db->update("skb_mobil",$data_truck);
+            }
         }
     //end fungsi acc
     //fungsi update
@@ -244,51 +343,69 @@ class Model_Form extends CI_model
             $this->db->update("skb_supir");
         }
         public function update_supir($data,$supir_id){
+            $this->db->set("temp_supir",json_encode($data));
+            $this->db->set("validasi_edit","Pending");
             $this->db->where("supir_id",$supir_id);
-            $this->db->update("skb_supir",$data);
+            $this->db->update("skb_supir");
         }
         public function update_kosongan($kosongan_id,$data){
+            $this->db->set("temp_kosongan",json_encode($data));
+            $this->db->set("validasi_edit","Pending");
             $this->db->where("kosongan_id",$kosongan_id);
-            $this->db->update("skb_kosongan",$data);
+            $this->db->update("skb_kosongan");
         }
         public function update_merk($data,$merk_id){
-            $data_merk = $this->db->get_where("skb_merk_kendaraan",array("merk_id"=>$merk_id))->row_array();
-            $this->db->set("jenis_mobil",$data["merk_jenis"]);
-            $this->db->where("jenis_mobil",$data_merk["merk_jenis"]);
-            $this->db->update("skb_rute");
+            // $data_merk = $this->db->get_where("skb_merk_kendaraan",array("merk_id"=>$merk_id))->row_array();
+
+            // $this->db->set("jenis_mobil",$data["merk_jenis"]);
+            // $this->db->where("jenis_mobil",$data_merk["merk_jenis"]);
+            // $this->db->update("skb_rute");
     
-            $data_truck = array(
-                "mobil_merk" => $data["merk_nama"],
-                "mobil_type" => $data["merk_type"],
-                "mobil_jenis" => $data["merk_jenis"],
-                "mobil_dump" => $data["merk_dump"]
-            );
+            // $data_truck = array(
+            //     "mobil_merk" => $data["merk_nama"],
+            //     "mobil_type" => $data["merk_type"],
+            //     "mobil_jenis" => $data["merk_jenis"],
+            //     "mobil_dump" => $data["merk_dump"]
+            // );
+            // $this->db->where("merk_id",$merk_id);
+            // $this->db->update("skb_mobil",$data_truck);
+            
+            $this->db->set("temp_merk",json_encode($data));
+            $this->db->set("validasi_edit","Pending");
             $this->db->where("merk_id",$merk_id);
-            $this->db->update("skb_mobil",$data_truck);
-    
-            $this->db->where("merk_id",$merk_id);
-            $this->db->update("skb_merk_kendaraan",$data);
+            $this->db->update("skb_merk_kendaraan");
+            // $this->db->update("skb_merk_kendaraan",$data);
         }
         public function update_rute($data,$rute_id){
+            $this->db->set("temp_rute",json_encode($data));
+            $this->db->set("validasi_rute_edit","Pending");
             $this->db->where("rute_id",$rute_id);
-            $this->db->update("skb_rute",$data);
+            $this->db->update("skb_rute");
         }
         public function update_paketan($data,$paketan_id){
+            $this->db->set("temp_paketan",json_encode($data));
+            $this->db->set("validasi_paketan_edit","Pending");
             $this->db->where("paketan_id",$paketan_id);
-            $this->db->update("skb_paketan",$data);
+            $this->db->update("skb_paketan");
         }
         public function update_customer($data){
-            $this->db->set("customer_name",$data["customer_name"]);
-            $this->db->set("customer_alamat",$data["customer_alamat"]);
-            $this->db->set("customer_kontak_person",$data["customer_kontak_person"]);
-            $this->db->set("customer_telp",$data["customer_telp"]);
-            $this->db->set("customer_keterangan",$data["customer_keterangan"]);
+            $data_temp = array(
+                "customer_name"=>$data["customer_name"],
+                "customer_alamat"=>$data["customer_alamat"],
+                "customer_kontak_person"=>$data["customer_kontak_person"],
+                "customer_telp"=>$data["customer_telp"],
+                "customer_keterangan"=>$data["customer_keterangan"]
+            );
+            $this->db->set("temp_customer",json_encode($data_temp));
+            $this->db->set("validasi_edit","Pending");
             $this->db->where("customer_id",$data["customer_id"]);
             $this->db->update("skb_customer");
         }
         public function update_truck($data){
+            $this->db->set("temp_mobil",json_encode($data));
+            $this->db->set("validasi_edit","Pending");
             $this->db->where("mobil_no",$data["mobil_no"]);
-            $this->db->update("skb_mobil",$data);
+            $this->db->update("skb_mobil");
         }
         public function update_akun($data){
             $user = $this->db->get_where("user",array("akun_id"=>$data["akun_id"]))->row_array();

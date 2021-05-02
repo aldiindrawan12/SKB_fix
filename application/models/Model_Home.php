@@ -697,7 +697,9 @@ class Model_Home extends CI_model
                         $hasil_fix[] = $hasil[$i];
                     }
                 }else{
-                    $hasil_fix[] = $hasil[$i];
+                    if($hasil[$i]["status_hapus"]=="NO"){
+                        $hasil_fix[] = $hasil[$i];
+                    }
                 }
             }
             return $hasil_fix;   
@@ -722,7 +724,9 @@ class Model_Home extends CI_model
                             $hasil_fix +=1;
                         }
                     }else{
-                        $hasil_fix +=1;
+                        if($hasil_data[$i]["status_hapus"]=="NO"){
+                            $hasil_fix +=1;
+                        }
                     }
                 }
                 return $hasil_fix;

@@ -46,8 +46,24 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="container mt-4">
+            
+            <div class="container">
             <?php echo form_open_multipart('form/insert_truck'); ?>
+            <div class="table-responsive py-2 mb-3">
+                <table class="table table-bordered " id="Table-Pilih-Merk" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>    
+                            <th class="text-center" width="5%" scope="col">No</th>
+                            <th class="text-center" width="12%" scope="col">Merk</th>
+                            <th class="text-center" width="12%" scope="col">Type</th>
+                            <th class="text-center" width="15%" scope="col">Jenis Kendaraan</th>
+                            <th class="text-center" width="10%" scope="col">Dump</th>
+                            <th class="text-center" width="30%" scope="col">Aksi</th>
+                        </tr>
+                    </thead>
+                    
+                </table>
+            </div>
                 <div class="row">
                     <div class="col">
                         <div class="form-group ">
@@ -131,21 +147,7 @@
                 <button type="reset" class="btn btn-outline-danger mr-3 float-md-right" onclick="reset_form()">Reset</button>
             </div>
             <?php echo form_close();?>
-            <div class="table-responsive border border-dark py-2">
-                <table class="table table-bordered " id="Table-Pilih-Merk" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>    
-                            <th class="text-center" width="12%" scope="col">No</th>
-                            <th class="text-center" width="12%" scope="col">Merk</th>
-                            <th class="text-center" width="12%" scope="col">Type</th>
-                            <th class="text-center" width="15%" scope="col">Jenis Kendaraan</th>
-                            <th class="text-center" width="10%" scope="col">Dump</th>
-                            <th class="text-center" width="30%" scope="col">Aksi</th>
-                        </tr>
-                    </thead>
-                    
-                </table>
-            </div>
+            
         </div>
     </div>
 </div>

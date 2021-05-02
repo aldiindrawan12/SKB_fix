@@ -30,11 +30,7 @@
             <li class="nav-item" id="LI_Master_Data">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Master_Data"
                     aria-expanded="true" aria-controls="Master_Data" onclick="aktifasi('Master_Data')">
-                    <?php if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User"){?>
-                        <span>Valdisai Master Data</span>
-                    <?php }else{?>
-                        <span>Master Data</span>
-                    <?php }?>
+                    <span>Master Data</span>
                 </a>
                 <div id="Master_Data" class="collapse" aria-labelledby="headingTwo">
                     <div class="bg-white py-2 collapse-inner rounded">

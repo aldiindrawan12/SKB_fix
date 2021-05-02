@@ -25,6 +25,7 @@
                         <th class="text-center" width="12%" scope="col">Uang Jalan</th>
                         <th class="text-center" width="12%" scope="col">Status Validasi</th>
                         <th class="text-center" width="15%" scope="col">Aksi</th>
+                        <th class="text-center" width="15%" scope="col">Validasi</th>
                     </tr>
                 </thead>
                 <tbody>

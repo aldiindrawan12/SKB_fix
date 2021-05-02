@@ -27,9 +27,10 @@
                         <th class="text-center" scope="col">Ke</th>
                         <th class="text-center" scope="col">Muatan</th>
                         <th class="text-center" scope="col">Uang Jalan</th>
-                        <th class="text-center" scope="col">Inv./Tagihan</th>
+                        <!-- <th class="text-center" scope="col">Inv./Tagihan</th> -->
                         <th class="text-center" scope="col">Status Validasi</th>
                         <th class="text-center" width="15%" scope="col">Aksi</th>
+                        <th class="text-center" width="15%" scope="col">Validasi</th>
                     </tr>
                 </thead>
                 <tbody>

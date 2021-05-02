@@ -100,17 +100,6 @@
                         "data": "mobil_jenis"
                     },
                     {
-                        "data": "mobil_tahun",
-                        className: 'text-center'
-                    },
-                    {
-                        "data": "mobil_berlaku",
-                        className: 'text-center',
-                        render: function(data, type, row) {
-                            return change_tanggal(data);
-                        }
-                    },
-                    {
                         "data": "validasi",
                         className: 'text-center',
                         render: function(data, type, row) {
@@ -123,17 +112,24 @@
                         className: 'text-center font-weight-bold',
                         "orderable": false,
                         render: function(data, type, row) {
+                            let html = "";
+                            html += "<a class='btn btn-light btn-detail-truck' href='javascript:void(0)' data-toggle='modal' data-target='#popup-kendaraan' data-pk='"+data+"'><i class='fas fa-eye'></i></a>"
+                            if(row["validasi"]!="Pending" && row["validasi_edit"]!="Pending" && row["validasi_delete"]!="Pending"){
+                                html += "<a class='btn btn-light btn-update-truck' href='javascript:void(0)' data-toggle='modal' data-target='#popup-update-truck' data-pk='"+data+"'><i class='fas fa-pen-square'></i></a>"+
+                                "<a class='btn btn-light btn-delete-truck' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-trash-alt'></i></a>";
+                                return html;
+                            }
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "mobil_no",
+                        className: 'text-center font-weight-bold',
+                        "orderable": false,
+                        render: function(data, type, row) {
                             var role_user = "<?=$_SESSION['role']?>";
                             let html = "";
-                            if(role_user!="Supervisor" && role_user!="Super User" && row["validasi"]!="Pending" && row["validasi"]!="Ditolak"){
-                                if(row["validasi"]!="Pending" && row["validasi_edit"]!="Pending" && row["validasi_delete"]!="Pending"){
-                                    html += "<a class='btn btn-light btn-detail-truck' href='javascript:void(0)' data-toggle='modal' data-target='#popup-kendaraan' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
-                                    "<a class='btn btn-light btn-update-truck' href='javascript:void(0)' data-toggle='modal' data-target='#popup-update-truck' data-pk='"+data+"'><i class='fas fa-pen-square'></i></a> || "+
-                                    "<a class='btn btn-light btn-delete-truck' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-trash-alt'></i></a>";
-                                    return html;
-                                }
-                                return html;
-                            }else if(role_user=="Supervisor" || role_user=="Super User"){
+                            if(role_user=="Supervisor" || role_user=="Super User"){
                                 if(row["validasi"]=="Pending"){
                                     html +="<a class='btn btn-success btn-sm btn-acc-truck' href='javascript:void(0)' data-pk='"+data+"'>ACC Tambah<i class='fas fa-check-circle'></i></a><br>";
                                 }
@@ -371,7 +367,7 @@
                 "serverSide": true,
                 "ordering": true,
                 "order": [
-                    [0, 'asc']
+                    [0, 'desc']
                 ],
                 "ajax": {
                     "url": "<?php echo base_url('index.php/home/view_merk/viewmerk') ?>",
@@ -410,6 +406,19 @@
                             return html;
                         }
                     },
+                    {   
+                        "data": "merk_id",
+                        className: 'text-center font-weight-bold',
+                        "orderable": false,
+                        render: function(data, type, row) {
+                            let html = "";
+                            if(row["validasi"]!="Pending" && row["validasi_edit"]!="Pending" && row["validasi_delete"]!="Pending"){
+                                html +="<a class='btn btn-light btn-update-merk' href='javascript:void(0)' data-toggle='modal' data-target='#popup-update-merk' data-pk='"+data+"'><i class='fas fa-pen-square'></i></a>"+
+                                "<a class='btn btn-light btn-delete-merk' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-trash-alt'></i></a>";
+                            }
+                            return html;
+                        }
+                    },
                     {
                         "data": "merk_id",
                         className: 'text-center font-weight-bold',
@@ -417,13 +426,7 @@
                         render: function(data, type, row) {
                             var role_user = "<?=$_SESSION['role']?>";
                             let html = "";
-                            if(role_user!="Supervisor" && role_user!="Super User" && row["validasi"]!="Pending" && row["validasi"]!="Ditolak"){
-                                if(row["validasi"]!="Pending" && row["validasi_edit"]!="Pending" && row["validasi_delete"]!="Pending"){
-                                    html +="<a class='btn btn-light btn-update-merk' href='javascript:void(0)' data-toggle='modal' data-target='#popup-update-merk' data-pk='"+data+"'><i class='fas fa-pen-square'></i></a> || "+
-                                    "<a class='btn btn-light btn-delete-merk' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-trash-alt'></i></a>";
-                                }
-                                return html;
-                            }else if(role_user=="Supervisor" || role_user=="Super User"){
+                            if(role_user=="Supervisor" || role_user=="Super User"){
                                 if(row["validasi"]=="Pending"){
                                     html +="<a class='btn btn-success btn-sm btn-acc-merk' href='javascript:void(0)' data-pk='"+data+"'>ACC Tambah<i class='fas fa-check-circle'></i></a><br>";
                                 }
@@ -1528,48 +1531,60 @@
                 "columns": [
                     {
                         "data": "customer_id",
-                        className: 'text-center',
+                        className: 'text-center small',
                         render: function(data, type, row) {
                             let html = row["nomor"];
                             return html;
                         }
                     },
                     {
-                        "data": "customer_name"
+                        "data": "customer_name",
+                        className: 'text-center small'
                     },
                     {
-                        "data": "customer_alamat"
+                        "data": "customer_alamat",
+                        className: 'text-center small'
                     },
                     {
-                        "data": "customer_kontak_person"
+                        "data": "customer_kontak_person",
+                        className: 'text-center small'
                     },
                     {
-                        "data": "customer_telp"
+                        "data": "customer_telp",
+                        className: 'text-center small'
                     },
                     {
                         "data": "validasi",
-                        className: 'text-center',
+                        className: 'text-center small',
                         render: function(data, type, row) {
-                            let html = "<span class='small'>Tambah = "+data+"<br>Edit = "+row['validasi_edit']+"<br>Hapus = "+row['validasi_delete']+"</span>";
+                            let html = "<span>Tambah = "+data+"<br>Edit = "+row['validasi_edit']+"<br>Hapus = "+row['validasi_delete']+"</span>";
                             return html;
                         }
                     },
                     {
                         "data": "customer_id",
-                        className: 'text-center',
+                        className: 'text-center small',
                         "orderable": false,
                         render: function(data, type, row) {
                             var role_user = "<?=$_SESSION['role']?>";
                             let html = "";
-                            if(role_user!="Supervisor" && role_user!="Super User" && row["validasi"]!="Pending" && row["validasi"]!="Ditolak"){
-                                if(row["validasi"]!="Pending" && row["validasi_edit"]!="Pending" && row["validasi_delete"]!="Pending"){
-                                    html += "<a class='btn btn-light btn-detail-customer' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-customer' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
-                                    "<a class='btn btn-light btn-update-customer' data-toggle='modal' data-target='#popup-update-customer' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
-                                    "<a class='btn btn-light btn-delete-customer' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
-                                    return html;
-                                }
+                            html += "<a class='btn btn-light btn-detail-customer' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-customer' data-pk='"+data+"'><i class='fas fa-eye'></i></a>";
+                            if(row["validasi"]!="Pending" && row["validasi_edit"]!="Pending" && row["validasi_delete"]!="Pending"){
+                                html += "<a class='btn btn-light btn-update-customer' data-toggle='modal' data-target='#popup-update-customer' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a>"+
+                                "<a class='btn btn-light btn-delete-customer' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
                                 return html;
-                            }else if(role_user=="Supervisor" || role_user=="Super User"){
+                            }
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "customer_id",
+                        className: 'text-center small',
+                        "orderable": false,
+                        render: function(data, type, row) {
+                            var role_user = "<?=$_SESSION['role']?>";
+                            let html = "";
+                            if(role_user=="Supervisor" || role_user=="Super User"){
                                 if(row["validasi"]=="Pending"){
                                     html +="<a class='btn btn-success btn-sm btn-acc-customer' href='javascript:void(0)' data-pk='"+data+"'>ACC Tambah<i class='fas fa-check-circle'></i></a><br>";
                                 }
@@ -1883,51 +1898,51 @@
                             return html;
                         }
                     },
-                    {
-                        "data": "supir_tgl_sim",
-                        className: 'text-center',
-                        "orderable": false,
-                            render: function(data, type, row) {
-                                var selisih = "";
-                                $.ajax({
-                                    async: false,
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/generate_selisih_tanggal/') ?>"+data,
-                                    dataType: "text",
-                                    success: function(tanggal) {
-                                        selisih = tanggal;
-                                    }
-                                });
-                                if(row["sisa"][0]=="-"){
-                                    if(selisih>31){
-                                        let html = "<a class='btn btn-block btn-sm btn-success active'><i class='fa fa-fw fa-exclamation-circle'></i>"+row["sisa"]+"</a>";
-                                        return html;
-                                    }else{
-                                        let html = "<a class='btn btn-block btn-sm btn-warning'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
-                                        return html;
-                                    }
-                                }else{
-                                    let html = "<a class='btn btn-block btn-sm btn-danger'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
-                                    return html;
-                                }
-                            }
+                    // {
+                    //     "data": "supir_tgl_sim",
+                    //     className: 'text-center',
+                    //     "orderable": false,
+                    //         render: function(data, type, row) {
+                    //             var selisih = "";
+                    //             $.ajax({
+                    //                 async: false,
+                    //                 type: "GET",
+                    //                 url: "<?php echo base_url('index.php/form/generate_selisih_tanggal/') ?>"+data,
+                    //                 dataType: "text",
+                    //                 success: function(tanggal) {
+                    //                     selisih = tanggal;
+                    //                 }
+                    //             });
+                    //             if(row["sisa"][0]=="-"){
+                    //                 if(selisih>31){
+                    //                     let html = "<a class='btn btn-block btn-sm btn-success active'><i class='fa fa-fw fa-exclamation-circle'></i>"+row["sisa"]+"</a>";
+                    //                     return html;
+                    //                 }else{
+                    //                     let html = "<a class='btn btn-block btn-sm btn-warning'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
+                    //                     return html;
+                    //                 }
+                    //             }else{
+                    //                 let html = "<a class='btn btn-block btn-sm btn-danger'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
+                    //                 return html;
+                    //             }
+                    //         }
 
-                    },
-                    {
-                        "data": "status_jalan",
-                        className: 'text-center',
-                        "orderable": false,
-                            render: function(data, type, row) {
-                                if (data == "Jalan") {
-                                    let html = "<span class='btn-sm btn-block btn-success active'><i class='fa fa-fw fa-check mr-2'></i>" + data + "</span>";
-                                    return html;
-                                } else {
-                                    let html = "<span class='btn-sm btn-block btn-warning active'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>" + data + "</span>";
-                                    return html;
-                                }
-                            }
+                    // },
+                    // {
+                    //     "data": "status_jalan",
+                    //     className: 'text-center',
+                    //     "orderable": false,
+                    //         render: function(data, type, row) {
+                    //             if (data == "Jalan") {
+                    //                 let html = "<span class='btn-sm btn-block btn-success active'><i class='fa fa-fw fa-check mr-2'></i>" + data + "</span>";
+                    //                 return html;
+                    //             } else {
+                    //                 let html = "<span class='btn-sm btn-block btn-warning active'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>" + data + "</span>";
+                    //                 return html;
+                    //             }
+                    //         }
 
-                    },
+                    // },
                     {
                         "data": "status_aktif",
                         className: 'text-center',
@@ -1941,7 +1956,6 @@
                                     return html;
                                 }
                             }
-
                     },
                     {
                         "data": "validasi",
@@ -1956,17 +1970,24 @@
                         className: 'text-center font-weight-bold',
                         "orderable": false,
                         render: function(data, type, row) {
+                            let html = "";
+                            html += "<a class='btn btn-light btn-detail-supir' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-supir' data-pk='"+data+"'><i class='fas fa-eye'></i></a>";
+                            if(row["validasi"]!="Pending" && row["validasi_edit"]!="Pending" && row["validasi_delete"]!="Pending"){
+                                html += "<a class='btn btn-light btn-update-supir' data-toggle='modal' data-target='#popup-update-supir' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a>"+
+                                "<a class='btn btn-light btn-delete-supir' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
+                                return html;
+                            }
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "supir_id",
+                        className: 'text-center font-weight-bold',
+                        "orderable": false,
+                        render: function(data, type, row) {
                             var role_user = "<?=$_SESSION['role']?>";
                             let html = "";
-                            if(role_user!="Supervisor" && role_user!="Super User" && row["validasi"]!="Pending" && row["validasi"]!="Ditolak"){
-                                if(row["validasi"]!="Pending" && row["validasi_edit"]!="Pending" && row["validasi_delete"]!="Pending"){
-                                    html += "<a class='btn btn-light btn-detail-supir' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-supir' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
-                                    "<a class='btn btn-light btn-update-supir' data-toggle='modal' data-target='#popup-update-supir' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
-                                    "<a class='btn btn-light btn-delete-supir' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
-                                    return html;
-                                }
-                                return html;
-                            }else if(role_user=="Supervisor" || role_user=="Super User"){
+                            if(role_user=="Supervisor" || role_user=="Super User"){
                                 if(row["validasi"]=="Pending"){
                                     html +="<a class='btn btn-success btn-sm btn-acc-supir' href='javascript:void(0)' data-pk='"+data+"'>ACC Tambah<i class='fas fa-check-circle'></i></a><br>";
                                 }
@@ -2769,10 +2790,6 @@
                             return html;
                         }
                     },
-                    // {
-                    //     "data": "rute_id",
-                    //     className: 'text-center'
-                    // },
                     {
                         "data": "customer_name"
                     },
@@ -2793,14 +2810,14 @@
                             return html;
                         }
                     },
-                    {
-                        "data": "rute_tagihan",
-                        className: 'text-center',
-                        render: function(data, type, row) {
-                            let html = 'Rp.'+rupiah(data);
-                            return html;
-                        }
-                    },
+                    // {
+                    //     "data": "rute_tagihan",
+                    //     className: 'text-center',
+                    //     render: function(data, type, row) {
+                    //         let html = 'Rp.'+rupiah(data);
+                    //         return html;
+                    //     }
+                    // },
                     {
                         "data": "validasi_rute",
                         className: 'text-center',
@@ -2814,17 +2831,24 @@
                         className: 'text-center',
                         "orderable": false,
                         render: function(data, type, row) {
+                            let html = "";
+                            html += "<a class='btn btn-light btn-detail-rute' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute' data-pk='"+data+"'><i class='fas fa-eye'></i></a>";
+                            if(row["validasi_rute"]!="Pending" && row["validasi_rute_edit"]!="Pending" && row["validasi_rute_delete"]!="Pending"){
+                                html += "<a class='btn btn-light btn-update-rute' data-toggle='modal' data-target='#popup-update-rute' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a>"+
+                                "<a class='btn btn-light btn-delete-rute' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
+                                return html;
+                            }
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "rute_id",
+                        className: 'text-center',
+                        "orderable": false,
+                        render: function(data, type, row) {
                             var role_user = "<?=$_SESSION['role']?>";
                             let html = "";
-                            if(role_user!="Supervisor" && role_user!="Super User" && row["validasi_rute"]!="Pending" && row["validasi_rute"]!="Ditolak"){
-                                if(row["validasi_rute"]!="Pending" && row["validasi_rute_edit"]!="Pending" && row["validasi_rute_delete"]!="Pending"){
-                                    html += "<a class='btn btn-light btn-detail-rute' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute' data-pk='"+data+"'><i class='fas fa-eye'></i></a> || "+
-                                    "<a class='btn btn-light btn-update-rute' data-toggle='modal' data-target='#popup-update-rute' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
-                                    "<a class='btn btn-light btn-delete-rute' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
-                                    return html;
-                                }
-                                return html;
-                            }else if(role_user=="Supervisor" || role_user=="Super User"){
+                            if(role_user=="Supervisor" || role_user=="Super User"){
                                 if(row["validasi_rute"]=="Pending"){
                                     html +="<a class='btn btn-success btn-sm btn-acc-rute' href='javascript:void(0)' data-pk='"+data+"'>ACC Tambah<i class='fas fa-check-circle'></i></a><br>";
                                 }
@@ -2839,7 +2863,6 @@
                                 return "";
                             }
                         }
-                        
                     }
                 ],
                 drawCallback: function() {
@@ -3115,14 +3138,14 @@
                             return html;
                         }
                     },
-                    {
-                        "data": "paketan_tagihan",
-                        className: 'text-center',
-                        render: function(data, type, row) {
-                            let html = 'Rp.'+rupiah(data);
-                            return html;
-                        }
-                    },
+                    // {
+                    //     "data": "paketan_tagihan",
+                    //     className: 'text-center',
+                    //     render: function(data, type, row) {
+                    //         let html = 'Rp.'+rupiah(data);
+                    //         return html;
+                    //     }
+                    // },
                     {
                         "data": "validasi_paketan",
                         className: 'text-center',
@@ -3136,16 +3159,23 @@
                         className: 'text-center',
                         "orderable": false,
                         render: function(data, type, row) {
-                            var role_user = "<?=$_SESSION['role']?>";
                             let html = "";
-                            if(role_user!="Supervisor" && role_user!="Super User" && row["validasi_paketan"]!="Pending" && row["validasi_paketan"]!="Ditolak"){
                                 if(row["validasi_paketan"]!="Pending" && row["validasi_paketan_edit"]!="Pending" && row["validasi_paketan_delete"]!="Pending"){
                                     html += "<a class='btn btn-light btn-update-paketan' data-toggle='modal' data-target='#popup-update-paketan' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
                                     "<a class='btn btn-light btn-delete-paketan' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
                                     return html;
                                 }
                                 return html;
-                            }else if(role_user=="Supervisor" || role_user=="Super User"){
+                        } 
+                    },
+                    {
+                        "data": "paketan_id",
+                        className: 'text-center',
+                        "orderable": false,
+                        render: function(data, type, row) {
+                            var role_user = "<?=$_SESSION['role']?>";
+                            let html = "";
+                            if(role_user=="Supervisor" || role_user=="Super User"){
                                 if(row["validasi_paketan"]=="Pending"){
                                     html +="<a class='btn btn-success btn-sm btn-acc-paketan' href='javascript:void(0)' data-pk='"+data+"'>ACC Tambah<i class='fas fa-check-circle'></i></a><br>";
                                 }
@@ -4044,7 +4074,7 @@
                 "serverSide": true,
                 "ordering": true,
                 "order": [
-                    [0, 'asc']
+                    [0, 'desc']
                 ],
                 "ajax": {
                     "url": "<?php echo base_url('index.php/home/view_kosongan/') ?>",
@@ -4087,16 +4117,23 @@
                         className: 'text-center font-weight-bold',
                         "orderable": false,
                         render: function(data, type, row) {
-                            var role_user = "<?=$_SESSION['role']?>";
                             let html = "";
-                            if(role_user!="Supervisor" && role_user!="Super User" && row["validasi"]!="Pending" && row["validasi"]!="Ditolak"){
                                 if(row["validasi"]!="Pending" && row["validasi_edit"]!="Pending" && row["validasi_delete"]!="Pending"){
                                     html += "<a class='btn btn-light btn-update-kosongan' href='javascript:void(0)' data-toggle='modal' data-target='#popup-update-kosongan' data-pk='"+data+"'><i class='fas fa-pen-square'></i></a> || "+
                                     "<a class='btn btn-light btn-delete-kosongan' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-trash-alt'></i></a>";
                                     return html;
                                 }
                                 return html;
-                            }else if(role_user=="Supervisor" || role_user=="Super User"){
+                        }
+                    },
+                    {
+                        "data": "kosongan_id",
+                        className: 'text-center font-weight-bold',
+                        "orderable": false,
+                        render: function(data, type, row) {
+                            var role_user = "<?=$_SESSION['role']?>";
+                            let html = "";
+                            if(role_user=="Supervisor" || role_user=="Super User"){
                                 if(row["validasi"]=="Pending"){
                                     html +="<a class='btn btn-success btn-sm btn-acc-kosongan' href='javascript:void(0)' data-pk='"+data+"'>ACC Tambah<i class='fas fa-check-circle'></i></a><br>";
                                 }

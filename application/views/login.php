@@ -65,9 +65,9 @@
         var false_login = '<?= $this->session->flashdata('status-login'); ?>';
         if(username == "Username"){
             Swal.fire({
-                    title: "Gagal Login",
-                    icon:"error",
-                    text: "Username tidak ditemukan",
+                    title: 'Gagal Login',
+                    icon:'error',
+                    text: 'Username tidak ditemukan',
                     timer: 2000
                 });
         }
@@ -75,7 +75,7 @@
             Swal.fire({
                     title: "Gagal Login",
                     text: "Password salah",
-                    icon: "error",
+                    icon: 'error',
                     timer: 2000
                 });
         }
@@ -83,7 +83,7 @@
             Swal.fire({
                     title: "Gagal Masuk",
                     text: "Silakan login terlebih dahulu",
-                    icon: "error",
+                    icon: 'error',
                     timer: 2000
                 });
         }

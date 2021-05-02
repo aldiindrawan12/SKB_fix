@@ -779,10 +779,6 @@ class Model_Home extends CI_model
             $this->db->where("paketan_status_hapus","NO");
             if($asal=="addjo"){
                 $this->db->where("validasi_paketan","ACC");
-            }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewpaketan"){
-                $this->db->where("validasi_paketan","Pending");
-                $this->db->or_where("validasi_paketan_edit","Pending");
-                $this->db->or_where("validasi_paketan_delete","Pending");
             }
             return $this->db->count_all_results("skb_paketan");
         }
@@ -810,11 +806,11 @@ class Model_Home extends CI_model
                     }
                 }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewpaketan"){
                     if($customer=='x'){
-                        if($hasil[$i]["paketan_status_hapus"]=="NO" && $hasil[$i]["validasi_paketan"]=="Pending" || $hasil[$i]["validasi_paketan_edit"]=="Pending" || $hasil[$i]["validasi_paketan_delete"]=="Pending"){
+                        if($hasil[$i]["paketan_status_hapus"]=="NO"){
                             $hasil_fix[] = $hasil[$i];
                         }
                     }else{
-                        if($hasil[$i]["customer_id"]==$customer && $hasil[$i]["paketan_status_hapus"]=="NO" && $hasil[$i]["validasi_paketan"]=="Pending" || $hasil[$i]["validasi_paketan_edit"]=="Pending" || $hasil[$i]["validasi_paketan_delete"]=="Pending"){
+                        if($hasil[$i]["customer_id"]==$customer && $hasil[$i]["paketan_status_hapus"]=="NO"){
                             $hasil_fix[] = $hasil[$i];
                         }
                     }
@@ -847,11 +843,11 @@ class Model_Home extends CI_model
                         }
                     }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewpaketan"){
                         if($customer=='x'){
-                            if($hasil_data[$i]["paketan_status_hapus"]=="NO" && $hasil_data[$i]["validasi_paketan"]=="Pending" || $hasil_data[$i]["validasi_paketan_edit"]=="Pending" || $hasil_data[$i]["validasi_paketan_delete"]=="Pending"){
+                            if($hasil_data[$i]["paketan_status_hapus"]=="NO"){
                                 $hasil_fix +=1;
                             }
                         }else{
-                            if($hasil_data[$i]["customer_id"]==$customer && $hasil_data[$i]["paketan_status_hapus"]=="NO" && $hasil_data[$i]["validasi_paketan"]=="Pending" || $hasil_data[$i]["validasi_paketan_edit"]=="Pending" || $hasil_data[$i]["validasi_paketan_delete"]=="Pending"){
+                            if($hasil_data[$i]["customer_id"]==$customer && $hasil_data[$i]["paketan_status_hapus"]=="NO"){
                                 $hasil_fix +=1;
                             }
                         }

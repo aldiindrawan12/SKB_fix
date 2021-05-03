@@ -109,11 +109,11 @@
                             echo 'checked';
                         }
                     ?>
-                    data-toggle="toggle" type="checkbox" data-size="medium" data-onstyle="success" data-offstyle="danger" onchange="togglenih('cekpage<?= $i+1?>','isicekpage<?= $i+1?>')"></td>
+                   input type="checkbox" checked data-toggle="toggle"  data-size="medium" data-onstyle="success" data-offstyle="danger" onchange="togglenih('cekpage<?= $i+1?>','isicekpage<?= $i+1?>')"></td>
                 </tr>
             <?php }?>
-            <tr>
-                <td colspan=3><button type="submit" class="btn btn-primary mr-2">Simpan</button><button type="reset" class="btn btn-danger" onclick="reset_konfigurasi()">Batal</button></td>
+            <tr >
+                <td class="py-3 " colspan=3><button type="submit" class="btn btn-primary mr-2">Simpan</button><button type="reset" class="btn btn-danger" onclick="reset_konfigurasi()">Batal</button></td>
             </tr>
         </tbody>
     </table>
@@ -122,19 +122,20 @@
 </div>
 </div>
 </div>
+
 <script>
-function togglenih(cek,isicek){
-var hak_akses = $("."+isicek).val();
-// alert(hak_akses);
-if(hak_akses==1){
-$("."+cek).val(0);
-$("."+isicek).val(0);
-}else{
-$("."+cek).val(1);
-$("."+isicek).val(1);
-}
-}
-function reset_konfigurasi(){
-location.reload();
+            function togglenih(cek,isicek){
+            var hak_akses = $("."+isicek).val();
+            // alert(hak_akses);
+            if(hak_akses==1){
+            $("."+cek).val(0);
+            $("."+isicek).val(0);
+            }else{
+            $("."+cek).val(1);
+            $("."+isicek).val(1);
+            }
+            }
+            function reset_konfigurasi(){
+            location.reload();
 }
 </script>

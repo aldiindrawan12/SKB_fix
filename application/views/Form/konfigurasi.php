@@ -109,7 +109,7 @@
                             echo 'checked';
                         }
                     ?>
-                   input type="checkbox" checked data-toggle="toggle"  data-size="medium" data-onstyle="success" data-offstyle="danger" onchange="togglenih('cekpage<?= $i+1?>','isicekpage<?= $i+1?>')"></td>
+                    data-toggle="toggle" type="checkbox" data-size="medium" data-onstyle="success" data-offstyle="danger" onchange="togglenih('cekpage<?= $i+1?>','isicekpage<?= $i+1?>')"></td>
                 </tr>
             <?php }?>
             <tr >

@@ -126,5 +126,5 @@
     </div>
 </div>
 <!-- end pop up update akun -->
-<!-- <input id="toggle-one" data-toggle="toggle" type="checkbox" data-size="small" data-onstyle="success" data-offstyle="danger" onchange="togglenih()" data-on="Hello<br>World" data-off="Goodbye<br>World"> -->
+</div>
 </div>

@@ -96,6 +96,7 @@
         <!-- end tabel JO -->
     </div>
 </div>
+</div>
 <!-- pop up add detail rute paketan -->
 <div class="modal fade" id="popup-detail-rute-paketan" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-md"  role="document"  >

@@ -2690,10 +2690,10 @@
                         "orderable": false,
                         render: function(data, type, row) {
                             if (data == "Super User") {
-                                    let html = "<span class='btn-sm btn-block btn-dark'></i>" + data + "</span>";
+                                    let html = "<span class='btn-sm btn-block active btn-dark'></i>" + data + "</span>";
                                     return html;
                                 } else {
-                                    let html = "<span class='btn-sm btn-block btn-light'>" + data + "</span>";
+                                    let html = "<span class='btn-sm btn-block active btn-light'>" + data + "</span>";
                                     return html;
                                 }
                         }

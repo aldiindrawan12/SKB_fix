@@ -4,9 +4,10 @@
             <h6 class="m-0 font-weight-bold text-primary">Data Job Order(JO)</h6>
         </div>
         <!-- select tanggal,bulan,tahun -->
-        <div class="row text-center col-md-12">
+        
+        <div class="row text-center col-md-12 ml-0">
             <!-- select tanggal -->
-            <div class="col-md-2 ">
+            <div class="col-md-2">
                 <select name="Tanggal" id="Tanggal" class="form-control">
                     <option class="font-w700" selected value="x">Semua Tanggal</option>
                     <?php for($i=1;$i<32;$i++){
@@ -72,6 +73,7 @@
                 </a>
             </div>
         </div>
+
         <!-- end select tanggal,bulan,tahun -->
         <!-- tabel JO -->
         <div class="card-body">

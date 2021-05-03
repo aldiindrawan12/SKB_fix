@@ -4,10 +4,10 @@
             <h6 class="m-0 font-weight-bold text-primary">Data Uang Jalan</h6>
         </div>
         <!-- select tanggal,bulan,tahun -->
-        <div class="row text-center col-md-12">
+        <div class="row text-center col-md-12 ml-0">
             <!-- select tanggal -->
-            <div class="col-md-2 ">
-                <select name="Tanggal" id="Tanggal" class="form-control">
+            <div class="col">
+                <select name="Tanggal" id="Tanggal" class="form-control ">
                     <option class="font-w700" selected value="x">Semua Tanggal</option>
                     <?php for($i=1;$i<32;$i++){
                         if($i<10){?>
@@ -20,7 +20,7 @@
             </div>
             <!-- end select tanggal -->
             <!-- select bulan -->
-            <div class="col-md-2">
+            <div class="col">
                 <select name="Bulan" id="Bulan" class="form-control">
                     <option class="font-w700" selected value="x">Semua Bulan</option>
                     <option class="font-w700" value="01">Januari</option>
@@ -39,7 +39,7 @@
             </div>
             <!-- end select bulan -->
             <!-- select tahun -->
-            <div class="col-md-2">
+            <div class="col">
                 <select name="Tahun" id="Tahun" class="form-control">
                     <option class="font-w700" selected value="x">Semua Tahun</option>
                     <?php for($i=15;$i<30;$i++){?>

@@ -92,6 +92,7 @@
                 </table>
             </div>
         </div>
+        </div>
         <!-- end tabel JO -->
     </div>
 </div>

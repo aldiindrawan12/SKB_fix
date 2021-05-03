@@ -99,6 +99,7 @@
         </div>
     </div>
 </div>
+</div>
 <!-- end pop up add detail rute paketan -->
 
 <script>

@@ -94,6 +94,7 @@
         </div>
     </div>
 </div>
+</div>
 <!-- end tampilan detail penggajian supir -->
    
   

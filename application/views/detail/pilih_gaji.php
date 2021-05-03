@@ -48,7 +48,7 @@
                             <input autocomplete="off" type="text" class="form-control" id="gaji_grand_total" name="gaji_grand_total" required readonly>
                         </div>
                     </div>
-                    <div class="container-fluid  alert-danger px-0">
+                    <div class="container-fluid px-0">
                     <button type="submit" class="btn btn-success  float-right" onclick="cek_jo()">Selanjutnya</button>
                     </div>
                 </form>

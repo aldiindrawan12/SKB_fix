@@ -725,6 +725,7 @@ class Home extends CI_Controller {
                 $this->session->set_flashdata('status-login', 'False');
                 redirect(base_url());
             }
+            $data["kosongan"] = $this->model_home->getkosongan();
             $data["page"] = "Paketan_page";
             $data["collapse_group"] = "Master_Data";
             $data["customer"] = $this->model_home->getcustomer();

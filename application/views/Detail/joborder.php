@@ -27,7 +27,11 @@
                     <tr>
                         <td class="d-none d-sm-table-cell text-center " rowspan="16" style="width: 15%;">
                             <p class="badge badge-info">Customer</p>
+                            <?php if($customer){?>
                             <p class="font-size-sm font-weight-bold"><?= $customer["customer_name"] ?></p>
+                            <?php }else{?>
+                                <p class="font-size-sm font-weight-bold">-</p>
+                            <?php }?>
                             <hr>
                             <p class="font-weight-bold badge badge-success">ID JO</p>
                             <p class="font-size-sm font-weight-bold"><?= $jo["Jo_id"] ?></p>
@@ -47,7 +51,7 @@
                                     <table class="table table-bordered small">
                                         <thead>
                                             <tr>
-                                                <th>No Rute</th>
+                                                <th>Keterangan</th>
                                                 <th>Dari</th>
                                                 <th>Ke</th>
                                                 <th>Muatan</th>
@@ -58,7 +62,7 @@
                                                 <?php $data_rute = json_decode($paketan["paketan_data_rute"],true);?>
                                                 <?php for($i=0;$i<count($data_rute);$i++){?>
                                                     <tr>
-                                                        <td>Rute ke-<?= $i+1?></td>
+                                                        <td><?= $data_rute[$i]["customer"]?></td>
                                                         <td><?= $data_rute[$i]["dari"]?></td>
                                                         <td><?= $data_rute[$i]["ke"]?></td>
                                                         <td><?= $data_rute[$i]["muatan"]?></td>
@@ -152,7 +156,7 @@
                     </tr>
                     <tr>
                         <td class="font-weight-bold " style="width: 25%;">Uang Jalan Terbayar</td>
-                        <?php if($jo["uang_jalan_bayar"]>=$jo["uang_jalan"]+$jo["uang_kosongan"] && $jo["status"]=="Dibatalkan"){?>
+                        <?php if($jo["uang_jalan_bayar"]>=$jo["uang_jalan"]+$jo["uang_kosongan"] || $jo["status"]=="Dibatalkan"){?>
                             <td colspan=3>
                                 <div class="row ">
                                     <p class="col">Rp.<?= number_format($jo["uang_jalan_bayar"],2,',','.')?></p>

@@ -11,36 +11,25 @@
                 <small>Pilih Rute Pada Table di Bawah</small>
                 <!-- form Job Order Baru -->
                 <form action="<?=base_url("index.php/form/insert_JO_paketan")?>" method="POST" class="row">
-                    <div class="col-md-3 col-md-offset-4 mb-4">
-                        <label class="form-label font-weight-bold " for="Customer">Customer</label>
-                        <select name="Customer" value="DESC" id="Customer" class="form-control selectpicker mb-4" data-live-search="true" required onchange="customer()">
-                            <option class="font-w700" disabled="disabled" selected value="">Customer</option>
-                            <?php foreach($customer as $value){?>
-                                <option value="<?=$value["customer_id"]?>"><?=$value["customer_name"]?></option>
-                            <?php } ?>
-                        </select>
-                    </div>
-                    <div class="col-md-3 col-md-offset-4 mb-4">
-                        <label for="tanggal_jo" class="form-label font-weight-bold">Tanggal</label>
-                        <input autocomplete="off" type="text" class="form-control" id="tanggal_jo" name="tanggal_jo" required onclick="tanggal_berlaku(this)">
-                    </div>
-                    <div class="table-responsive">
+                    <div class="table-responsive border border-secondary p-3 mb-5 rounded">
                         <table class="table table-bordered" id="Table-Pilih-Rute-Paketan" width="100%" cellspacing="0">
                             <thead>
                                 <tr>    
                                     <th class="text-center" scope="col">No</th>
-                                    <th class="text-center" scope="col">Nama Customer</th>
                                     <th class="text-center" scope="col">Rute</th>
                                     <th class="text-center" scope="col">Jenis Mobil</th>
                                     <th class="text-center" scope="col">Ritase/Tonase</th>
                                     <th class="text-center" scope="col">Uang Jalan</th>
-                                    <th class="text-center" scope="col">Inv./Tagihan</th>
                                     <th class="text-center" width="20%" scope="col">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                             </tbody>
                         </table>
+                    </div>
+                    <div class="col-md-3 col-md-offset-4 mb-4">
+                        <label for="tanggal_jo" class="form-label font-weight-bold">Tanggal</label>
+                        <input autocomplete="off" type="text" class="form-control" id="tanggal_jo" name="tanggal_jo" required onclick="tanggal_berlaku(this)">
                     </div>
                     <div class="col-md-3 col-md-offset-4 mb-4">
                         <label class="form-label font-weight-bold" for="Jenis">Jenis Mobil</label>
@@ -64,7 +53,7 @@
                     </div>
                     <div class="col-md-4 col-md-offset-4">
                         <label for="uang_jalan_bayar" class="form-label font-weight-bold">Uang Jalan Dibayar</label>
-                        <input autocomplete="off" type="text" class="form-control" id="uang_jalan_bayar" name="uang_jalan_bayar" required onkeyup="uang(this)">
+                        <input autocomplete="off" type="text" class="form-control" id="uang_jalan_bayar" name="uang_jalan_bayar" required onkeyup="uang_cek(this)">
                     </div>
                     <div class="col-md-4 col-md-offset-4 mb-4">
                         <label class="form-label font-weight-bold" for="Supir">Supir</label>
@@ -92,7 +81,7 @@
                         <table class="table table-bordered" id="table-data-rute-paketan" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th class="text-center" scope="col">No Rute</th>
+                                    <th class="text-center" scope="col">Keterangan</th>
                                     <th class="text-center" scope="col">Dari</th>
                                     <th class="text-center" scope="col">Ke</th>
                                     <th class="text-center" scope="col">Muatan</th>
@@ -104,7 +93,7 @@
                     </div>
                     <input autocomplete="off" type="text" class="form-control" id="paketan_id" name="paketan_id" required hidden>
                     <input autocomplete="off" type="text" class="form-control" id="Upah" name="Upah" required hidden>
-                    <input autocomplete="off" type="text" class="form-control" id="Tagihan" name="Tagihan" required hidden>
+                    <!-- <input autocomplete="off" type="text" class="form-control" id="Tagihan" name="Tagihan" required hidden> -->
                     <div class="col-md-12 col-md-offset-4 ">
                         <button type="submit" class="btn btn-success ml-3 mt-5 float-md-right">Simpan dan Cetak</button>
                         <button type="reset" class="btn btn-outline-danger mb-3 mt-5  float-md-right" onclick="reset_form()">Reset</button>
@@ -125,46 +114,46 @@
                     </button>
                 </div>
                 <div class="font-size-sm m-3 text-justify">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered" id="table-data-rute-paketan" width="100%" cellspacing="0">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-center" scope="col">No Rute</th>
-                                                <th class="text-center" scope="col">Dari</th>
-                                                <th class="text-center" scope="col">Ke</th>
-                                                <th class="text-center" scope="col">Muatan</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered" id="table-detail-paketan" width="100%" cellspacing="0">
-                                        <tbody>
-                                            <tr>
-                                                <td>Keterangan</td>
-                                                <td><span id="detail-keterangan"></span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tonase</td>
-                                                <td><span id="detail-tonase"></span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Type Gaji</td>
-                                                <td><span id="detail-gaji"></span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Gaji Fix</td>
-                                                <td><span id="detail-gaji-fix"></span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Gaji Non-Fix</td>
-                                                <td><span id="detail-gaji-nonfix"></span></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="table-data-rute-paketan" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th class="text-center" scope="col">Keterangan</th>
+                                    <th class="text-center" scope="col">Dari</th>
+                                    <th class="text-center" scope="col">Ke</th>
+                                    <th class="text-center" scope="col">Muatan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="table-detail-paketan" width="100%" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td>Keterangan</td>
+                                    <td><span id="detail-keterangan"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Tonase</td>
+                                    <td><span id="detail-tonase"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Type Gaji</td>
+                                    <td><span id="detail-gaji"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Gaji Fix</td>
+                                    <td><span id="detail-gaji-fix"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Gaji Non-Fix</td>
+                                    <td><span id="detail-gaji-nonfix"></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -175,7 +164,13 @@
     function reset_form(){
         location.reload();
     }
-    function uang(a){
+    function uang_cek(a){
         $( '#'+a.id ).mask('000.000.000', {reverse: true});
+        var uj = $("#Uang").val().replaceAll(".","");
+        var uang_bayar = $("#uang_jalan_bayar").val().replaceAll(".","");
+        if(parseInt(uj)<parseInt(uang_bayar)){
+            alert('Jumlah Pembayaran UJ Harus Lebih Kecil Dari Rp.'+ rupiah(uj));
+            $( '#uang_jalan_bayar' ).val("");
+        }
     }
 </script>

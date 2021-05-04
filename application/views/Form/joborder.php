@@ -20,10 +20,6 @@
                             <?php } ?>
                         </select>
                     </div>
-                    <div class="col-md-3 col-md-offset-4 mb-4">
-                        <label for="tanggal_jo" class="form-label font-weight-bold">Tanggal</label>
-                        <input autocomplete="off" type="text" class="form-control" id="tanggal_jo" name="tanggal_jo" required onclick="tanggal_berlaku(this)">
-                    </div>
                     <div class="table-responsive">
                         <table class="table table-bordered" id="Table-Pilih-Rute" width="100%" cellspacing="0">
                             <thead>
@@ -68,15 +64,15 @@
                     </div>
                     <div class="col-md-4 col-md-offset-4 mb-4">
                         <label for="Uang" class="form-label font-weight-bold">Uang Jalan</label>
-                        <input autocomplete="off" type="text" class="form-control" id="Uang" name="Uang" required readonly>
+                        <input autocomplete="off" type="text" class="form-control" id="Uang" name="Uang" value=0 required readonly>
                     </div>
                     <div class="col-md-4 col-md-offset-4 ">
                         <label for="Terbilang" class="form-label font-weight-bold">Terbilang</label>
                         <input autocomplete="off" type="text" class="form-control" id="Terbilang" name="Terbilang" required readonly>
                     </div>
-                    <div class="col-md-4 col-md-offset-4">
-                        <label for="uang_jalan_bayar" class="form-label font-weight-bold">Uang Jalan Dibayar</label>
-                        <input autocomplete="off" type="text" class="form-control" id="uang_jalan_bayar" name="uang_jalan_bayar" required onkeyup="uang(this)">
+                    <div class="col-md-3 col-md-offset-4 mb-4">
+                        <label for="tanggal_jo" class="form-label font-weight-bold">Tanggal</label>
+                        <input autocomplete="off" type="text" class="form-control" id="tanggal_jo" name="tanggal_jo" required onclick="tanggal_berlaku(this)">
                     </div>
                     <div class="col-md-4 col-md-offset-4 mb-4">
                         <label class="form-label font-weight-bold" for="Supir">Supir</label>
@@ -107,14 +103,24 @@
                             <option class="font-w700" value="Tidak">Tidak</option>
                         </select>
                     </div>
-                    <div class="col-md-8 col-md-offset-4" style="display:none" id="rute_kosongan_pilih">
-                        <label class="form-label font-weight-bold " for="kosongan_id">Rute Kosongan</label>
-                        <select name="kosongan_id" value="DESC" id="kosongan_id" class="form-control selectpicker mb-4" data-live-search="true">
-                        <option class="font-w700" selected value="0">Dari - Ke - Uang Jalan</option>
-                            <?php foreach($kosongan as $value){?>
-                                <option value="<?=$value["kosongan_id"]?>"><?=$value["kosongan_dari"]?> - <?=$value["kosongan_ke"]?> - Rp.<?= number_format($value["kosongan_uang"],2,",",".")?></option>
-                            <?php } ?>
-                        </select>
+                    <div class="col-md-8 col-md-offset-4" >
+                        <div style="display:none" id="rute_kosongan_pilih">
+                            <label class="form-label font-weight-bold " for="kosongan_id">Rute Kosongan</label>
+                            <select name="kosongan_id" value="DESC" id="kosongan_id" class="form-control selectpicker mb-4" data-live-search="true" onchange="set_uj()">
+                            <option class="font-w700" selected value="0">Dari - Ke - Uang Jalan</option>
+                                <?php foreach($kosongan as $value){?>
+                                    <option value="<?=$value["kosongan_id"]?>"><?=$value["kosongan_dari"]?> - <?=$value["kosongan_ke"]?> - Rp.<?= number_format($value["kosongan_uang"],2,",",".")?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-md-offset-4">
+                        <label for="uang_jalan_total" class="form-label font-weight-bold">Total Uang Jalan</label>
+                        <input autocomplete="off" type="text" class="form-control" id="uang_jalan_total" name="uang_jalan_total" value=0 readonly>
+                    </div>
+                    <div class="col-md-4 col-md-offset-4">
+                        <label for="uang_jalan_bayar" class="form-label font-weight-bold">Uang Jalan Dibayar</label>
+                        <input autocomplete="off" type="text" class="form-control" id="uang_jalan_bayar" name="uang_jalan_bayar" required onkeyup="uang_cek(this)">
                     </div>
                     <input autocomplete="off" type="text" class="form-control" id="Upah" name="Upah" required hidden>
                     <input autocomplete="off" type="text" class="form-control" id="Tagihan" name="Tagihan" required hidden>
@@ -131,8 +137,44 @@
     function reset_form(){
         location.reload();
     }
-    function uang(a){
+    function uang_cek(a){
         $( '#'+a.id ).mask('000.000.000', {reverse: true});
+        var uj = $("#Uang").val().replaceAll(".","");
+        var uj_kosongan = 0;
+        $.ajax({
+            async:false,
+            type: "GET",
+            url: "<?php echo base_url('index.php/detail/getkosongan') ?>",
+            dataType: "JSON",
+            data: {
+                id: $("#kosongan_id").val()
+            },
+            success: function(data) { //jika ambil data sukses
+                uj_kosongan = data["kosongan_uang"];
+            }
+        });
+        var uang_bayar = $("#uang_jalan_bayar").val().replaceAll(".","");
+        if(parseInt(uj)+parseInt(uj_kosongan)<parseInt(uang_bayar)){
+            alert('Jumlah Pembayaran UJ Harus Lebih Kecil Dari Rp.'+ rupiah(parseInt(uj)+parseInt(uj_kosongan)));
+            $( '#uang_jalan_bayar' ).val("");
+        }
+    }
+    function set_uj(){
+        var uj = $("#Uang").val().replaceAll(".","");
+        var uj_kosongan = 0;
+        $.ajax({
+            async:false,
+            type: "GET",
+            url: "<?php echo base_url('index.php/detail/getkosongan') ?>",
+            dataType: "JSON",
+            data: {
+                id: $("#kosongan_id").val()
+            },
+            success: function(data) { //jika ambil data sukses
+                uj_kosongan = data["kosongan_uang"];
+            }
+        });
+        $( '#uang_jalan_total' ).val(rupiah(parseInt(uj)+parseInt(uj_kosongan)));
     }
     function kosongan(a){
         if($("#"+a.id).val()=="Ya"){

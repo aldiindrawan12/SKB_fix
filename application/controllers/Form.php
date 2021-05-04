@@ -96,10 +96,10 @@ class Form extends CI_Controller {
                 "customer_id"=>$this->input->post("customer_id"),
                 "invoice_kode"=>$this->input->post("invoice_id1").$this->input->post("invoice_id2").$this->input->post("invoice_id3"),
                 "tanggal_invoice"=>$this->input->post("invoice_tgl"),
-                "total_tonase"=>$this->input->post("invoice_tonase"),
-                "total"=>$this->input->post("invoice_total"),
-                "ppn"=>$this->input->post("invoice_ppn_nilai"),
-                "grand_total"=>$this->input->post("invoice_grand_total"),
+                "total_tonase"=>str_replace(".","",$this->input->post("invoice_tonase")),
+                "total"=>str_replace(".","",$this->input->post("invoice_total")),
+                "ppn"=>str_replace(".","",$this->input->post("invoice_ppn_nilai")),
+                "grand_total"=>str_replace(".","",$this->input->post("invoice_grand_total")),
                 "batas_pembayaran"=>$this->input->post("invoice_payment"),
                 "invoice_keterangan"=>$this->input->post("invoice_keterangan"),
                 "status_bayar"=>"Belum Lunas",
@@ -110,18 +110,28 @@ class Form extends CI_Controller {
             redirect(base_url("index.php/home/invoice"));
         }
         public function insert_paketan(){
-            $data_dari = explode(",",$this->input->post("data_rute_dari"));
-            $data_ke = explode(",",$this->input->post("data_rute_ke"));
-            $data_muatan = explode(",",$this->input->post("data_rute_muatan"));
-            $data_rute = [];
-            for($i=0;$i<count($data_dari);$i++){
-                $isi_data_rute = [];
-                $isi_data_rute = array(
-                    "dari"=>$data_dari[$i],
-                    "ke"=>$data_ke[$i],
-                    "muatan"=>$data_muatan[$i],
-                );
-                $data_rute[] = $isi_data_rute;
+            $data_rute = explode(",",$this->input->post("data_rute"));
+            $detail_rute = [];
+            for($i=0;$i<count($data_rute);$i++){
+                $isi_detail_rute = [];
+                if($data_rute[$i][0]=="k"){
+                    $data_kosongan_by_id = $this->model_detail->getkosonganbyid(str_replace("k","",$data_rute[$i]),0);
+                    $isi_detail_rute = array(
+                        "customer"=>"-",
+                        "dari"=>$data_kosongan_by_id["kosongan_dari"],
+                        "ke"=>$data_kosongan_by_id["kosongan_ke"],
+                        "muatan"=>"Kosongan",
+                    );
+                }else{
+                    $data_rute_by_id = $this->model_detail->getrutebyid(str_replace("r","",$data_rute[$i]));
+                    $isi_detail_rute = array(
+                        "customer"=>$data_rute_by_id["customer_name"],
+                        "dari"=>$data_rute_by_id["rute_dari"],
+                        "ke"=>$data_rute_by_id["rute_ke"],
+                        "muatan"=>$data_rute_by_id["rute_muatan"],
+                    );
+                }
+                $detail_rute[] = $isi_detail_rute;
             }
             if($this->input->post("Tonase")==""){
                 $paketan_gaji = str_replace(".","",$this->input->post("paketan_gaji"));
@@ -133,10 +143,8 @@ class Form extends CI_Controller {
                 $tonase = str_replace(".","",$this->input->post("Tonase"));
             }
             $data=array(
-                "customer_id"=>$this->input->post("customer_id"),
                 "jenis_mobil"=>$this->input->post("jenis_mobil"),
                 "paketan_uj"=>str_replace(".","",$this->input->post("paketan_uj")),
-                "paketan_tagihan"=>str_replace(".","",$this->input->post("paketan_tagihan")),
                 "paketan_gaji"=>$paketan_gaji,
                 "paketan_tonase"=>$tonase,
                 "paketan_gaji_rumusan"=>$paketan_gaji_rumusan,
@@ -145,10 +153,10 @@ class Form extends CI_Controller {
                 "validasi_paketan_edit"=>"ACC",
                 "validasi_paketan_delete"=>"ACC",
                 "paketan_keterangan"=>$this->input->post("paketan_keterangan"),
-                "paketan_data_rute"=>json_encode($data_rute),
-                "ritase"=>$this->input->post("Ritase")
+                "paketan_data_rute"=>json_encode($detail_rute),
+                "ritase"=>$this->input->post("Ritase"),
+                "data_rute"=>$this->input->post("data_rute")
             );
-            // echo var_dump($data);
             $this->model_form->insert_paketan($data);
 			$this->session->set_flashdata('status-add-paketan', 'Berhasil');
             redirect(base_url("index.php/home/paketan"));
@@ -200,7 +208,7 @@ class Form extends CI_Controller {
             $data["jo_id"] = $new_jo_id;
             $data["asal"] = "insert";
             $data["tipe_jo"] = "reguler";
-            $data["kosongan"] = $this->model_detail->getkosonganbyid($data["data"]["kosongan_id"]);
+            $data["kosongan"] = $this->model_detail->getkosonganbyid($data["data"]["kosongan_id"],$new_jo_id);
             $data["supir"] = $this->model_home->getsupirbyid($data["data"]["supir_id"]);
             $data["mobil"] = $this->model_home->getmobilbyid($data["data"]["mobil_no"]);
             $this->load->view("print/jo_print",$data);
@@ -227,7 +235,6 @@ class Form extends CI_Controller {
                 "terbilang"=>$this->input->post("Terbilang"),
                 "tanggal_surat"=>$this->input->post("tanggal_jo"),
                 "keterangan"=>$this->input->post("Keterangan"),
-                "customer_id"=>$this->input->post("Customer"),
                 "status"=>"Dalam Perjalanan",
                 "status_upah"=>"Belum Dibayar",
                 "upah"=>str_replace(".","",$this->input->post("Upah")),
@@ -238,14 +245,79 @@ class Form extends CI_Controller {
                 "user"=>$_SESSION["user"]
             );
             $this->model_form->insert_JO($data["data"]);
-            $data["jo_id"] = $new_jo_id;
-            $data["asal"] = "insert";
-            $data["tipe_jo"] = "paketan";
-            $data["paketan"] = $this->model_form->getpaketanbyid($this->input->post("paketan_id"));
-            $data["kosongan"] = $this->model_detail->getkosonganbyid(0);
-            $data["supir"] = $this->model_home->getsupirbyid($data["data"]["supir_id"]);
-            $data["mobil"] = $this->model_home->getmobilbyid($data["data"]["mobil_no"]);
-            $this->load->view("print/jo_print",$data);
+
+            $paketan = $this->model_form->getrutepaketanbyid($this->input->post("paketan_id"));
+            $data_rute = explode(",",$paketan["data_rute"]);
+            $kosongan_id = 0;
+            $uang_kosongan = 0;
+            $parent_jo_id = "";
+            for($i=0;$i<7-strlen(max($isi_jo_id)+1);$i++){
+                $parent_jo_id .= "0";
+            }
+            $parent_jo_id = $parent_jo_id.(max($isi_jo_id)+1);
+            for($i=0;$i<count($data_rute);$i++){
+                if($data_rute[$i][0]=="k"){
+                    //get kosongan
+                    $kosongan = $this->model_home->getkosonganbyid(str_replace("k","",$data_rute[$i]),0);
+                    $kosongan_id = $kosongan["kosongan_id"];
+                    $uang_kosongan = $kosongan["kosongan_uang"];
+                    //end kosongan
+                }else{
+                    if($i+2==count($data_rute) && $data_rute[$i+1][0]=="k"){
+                        $kosongan = $this->model_home->getkosonganbyid(str_replace("k","",$data_rute[$i+1]),0);
+                        $kosongan_id = $kosongan["kosongan_id"];
+                        $uang_kosongan = $kosongan["kosongan_uang"];
+                    }
+                    $rute = $this->model_detail->getrutebyid(str_replace("r","",$data_rute[$i]));
+                    $jo_id = $this->model_form->getjoid();
+                    $isi_jo_id = [];
+                    for($j=0;$j<count($jo_id);$j++){
+                        $isi_jo_id[] = $jo_id[$j]["Jo_id"];
+                    }
+                    //generate jo id
+                    $child_jo_id = "";
+                    for($k=0;$k<7-strlen(max($isi_jo_id)+1);$k++){
+                        $child_jo_id .= "0";
+                    }
+                    $child_jo_id = $child_jo_id.(max($isi_jo_id)+1);
+                    //end generate jo id
+                    $data_jo=array(
+                        "Jo_id"=>$child_jo_id,
+                        "parent_Jo_id"=>$parent_jo_id,
+                        "mobil_no"=>$this->input->post("Kendaraan"),
+                        "supir_id"=>$this->input->post("Supir"),
+                        "muatan"=>$rute["rute_muatan"],
+                        "asal"=>$rute["rute_ke"],
+                        "tujuan"=>$rute["rute_dari"],
+                        "uang_jalan"=>$rute["rute_uj_engkel"],
+                        "uang_jalan_bayar"=>0,
+                        "terbilang"=>0,
+                        "tanggal_surat"=>$this->input->post("tanggal_jo"),
+                        "keterangan"=>$this->input->post("Keterangan"),
+                        "customer_id"=>$rute["customer_id"],
+                        "status"=>"Dalam Perjalanan",
+                        "status_upah"=>"Belum Dibayar",
+                        "upah"=>0,
+                        "tagihan"=>$rute["rute_tagihan"],
+                        "kosongan_id"=>$kosongan_id,
+                        "paketan_id"=>0,
+                        "uang_kosongan" =>$uang_kosongan,
+                        "user"=>$_SESSION["user"]
+                    );
+                    $this->model_form->insert_JO($data_jo);
+                    $kosongan_id = 0;
+                    $uang_kosongan = 0;
+                }
+            }
+
+                $data["jo_id"] = $new_jo_id;
+                $data["asal"] = "insert";
+                $data["tipe_jo"] = "paketan";
+                $data["paketan"] = $this->model_form->getpaketanbyid($this->input->post("paketan_id"));
+                $data["kosongan"] = $this->model_detail->getkosonganbyid(0,$new_jo_id);
+                $data["supir"] = $this->model_home->getsupirbyid($data["data"]["supir_id"]);
+                $data["mobil"] = $this->model_home->getmobilbyid($data["data"]["mobil_no"]);
+                $this->load->view("print/jo_print",$data);
         }
         public function insert_bon(){
             $bon_id = $this->model_form->getbonid();
@@ -430,7 +502,6 @@ class Form extends CI_Controller {
                 "validasi_edit"=>"ACC",
                 "validasi_delete"=>"ACC",
             );
-            // echo var_dump($data);
             $this->model_form->insert_merk($data);
 			$this->session->set_flashdata('status-add-merk', 'Berhasil');
             redirect(base_url("index.php/home/merk"));
@@ -471,7 +542,6 @@ class Form extends CI_Controller {
                 "rute_keterangan"=>$this->input->post("rute_keterangan"),
                 "ritase"=>$this->input->post("Ritase")
             );
-            // echo var_dump($data);
             $this->model_form->insert_rute($data);
 			$this->session->set_flashdata('status-add-satuan', 'Berhasil');
             redirect(base_url("index.php/home/satuan"));
@@ -496,7 +566,6 @@ class Form extends CI_Controller {
                 "rute_keterangan"=>str_replace(".","",$this->input->post("rute_keterangan_update")),
                 // "ritase"=>str_replace(".","",$this->input->post("Ritase_update")),
             );
-            // echo var_dump($data);
             $this->model_form->update_rute($data,$this->input->post("rute_id_update"));
             $this->session->set_flashdata('status-update-satuan', 'Berhasil');
             redirect(base_url("index.php/home/satuan"));
@@ -505,14 +574,12 @@ class Form extends CI_Controller {
             $data=array(
                 "jenis_mobil"=>$this->input->post("jenis_mobil_update"),
                 "paketan_uj"=>str_replace(".","",$this->input->post("paketan_uj_update")),
-                "paketan_tagihan"=>str_replace(".","",$this->input->post("paketan_tagihan_update")),
                 "paketan_gaji"=>str_replace(".","",$this->input->post("paketan_gaji_update")),
                 "paketan_tonase"=>str_replace(".","",$this->input->post("Tonase_update")),
                 "paketan_gaji_rumusan"=>str_replace(".","",$this->input->post("paketan_gaji_rumusan_update")),
                 "paketan_keterangan"=>$this->input->post("paketan_keterangan_update"),
                 "ritase"=>$this->input->post("Ritase_update")
             );
-            // echo var_dump($data);
             $this->model_form->update_paketan($data,$this->input->post("paketan_id_update"));
             $this->session->set_flashdata('status-update-paketan', 'Berhasil');
             redirect(base_url("index.php/home/paketan"));
@@ -551,7 +618,6 @@ class Form extends CI_Controller {
                 "mobil_berlaku_ijin_bongkar" => $this->input->post("mobil_berlaku_ijin_bongkar_update"),
                 "mobil_keterangan" => $this->input->post("mobil_keterangan_update")
             );
-            // echo var_dump($data);
             $this->model_form->update_truck($data);
             $this->session->set_flashdata('status-update-truck', 'Berhasil');
             redirect(base_url("index.php/home/truck"));
@@ -622,11 +688,9 @@ class Form extends CI_Controller {
                     "jo_id" => $this->input->post("jo_id"),
                     "status" => $this->input->post("status"),
                     "tonase"=>$this->input->post("tonase"),
-                    // "bonus"=>str_replace(".","",$this->input->post("bonus")),
                     "keterangan"=>$keterangan,
                     "tanggal_bongkar"=>date('Y-m-d'),
                 );
-                // echo var_dump($data);
                 $this->model_form->update_jo_status($data,$supir,$mobil);
                 redirect(base_url("index.php/home/konfirmasi_jo"));
             }else{

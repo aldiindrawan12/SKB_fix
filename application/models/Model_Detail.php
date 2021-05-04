@@ -46,11 +46,15 @@ class Model_Detail extends CI_model
     }
 
     public function getrutebyid($rute_id){ //rute by ID
+        $this->db->join("skb_customer","skb_customer.customer_id=skb_rute.customer_id","left");
         return $this->db->get_where("skb_rute",array("rute_id"=>$rute_id))->row_array();
     }
 
-    public function getkosonganbyid($kosongan_id){ //kosongan by ID
+    public function getkosonganbyid($kosongan_id,$jo_id){ //kosongan by ID
         $this->db->join("skb_job_order","skb_job_order.kosongan_id=skb_kosongan.kosongan_id","left");
+        if($jo_id!=0){
+            $this->db->where("skb_job_order.Jo_id",$jo_id);
+        }
         return $this->db->get_where("skb_kosongan",array("skb_kosongan.kosongan_id"=>$kosongan_id))->row_array();
     }
 
@@ -163,6 +167,13 @@ class Model_Detail extends CI_model
     }
 
     public function update_jo_dibatalkan($Jo_id,$supir_id,$mobil_no,$uj){
+        $child_jo = $this->db->get_where("skb_job_order",array("parent_Jo_id"=>$Jo_id))->result_array();
+        for($i=0;$i<count($child_jo);$i++){
+            $this->db->set("status","Dibatalkan");
+            $this->db->where("Jo_id",$child_jo[$i]["Jo_id"]);
+            $this->db->update("skb_job_order");
+        }
+
         $this->db->set("status","Dibatalkan");
         $this->db->where("Jo_id",$Jo_id);
         $this->db->update("skb_job_order");

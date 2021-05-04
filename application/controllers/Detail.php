@@ -49,10 +49,10 @@ class Detail extends CI_Controller {
             if($data["jo"]["paketan_id"]!=0){
                 $data["tipe_jo"]="paketan";
                 $data["paketan"] = $this->model_form->getpaketanbyid($data["jo"]["paketan_id"]);
-                $data["kosongan"] = $this->model_detail->getkosonganbyid(0);
+                $data["kosongan"] = $this->model_detail->getkosonganbyid(0,$Jo_id);
             }else{     
                 $data["tipe_jo"]="reguler";
-                $data["kosongan"] = $this->model_detail->getkosonganbyid($data["jo"]["kosongan_id"]);
+                $data["kosongan"] = $this->model_detail->getkosonganbyid($data["jo"]["kosongan_id"],$Jo_id);
             }
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             if(json_decode($data["akun_akses"]["akses"])[1]==0 && json_decode($data["akun_akses"]["akses"])[8]==0 && json_decode($data["akun_akses"]["akses"])[7]==0){
@@ -75,7 +75,7 @@ class Detail extends CI_Controller {
             for($i=0;$i<count($data["invoice"]);$i++){
                 $data_paketan = $this->model_form->getpaketanbyid($data["invoice"][$i]["paketan_id"]);
                 $paketan_id[] = $data_paketan;
-                $data_kosongan = $this->model_detail->getkosonganbyid($data["invoice"][$i]["kosongan_id"]);
+                $data_kosongan = $this->model_detail->getkosonganbyid($data["invoice"][$i]["kosongan_id"],0);
                 $kosongan_id[] = $data_kosongan;
             }
             $data["paketan"] = $paketan_id;
@@ -224,7 +224,8 @@ class Detail extends CI_Controller {
         function getkosongan()
         {
             $kosongan_id = $this->input->get('id');
-            $data = $this->model_detail->getkosonganbyid($kosongan_id);
+            $jo_id = $this->input->get('jo');
+            $data = $this->model_detail->getkosonganbyid($kosongan_id,$jo_id);
             echo json_encode($data);
         }
     //end fungsi untuk Detail kosongan

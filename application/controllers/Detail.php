@@ -75,7 +75,7 @@ class Detail extends CI_Controller {
             for($i=0;$i<count($data["invoice"]);$i++){
                 $data_paketan = $this->model_form->getpaketanbyid($data["invoice"][$i]["paketan_id"]);
                 $paketan_id[] = $data_paketan;
-                $data_kosongan = $this->model_detail->getkosonganbyid($data["invoice"][$i]["kosongan_id"]);
+                $data_kosongan = $this->model_detail->getkosonganbyid($data["invoice"][$i]["kosongan_id"],0);
                 $kosongan_id[] = $data_kosongan;
             }
             $data["paketan"] = $paketan_id;

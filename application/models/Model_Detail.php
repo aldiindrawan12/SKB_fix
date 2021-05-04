@@ -46,6 +46,7 @@ class Model_Detail extends CI_model
     }
 
     public function getrutebyid($rute_id){ //rute by ID
+        $this->db->join("skb_customer","skb_customer.customer_id=skb_rute.customer_id","left");
         return $this->db->get_where("skb_rute",array("rute_id"=>$rute_id))->row_array();
     }
 

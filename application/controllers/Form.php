@@ -110,18 +110,26 @@ class Form extends CI_Controller {
             redirect(base_url("index.php/home/invoice"));
         }
         public function insert_paketan(){
-            $data_dari = explode(",",$this->input->post("data_rute_dari"));
-            $data_ke = explode(",",$this->input->post("data_rute_ke"));
-            $data_muatan = explode(",",$this->input->post("data_rute_muatan"));
-            $data_rute = [];
-            for($i=0;$i<count($data_dari);$i++){
-                $isi_data_rute = [];
-                $isi_data_rute = array(
-                    "dari"=>$data_dari[$i],
-                    "ke"=>$data_ke[$i],
-                    "muatan"=>$data_muatan[$i],
-                );
-                $data_rute[] = $isi_data_rute;
+            $data_rute = explode(",",$this->input->post("data_rute"));
+            $detail_rute = [];
+            for($i=0;$i<count($data_rute);$i++){
+                $isi_detail_rute = [];
+                if($data_rute[$i][0]=="k"){
+                    $data_kosongan_by_id = $this->model_detail->getkosonganbyid(str_replace("k","",$data_rute[$i]));
+                    $isi_detail_rute = array(
+                        "dari"=>$data_kosongan_by_id["kosongan_dari"],
+                        "ke"=>$data_kosongan_by_id["kosongan_ke"],
+                        "muatan"=>"Kosongan",
+                    );
+                }else{
+                    $data_rute_by_id = $this->model_detail->getrutebyid(str_replace("r","",$data_rute[$i]));
+                    $isi_detail_rute = array(
+                        "dari"=>$data_rute_by_id["rute_dari"],
+                        "ke"=>$data_rute_by_id["rute_ke"],
+                        "muatan"=>$data_rute_by_id["rute_muatan"],
+                    );
+                }
+                $detail_rute[] = $isi_detail_rute;
             }
             if($this->input->post("Tonase")==""){
                 $paketan_gaji = str_replace(".","",$this->input->post("paketan_gaji"));
@@ -133,10 +141,8 @@ class Form extends CI_Controller {
                 $tonase = str_replace(".","",$this->input->post("Tonase"));
             }
             $data=array(
-                "customer_id"=>$this->input->post("customer_id"),
                 "jenis_mobil"=>$this->input->post("jenis_mobil"),
                 "paketan_uj"=>str_replace(".","",$this->input->post("paketan_uj")),
-                "paketan_tagihan"=>str_replace(".","",$this->input->post("paketan_tagihan")),
                 "paketan_gaji"=>$paketan_gaji,
                 "paketan_tonase"=>$tonase,
                 "paketan_gaji_rumusan"=>$paketan_gaji_rumusan,
@@ -145,10 +151,10 @@ class Form extends CI_Controller {
                 "validasi_paketan_edit"=>"ACC",
                 "validasi_paketan_delete"=>"ACC",
                 "paketan_keterangan"=>$this->input->post("paketan_keterangan"),
-                "paketan_data_rute"=>json_encode($data_rute),
-                "ritase"=>$this->input->post("Ritase")
+                "paketan_data_rute"=>json_encode($detail_rute),
+                "ritase"=>$this->input->post("Ritase"),
+                "data_rute"=>$this->input->post("data_rute")
             );
-            // echo var_dump($data);
             $this->model_form->insert_paketan($data);
 			$this->session->set_flashdata('status-add-paketan', 'Berhasil');
             redirect(base_url("index.php/home/paketan"));

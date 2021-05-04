@@ -40,7 +40,7 @@
 </div>
 
 <!-- pop up add rute paketan -->
-<div class="modal fade" id="popup-paketan" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<!-- <div class="modal fade" id="popup-paketan-old" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-xl"  role="document"  >
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
@@ -163,6 +163,133 @@
             </div>
         </div>
     </div>
+</div> -->
+<!-- end pop up add rute paketan -->
+
+<!-- pop up add rute paketan -->
+<div class="modal fade" id="popup-paketan" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+    <div class="modal-dialog modal-xl"  role="document"  >
+        <div class="modal-content">
+            <div class="modal-header bg-primary-dark">
+                <h5 class="font-weight-bold">Tambah Rute Paketan</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="font-size-sm m-3 text-justify">
+                <form action="<?= base_url("index.php/form/insert_paketan")?>" method="POST">             
+                    <div class="row">
+                        <div class="col-md-6 border rounded">
+                            <small class="font-weight-bold">Detail Rute</small>
+                            <hr>
+                            <a class="btn btn-sm btn-primary mb-3" data-toggle='modal' data-target='#popup-add-rute' id="btn-add-rute">
+                                <span class="icon text-white-100">
+                                    <i class="fas fa-plus"></i> 
+                                </span>
+                                <span class="text">
+                                    Tambah Rute
+                                </span>
+                            </a>
+                            <a class="btn btn-sm btn-primary mb-3" data-toggle='modal' data-target='#popup-add-kosongan' id="btn-add-kosongan">
+                                <span class="icon text-white-100">
+                                    <i class="fas fa-plus"></i> 
+                                </span>
+                                <span class="text">
+                                    Tambah Kosongan
+                                </span>
+                            </a>
+                            <div class="table-responsive">
+                                <table class="table table-bordered small" id="table-data-rute" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <!-- <th class="text-center" scope="col">No Rute</th> -->
+                                            <th class="text-center" scope="col">Customer</th>
+                                            <th class="text-center" scope="col">Dari</th>
+                                            <th class="text-center" scope="col">Ke</th>
+                                            <th class="text-center" scope="col">Muatan</th>
+                                            <th class="text-center" scope="col">Uang Jalan</th>
+                                            <th class="text-center" scope="col">Tagihan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <input autocomplete="off" type="text" class="form-control" id="data_rute" name="data_rute" hidden>
+                        </div>
+                        <div class="col-md-3 border rounded">
+                            <div class="form-group">
+                                <label for="jenis_mobil" class="form-label font-weight-bold ">Jenis Mobil</label> 
+                                <select name="jenis_mobil" id="jenis_mobil" class="form-control mb-4" required>
+                                    <option class="font-w700" disabled="disabled" selected value="">Jenis Mobil</option>
+                                </select>
+                            </div>
+                            <small class="font-weight-bold">Detail Uang Jalan (Uj)</small>
+                            <hr>
+                            <div class="form-group">
+                                <label for="paketan_uj" class="form-label font-weight-bold">Uang Jalan</label>
+                                <input autocomplete="off" type="text" class="form-control" id="paketan_uj" name="paketan_uj" required onkeyup="uang(this)">
+                            </div>
+                            <small class="font-weight-bold">Detail Keuangan</small>
+                            <hr>
+                            <div class="form-group">
+                                <label class="form-label font-weight-bold" for="Ritase">Ritase/Tonase</label>
+                                <select name="Ritase" id="Ritase" class="form-control" required>
+                                    <option class="font-w700" disabled="disabled" selected value="">Ritase/Tonase</option>
+                                    <option class="font-w700" value="Ritase">Ritase</option>
+                                    <option class="font-w700" value="Tonase">Tonase</option>
+                                </select>
+                            </div>
+                            <!-- <div class="form-group">
+                                <label for="paketan_tagihan" class="form-label font-weight-bold">Inv./Tagihan</label>
+                                <input autocomplete="off" type="text" class="form-control" id="paketan_tagihan" name="paketan_tagihan" required onkeyup="uang(this)">
+                            </div> -->
+                        </div>
+                        <div class="col-md-3 border rounded">
+                            <small class="font-weight-bold">Detail Gaji</small>
+                            <hr>
+                            <div class="form-group">
+                                <label class="form-label font-weight-bold" for="Gaji">Gaji</label>
+                                <select name="Gaji" id="Gaji" class="form-control" required onchange="gaji()">
+                                    <option class="font-w700" disabled="disabled" selected value="">Tipe Gaji</option>
+                                    <option class="font-w700" value="Fix">Fix</option>
+                                    <option class="font-w700" value="Non-Fix">Non-Fix</option>
+                                </select>
+                            </div>
+                            <div class="Tonase" style="display:none">
+                                <div class="form-group">
+                                    <label for="Tonase" class="form-label font-weight-bold">Tonase</label>  
+                                    <input autocomplete="off" type="text" class="form-control" id="Tonase" name="Tonase">
+                                </div>
+                            </div>
+                            <div class="Fix" style="display:none">
+                                <div class="form-group">
+                                    <label for="paketan_gaji" class="form-label font-weight-bold">Gaji(FIX)</label>
+                                    <input autocomplete="off" type="text" class="form-control" id="paketan_gaji" name="paketan_gaji" onkeyup="uang(this)">
+                                </div>
+                            </div>
+                            <div class="Non-Fix" style="display:none">
+                                <div class="form-group">
+                                    <label for="paketan_gaji_rumusan" class="form-label font-weight-bold">Gaji Rumusan(Non-FIX)</label>
+                                    <input autocomplete="off" type="text" class="form-control" id="paketan_gaji_rumusan" name="paketan_gaji_rumusan" onkeyup="uang(this)">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="paketan_keterangan" class="form-label font-weight-bold">keterangan</label>
+                                <input autocomplete="off" type="text" class="form-control" id="paketan_keterangan" name="paketan_keterangan" required>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="form-group float-right mt-1 mr-1">
+                        
+                        <button type="reset" class="btn btn-outline-danger" onclick="reset_form()">Reset</button>
+                        <button type="submit" class="btn btn-success">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- end pop up add rute paketan -->
 
@@ -223,8 +350,35 @@
 </div>
 <!-- end pop up add detail rute paketan -->
 
+<!-- pop up add rute Kosongan untuk form add rute paketan -->
+<div class="modal fade" id="popup-add-kosongan" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+    <div class="modal-dialog modal-xl"  role="document"  >
+        <div class="modal-content">
+            <div class="modal-header bg-primary-dark">
+                <h5 class="font-weight-bold">Pilih Rute Kosongan</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="font-size-sm m-3 text-justify">
+                <div class="form-group">
+                    <label class="form-label font-weight-bold " for="kosongan_id">Rute Kosongan</label>
+                    <select name="kosongan_id" value="DESC" id="kosongan_id" class="form-control selectpicker mb-4" data-live-search="true">
+                    <option class="font-w700" selected value="0">Dari - Ke - Uang Jalan</option>
+                        <?php foreach($kosongan as $value){?>
+                            <option value="<?=$value["kosongan_id"]?>"><?=$value["kosongan_dari"]?> - <?=$value["kosongan_ke"]?> - Rp.<?= number_format($value["kosongan_uang"],2,",",".")?></option>
+                        <?php } ?>
+                    </select>
+                    <button type="submit" data-dismiss="modal" aria-label="Close" class="btn btn-success" onclick="add_rute('kosongan','x')"><i class="fas fa-plus"></i>Tambah</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end pop up add rute Kosongan untuk form add rute paketan -->
+
 <!-- pop up add rute untuk form add rute paketan -->
-<div class="modal fade" id="popup-add-rute" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<!-- <div class="modal fade" id="popup-add-old" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-sm"  role="document"  >
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
@@ -252,6 +406,50 @@
                         <button type="reset" class="btn btn-outline-danger mr-3  mt-3 float-md-right">Reset</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+</div> -->
+<!-- end pop up add rute untuk form add rute paketan -->
+
+<!-- pop up add rute untuk form add rute paketan -->
+<div class="modal fade" id="popup-add-rute" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+    <div class="modal-dialog modal-xl"  role="document"  >
+        <div class="modal-content">
+            <div class="modal-header bg-primary-dark">
+                <h5 class="font-weight-bold">Tambah Rute</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="font-size-sm m-3 text-justify">
+                <div class="col-md-3 col-md-offset-4 mb-4">
+                    <label class="form-label font-weight-bold " for="Customer">Customer</label>
+                    <select name="Customer" value="DESC" id="Customer" class="form-control selectpicker mb-4" data-live-search="true" required onchange="customer()">
+                        <option class="font-w700" disabled="disabled" selected value="">Customer</option>
+                        <?php foreach($customer as $value){?>
+                            <option value="<?=$value["customer_id"]?>"><?=$value["customer_name"]?></option>
+                        <?php } ?>
+                    </select>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="Table-Add-Rute-Paketan" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>    
+                                    <th class="text-center" scope="col">Customer</th>
+                                    <th class="text-center" scope="col">Muatan</th>
+                                    <th class="text-center" scope="col">Dari</th>
+                                    <th class="text-center" scope="col">Ke</th>
+                                    <th class="text-center" scope="col">Uang Jalan</th>
+                                    <th class="text-center" scope="col">Tagihan</th>
+                                    <!-- <th class="text-center" scope="col">Tonase</th> -->
+                                    <th class="text-center" width="15%" scope="col">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
             </div>
         </div>
     </div>
@@ -356,9 +554,8 @@
         </div>
     </div>
 </div>
-</div>
-</div>
 <!-- end pop up add rute paketan -->
+
 
 <script>
     function uang(a){
@@ -374,8 +571,6 @@
             $(".Tonase").hide();
         }
     }
-</script>
-<script>
     function mobil(){
         $('#jenis_mobil').find('option').remove().end(); //reset option select
         var isi_jenis = [];

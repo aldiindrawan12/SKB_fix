@@ -81,7 +81,7 @@
                         <table class="table table-bordered" id="table-data-rute-paketan" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th class="text-center" scope="col">No Rute</th>
+                                    <th class="text-center" scope="col">Keterangan</th>
                                     <th class="text-center" scope="col">Dari</th>
                                     <th class="text-center" scope="col">Ke</th>
                                     <th class="text-center" scope="col">Muatan</th>
@@ -114,46 +114,46 @@
                     </button>
                 </div>
                 <div class="font-size-sm m-3 text-justify">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered" id="table-data-rute-paketan" width="100%" cellspacing="0">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-center" scope="col">No Rute</th>
-                                                <th class="text-center" scope="col">Dari</th>
-                                                <th class="text-center" scope="col">Ke</th>
-                                                <th class="text-center" scope="col">Muatan</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered" id="table-detail-paketan" width="100%" cellspacing="0">
-                                        <tbody>
-                                            <tr>
-                                                <td>Keterangan</td>
-                                                <td><span id="detail-keterangan"></span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tonase</td>
-                                                <td><span id="detail-tonase"></span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Type Gaji</td>
-                                                <td><span id="detail-gaji"></span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Gaji Fix</td>
-                                                <td><span id="detail-gaji-fix"></span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Gaji Non-Fix</td>
-                                                <td><span id="detail-gaji-nonfix"></span></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="table-data-rute-paketan" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th class="text-center" scope="col">Keterangan</th>
+                                    <th class="text-center" scope="col">Dari</th>
+                                    <th class="text-center" scope="col">Ke</th>
+                                    <th class="text-center" scope="col">Muatan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="table-detail-paketan" width="100%" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td>Keterangan</td>
+                                    <td><span id="detail-keterangan"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Tonase</td>
+                                    <td><span id="detail-tonase"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Type Gaji</td>
+                                    <td><span id="detail-gaji"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Gaji Fix</td>
+                                    <td><span id="detail-gaji-fix"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Gaji Non-Fix</td>
+                                    <td><span id="detail-gaji-nonfix"></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

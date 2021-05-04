@@ -116,7 +116,7 @@
                     </div>
                     <div class="col-md-4 col-md-offset-4">
                         <label for="uang_jalan_total" class="form-label font-weight-bold">Total Uang Jalan</label>
-                        <input autocomplete="off" type="text" class="form-control" id="uang_jalan_total" name="uang_jalan_total" readonly>
+                        <input autocomplete="off" type="text" class="form-control" id="uang_jalan_total" name="uang_jalan_total" value=0 readonly>
                     </div>
                     <div class="col-md-4 col-md-offset-4">
                         <label for="uang_jalan_bayar" class="form-label font-weight-bold">Uang Jalan Dibayar</label>

@@ -3749,7 +3749,7 @@
                                 return html;
                             }
                             if(row["kosongan_id"]!=0){
-                                let html = "<a class='btn btn-light btn-detail-rute-paketan-kosong' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-pk='"+row["kosongan_id"]+"'><i class='fas fa-eye'></i></a>";
+                                let html = "<a class='btn btn-light btn-detail-rute-paketan-kosong' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-jo='"+row["Jo_id"]+"' data-pk='"+row["kosongan_id"]+"'><i class='fas fa-eye'></i></a>";
                                 return html;
                             }else{
                                 let html = "<a class='btn btn-light btn-detail-rute-paketan-reguler' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-pk='"+row["Jo_id"]+"'><i class='fas fa-eye'></i></a>";
@@ -3866,13 +3866,15 @@
                     });
                     $('.btn-detail-rute-paketan-kosong').click(function() {
                         let pk = $(this).data('pk');
+                        let jo = $(this).data('jo');
                         $("#table-data-rute-paketan tbody").html("");
                         $.ajax({
                             type: "GET",
                             url: "<?php echo base_url('index.php/detail/getkosongan') ?>",
                             dataType: "JSON",
                             data: {
-                                id: pk
+                                id: pk,
+                                jo:jo
                             },
                             success: function(data) { //jika ambil data sukses
                                     let html = "";
@@ -4000,6 +4002,7 @@
                 drawCallback: function() {
                     $('.btn-pilih-rute').click(function() {
                         let pk = $(this).data('pk');
+                        $("#uang_jalan_total").val(0);
                         $.ajax({
                             type: "GET",
                             url: "<?php echo base_url('index.php/detail/getrute') ?>",
@@ -4604,7 +4607,7 @@
                                 let html = "";
                                 for(i=0;i<data_rute.length;i++){
                                     html += "<tr>"+
-                                    "<td>Rute ke-"+(i+1)+"</td>"+
+                                    "<td>"+data_rute[i]["customer"]+"</td>"+
                                     "<td>"+data_rute[i]["dari"]+"</td>"+
                                     "<td>"+data_rute[i]["ke"]+"</td>"+
                                     "<td>"+data_rute[i]["muatan"]+"</td>"+
@@ -4628,7 +4631,7 @@
                                 let html = "";
                                 for(i=0;i<data.length;i++){
                                     html += "<tr>"+
-                                    "<td>Rute ke-"+(i+1)+"</td>"+
+                                    "<td>"+data[i]["customer"]+"</td>"+
                                     "<td>"+data[i]["dari"]+"</td>"+
                                     "<td>"+data[i]["ke"]+"</td>"+
                                     "<td>"+data[i]["muatan"]+"</td>"+

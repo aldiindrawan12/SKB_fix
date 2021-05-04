@@ -146,10 +146,8 @@
                                 <input autocomplete="off" type="text" class="form-control" id="paketan_keterangan" name="paketan_keterangan" required>
                             </div>
                         </div>
-                        
                     </div>
                     <div class="form-group float-right mt-1 mr-1">
-                        
                         <button type="reset" class="btn btn-outline-danger" onclick="reset_form()">Reset</button>
                         <button type="submit" class="btn btn-success">Simpan</button>
                     </div>

@@ -729,7 +729,8 @@
                         className: 'text-center'
                     },
                     {
-                        "data": "customer_name"
+                        "data": "customer_name",
+                        className: 'text-center'
                     },
                     {
                         "data": "Jo_id",
@@ -807,7 +808,7 @@
                                 let html = "";
                                 for(i=0;i<data.length;i++){
                                     html += "<tr>"+
-                                    "<td>Rute ke-"+(i+1)+"</td>"+
+                                    "<td>"+data[i]["customer"]+"</td>"+
                                     "<td>"+data[i]["dari"]+"</td>"+
                                     "<td>"+data[i]["ke"]+"</td>"+
                                     "<td>"+data[i]["muatan"]+"</td>"+
@@ -901,7 +902,8 @@
                         className: 'text-center'
                     },
                     {
-                        "data": "customer_name"
+                        "data": "customer_name",
+                        className: 'text-center'
                     },
                     {
                         "data": "Jo_id",
@@ -979,7 +981,7 @@
                                 let html = "";
                                 for(i=0;i<data.length;i++){
                                     html += "<tr>"+
-                                    "<td>Rute ke-"+(i+1)+"</td>"+
+                                    "<td>"+data[i]["customer"]+"</td>"+
                                     "<td>"+data[i]["dari"]+"</td>"+
                                     "<td>"+data[i]["ke"]+"</td>"+
                                     "<td>"+data[i]["muatan"]+"</td>"+
@@ -3118,9 +3120,6 @@
                         }
                     },
                     {
-                        "data": "customer_name"
-                    },
-                    {
                         "data": "paketan_id",
                         className: 'text-center',
                         "orderable": false,
@@ -3143,14 +3142,6 @@
                             return html;
                         }
                     },
-                    // {
-                    //     "data": "paketan_tagihan",
-                    //     className: 'text-center',
-                    //     render: function(data, type, row) {
-                    //         let html = 'Rp.'+rupiah(data);
-                    //         return html;
-                    //     }
-                    // },
                     {
                         "data": "validasi_paketan",
                         className: 'text-center',
@@ -3306,7 +3297,7 @@
                                 let html = "";
                                 for(i=0;i<data.length;i++){
                                     html += "<tr>"+
-                                    "<td>Rute ke-"+(i+1)+"</td>"+
+                                    "<td>"+data[i]["customer"]+"</td>"+
                                     "<td>"+data[i]["dari"]+"</td>"+
                                     "<td>"+data[i]["ke"]+"</td>"+
                                     "<td>"+data[i]["muatan"]+"</td>"+
@@ -4031,6 +4022,7 @@
                                 $('#Tonase').val(data["rute_tonase"]); //set value
                                 $('#Uang').val(rupiah(data["rute_uj_engkel"])); //set value
                                 $('#Tagihan').val(data["rute_tagihan"]); //set value
+                                $( '#uang_jalan_total' ).val(rupiah( parseInt(data["rute_uj_engkel"])+parseInt($("#uang_jalan_total").val().replaceAll(".","")) ) );
                                 uang = rupiah(data["rute_uj_engkel"]);
                                 $.ajax({
                                     type: "GET",
@@ -4115,26 +4107,6 @@
                             return "Rp."+rupiah(data);
                         }
                     },
-                    // {
-                    //     "data": "jenis_mobil"
-                    // },
-                    // {
-                    //     "data": "rute_tonase",
-                    //     className: 'text-center font-weight-bold',
-                    //     "orderable": false,
-                    //     render: function(data, type, row) {
-                    //         if(data=="0"){
-                    //             let html ="<small>FIX</small>";
-                    //             return html;
-                    //         }else{
-                    //             let html ="<small>NON-FIX</small>";
-                    //             return html;
-                    //         }
-                    //     }
-                    // },
-                    // {
-                    //     "data": "rute_tonase"
-                    // },
                     {
                         "data": "rute_id",
                         className: 'text-center font-weight-bold',
@@ -4191,7 +4163,6 @@
                         },
                         success: function(data) { //jika ambil data sukses
                             html += "<tr>"+
-                                // "<td>Rute ke-"+n+"</td>"+
                                 "<td>-</td>"+
                                 "<td>"+data["kosongan_dari"]+"</td>"+
                                 "<td>"+data["kosongan_ke"]+"</td>"+
@@ -4214,7 +4185,6 @@
                         },
                         success: function(data) {
                             html += "<tr>"+
-                            // "<td>Rute ke-"+n+"</td>"+
                             "<td>"+data["customer_name"]+"</td>"+
                             "<td>"+data["rute_dari"]+"</td>"+
                             "<td>"+data["rute_ke"]+"</td>"+
@@ -4531,7 +4501,7 @@
                     "url": "<?php echo base_url('index.php/home/view_paketan/addjo')?>",
                     "type": "POST",
                     'data': function(data) {
-                        data.customer = $("#Customer").val();
+                        data.customer = 'x';
                     }
                 },
                 "deferRender": true,
@@ -4544,9 +4514,6 @@
                             let html = row["no"];
                             return html;
                         }
-                    },
-                    {
-                        "data": "customer_name"
                     },
                     {
                         "data": "paketan_id",
@@ -4565,14 +4532,6 @@
                     },
                     {
                         "data": "paketan_uj",
-                        className: 'text-center',
-                        render: function(data, type, row) {
-                            let html = 'Rp.'+rupiah(data);
-                            return html;
-                        }
-                    },
-                    {
-                        "data": "paketan_tagihan",
                         className: 'text-center',
                         render: function(data, type, row) {
                             let html = 'Rp.'+rupiah(data);
@@ -4610,7 +4569,7 @@
                                 $('#Jenis').val(data["jenis_mobil"]); //set value
                                 $('#Tonase').val(data["paketan_tonase"]); //set value
                                 $('#Uang').val(rupiah(data["paketan_uj"])); //set value
-                                $('#paketan_id').val(rupiah(data["paketan_id"])); //set value
+                                $('#paketan_id').val(data["paketan_id"]); //set value
                                 $('#Tagihan').val(data["paketan_tagihan"]); //set value
                                 uang = rupiah(data["paketan_uj"]);
                                 $.ajax({
@@ -4699,9 +4658,6 @@
                         });
                     });
                 },
-            });
-            $("#Customer").change(function() {
-                table.ajax.reload();
             });
         });
     </script>

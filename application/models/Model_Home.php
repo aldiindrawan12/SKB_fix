@@ -56,6 +56,7 @@ class Model_Home extends CI_model
 
         public function getjobyid($jo_id) //JO by ID
         {
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
             return $this->db->get_where("skb_job_order",array("Jo_id"=>$jo_id))->row_array();
         }
     //end funcction get
@@ -626,7 +627,6 @@ class Model_Home extends CI_model
         {
             if($search!=""){
                 $this->db->like('JO_id', $search);
-                $this->db->or_like('customer_name', $search);
                 $this->db->or_like('muatan', $search);
                 $this->db->or_like('asal', $search);
                 $this->db->or_like('tujuan', $search);
@@ -647,7 +647,6 @@ class Model_Home extends CI_model
         {   
             if($search!=""){
                 $this->db->like('JO_id', $search);
-                $this->db->or_like('customer_name', $search);
                 $this->db->or_like('muatan', $search);
                 $this->db->or_like('asal', $search);
                 $this->db->or_like('tujuan', $search);
@@ -790,8 +789,8 @@ class Model_Home extends CI_model
         public function filter_paketan($asal,$customer,$search, $order_field, $order_ascdesc)
         {
             if($search!=""){
-                $this->db->like('customer_name', $search);
-                // $this->db->or_like('kosongan_ke', $search);
+                $this->db->like('jenis_mobil', $search);
+                $this->db->or_like('ritase', $search);
             }
             $this->db->order_by($order_field, $order_ascdesc);
             $this->db->join("skb_customer", "skb_customer.customer_id = skb_paketan.customer_id", 'left');
@@ -828,8 +827,8 @@ class Model_Home extends CI_model
         public function count_filter_paketan($asal,$customer,$search)
         {
             if($search!=""){
-                $this->db->like('customer_name', $search);
-                // $this->db->or_like('kosongan_ke', $search);
+                $this->db->like('jenis_mobil', $search);
+                $this->db->or_like('ritase', $search);
             }
             $this->db->join("skb_customer", "skb_customer.customer_id = skb_paketan.customer_id", 'left');
             $hasil_data = $this->db->get('skb_paketan')->result_array();

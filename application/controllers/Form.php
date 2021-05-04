@@ -117,6 +117,7 @@ class Form extends CI_Controller {
                 if($data_rute[$i][0]=="k"){
                     $data_kosongan_by_id = $this->model_detail->getkosonganbyid(str_replace("k","",$data_rute[$i]));
                     $isi_detail_rute = array(
+                        "customer"=>"-",
                         "dari"=>$data_kosongan_by_id["kosongan_dari"],
                         "ke"=>$data_kosongan_by_id["kosongan_ke"],
                         "muatan"=>"Kosongan",
@@ -124,6 +125,7 @@ class Form extends CI_Controller {
                 }else{
                     $data_rute_by_id = $this->model_detail->getrutebyid(str_replace("r","",$data_rute[$i]));
                     $isi_detail_rute = array(
+                        "customer"=>$data_rute_by_id["customer_name"],
                         "dari"=>$data_rute_by_id["rute_dari"],
                         "ke"=>$data_rute_by_id["rute_ke"],
                         "muatan"=>$data_rute_by_id["rute_muatan"],
@@ -233,7 +235,6 @@ class Form extends CI_Controller {
                 "terbilang"=>$this->input->post("Terbilang"),
                 "tanggal_surat"=>$this->input->post("tanggal_jo"),
                 "keterangan"=>$this->input->post("Keterangan"),
-                "customer_id"=>$this->input->post("Customer"),
                 "status"=>"Dalam Perjalanan",
                 "status_upah"=>"Belum Dibayar",
                 "upah"=>str_replace(".","",$this->input->post("Upah")),
@@ -244,6 +245,9 @@ class Form extends CI_Controller {
                 "user"=>$_SESSION["user"]
             );
             $this->model_form->insert_JO($data["data"]);
+
+            // echo print_r($data["data"]);
+
             $data["jo_id"] = $new_jo_id;
             $data["asal"] = "insert";
             $data["tipe_jo"] = "paketan";
@@ -436,7 +440,6 @@ class Form extends CI_Controller {
                 "validasi_edit"=>"ACC",
                 "validasi_delete"=>"ACC",
             );
-            // echo var_dump($data);
             $this->model_form->insert_merk($data);
 			$this->session->set_flashdata('status-add-merk', 'Berhasil');
             redirect(base_url("index.php/home/merk"));
@@ -477,7 +480,6 @@ class Form extends CI_Controller {
                 "rute_keterangan"=>$this->input->post("rute_keterangan"),
                 "ritase"=>$this->input->post("Ritase")
             );
-            // echo var_dump($data);
             $this->model_form->insert_rute($data);
 			$this->session->set_flashdata('status-add-satuan', 'Berhasil');
             redirect(base_url("index.php/home/satuan"));
@@ -502,7 +504,6 @@ class Form extends CI_Controller {
                 "rute_keterangan"=>str_replace(".","",$this->input->post("rute_keterangan_update")),
                 // "ritase"=>str_replace(".","",$this->input->post("Ritase_update")),
             );
-            // echo var_dump($data);
             $this->model_form->update_rute($data,$this->input->post("rute_id_update"));
             $this->session->set_flashdata('status-update-satuan', 'Berhasil');
             redirect(base_url("index.php/home/satuan"));
@@ -511,14 +512,12 @@ class Form extends CI_Controller {
             $data=array(
                 "jenis_mobil"=>$this->input->post("jenis_mobil_update"),
                 "paketan_uj"=>str_replace(".","",$this->input->post("paketan_uj_update")),
-                "paketan_tagihan"=>str_replace(".","",$this->input->post("paketan_tagihan_update")),
                 "paketan_gaji"=>str_replace(".","",$this->input->post("paketan_gaji_update")),
                 "paketan_tonase"=>str_replace(".","",$this->input->post("Tonase_update")),
                 "paketan_gaji_rumusan"=>str_replace(".","",$this->input->post("paketan_gaji_rumusan_update")),
                 "paketan_keterangan"=>$this->input->post("paketan_keterangan_update"),
                 "ritase"=>$this->input->post("Ritase_update")
             );
-            // echo var_dump($data);
             $this->model_form->update_paketan($data,$this->input->post("paketan_id_update"));
             $this->session->set_flashdata('status-update-paketan', 'Berhasil');
             redirect(base_url("index.php/home/paketan"));
@@ -557,7 +556,6 @@ class Form extends CI_Controller {
                 "mobil_berlaku_ijin_bongkar" => $this->input->post("mobil_berlaku_ijin_bongkar_update"),
                 "mobil_keterangan" => $this->input->post("mobil_keterangan_update")
             );
-            // echo var_dump($data);
             $this->model_form->update_truck($data);
             $this->session->set_flashdata('status-update-truck', 'Berhasil');
             redirect(base_url("index.php/home/truck"));

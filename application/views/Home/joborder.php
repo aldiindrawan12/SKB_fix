@@ -64,7 +64,7 @@
                                 <table class="table table-bordered" id="table-data-rute-paketan" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th class="text-center" scope="col">No Rute</th>
+                                            <th class="text-center" scope="col">Ketrangan</th>
                                             <th class="text-center" scope="col">Dari</th>
                                             <th class="text-center" scope="col">Ke</th>
                                             <th class="text-center" scope="col">Muatan</th>

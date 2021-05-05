@@ -240,7 +240,7 @@ class Model_Dashboard extends CI_model
             $hasil = $this->db->get('skb_job_order')->result_array();
                 $hasil_fix = [];
                 for($i=0;$i<count($hasil);$i++){
-                    if($hasil[$i]["status"]==$status && $hasil[$i]["invoice_id"]==""){
+                    if($hasil[$i]["status"]==$status && $hasil[$i]["invoice_id"]=="" && $hasil[$i]["parent_Jo_id"]!='x'){
                         $hasil_fix[] = $hasil[$i];
                     }
                 }
@@ -260,7 +260,7 @@ class Model_Dashboard extends CI_model
             $hasil_data = $this->db->get('skb_job_order')->result_array();
                 $hasil_fix = 0;
                 for($i=0;$i<count($hasil_data);$i++){
-                    if($hasil_data[$i]["status"]==$status && $hasil_data[$i]["invoice_id"]==""){
+                    if($hasil_data[$i]["status"]==$status && $hasil_data[$i]["invoice_id"]=="" && $hasil_data[$i]["parent_Jo_id"]!='x'){
                         $hasil_fix +=1;
                     }
                 }

@@ -45,34 +45,40 @@ class Print_Berkas extends CI_Controller {
 
 		//generate rute
 		$isi_rute = [];
+		$isi_customer = [];
 		foreach($jo as $value){
 			$rute = "";
+			$customer = "";
 			$n=0; 
 			for($i=0;$i<count($paketan);$i++){
-				// if($paketan[$i]!=NULL){
 					if($paketan[$i]["paketan_id"] == $value["paketan_id"]){
 						$data_paketan = json_decode($paketan[$i]["paketan_data_rute"],true);
 						$n++;
 						for($j=0;$j<count($data_paketan);$j++){
+							if($data_paketan[$j]["customer"]!="-"){
+							 $customer .= $data_paketan[$j]["customer"]." - ";
+							}
+						}
+						$customer .= "(Paketan)";
+						for($j=0;$j<count($data_paketan);$j++){
 							$rute .= $data_paketan[$j]["dari"]."-".$data_paketan[$j]["ke"]." (".$data_paketan[$j]["muatan"].");";
 						}
 					}
-				// 	break;
-				// }
 			}
 			for($i=0;$i<count($kosongan);$i++){
-				// if($kosongan[$i]!=NULL){
 					if($kosongan[$i]["kosongan_id"] == $value["kosongan_id"]){
 						$n++;
+						$customer .= $value["customer_name"]." (Reguler)";
 						$rute .= $kosongan[$i]["kosongan_dari"]."-".$kosongan[$i]["kosongan_ke"]." ("."kosongan);";
 						$rute .= $value["asal"]."-".$value["tujuan"]."-".$value["muatan"].")";
 					}
-				// }
 			}
 			if($n==0){
+				$customer .= $value["customer_name"]." (Reguler)";
 				$rute .= $value["asal"]."-".$value["tujuan"]." (".$value["muatan"].")";
 			}
 			$isi_rute[]=$rute;
+			$isi_customer[]=$customer;
 		}
 
 		if($asal=="uang_jalan"){
@@ -105,7 +111,7 @@ class Print_Berkas extends CI_Controller {
 			$numrow = 4;
 			for($i=0;$i<count($jo);$i++){
 				$excel->setActiveSheetIndex(0)->setCellValue('A'.$numrow, strval($jo[$i]["Jo_id"]));
-				$excel->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $jo[$i]["customer_name"]);
+				$excel->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $isi_customer[$i]);
 				$excel->setActiveSheetIndex(0)->setCellValue('C'.$numrow, $isi_rute[$i]);
 				$excel->setActiveSheetIndex(0)->setCellValue('D'.$numrow, $jo[$i]["tanggal_surat"]);
 				$excel->setActiveSheetIndex(0)->setCellValue('E'.$numrow, $jo[$i]["tanggal_bongkar"]);

@@ -61,9 +61,13 @@
                             <td><?= $value["Jo_id"]?></td>
                             <td><?= change_tanggal($value["tanggal_surat"])?></td>
                             <td><?= change_tanggal($value["tanggal_bongkar"])?></td>
-                            <td><?= $value["muatan"]?></td>
-                            <td><?= $value["asal"]?></td>
-                            <td><?= $value["tujuan"]?></td>
+                            <?php if($value["muatan"]==""){?>
+                                <td colspan=3 class="text-center">Paketan</td>
+                            <?php }else{?>
+                                <td><?= $value["muatan"]?></td>
+                                <td><?= $value["asal"]?></td>
+                                <td><?= $value["tujuan"]?></td>
+                            <?php }?>
                             <?php
                                 if($value["uang_kosongan"]!=""){
                                     echo "<td>Rp.".number_format($value["uang_jalan"]+$value["uang_kosongan"],2,',','.')."</td>";

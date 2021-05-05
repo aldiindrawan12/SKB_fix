@@ -3231,7 +3231,7 @@
                                 let html = "";
                                 for(i=0;i<data_rute.length;i++){
                                     html += "<tr>"+
-                                    "<td>Rute ke-"+(i+1)+"</td>"+
+                                    "<td>"+data_rute[i]["customer"]+"</td>"+
                                     "<td>"+data_rute[i]["dari"]+"</td>"+
                                     "<td>"+data_rute[i]["ke"]+"</td>"+
                                     "<td>"+data_rute[i]["muatan"]+"</td>"+

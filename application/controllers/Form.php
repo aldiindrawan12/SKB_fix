@@ -184,7 +184,7 @@ class Form extends CI_Controller {
             //end generate jo id
             $data["data"]=array(
                 "Jo_id"=>$new_jo_id,
-                "parent_Jo_id"=>'x',
+                "parent_Jo_id"=>'y',
                 "mobil_no"=>$this->input->post("Kendaraan"),
                 "supir_id"=>$this->input->post("Supir"),
                 "muatan"=>$this->input->post("Muatan"),

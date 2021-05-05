@@ -1,4 +1,4 @@
-<div class="info-supir">
+    <div class="info-supir">
         <div class="card shadow mb-4 ml-2 mr-2">
             <div class="card-header py-3 text-center">
             <h6 class="m-0 font-weight-bold btn-facebook disabled h4 p-3 " style="border-radius:10px; ">Informasi Driver</h6>
@@ -250,7 +250,7 @@
                                     <table class="table table-bordered" id="table-data-rute-paketan" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th class="text-center" scope="col">No Rute</th>
+                                                <th class="text-center" scope="col">Keterangan</th>
                                                 <th class="text-center" scope="col">Dari</th>
                                                 <th class="text-center" scope="col">Ke</th>
                                                 <th class="text-center" scope="col">Muatan</th>
@@ -776,7 +776,7 @@
                                 let html = "";
                                 for(i=0;i<data.length;i++){
                                     html += "<tr>"+
-                                    "<td>Rute ke-"+(i+1)+"</td>"+
+                                    "<td>"+data[i]["cudtomer"]+"</td>"+
                                     "<td>"+data[i]["dari"]+"</td>"+
                                     "<td>"+data[i]["ke"]+"</td>"+
                                     "<td>"+data[i]["muatan"]+"</td>"+

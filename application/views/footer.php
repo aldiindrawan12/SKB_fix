@@ -1056,7 +1056,7 @@
                 "serverSide": true,
                 "ordering": true,
                 "order": [
-                    [0, 'asc']
+                    [0, 'desc']
                 ],
                 "ajax": {
                     "url": "<?php echo base_url('index.php/home/view_JO_report/') ?>",
@@ -1240,7 +1240,7 @@
                 "serverSide": true,
                 "ordering": true,
                 "order": [
-                    [0, 'asc']
+                    [0, 'desc']
                 ],
                 "ajax": {
                     "url": "<?php echo base_url('index.php/home/view_JO_report/') ?>",

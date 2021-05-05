@@ -73,20 +73,7 @@
                             <td><?= change_tanggal($value["tanggal_surat"]) ?></td>
                             <td><?= change_tanggal($value["tanggal_bongkar"])   ?></td>
                             <td><?= $value["mobil_no"]?></td>
-                            <?php $n=0; 
-                            for($i=0;$i<count($paketan);$i++){
-                                if($value["paketan_id"]!="0"){
-                                    if($paketan[$i]["paketan_id"] == $value["paketan_id"]){
-                                        $data_paketan = json_decode($paketan[$i]["paketan_data_rute"],true);
-                                        $n++?>
-                                        <td>
-                                        <?php for($j=0;$j<count($data_paketan);$j++){?>
-                                            <?= $data_paketan[$j]["dari"]."=>".$data_paketan[$j]["ke"]."=>".$data_paketan[$j]["muatan"]?>
-                                        <?php }?>
-                                        </td>    
-                                <?php }
-                                }
-                            }?>
+                            <?php $n=0;?>
                             <?php 
                             for($i=0;$i<count($kosongan);$i++){
                                 if($value["kosongan_id"]!="0"){
@@ -96,14 +83,14 @@
                                             <?= $kosongan[$i]["kosongan_dari"]."=>".$kosongan[$i]["kosongan_ke"]."=>"?>kosongan<br>
                                             <?= $value["asal"]."=>".$value["tujuan"]."=>".$value["muatan"]?><br>
                                         </td>    
-                                <?php }
+                                <?php break;}
                                 }
                             }?>
                             <?php if($n==0){?>
                                 <td><?= $value["asal"]."=>".$value["tujuan"]."=>".$value["muatan"]?></td>
                             <?php }?>
                             <td><?= $value["tonase"]?></td>
-                            <td>Rp.<?= number_format($value["total"],2,',','.')?></td>
+                            <td>Rp.<?= number_format($value["tagihan"],2,',','.')?></td>
                         </tr>
                     <?php }?>
                         <tr>

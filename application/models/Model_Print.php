@@ -48,4 +48,7 @@ class Model_Print extends CI_model
         {
             return $this->db->get("skb_paketan")->result_array();
         }
+        public function getkosonganbyid($kosongan_id){ //kosongan by ID
+            return $this->db->get_where("skb_kosongan",array("skb_kosongan.kosongan_id"=>$kosongan_id))->row_array();
+        }
 }

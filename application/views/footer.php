@@ -888,7 +888,7 @@
                 "serverSide": true,
                 "ordering": true,
                 "order": [
-                    [0, 'asc']
+                    [0, 'desc']
                 ],
                 "ajax": {
                     "url": "<?php echo base_url('index.php/home/view_konfirmasi_JO/') ?>",
@@ -2498,7 +2498,7 @@
                 "serverSide": true,
                 "ordering": true,
                 "order": [
-                    [0, 'asc']
+                    [2, 'desc']
                 ],
                 "ajax": {
                     "url": "<?php echo base_url('index.php/home/view_invoice_belum_lunas') ?>",
@@ -2575,7 +2575,7 @@
                 "serverSide": true,
                 "ordering": true,
                 "order": [
-                    [0, 'asc']
+                    [2, 'desc']
                 ],
                 "ajax": {
                     "url": "<?php echo base_url('index.php/home/view_invoice_lunas') ?>",

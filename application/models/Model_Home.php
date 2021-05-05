@@ -130,7 +130,7 @@ class Model_Home extends CI_model
             if($status!="x"){
                 $hasil_fix = [];
                 for($i=0;$i<count($hasil);$i++){
-                    if($hasil[$i]["status"]==$status && $hasil[$i]["parent_Jo_id"]==""){
+                    if($hasil[$i]["status"]==$status && $hasil[$i]["parent_Jo_id"]=="x"){
                         $hasil_fix[] = $hasil[$i];
                     }
                 }
@@ -138,7 +138,7 @@ class Model_Home extends CI_model
             }else{
                 $hasil_fix = [];
                 for($i=0;$i<count($hasil);$i++){
-                    if($hasil[$i]["parent_Jo_id"]==""){
+                    if($hasil[$i]["parent_Jo_id"]=="x"){
                         $hasil_fix[] = $hasil[$i];
                     }
                 }
@@ -171,7 +171,7 @@ class Model_Home extends CI_model
             if($status!="x"){
                 $hasil_fix = 0;
                 for($i=0;$i<count($hasil_data);$i++){
-                    if($hasil_data[$i]["status"]==$status && $hasil_data[$i]["parent_Jo_id"]==""){
+                    if($hasil_data[$i]["status"]==$status && $hasil_data[$i]["parent_Jo_id"]=="x"){
                         $hasil_fix +=1;
                     }
                 }
@@ -179,7 +179,7 @@ class Model_Home extends CI_model
             }else{
                 $hasil_fix = 0;
                 for($i=0;$i<count($hasil_data);$i++){
-                    if($hasil_data[$i]["parent_Jo_id"]==""){
+                    if($hasil_data[$i]["parent_Jo_id"]=="x"){
                         $hasil_fix +=1;
                     }
                 }
@@ -226,7 +226,7 @@ class Model_Home extends CI_model
             if($status!="x"){
                 $this->db->where("status",$status);
             }
-            $this->db->where("parent_Jo_id","");
+            $this->db->where("parent_Jo_id","x");
             $this->db->order_by($order_field, $order_ascdesc);
             // $this->db->limit($limit, $start);
             $this->db->join("skb_supir", "skb_supir.supir_id = skb_job_order.supir_id", 'left');
@@ -263,7 +263,7 @@ class Model_Home extends CI_model
             if($status!="x"){
                 $this->db->where("status",$status);
             }
-            $this->db->where("parent_Jo_id","");
+            $this->db->where("parent_Jo_id","x");
             $this->db->join("skb_supir", "skb_supir.supir_id = skb_job_order.supir_id", 'left');
             $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
             return $this->db->get('skb_job_order')->num_rows();
@@ -651,7 +651,7 @@ class Model_Home extends CI_model
             $hasil = $this->db->get('skb_job_order')->result_array();
             $hasil_fix = [];
             for($i=0;$i<count($hasil);$i++){
-                if($hasil[$i]["status"]=="Dalam Perjalanan" && $hasil[$i]["parent_Jo_id"]==""){
+                if($hasil[$i]["status"]=="Dalam Perjalanan" && $hasil[$i]["parent_Jo_id"]=="x"){
                     $hasil_fix[] = $hasil[$i];
                 }
             }
@@ -670,7 +670,7 @@ class Model_Home extends CI_model
             $hasil_data = $this->db->get('skb_job_order')->result_array();
             $hasil_fix = 0;
             for($i=0;$i<count($hasil_data);$i++){
-                if($hasil_data[$i]["status"]=="Dalam Perjalanan" && $hasil_data[$i]["parent_Jo_id"]==""){
+                if($hasil_data[$i]["status"]=="Dalam Perjalanan" && $hasil_data[$i]["parent_Jo_id"]=="x"){
                     $hasil_fix +=1;
                 }
             }

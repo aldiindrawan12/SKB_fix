@@ -175,7 +175,7 @@ class Print_Berkas extends CI_Controller {
 			$data["data"] = $this->model_home->getjobyid($jo_id);
 			if($data["data"]["paketan_id"]==0){
 				$data["tipe_jo"] = "reguler";
-				$data["kosongan"] = $this->model_detail->getkosonganbyid($data["data"]["kosongan_id"]);
+				$data["kosongan"] = $this->model_detail->getkosonganbyid($data["data"]["kosongan_id"],0);
 			}else{
 				$data["paketan"] = $this->model_form->getpaketanbyid($data["data"]["paketan_id"]);
 				$data["tipe_jo"] = "paketan";

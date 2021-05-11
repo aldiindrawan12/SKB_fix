@@ -106,6 +106,7 @@
                         <select name="role_update" id="role_update" class="form-control custom-select " required>
                             <option class="font-w700" disabled="disabled" selected value="">Jenis Role</option>
                             <option value="Super User">Super User</option>
+                            <option value="Supervisor">Supervisor</option>
                             <option value="Operator">Operator</option>
                         </select>
                     </div>

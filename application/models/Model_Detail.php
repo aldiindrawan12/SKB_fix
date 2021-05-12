@@ -20,6 +20,27 @@ class Model_Detail extends CI_model
         $this->db->update("skb_mobil");
     }
 
+    public function hapus_jo($jo_id){
+        $data_jo = $this->db->get_where("skb_job_order",array("Jo_id"=>$jo_id))->row_array();
+        $data_anak = $this->db->get_where("skb_job_order",array("parent_Jo_id"=>$jo_id))->result_array();
+        for($i=0;$i<count($data_anak);$i++){
+            $this->db->where("Jo_id",$data_anak[$i]["Jo_id"]);
+            $this->db->delete("skb_job_order");
+        }
+        $this->db->where("Jo_id",$data_jo["Jo_id"]);
+        $this->db->delete("skb_job_order");
+
+        //reset supir
+        $this->db->set("status_jalan","Tidak Jalan");
+        $this->db->where("supir_id",$data_jo["supir_id"]);
+        $this->db->update("skb_supir");
+
+        //reset truck
+        $this->db->set("status_jalan","Tidak Jalan");
+        $this->db->where("mobil_no",$data_jo["mobil_no"]);
+        $this->db->update("skb_mobil");
+    }
+
     public function updateUJ($jo_id,$keterangan,$uj){ //update status jo saat sampai tujuan
         $this->db->set("uang_jalan_bayar",$uj);
         $this->db->set("keterangan",$keterangan);

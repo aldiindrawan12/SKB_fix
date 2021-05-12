@@ -15,9 +15,14 @@
                 <div class="float-right mb-3">
                     <?php if($jo["status"]=="Dalam Perjalanan"){?>                    
                         <a class='btn btn-primary btn-sm ' href='<?= base_url("index.php/print_berkas/uang_jalan/").$jo["Jo_id"]?>' id="">
-                            <span>Cetak Bukti Uang Jalan</span>
+                            <i class="fas fa-print"></i><span> Cetak Bukti Uang Jalan</span>
                         </a>
-                    <?php }?>
+                        <?php if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User"){?>
+                            <a class='btn btn-danger btn-sm ' id="<?= $jo["Jo_id"]?>" onclick="hapus_jo(this)">
+                                <i class='fas fa-trash-alt'></i><span> Hapus</span>
+                            </a>
+                    <?php }
+                    }?>
                 </div>
             </div>
         <!-- tampilan detail jo -->
@@ -321,5 +326,22 @@
     }
     function sisa_uj(sisa){
         $("#sisa_uj").text(rupiah(sisa));
+    }
+    function hapus_jo(a){
+        var jo_id = a.id;
+        Swal.fire({
+            title: 'Hapus Job Order',
+            text:'Yakin anda akan menghapus Job Order ini?',
+            showDenyButton: true,
+            denyButtonText: `Batal`,
+            confirmButtonText: 'Hapus',
+            denyButtonColor: '#808080',
+            confirmButtonColor: '#FF0000',
+            icon: "warning",
+        }).then((result) => {
+            if (result.isConfirmed) {   
+                window.location.replace("<?= base_url('index.php/detail/hapus_jo/')?>"+jo_id);
+            }
+        })
     }
 </script>

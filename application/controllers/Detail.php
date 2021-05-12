@@ -153,6 +153,31 @@ class Detail extends CI_Controller {
             $data = $this->model_home->getjobyid($jo_id);
             echo json_encode($data);       
         }
+        public function hapus_jo($jo_id){
+            $data_jo = $this->model_home->getjobyid($jo_id);
+            $data["data_jo"]=$data_jo;
+            $bon_id = $this->model_form->getbonid();
+            $isi_bon_id = [];
+            for($i=0;$i<count($bon_id);$i++){
+                $isi_bon_id[] = $bon_id[$i]["bon_id"];
+            }
+            date_default_timezone_set('Asia/Jakarta');
+            $data["data"]=array(
+                "bon_id"=>max($isi_bon_id)+1,
+                "supir_id"=>$data_jo["supir_id"],
+                "bon_jenis"=>"Pembatalan JO",
+                "bon_nominal"=>$data_jo["uang_jalan_bayar"],
+                "bon_keterangan"=>"Pembatalan JO",
+                "bon_tanggal"=>date("Y-m-d H:i:s")
+            );
+            $data["bon_id"] = max($isi_bon_id)+1;
+            $this->model_form->insert_bon($data["data"]);
+            $data["supir"] = $this->model_home->getsupirbyid($data["data"]["supir_id"]);
+            $data["asal"] = "Hapus JO";
+            $this->load->view("print/bon_print",$data);
+            
+            $this->model_detail->hapus_jo($jo_id);
+        }
     //end fungsi untuk Detail jo dan invoice
 
     //fungsi untuk Detail customer

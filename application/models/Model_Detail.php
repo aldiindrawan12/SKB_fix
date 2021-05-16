@@ -41,6 +41,22 @@ class Model_Detail extends CI_model
         $this->db->update("skb_mobil");
     }
 
+    
+    public function hapus_invoice($invoice_id){
+        $data_jo = $this->db->get_where("skb_job_order",array("invoice_id"=>$invoice_id))->result_array();
+        $customer = $data_jo[0]["customer_id"];
+        for($i=0;$i<count($data_jo);$i++){
+            $this->db->set("invoice_id","");
+            $this->db->where("Jo_id",$data_jo[$i]["Jo_id"]);
+            $this->db->update("skb_job_order");
+        }
+
+        $this->db->where("invoice_kode",$invoice_id);
+        $this->db->delete("skb_invoice");
+
+        return $customer;
+    }
+
     public function updateUJ($jo_id,$keterangan,$uj){ //update status jo saat sampai tujuan
         $this->db->set("uang_jalan_bayar",$uj);
         $this->db->set("keterangan",$keterangan);

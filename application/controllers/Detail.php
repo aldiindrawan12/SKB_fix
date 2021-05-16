@@ -95,6 +95,10 @@ class Detail extends CI_Controller {
             $this->load->view('detail/invoice');
             $this->load->view('footer');
         }
+        public function hapus_invoice($invoice_id){
+            $customer = $this->model_detail->hapus_invoice($invoice_id);
+            redirect(base_url('index.php/detail/detail_customer/').$customer);
+        }
         public function updatestatusjo($supir,$mobil){
             $data_jo = $this->model_home->getjobyid($this->input->post("jo_id"));
             $keterangan = "<strong>Catatan JO : </strong>".$data_jo["keterangan"]."<br><strong>Catatan Konfirmasi : </strong>".$this->input->post("Keterangan");

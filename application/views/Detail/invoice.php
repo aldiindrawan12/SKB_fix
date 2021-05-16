@@ -19,6 +19,7 @@
                     <a class="btn btn-primary" onclick="cetak_invoice()"><span class="small">Cetak Invoice</span></a>
                     <?php if($invoice[0]["status_bayar"] == "Belum Lunas" && ($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User")){?>
                         <a class="btn btn-warning" data-toggle="modal" data-target="#popup-konfirmasi-status" href="" id="<?= $invoice[0]["invoice_kode"]?>" onclick="update_status(this)"><span class="small">Tandai Lunas</span></a>
+                        <a class="btn btn-danger" id="<?= $invoice[0]["invoice_kode"]?>" onclick="hapus_invoice(this)"><span class="small">Hapus Invoice</span></a>
                     <?php }?>
                     <table class="w-50 mt-4">
                         <tbody>
@@ -161,5 +162,22 @@
         var invoice_kode = a.id;
         $("#view-invoice-kode").text(invoice_kode);
         $("#invoice-kode").val(invoice_kode);
+    }
+    function hapus_invoice(a){
+        var invoice_id = a.id;
+        Swal.fire({
+            title: 'Hapus Invoice',
+            text:'Yakin anda akan menghapus Invoice ini?',
+            showDenyButton: true,
+            denyButtonText: `Batal`,
+            confirmButtonText: 'Hapus',
+            denyButtonColor: '#808080',
+            confirmButtonColor: '#FF0000',
+            icon: "error",
+        }).then((result) => {
+            if (result.isConfirmed) {   
+                window.location.replace("<?= base_url('index.php/detail/hapus_invoice/')?>"+invoice_id);
+            }
+        })
     }
 </script>

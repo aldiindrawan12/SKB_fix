@@ -300,10 +300,9 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                // "paging":false,
                 "aLengthMenu": [
-                    [1, 2, 50, 100],
-                    [1, 2, 50, 100]
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
                 ],
                 "columns": [
                     {
@@ -357,10 +356,9 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                // "paging":false,
                 "aLengthMenu": [
-                    [1, 2, 50, 100],
-                    [1, 2, 50, 100]
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
                 ],
                 "columns": [
                     {
@@ -413,10 +411,9 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                // "paging":false,
                 "aLengthMenu": [
-                    [1, 2, 50, 100],
-                    [1, 2, 50, 100]
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
                 ],
                 "columns": [
                     {
@@ -464,10 +461,9 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                // "paging":false,
                 "aLengthMenu": [
-                    [1, 2, 50, 100],
-                    [1, 2, 50, 100]
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
                 ],
                 "columns": [
                     {   
@@ -515,10 +511,9 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                // "paging":false,
                 "aLengthMenu": [
-                    [1, 2, 50, 100],
-                    [1, 2, 50, 100]
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
                 ],
                 "columns": [
                     {   
@@ -555,7 +550,6 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                // "paging":false,
                 "aLengthMenu": [
                     [10, 30, 50, 100],
                     [10, 30, 50, 100]
@@ -600,7 +594,6 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                // "paging":false,
                 "aLengthMenu": [
                     [10, 30, 50, 100],
                     [10, 30, 50, 100]
@@ -643,6 +636,9 @@
         $(document).ready(function() {
             var table = null;
             table = $('#Table-Invoice-Jatuh-Tempo').DataTable({
+                language: {
+                    searchPlaceholder: "Invoice Kode"
+                },
                 "processing": true,
                 "serverSide": true,
                 "ordering": true,
@@ -654,7 +650,6 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                // "paging":false,
                 "aLengthMenu": [
                     [10, 30, 50, 100],
                     [10, 30, 50, 100]
@@ -717,6 +712,9 @@
         $(document).ready(function() {
             var table = null;
             table = $('#Table-JO-Belum-Invoice').DataTable({
+                language: {
+                    searchPlaceholder: "Jo ID"
+                },
                 "processing": true,
                 "serverSide": true,
                 "ordering": true,
@@ -728,10 +726,9 @@
                     "type": "POST"
                 },
                 "deferRender": true,
-                // "paging":false,
                 "aLengthMenu": [
-                    [1, 2, 50, 100],
-                    [1, 2, 50, 100]
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
                 ],
                 "columns": [
                     {

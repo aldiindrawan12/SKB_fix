@@ -588,6 +588,32 @@ class Form extends CI_Controller {
         }
         public function update_supir(){
             $supir_id = $this->input->post("supir_id");
+            $data_supir = $this->model_form->getsupirname( $supir_id);
+            $config['upload_path'] = './assets/berkas/driver'; //letak folder file yang akan diupload
+            $config['allowed_types'] = 'jpg|png|img|jpeg'; //jenis file yang dapat diterima
+            $config['max_size'] = '2000'; // kb
+            $this->load->library('upload', $config); //deklarasi library upload (config)
+            if ($this->upload->do_upload('file_foto_update')) {
+                $this->upload->data();
+                $file_foto =  $this->upload->data('file_name');
+            }
+            if ($this->upload->do_upload('file_sim_update')) {
+                $this->upload->data();
+                $file_sim =  $this->upload->data('file_name');
+            }
+            if ($this->upload->do_upload('file_ktp_update')) {
+                $this->upload->data();
+                $file_ktp =  $this->upload->data('file_name');
+            }
+            if($file_foto == null){
+                $file_foto = $data_supir["file_foto"];
+            }
+            if($file_sim == null){
+                $file_sim = $data_supir["file_sim"];
+            }
+            if($file_ktp == null){
+                $file_ktp = $data_supir["file_ktp"];
+            }
             $data = array(
                 "supir_name" => $this->input->post("supir_name"),
                 "supir_panggilan" => $this->input->post("supir_panggilan_update"),
@@ -603,12 +629,34 @@ class Form extends CI_Controller {
                 "darurat_telp" => $this->input->post("darurat_telp_update"),
                 "darurat_referensi" => $this->input->post("darurat_referensi_update"),
                 "supir_keterangan" => $this->input->post("supir_keterangan_update"),
+                "file_foto"=>$file_foto,
+                "file_sim"=>$file_sim,
+                "file_ktp"=>$file_ktp
             );
             $this->model_form->update_supir($data,$supir_id);
             $this->session->set_flashdata('status-update-supir', 'Berhasil');
             redirect(base_url("index.php/home/penggajian"));
         }
         public function update_truck(){
+            $data_mobil = $this->model_detail->gettruckbyid( $this->input->post("mobil_no_update"));
+            $config['upload_path'] = './assets/berkas/kendaraan'; //letak folder file yang akan diupload
+            $config['allowed_types'] = 'jpg|png|img|jpeg'; //jenis file yang dapat diterima
+            $config['max_size'] = '2000'; // kb
+            $this->load->library('upload', $config); //deklarasi library upload (config)
+            if ($this->upload->do_upload('file_foto_update')) {
+                $this->upload->data();
+                $file_foto =  $this->upload->data('file_name');
+            }
+            if ($this->upload->do_upload('file_STNK_update')) {
+                $this->upload->data();
+                $file_stnk =  $this->upload->data('file_name');
+            }
+            if($file_foto == null){
+                $file_foto = $data_mobil["file_foto"];
+            }
+            if($file_stnk == null){
+                $file_stnk = $data_mobil["file_stnk"];
+            }
             $data = array(
                 "mobil_no" => $this->input->post("mobil_no_update"),
                 "mobil_stnk" => $this->input->post("mobil_stnk_update"),
@@ -618,7 +666,9 @@ class Form extends CI_Controller {
                 "mobil_berlaku_kir" => $this->input->post("mobil_berlaku_kir_update"),
                 "mobil_ijin_bongkar" => $this->input->post("mobil_ijin_bongkar_update"),
                 "mobil_berlaku_ijin_bongkar" => $this->input->post("mobil_berlaku_ijin_bongkar_update"),
-                "mobil_keterangan" => $this->input->post("mobil_keterangan_update")
+                "mobil_keterangan" => $this->input->post("mobil_keterangan_update"),
+                "file_foto"=>$file_foto,
+                "file_stnk"=>$file_stnk
             );
             $this->model_form->update_truck($data);
             $this->session->set_flashdata('status-update-truck', 'Berhasil');

@@ -27,11 +27,13 @@ class Dashboard extends CI_Controller {
     }    
     public function view_truck($fungsi){
         $search = $_POST['search']['value'];
+        $limit = $_POST['length'];
+        $start = $_POST['start'];
         $order_index = $_POST['order'][0]['column'];
         $order_field = $_POST['columns'][$order_index]['data'];
         $order_ascdesc = $_POST['order'][0]['dir'];
         $sql_total = $this->model_dashboard->count_all_truck($fungsi);
-        $sql_data = $this->model_dashboard->filter_truck($fungsi,$search, $order_field, $order_ascdesc);
+        $sql_data = $this->model_dashboard->filter_truck($fungsi,$search, $order_field, $order_ascdesc,$limit,$start);
         $sql_filter = $this->model_dashboard->count_filter_truck($fungsi,$search);
         $data = array();
         for($i=0;$i<count($sql_data);$i++){
@@ -74,11 +76,13 @@ class Dashboard extends CI_Controller {
     }
     public function view_supir($fungsi){
         $search = $_POST['search']['value'];
+        $limit = $_POST['length'];
+        $start = $_POST['start'];
         $order_index = $_POST['order'][0]['column'];
         $order_field = $_POST['columns'][$order_index]['data'];
         $order_ascdesc = $_POST['order'][0]['dir'];
         $sql_total = $this->model_dashboard->count_all_supir($fungsi);
-        $sql_data = $this->model_dashboard->filter_supir($fungsi,$search, $order_field, $order_ascdesc);
+        $sql_data = $this->model_dashboard->filter_supir($fungsi,$search, $order_field, $order_ascdesc,$limit,$start);
         $sql_filter = $this->model_dashboard->count_filter_supir($fungsi,$search);
         $data = array();
         for($i=0;$i<count($sql_data);$i++){
@@ -113,11 +117,13 @@ class Dashboard extends CI_Controller {
     }
     public function view_invoice_jatuh_tempo(){
         $search = $_POST['search']['value'];
+        $limit = $_POST['length'];
+        $start = $_POST['start'];
         $order_index = $_POST['order'][0]['column'];
         $order_field = $_POST['columns'][$order_index]['data'];
         $order_ascdesc = $_POST['order'][0]['dir'];
         $sql_total = $this->model_dashboard->count_all_invoice_jatuh_tempo();
-        $sql_data = $this->model_dashboard->filter_invoice_jatuh_tempo($search,$order_field, $order_ascdesc);
+        $sql_data = $this->model_dashboard->filter_invoice_jatuh_tempo($search,$order_field, $order_ascdesc,$limit,$start);
         $sql_filter = $this->model_dashboard->count_filter_invoice_jatuh_tempo($search);
         $data = array();
         for($i=0;$i<count($sql_data);$i++){
@@ -151,11 +157,13 @@ class Dashboard extends CI_Controller {
     public function view_JO_no_invoice(){
         $search = $_POST['search']['value'];
         $status = "Sampai Tujuan";
+        $limit = $_POST['length'];
+        $start = $_POST['start'];
         $order_index = $_POST['order'][0]['column'];
         $order_field = $_POST['columns'][$order_index]['data'];
         $order_ascdesc = $_POST['order'][0]['dir'];
         $sql_total = $this->model_dashboard->count_all_JO($status);
-        $sql_data = $this->model_dashboard->filter_JO($search,$order_field, $order_ascdesc,$status);
+        $sql_data = $this->model_dashboard->filter_JO($search,$order_field, $order_ascdesc,$status,$limit,$start);
         $sql_filter = $this->model_dashboard->count_filter_JO($search,$status);
         $data = array();
         for($i=0;$i<count($sql_data);$i++){

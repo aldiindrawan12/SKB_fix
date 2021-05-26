@@ -186,7 +186,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <form action="<?= base_url("index.php/form/update_supir")?>" method="POST">
+                        <?php echo form_open_multipart('form/update_supir'); ?>
                         <input type="text" name=supir_id id=supir_id hidden>
                         <div class="form-group row">
                             <label for="supir_name" class="form-label font-weight-bold col-md-12">Nama Driver</label>
@@ -241,11 +241,23 @@
                             <label for="darurat_referensi_update" class="form-label font-weight-bold">Referensi</label>
                             <input autocomplete="off" type="text" class="form-control" id="darurat_referensi_update" name="darurat_referensi_update" required placeholder="Referensi">
                         </div>
+                        <div class="form-group">
+                            <label for="file_foto_update" class="form-label font-weight-bold">Foto Driver</label>
+                            <input type="file" class="form-control" id="file_foto_update" name="file_foto_update" onchange="upload_foto(this)">
+                        </div>
+                        <div class="form-group">
+                            <label for="file_sim_update" class="form-label font-weight-bold">Foto SIM</label>
+                            <input type="file" class="form-control" id="file_sim_update" name="file_sim_update" onchange="upload_foto(this)">
+                        </div>
+                        <div class="form-group">
+                            <label for="file_ktp_update" class="form-label font-weight-bold">Foto KTP</label>
+                            <input type="file" class="form-control" id="file_ktp_update" name="file_ktp_update" onchange="upload_foto(this)">
+                        </div>
                     </div>
                     <div class="form-group col-md-12">
                         <button type="submit" class="btn btn-success mb-3 float-right">Simpan</button>
                     </div>
-                    </form>
+                    <?php echo form_close();?>
                 </div>
             </div>
 

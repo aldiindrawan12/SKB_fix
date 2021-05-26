@@ -155,7 +155,7 @@
 
 <!-- pop up update truck -->
 <div class="modal fade" id="popup-update-truck" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
-    <div class="modal-dialog modal-md" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
                 <h5 class="font-weight-bold">Update Kendaraan</h5>
@@ -163,8 +163,9 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="font-size-sm m-3 text-justify">
-                <form action="<?= base_url("index.php/form/update_truck")?>" method="POST">     
+            <div class="font-size-sm m-3 text-justify row">
+                <?php echo form_open_multipart('form/update_truck'); ?>
+                    <div class="col">
                         <div class="form-group">
                             <input autocomplete="off" type="text" class="form-control" id="mobil_no_update" name="mobil_no_update" required readonly>
                         </div>
@@ -188,6 +189,8 @@
                             <label for="mobil_berlaku_kir_update" class="form-label font-weight-bold">Tgl.Berlaku KIR</label>
                             <input autocomplete="off" type="text" class="form-control" id="mobil_berlaku_kir_update" name="mobil_berlaku_kir_update" required onclick="tanggal_berlaku(this)">
                         </div>
+                    </div>
+                    <div class="col">
                         <div class="form-group">
                             <label for="mobil_ijin_bongkar_update" class="form-label font-weight-bold">Ijin Bongkar</label>
                             <input autocomplete="off" type="text" class="form-control" id="mobil_ijin_bongkar_update" name="mobil_ijin_bongkar_update" required>
@@ -200,10 +203,19 @@
                             <label for="mobil_keterangan_update" class="form-label font-weight-bold">Keterangan</label>
                             <textarea class="form-control" id="mobil_keterangan_update" name="mobil_keterangan_update" rows="3"></textarea>
                         </div>
-                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="file_foto_update" class="form-label font-weight-bold">Foto STNK</label>
+                            <input type="file" class="form-control" id="file_foto_update" name="file_foto_update" onchange="upload_foto(this)">
+                        </div>
+                        <div class="form-group">
+                            <label for="file_STNK_update" class="form-label font-weight-bold">Foto STNK</label>
+                            <input type="file" class="form-control" id="file_STNK_update" name="file_STNK_update" onchange="upload_foto(this)"> 
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
                         <button type="submit" class="btn btn-success mb-3 float-right">Simpan</button>
                     </div>
-                </form>
+                <?php echo form_close();?>            
             </div>
         </div>
     </div>

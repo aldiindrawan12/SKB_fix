@@ -300,7 +300,11 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                "paging":false,
+                // "paging":false,
+                "aLengthMenu": [
+                    [1, 2, 50, 100],
+                    [1, 2, 50, 100]
+                ],
                 "columns": [
                     {
                         "data": "mobil_no",
@@ -353,7 +357,11 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                "paging":false,
+                // "paging":false,
+                "aLengthMenu": [
+                    [1, 2, 50, 100],
+                    [1, 2, 50, 100]
+                ],
                 "columns": [
                     {
                         "data": "mobil_no",
@@ -405,7 +413,11 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                "paging":false,
+                // "paging":false,
+                "aLengthMenu": [
+                    [1, 2, 50, 100],
+                    [1, 2, 50, 100]
+                ],
                 "columns": [
                     {
                         "data": "mobil_no"
@@ -452,7 +464,11 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                "paging":false,
+                // "paging":false,
+                "aLengthMenu": [
+                    [1, 2, 50, 100],
+                    [1, 2, 50, 100]
+                ],
                 "columns": [
                     {   
                         "data": "mobil_no"
@@ -499,7 +515,11 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                "paging":false,
+                // "paging":false,
+                "aLengthMenu": [
+                    [1, 2, 50, 100],
+                    [1, 2, 50, 100]
+                ],
                 "columns": [
                     {   
                         "data": "mobil_no"
@@ -520,7 +540,7 @@
             });
         });
     </script>
-        <script> //script datatables kendaraan
+    <script> //script datatables kendaraan
         $(document).ready(function() {
             var table = null;
             table = $('#Table-Supir-Tidak-Jalan').DataTable({
@@ -535,7 +555,11 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                "paging":false,
+                // "paging":false,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
                 "columns": [
                     {   
                         "data": "supir_name"
@@ -576,7 +600,11 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                "paging":false,
+                // "paging":false,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
                 "columns": [
                     {   
                         "data": "supir_name"
@@ -626,7 +654,11 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                "paging":false,
+                // "paging":false,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
                 "columns": [
                     {
                         "data": "invoice_kode",
@@ -696,7 +728,11 @@
                     "type": "POST"
                 },
                 "deferRender": true,
-                "paging":false,
+                // "paging":false,
+                "aLengthMenu": [
+                    [1, 2, 50, 100],
+                    [1, 2, 50, 100]
+                ],
                 "columns": [
                     {
                         "data": "Jo_id",

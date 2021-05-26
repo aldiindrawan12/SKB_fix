@@ -14,7 +14,7 @@ class Model_Dashboard extends CI_model
             return $this->db->count_all_results("skb_mobil");
         }
 
-        public function filter_truck($fungsi,$search, $order_field, $order_ascdesc)
+        public function filter_truck($fungsi,$search, $order_field, $order_ascdesc,$limit,$start)
         {
             if($search!=""){
                 $this->db->like('mobil_no', $search);
@@ -24,6 +24,7 @@ class Model_Dashboard extends CI_model
                 $this->db->or_like('mobil_tahun', $search);
             }
             $this->db->order_by($order_field, $order_ascdesc);
+            $this->db->limit($limit, $start);
             $hasil = $this->db->get('skb_mobil')->result_array();
             $hasil_fix = [];
             for($i=0;$i<count($hasil);$i++){
@@ -107,11 +108,12 @@ class Model_Dashboard extends CI_model
             return $this->db->count_all_results("skb_supir");
         }
 
-        public function filter_supir($fungsi,$search, $order_field, $order_ascdesc)
+        public function filter_supir($fungsi,$search, $order_field, $order_ascdesc,$limit,$start)
         {
             $this->db->like('supir_name', $search);
             $this->db->where("status_hapus","NO");
             $this->db->order_by($order_field, $order_ascdesc);
+            $this->db->limit($limit, $start);
             $hasil = $this->db->get('skb_supir')->result_array();
             $hasil_fix = [];
             for($i=0;$i<count($hasil);$i++){
@@ -174,7 +176,7 @@ class Model_Dashboard extends CI_model
             return $this->db->count_all_results("skb_invoice");
         }
 
-        public function filter_invoice_jatuh_tempo($search, $order_field, $order_ascdesc)
+        public function filter_invoice_jatuh_tempo($search, $order_field, $order_ascdesc,$limit,$start)
         {
             if($search!=""){
                 $this->db->like('invoice_kode', $search);
@@ -182,6 +184,7 @@ class Model_Dashboard extends CI_model
             }
             $this->db->order_by($order_field, $order_ascdesc);
             $this->db->join("skb_customer", "skb_customer.customer_id = skb_invoice.customer_id", 'left');
+            $this->db->limit($limit, $start);
             $hasil = $this->db->get('skb_invoice')->result_array();
             $hasil_fix = [];
             for($i=0;$i<count($hasil);$i++){
@@ -226,7 +229,7 @@ class Model_Dashboard extends CI_model
             return $this->db->count_all_results("skb_job_order");
         }
 
-        public function filter_JO($search, $order_field, $order_ascdesc,$status)
+        public function filter_JO($search, $order_field, $order_ascdesc,$status,$limit,$start)
         {
             if($search!=""){
                 $this->db->like('JO_id', $search);
@@ -236,6 +239,7 @@ class Model_Dashboard extends CI_model
                 $this->db->or_like('tujuan', $search);
             }
             $this->db->order_by($order_field, $order_ascdesc);
+            $this->db->limit($limit, $start);
             $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
             $hasil = $this->db->get('skb_job_order')->result_array();
                 $hasil_fix = [];

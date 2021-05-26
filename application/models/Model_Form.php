@@ -142,15 +142,21 @@ class Model_Form extends CI_model
                     unlink($path_ktp);
                 }
             }else{
+                if($data_supir["file_foto"] != $temp_supir["file_foto"]){
                     $path_foto = './assets/berkas/driver/'.$temp_supir["file_foto"];
                     chmod($path_foto, 0777);
                     unlink($path_foto);
+                }
+                if($data_supir["file_sim"] != $temp_supir["file_sim"]){
                     $path_sim = './assets/berkas/driver/'.$temp_supir["file_sim"];
                     chmod($path_sim, 0777);
                     unlink($path_sim);
+                }
+                if($data_supir["file_ktp"] != $temp_supir["file_ktp"]){
                     $path_ktp = './assets/berkas/driver/'.$temp_supir["file_ktp"];
                     chmod($path_ktp, 0777);
                     unlink($path_ktp);
+                }
             }
             $this->db->set("temp_supir","");
             $this->db->set("validasi_edit","ACC");
@@ -248,12 +254,16 @@ class Model_Form extends CI_model
                     unlink($path_stnk);
                 }
             }else{
+                if($data_mobil["file_foto"] != $temp_mobil["file_foto"]){
                     $path_foto = './assets/berkas/kendaraan/'.$temp_mobil["file_foto"];
                     chmod($path_foto, 0777);
                     unlink($path_foto);
+                }
+                if($data_mobil["file_stnk"] != $temp_mobil["file_stnk"]){
                     $path_stnk = './assets/berkas/kendaraan/'.$temp_mobil["file_stnk"];
                     chmod($path_stnk, 0777);
                     unlink($path_stnk);
+                }
             }
             $this->db->set("temp_mobil","");
             $this->db->set("validasi_edit","ACC");

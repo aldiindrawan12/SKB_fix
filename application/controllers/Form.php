@@ -57,7 +57,7 @@ class Form extends CI_Controller {
     			$this->session->set_flashdata('status-login', 'False');
                 redirect(base_url());
             }
-            $data["supir"] = $this->model_home->getsupir();
+            $data["supir"] = $this->model_home->getsupirbon();
             $data["page"] = "Bon_page";
             $data["collapse_group"] = "Penggajian";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);

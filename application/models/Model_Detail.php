@@ -43,6 +43,7 @@ class Model_Detail extends CI_model
 
     
     public function hapus_invoice($invoice_id){
+        $invoice_id = str_replace("%20"," ",$invoice_id);
         $data_jo = $this->db->get_where("skb_job_order",array("invoice_id"=>$invoice_id))->result_array();
         $customer = $data_jo[0]["customer_id"];
         for($i=0;$i<count($data_jo);$i++){

@@ -66,50 +66,84 @@ class Model_Home extends CI_model
         }
     //end funcction get
 
-     //function-fiunction datatable truck
-        public function count_all_truck()
-        {
+    //function-fiunction datatable truck
+        function getTruckData($postData){
+            $tanggal_now = date("Y-m-d");
+            $response = array();
+        
+            ## Read value
+            $draw = $postData['draw'];
+            $start = $postData['start']; // mulai display per page
+            $rowperpage = $postData['length']; // Rows display per page
+            $columnIndex = $postData['order'][0]['column']; // Column index untuk sorting
+            $columnName = $postData['columns'][$columnIndex]['data']; // Column name untuk sorting
+            $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
+            $searchValue = $postData['search']['value']; // Search value
+
+            ## Search 
+            $search_arr = array();
+            $searchQuery = "";
+            if($searchValue != ''){
+                $search_arr[] = " (mobil_no like '%".$searchValue."%' or 
+                    mobil_merk like '%".$searchValue."%' or 
+                    mobil_type like '%".$searchValue."%' or 
+                    mobil_tahun like '%".$searchValue."%' or 
+                    mobil_jenis like '%".$searchValue."%') ";
+            }
+            $search_arr[] = " status_hapus='NO' ";
+
+            if(count($search_arr) > 0){ //gabung kondisi where
+                $searchQuery = implode(" and ",$search_arr);
+            }
+        
+            ## Total record without filtering
+            $this->db->select('count(*) as allcount');
             $this->db->where("status_hapus","NO");
-            return $this->db->count_all_results("skb_mobil");
-        }
-
-        public function filter_truck($search, $order_field, $order_ascdesc)
-        {
-            if($search!=""){
-                $this->db->like('mobil_no', $search);
-                $this->db->or_like('mobil_jenis', $search);
-                $this->db->or_like('mobil_merk', $search);
-                $this->db->or_like('mobil_type', $search);
-                $this->db->or_like('mobil_tahun', $search);
+            $records = $this->db->get('skb_mobil')->result();
+            $totalRecords = $records[0]->allcount;
+        
+            ## Total record with filtering
+            $this->db->select('count(*) as allcount');
+            if($searchQuery != ''){
+                $this->db->where($searchQuery);
             }
-            $this->db->order_by($order_field, $order_ascdesc);
-            $hasil = $this->db->get('skb_mobil')->result_array();
-            $hasil_fix = [];
-            for($i=0;$i<count($hasil);$i++){
-                    if($hasil[$i]["status_hapus"]=="NO"){
-                        $hasil_fix[] = $hasil[$i];
-                    }
+            $records = $this->db->get('skb_mobil')->result();
+            $totalRecordwithFilter = $records[0]->allcount;
+        
+            ## data hasil record
+            $this->db->select('*');
+            if($searchQuery != ''){
+                $this->db->where($searchQuery);
             }
-            return $hasil_fix;   
-        }
-
-        public function count_filter_truck($search)
-        {
-            if($search!=""){
-                $this->db->like('mobil_no', $search);
-                $this->db->or_like('mobil_jenis', $search);
-                $this->db->or_like('mobil_merk', $search);
-                $this->db->or_like('mobil_type', $search);
-                $this->db->or_like('mobil_tahun', $search);
+            $this->db->order_by($columnName, $columnSortOrder);
+            $this->db->limit($rowperpage, $start);
+            $records = $this->db->get('skb_mobil')->result();
+        
+            $data = array();
+            $n = 1;
+            foreach($records as $record ){
+                $data[] = array( 
+                    "no"=>$n,
+                    "mobil_no"=>$record->mobil_no,
+                    "mobil_merk"=>$record->mobil_merk,
+                    "mobil_type"=>$record->mobil_type,
+                    "mobil_dump"=>$record->mobil_dump,
+                    "mobil_jenis"=>$record->mobil_jenis,
+                    "validasi"=>$record->validasi,
+                    "validasi_edit"=>$record->validasi_edit,
+                    "validasi_delete"=>$record->validasi_delete,
+                ); 
+                $n++;
             }
-            $hasil_data = $this->db->get('skb_mobil')->result_array();
-                $hasil_fix = 0;
-                for($i=0;$i<count($hasil_data);$i++){
-                        if($hasil_data[$i]["status_hapus"]=="NO"){
-                            $hasil_fix +=1;
-                        }
-                }
-                return $hasil_fix;
+            ## Response
+            $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordwithFilter,
+            "aaData" => $data
+            );
+        
+            return $response; 
         }
      //akhir function-fiunction datatable truck
 
@@ -285,7 +319,6 @@ class Model_Home extends CI_model
         }
     //akhir function-fiunction datatable JO laporan
 
-
      //function-fiunction datatable bon
         public function count_all_bon()
         {
@@ -312,7 +345,6 @@ class Model_Home extends CI_model
         }
      //akhir function-fiunction datatable bon
 
-
     //  Function Customer
         public function count_all_customer($asal)
         {
@@ -325,7 +357,6 @@ class Model_Home extends CI_model
 
         public function filter_customer($asal,$search, $limit, $start, $order_field, $order_ascdesc)
         {
-            // $this->db->like('customer_id', $search);
             $this->db->where("status_hapus","NO");
             $this->db->like('customer_name', $search);
             if($asal=="viewcustomerinvoice"){
@@ -338,7 +369,6 @@ class Model_Home extends CI_model
 
         public function count_filter_customer($asal,$search)
         {
-            // $this->db->like('customer_id', $search);
             $this->db->where("status_hapus","NO");
             $this->db->like('customer_name', $search);
             if($asal=="viewcustomerinvoice"){
@@ -548,100 +578,100 @@ class Model_Home extends CI_model
     //  end Function Akun
 
     // Function rute
-        public function count_all_rute($asal,$customer)
-        {
-            if($customer!="x"){
-                $this->db->where("skb_rute.customer_id",$customer);
+        function getRuteData($postData,$asal,$customer){
+            $response = array();
+        
+            ## Read value
+            $draw = $postData['draw'];
+            $start = $postData['start']; // mulai display per page
+            $rowperpage = $postData['length']; // Rows display per page
+            $columnIndex = $postData['order'][0]['column']; // Column index untuk sorting
+            $columnName = $postData['columns'][$columnIndex]['data']; // Column name untuk sorting
+            $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
+            $searchValue = $postData['search']['value']; // Search value
+        
+            ## Search 
+            $search_arr = array();
+            $searchQuery = "";
+            if($searchValue != ''){
+                $search_arr[] = " (rute_id like '%".$searchValue."%' or 
+                    rute_dari like '%".$searchValue."%' or 
+                    rute_muatan like '%".$searchValue."%' or 
+                    rute_ke like '%".$searchValue."%') ";
             }
-            $this->db->where("skb_rute.rute_status_hapus","No");
+            $search_arr[] = " rute_status_hapus='NO' ";
             if($asal=="addjo"){
-                $this->db->where("skb_rute.validasi_rute","ACC");
-                $this->db->where("skb_rute.validasi_rute_edit","ACC");
-                $this->db->where("skb_rute.validasi_rute_delete","ACC");
+                $search_arr[] = "validasi_rute = 'ACC'";
+                $search_arr[] = "validasi_rute_edit = 'ACC'";
+                $search_arr[] = "validasi_rute_delete = 'ACC'";
             }
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_rute.customer_id", 'left');
-            return $this->db->count_all_results("skb_rute");
-        }
 
-        public function filter_rute($asal,$customer,$search, $order_field, $order_ascdesc)
-        {
-            if($search!=""){
-                $this->db->like('rute_id', $search);
-                $this->db->or_like('customer_name', $search);
-                $this->db->or_like('rute_dari', $search);
-                $this->db->or_like('rute_ke', $search);
-                $this->db->or_like('rute_muatan', $search);
+            if(count($search_arr) > 0){ //gabung kondisi where
+                $searchQuery = implode(" and ",$search_arr);
             }
-            $this->db->order_by($order_field, $order_ascdesc);
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_rute.customer_id", 'left');
-            $hasil = $this->db->get('skb_rute')->result_array();
-            $hasil_fix = [];
-            for($i=0;$i<count($hasil);$i++){
-                if($asal=="addjo"){
-                    if($customer=='x'){
-                        if($hasil[$i]["rute_status_hapus"]=="NO" && $hasil[$i]["validasi_rute"]=="ACC" && $hasil[$i]["validasi_rute_edit"]=="ACC" && $hasil[$i]["validasi_rute_delete"]=="ACC"){
-                            $hasil_fix[] = $hasil[$i];
-                        }
-                    }else{
-                        if($hasil[$i]["customer_id"]==$customer && $hasil[$i]["rute_status_hapus"]=="NO" && $hasil[$i]["validasi_rute"]=="ACC" && $hasil[$i]["validasi_rute_edit"]=="ACC" && $hasil[$i]["validasi_rute_delete"]=="ACC"){
-                            $hasil_fix[] = $hasil[$i];
-                        }
-                    }
-                }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewrute"){
-                    if($customer=='x'){
-                        if($hasil[$i]["rute_status_hapus"]=="NO"){
-                            $hasil_fix[] = $hasil[$i];
-                        }
-                    }else{
-                        if($hasil[$i]["customer_id"]==$customer && $hasil[$i]["rute_status_hapus"]=="NO"){
-                            $hasil_fix[] = $hasil[$i];
-                        }
-                    }
-                }else{
-                    $hasil_fix[] = $hasil[$i];
-                }
-            }
-            return $hasil_fix;
-        }
-
-        public function count_filter_rute($asal,$customer,$search)
-        {
-            if($search!=""){
-                $this->db->like('rute_id', $search);
-                $this->db->or_like('customer_name', $search);
-                $this->db->or_like('rute_dari', $search);
-                $this->db->or_like('rute_ke', $search);
-                $this->db->or_like('rute_muatan', $search);
+        
+            ## Total record without filtering
+            $this->db->select('count(*) as allcount');
+            $this->db->where("rute_status_hapus","NO");
+            $records = $this->db->get('skb_rute')->result();
+            $totalRecords = $records[0]->allcount;
+        
+            ## Total record with filtering
+            $this->db->select('count(*) as allcount');
+            if($searchQuery != ''){
+                $this->db->where($searchQuery);
             }
             $this->db->join("skb_customer", "skb_customer.customer_id = skb_rute.customer_id", 'left');
-            $hasil_data = $this->db->get('skb_rute')->result_array();
-                $hasil_fix = 0;
-                for($i=0;$i<count($hasil_data);$i++){
-                    if($asal=="addjo"){
-                        if($customer=="x"){
-                            if($hasil_data[$i]["rute_status_hapus"]=="NO" && $hasil_data[$i]["validasi_rute"]=="ACC" && $hasil_data[$i]["validasi_rute_edit"]=="ACC" && $hasil_data[$i]["validasi_rute_delete"]=="ACC"){
-                                $hasil_fix +=1;
-                            }
-                        }else{
-                            if($hasil_data[$i]["customer_id"]==$customer && $hasil_data[$i]["rute_status_hapus"]=="NO" && $hasil_data[$i]["validasi_rute"]=="ACC" && $hasil_data[$i]["validasi_rute_edit"]=="ACC" && $hasil_data[$i]["validasi_rute_delete"]=="ACC"){
-                                $hasil_fix +=1;
-                            }
-                        }
-                    }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewrute"){
-                        if($customer=="x"){
-                            if($hasil_data[$i]["rute_status_hapus"]=="NO"){
-                                $hasil_fix +=1;
-                            }
-                        }else{
-                            if($hasil_data[$i]["customer_id"]==$customer && $hasil_data[$i]["rute_status_hapus"]=="NO"){
-                                $hasil_fix +=1;
-                            }
-                        }
-                    }else{
-                        $hasil_fix +=1;
-                    }
-                }
-                return $hasil_fix;           
+            if($customer!="x"){
+                $this->db->where("skb_customer.customer_id",$customer);
+            }
+            $records = $this->db->get('skb_rute')->result();
+            $totalRecordwithFilter = $records[0]->allcount;
+        
+            ## data hasil record
+            $this->db->select('*');
+            if($searchQuery != ''){
+                $this->db->where($searchQuery);
+            }
+            $this->db->order_by($columnName, $columnSortOrder);
+            $this->db->limit($rowperpage, $start);
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_rute.customer_id", 'left');
+            if($customer!="x"){
+                $this->db->where("skb_customer.customer_id",$customer);
+            }
+            $records = $this->db->get('skb_rute')->result();
+        
+            $data = array();
+            $n = 1;
+            foreach($records as $record ){
+                $data[] = array( 
+                    "no"=>$n,
+                    "rute_id"=>$record->rute_id,
+                    "customer_name"=>$record->customer_name,
+                    "rute_ke"=>$record->rute_ke,
+                    "jenis_mobil"=>$record->jenis_mobil,
+                    "rute_tonase"=>$record->rute_tonase,
+                    "rute_dari"=>$record->rute_dari,
+                    "rute_tagihan"=>$record->rute_tagihan,
+                    "rute_muatan"=>$record->rute_muatan,
+                    "rute_uj_engkel"=>$record->rute_uj_engkel,
+                    "rute_gaji_engkel"=>$record->rute_gaji_engkel,
+                    "rute_gaji_engkel_rumusan"=>$record->rute_gaji_engkel_rumusan,
+                    "validasi_rute"=>$record->validasi_rute,
+                    "validasi_rute_edit"=>$record->validasi_rute_edit,
+                    "validasi_rute_delete"=>$record->validasi_rute_delete,
+                ); 
+                $n++;
+            }
+            ## Response
+            $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordwithFilter,
+            "aaData" => $data
+            );
+        
+            return $response; 
         }
     // end Function rute
 
@@ -695,200 +725,258 @@ class Model_Home extends CI_model
     //akhir function-fiunction datatable JO
 
     //function-fiunction datatable merk
-        public function count_all_merk($asal)
-        {
+        function getMerkData($postData,$asal){
+            $tanggal_now = date("Y-m-d");
+            $response = array();
+        
+            ## Read value
+            $draw = $postData['draw'];
+            $start = $postData['start']; // mulai display per page
+            $rowperpage = $postData['length']; // Rows display per page
+            $columnIndex = $postData['order'][0]['column']; // Column index untuk sorting
+            $columnName = $postData['columns'][$columnIndex]['data']; // Column name untuk sorting
+            $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
+            $searchValue = $postData['search']['value']; // Search value
+        
+            ## Search 
+            $search_arr = array();
+            $searchQuery = "";
+            if($searchValue != ''){
+                $search_arr[] = " (merk_type like '%".$searchValue."%' or 
+                    merk_nama like '%".$searchValue."%' or 
+                    merk_jenis like '%".$searchValue."%') ";
+            }
+            $search_arr[] = " status_hapus='NO' ";
+            $search_arr[] = " validasi='ACC' ";
+            if($asal=="addtruck"){
+                $search_arr[] = " validasi_edit='ACC' ";
+                $search_arr[] = " validasi_delete='ACC' ";
+            }
+
+            if(count($search_arr) > 0){ //gabung kondisi where
+                $searchQuery = implode(" and ",$search_arr);
+            }
+        
+            ## Total record without filtering
+            $this->db->select('count(*) as allcount');
             $this->db->where("status_hapus","NO");
             if($asal=="addtruck"){
                 $this->db->where("validasi","ACC");
                 $this->db->where("validasi_edit","ACC");
                 $this->db->where("validasi_delete","ACC");
             }
-            return $this->db->count_all_results("skb_merk_kendaraan");
-        }
-
-        public function filter_merk($asal,$search, $order_field, $order_ascdesc)
-        {
-            if($search!=""){
-                $this->db->like('merk_nama', $search);
-                $this->db->or_like('merk_type', $search);
-                $this->db->or_like('merk_jenis', $search);
+            $records = $this->db->get('skb_merk_kendaraan')->result();
+            $totalRecords = $records[0]->allcount;
+        
+            ## Total record with filtering
+            $this->db->select('count(*) as allcount');
+            if($searchQuery != ''){
+                $this->db->where($searchQuery);
             }
-            $this->db->order_by($order_field, $order_ascdesc);
-            $hasil = $this->db->get('skb_merk_kendaraan')->result_array();
-            $hasil_fix = [];
-            for($i=0;$i<count($hasil);$i++){
-                if($asal=="addtruck"){
-                    if($hasil[$i]["status_hapus"]=="NO" && $hasil[$i]["validasi"]=="ACC" && $hasil[$i]["validasi_edit"]=="ACC" && $hasil[$i]["validasi_delete"]=="ACC"){
-                        $hasil_fix[] = $hasil[$i];
-                    }
-                }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewmerk"){
-                    if($hasil[$i]["status_hapus"]=="NO"){
-                        $hasil_fix[] = $hasil[$i];
-                    }
-                }else{
-                    if($hasil[$i]["status_hapus"]=="NO"){
-                        $hasil_fix[] = $hasil[$i];
-                    }
-                }
+            $records = $this->db->get('skb_merk_kendaraan')->result();
+            $totalRecordwithFilter = $records[0]->allcount;
+        
+            ## data hasil record
+            $this->db->select('*');
+            if($searchQuery != ''){
+                $this->db->where($searchQuery);
             }
-            return $hasil_fix;   
-        }
-
-        public function count_filter_merk($asal,$search)
-        {
-            if($search!=""){
-                $this->db->like('merk_nama', $search);
-                $this->db->or_like('merk_type', $search);
-                $this->db->or_like('merk_jenis', $search);
+            $this->db->order_by($columnName, $columnSortOrder);
+            $this->db->limit($rowperpage, $start);
+            $records = $this->db->get('skb_merk_kendaraan')->result();
+        
+            $data = array();
+            $n = 1;
+            foreach($records as $record ){
+                $data[] = array( 
+                    "no"=>$n,
+                    "merk_id"=>$record->merk_id,
+                    "merk_nama"=>$record->merk_nama,
+                    "merk_type"=>$record->merk_type,
+                    "merk_dump"=>$record->merk_dump,
+                    "merk_jenis"=>$record->merk_jenis,
+                    "validasi"=>$record->validasi,
+                    "validasi_edit"=>$record->validasi_edit,
+                    "validasi_delete"=>$record->validasi_delete,
+                ); 
+                $n++;
             }
-            $hasil_data = $this->db->get('skb_merk_kendaraan')->result_array();
-                $hasil_fix = 0;
-                for($i=0;$i<count($hasil_data);$i++){
-                    if($asal=="addtruck"){
-                        if($hasil_data[$i]["status_hapus"]=="NO" && $hasil_data[$i]["validasi"]=="ACC"  && $hasil_data[$i]["validasi_edit"]=="ACC"  && $hasil_data[$i]["validasi_delete"]=="ACC"){
-                            $hasil_fix +=1;
-                        }
-                    }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewmerk"){
-                        if($hasil_data[$i]["status_hapus"]=="NO"){
-                            $hasil_fix +=1;
-                        }
-                    }else{
-                        if($hasil_data[$i]["status_hapus"]=="NO"){
-                            $hasil_fix +=1;
-                        }
-                    }
-                }
-                return $hasil_fix;
+            ## Response
+            $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordwithFilter,
+            "aaData" => $data
+            );
+        
+            return $response; 
         }
     //akhir function-fiunction datatable merk
 
     //function-fiunction datatable kosongan
-        public function count_all_kosongan()
-        {
+        function getKosonganData($postData){
+            $tanggal_now = date("Y-m-d");
+            $response = array();
+        
+            ## Read value
+            $draw = $postData['draw'];
+            $start = $postData['start']; // mulai display per page
+            $rowperpage = $postData['length']; // Rows display per page
+            $columnIndex = $postData['order'][0]['column']; // Column index untuk sorting
+            $columnName = $postData['columns'][$columnIndex]['data']; // Column name untuk sorting
+            $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
+            $searchValue = $postData['search']['value']; // Search value
+        
+            ## Search 
+            $search_arr = array();
+            $searchQuery = "";
+            if($searchValue != ''){
+                $search_arr[] = " (kosongan_dari like '%".$searchValue."%' or 
+                    kosongan_ke like '%".$searchValue."%') ";
+            }
+            $search_arr[] = " status_hapus='NO' ";
+
+            if(count($search_arr) > 0){ //gabung kondisi where
+                $searchQuery = implode(" and ",$search_arr);
+            }
+        
+            ## Total record without filtering
+            $this->db->select('count(*) as allcount');
             $this->db->where("status_hapus","NO");
-            return $this->db->count_all_results("skb_kosongan");
-        }
-
-        public function filter_kosongan($search, $order_field, $order_ascdesc)
-        {
-            if($search!=""){
-                $this->db->like('kosongan_dari', $search);
-                $this->db->or_like('kosongan_ke', $search);
+            $records = $this->db->get('skb_kosongan')->result();
+            $totalRecords = $records[0]->allcount;
+        
+            ## Total record with filtering
+            $this->db->select('count(*) as allcount');
+            if($searchQuery != ''){
+                $this->db->where($searchQuery);
             }
-            $this->db->order_by($order_field, $order_ascdesc);
-            $hasil = $this->db->get('skb_kosongan')->result_array();
-            $hasil_fix = [];
-            for($i=0;$i<count($hasil);$i++){
-                if($hasil[$i]["status_hapus"]=="NO"){
-                    $hasil_fix[] = $hasil[$i];
-                }
+            $records = $this->db->get('skb_kosongan')->result();
+            $totalRecordwithFilter = $records[0]->allcount;
+        
+            ## data hasil record
+            $this->db->select('*');
+            if($searchQuery != ''){
+                $this->db->where($searchQuery);
             }
-            return $hasil_fix;   
-        }
-
-        public function count_filter_kosongan($search)
-        {
-            if($search!=""){
-                $this->db->like('kosongan_dari', $search);
-                $this->db->or_like('kosongan_ke', $search);
+            $this->db->order_by($columnName, $columnSortOrder);
+            $this->db->limit($rowperpage, $start);
+            $records = $this->db->get('skb_kosongan')->result();
+        
+            $data = array();
+            $n = 1;
+            foreach($records as $record ){
+                $data[] = array( 
+                    "no"=>$n,
+                    "kosongan_id"=>$record->kosongan_id,
+                    "kosongan_dari"=>$record->kosongan_dari,
+                    "kosongan_ke"=>$record->kosongan_ke,
+                    "kosongan_uang"=>$record->kosongan_uang,
+                    "validasi"=>$record->validasi,
+                    "validasi_edit"=>$record->validasi_edit,
+                    "validasi_delete"=>$record->validasi_delete,
+                ); 
+                $n++;
             }
-            $hasil_data = $this->db->get('skb_kosongan')->result_array();
-                $hasil_fix = 0;
-                for($i=0;$i<count($hasil_data);$i++){
-                    if($hasil_data[$i]["status_hapus"]=="NO"){
-                        $hasil_fix +=1;
-                    }
-                }
-                return $hasil_fix;
+            ## Response
+            $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordwithFilter,
+            "aaData" => $data
+            );
+        
+            return $response; 
         }
     //akhir function-fiunction datatable kosongan
 
     //function-fiunction datatable paketan
-        public function count_all_paketan($asal,$customer)
-        {
-            if($customer!="x"){
-                $this->db->where("skb_paketan.customer_id",$customer);
+        function getPaketanData($postData,$asal,$customer){
+            $response = array();
+        
+            ## Read value
+            $draw = $postData['draw'];
+            $start = $postData['start']; // mulai display per page
+            $rowperpage = $postData['length']; // Rows display per page
+            $columnIndex = $postData['order'][0]['column']; // Column index untuk sorting
+            $columnName = $postData['columns'][$columnIndex]['data']; // Column name untuk sorting
+            $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
+            $searchValue = $postData['search']['value']; // Search value
+        
+            ## Search 
+            $search_arr = array();
+            $searchQuery = "";
+            if($searchValue != ''){
+                $search_arr[] = " (jenis_mobil like '%".$searchValue."%' or 
+                    ritase like '%".$searchValue."%') ";
             }
-            $this->db->where("paketan_status_hapus","NO");
+            $search_arr[] = " paketan_status_hapus='NO' ";
+            $search_arr[] = "validasi_paketan = 'ACC'";
             if($asal=="addjo"){
-                $this->db->where("validasi_paketan","ACC");
+                $search_arr[] = "validasi_paketan_edit = 'ACC'";
+                $search_arr[] = "validasi_paketan_delete = 'ACC'";
             }
-            return $this->db->count_all_results("skb_paketan");
-        }
 
-        public function filter_paketan($asal,$customer,$search, $order_field, $order_ascdesc)
-        {
-            if($search!=""){
-                $this->db->like('jenis_mobil', $search);
-                $this->db->or_like('ritase', $search);
+            if(count($search_arr) > 0){ //gabung kondisi where
+                $searchQuery = implode(" and ",$search_arr);
             }
-            $this->db->order_by($order_field, $order_ascdesc);
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_paketan.customer_id", 'left');
-            $hasil = $this->db->get('skb_paketan')->result_array();
-            $hasil_fix = [];
-            for($i=0;$i<count($hasil);$i++){
-                if($asal=="addjo"){
-                    if($customer=='x'){
-                        if($hasil[$i]["paketan_status_hapus"]=="NO" && $hasil[$i]["validasi_paketan"]=="ACC" && $hasil[$i]["validasi_paketan_edit"]=="ACC" && $hasil[$i]["validasi_paketan_delete"]=="ACC"){
-                            $hasil_fix[] = $hasil[$i];
-                        }
-                    }else{
-                        if($hasil[$i]["customer_id"]==$customer && $hasil[$i]["paketan_status_hapus"]=="NO" && $hasil[$i]["validasi_paketan"]=="ACC" && $hasil[$i]["validasi_paketan_edit"]=="ACC" && $hasil[$i]["validasi_paketan_delete"]=="ACC"){
-                            $hasil_fix[] = $hasil[$i];
-                        }
-                    }
-                }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewpaketan"){
-                    if($customer=='x'){
-                        if($hasil[$i]["paketan_status_hapus"]=="NO"){
-                            $hasil_fix[] = $hasil[$i];
-                        }
-                    }else{
-                        if($hasil[$i]["customer_id"]==$customer && $hasil[$i]["paketan_status_hapus"]=="NO"){
-                            $hasil_fix[] = $hasil[$i];
-                        }
-                    }
-                }else{
-                    $hasil_fix[] = $hasil[$i];
-                }
-            }
-            return $hasil_fix;   
-        }
-
-        public function count_filter_paketan($asal,$customer,$search)
-        {
-            if($search!=""){
-                $this->db->like('jenis_mobil', $search);
-                $this->db->or_like('ritase', $search);
+        
+            ## Total record without filtering
+            $this->db->select('count(*) as allcount');
+            $this->db->where("paketan_status_hapus","NO");
+            $this->db->where("validasi_paketan","ACC");
+            $records = $this->db->get('skb_paketan')->result();
+            $totalRecords = $records[0]->allcount;
+        
+            ## Total record with filtering
+            $this->db->select('count(*) as allcount');
+            if($searchQuery != ''){
+                $this->db->where($searchQuery);
             }
             $this->db->join("skb_customer", "skb_customer.customer_id = skb_paketan.customer_id", 'left');
-            $hasil_data = $this->db->get('skb_paketan')->result_array();
-                $hasil_fix = 0;
-                for($i=0;$i<count($hasil_data);$i++){
-                    if($asal=="addjo"){
-                        if($customer=='x'){
-                            if($hasil_data[$i]["paketan_status_hapus"]=="NO" && $hasil_data[$i]["validasi_paketan"]=="ACC" && $hasil_data[$i]["validasi_paketan_edit"]=="ACC" && $hasil_data[$i]["validasi_paketan_delete"]=="ACC"){
-                                $hasil_fix +=1;
-                            }
-                        }else{
-                            if($hasil_data[$i]["customer_id"]==$customer && $hasil_data[$i]["paketan_status_hapus"]=="NO" && $hasil_data[$i]["validasi_paketan"]=="ACC" && $hasil_data[$i]["validasi_paketan_edit"]=="ACC" && $hasil_data[$i]["validasi_paketan_delete"]=="ACC"){
-                                $hasil_fix +=1;
-                            }
-                        }
-                    }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewpaketan"){
-                        if($customer=='x'){
-                            if($hasil_data[$i]["paketan_status_hapus"]=="NO"){
-                                $hasil_fix +=1;
-                            }
-                        }else{
-                            if($hasil_data[$i]["customer_id"]==$customer && $hasil_data[$i]["paketan_status_hapus"]=="NO"){
-                                $hasil_fix +=1;
-                            }
-                        }
-                    }else{
-                        $hasil_fix +=1;
-                    }
-                }
-                return $hasil_fix;
+            if($customer!="x"){
+                $this->db->where("skb_customer.customer_id",$customer);
+            }
+            $records = $this->db->get('skb_paketan')->result();
+            $totalRecordwithFilter = $records[0]->allcount;
+        
+            ## data hasil record
+            $this->db->select('*');
+            if($searchQuery != ''){
+                $this->db->where($searchQuery);
+            }
+            $this->db->order_by($columnName, $columnSortOrder);
+            $this->db->limit($rowperpage, $start);
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_paketan.customer_id", 'left');
+            if($customer!="x"){
+                $this->db->where("skb_customer.customer_id",$customer);
+            }
+            $records = $this->db->get('skb_paketan')->result();
+        
+            $data = array();
+            $n = 1;
+            foreach($records as $record ){
+                $data[] = array( 
+                    "no"=>$n,
+                    "paketan_id"=>$record->paketan_id,
+                    "jenis_mobil"=>$record->jenis_mobil,
+                    "ritase"=>$record->ritase,
+                    "paketan_uj"=>$record->paketan_uj,
+                    "validasi_paketan"=>$record->validasi_paketan,
+                    "validasi_paketan_edit"=>$record->validasi_paketan_edit,
+                    "validasi_paketan_delete"=>$record->validasi_paketan_delete,
+                ); 
+                $n++;
+            }
+            ## Response
+            $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordwithFilter,
+            "aaData" => $data
+            );
+        
+            return $response; 
         }
     //akhir function-fiunction datatable paketan
 }

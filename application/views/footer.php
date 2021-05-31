@@ -81,7 +81,10 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                "paging":false,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
                 "columns": [
                     {
                         "data": "mobil_no",
@@ -379,7 +382,10 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                "paging":false,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
                 "columns": [
                     {
                         "data": "merk_id",
@@ -637,7 +643,10 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                "paging":false,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
                 "columns": [
                     {
                         "data": "merk_id",
@@ -2787,7 +2796,10 @@
                     }
                 },
                 "deferRender": true,
-                "paging":false,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
                 "columns": [
                     {
                         "data": "rute_id",
@@ -3109,7 +3121,10 @@
                     }
                 },
                 "deferRender": true,
-                "paging":false,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
                 "columns": [
                     {
                         "data": "paketan_id",
@@ -3955,7 +3970,10 @@
                     }
                 },
                 "deferRender": true,
-                "paging":false,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
                 "columns": [
                     {
                         "data": "customer_name"
@@ -4084,7 +4102,10 @@
                     }
                 },
                 "deferRender": true,
-                "paging":false,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
                 "columns": [
                     {
                         "data": "customer_name"
@@ -4221,7 +4242,10 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                "paging":false,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
                 "columns": [
                     {
                         "data": "kosongan_id",
@@ -4508,7 +4532,10 @@
                     }
                 },
                 "deferRender": true,
-                "paging":false,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
                 "columns": [
                     {
                         "data": "paketan_id",

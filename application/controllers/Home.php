@@ -353,34 +353,9 @@ class Home extends CI_Controller {
             $this->load->view('footer');
         }
         public function view_truck(){
-            $search = $_POST['search']['value'];
-            // $limit = $_POST['length'];
-            // $start = $_POST['start'];
-            // $status = $this->input->post('searchStatus');
-            $order_index = $_POST['order'][0]['column'];
-            $order_field = $_POST['columns'][$order_index]['data'];
-            $order_ascdesc = $_POST['order'][0]['dir'];
-            $sql_total = $this->model_home->count_all_truck();
-            $sql_data = $this->model_home->filter_truck($search, $order_field, $order_ascdesc);
-            $sql_filter = $this->model_home->count_filter_truck($search);
-            $data = array();
-            for($i=0;$i<count($sql_data);$i++){
-                array_push($data, $sql_data[$i]);
-            }
-            $no = 1;
-            for($i=0;$i<count($data);$i++){
-                $data[$i]['no'] = $no;   
-                $no++;
-            }
-            $callback = array(
-                'draw' => $_POST['draw'],
-                'recordsTotal' => $sql_total,
-                'recordsFiltered' => $sql_filter,
-                'data' => $data
-            );
-
-            header('Content-Type: application/json');
-            echo json_encode($callback);
+            $postData = $this->input->post();
+            $data = $this->model_home->getTruckData($postData);
+            echo json_encode($data);
         }
     //end fungsi untuk truk
     
@@ -594,32 +569,10 @@ class Home extends CI_Controller {
             $this->load->view('footer');
         }
         public function view_rute($asal){
-            $search = $_POST['search']['value'];
             $customer = $this->input->post('customer');
-            $order_index = $_POST['order'][0]['column'];
-            $order_field = $_POST['columns'][$order_index]['data'];
-            $order_ascdesc = $_POST['order'][0]['dir'];
-            $sql_total = $this->model_home->count_all_rute($asal,$customer);
-            $sql_data = $this->model_home->filter_rute($asal,$customer,$search,$order_field, $order_ascdesc);
-            $sql_filter = $this->model_home->count_filter_rute($asal,$customer,$search);
-            $data = array();
-            for($i=0;$i<count($sql_data);$i++){
-                array_push($data, $sql_data[$i]);
-            }
-            $no = 1;
-            for($i=0;$i<count($data);$i++){
-                $data[$i]['no'] = $no;   
-                $no++;
-            }
-            $callback = array(
-                'draw' => $_POST['draw'],
-                'recordsTotal' => $sql_total,
-                'recordsFiltered' => $sql_filter,
-                'data' => $data
-            );
-
-            header('Content-Type: application/json');
-            echo json_encode($callback);
+            $postData = $this->input->post();
+            $data = $this->model_home->getRuteData($postData,$asal,$customer);
+            echo json_encode($data);
         }
     // end rute dan muatan
 
@@ -643,31 +596,9 @@ class Home extends CI_Controller {
             $this->load->view('footer');
         }
         public function view_merk($asal){
-            $search = $_POST['search']['value'];
-            $order_index = $_POST['order'][0]['column'];
-            $order_field = $_POST['columns'][$order_index]['data'];
-            $order_ascdesc = $_POST['order'][0]['dir'];
-            $sql_total = $this->model_home->count_all_merk($asal);
-            $sql_data = $this->model_home->filter_merk($asal,$search, $order_field, $order_ascdesc);
-            $sql_filter = $this->model_home->count_filter_merk($asal,$search);
-            $data = array();
-            for($i=0;$i<count($sql_data);$i++){
-                array_push($data, $sql_data[$i]);
-            }
-            $no = 1;
-            for($i=0;$i<count($data);$i++){
-                $data[$i]['no'] = $no;   
-                $no++;
-            }
-            $callback = array(
-                'draw' => $_POST['draw'],
-                'recordsTotal' => $sql_total,
-                'recordsFiltered' => $sql_filter,
-                'data' => $data
-            );
-
-            header('Content-Type: application/json');
-            echo json_encode($callback);
+            $postData = $this->input->post();
+            $data = $this->model_home->getMerkData($postData,$asal);
+            echo json_encode($data);
         }
     //end fungsi untuk merk
 
@@ -690,31 +621,9 @@ class Home extends CI_Controller {
             $this->load->view('footer');
         }
         public function view_kosongan(){
-            $search = $_POST['search']['value'];
-            $order_index = $_POST['order'][0]['column'];
-            $order_field = $_POST['columns'][$order_index]['data'];
-            $order_ascdesc = $_POST['order'][0]['dir'];
-            $sql_total = $this->model_home->count_all_kosongan();
-            $sql_data = $this->model_home->filter_kosongan($search, $order_field, $order_ascdesc);
-            $sql_filter = $this->model_home->count_filter_kosongan($search);
-            $data = array();
-            for($i=0;$i<count($sql_data);$i++){
-                array_push($data, $sql_data[$i]);
-            }
-            $no = 1;
-            for($i=0;$i<count($data);$i++){
-                $data[$i]['no'] = $no;   
-                $no++;
-            }
-            $callback = array(
-                'draw' => $_POST['draw'],
-                'recordsTotal' => $sql_total,
-                'recordsFiltered' => $sql_filter,
-                'data' => $data
-            );
-
-            header('Content-Type: application/json');
-            echo json_encode($callback);
+            $postData = $this->input->post();
+            $data = $this->model_home->getKosonganData($postData);
+            echo json_encode($data);
         }
     //end fungsi untuk kosongan
 
@@ -739,32 +648,10 @@ class Home extends CI_Controller {
             $this->load->view('footer');
         }
         public function view_paketan($asal){
-            $search = $_POST['search']['value'];
             $customer = $this->input->post('customer');
-            $order_index = $_POST['order'][0]['column'];
-            $order_field = $_POST['columns'][$order_index]['data'];
-            $order_ascdesc = $_POST['order'][0]['dir'];
-            $sql_total = $this->model_home->count_all_paketan($asal,$customer);
-            $sql_data = $this->model_home->filter_paketan($asal,$customer,$search, $order_field, $order_ascdesc);
-            $sql_filter = $this->model_home->count_filter_paketan($asal,$customer,$search);
-            $data = array();
-            for($i=0;$i<count($sql_data);$i++){
-                array_push($data, $sql_data[$i]);
-            }
-            $no = 1;
-            for($i=0;$i<count($data);$i++){
-                $data[$i]['no'] = $no;   
-                $no++;
-            }
-            $callback = array(
-                'draw' => $_POST['draw'],
-                'recordsTotal' => $sql_total,
-                'recordsFiltered' => $sql_filter,
-                'data' => $data
-            );
-
-            header('Content-Type: application/json');
-            echo json_encode($callback);
+            $postData = $this->input->post();
+            $data = $this->model_home->getPaketanData($postData,$asal,$customer);
+            echo json_encode($data);
         }
     //end fungsi untuk paketan
 }

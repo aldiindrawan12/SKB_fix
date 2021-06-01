@@ -623,8 +623,9 @@ class Model_Form extends CI_model
             return $this->db->count_all_results("skb_job_order");
         }
 
-        public function filter_jo($order_field, $order_ascdesc,$customer_id)
+        public function filter_jo($order_field, $order_ascdesc,$customer_id,$search)
         {
+            $this->db->where("(Jo_id like '%".$search."%')");
             $this->db->where("customer_id",$customer_id);
             $this->db->where("status","Sampai Tujuan");
             $this->db->where("invoice_id","");
@@ -632,8 +633,9 @@ class Model_Form extends CI_model
             return $this->db->get('skb_job_order')->result_array();
         }
 
-        public function count_filter_jo($customer_id)
+        public function count_filter_jo($customer_id,$search)
         {
+            $this->db->where("(Jo_id like '%".$search."%')");
             $this->db->where("customer_id",$customer_id);
             $this->db->where("status","Sampai Tujuan");
             $this->db->where("invoice_id","");

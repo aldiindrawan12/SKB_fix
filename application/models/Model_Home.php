@@ -145,177 +145,192 @@ class Model_Home extends CI_model
         
             return $response; 
         }
-     //akhir function-fiunction datatable truck
+    //akhir function-fiunction datatable truck
 
-     //function-fiunction datatable JO
-        public function count_all_JO($status)
-        {
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
-            return $this->db->count_all_results("skb_job_order");
-        }
-
-        public function filter_JO($search, $order_field, $order_ascdesc,$status)
-        {
-            if($search!=""){
-                $this->db->like('JO_id', $search);
-                $this->db->or_like('customer_name', $search);
-                $this->db->or_like('muatan', $search);
-                $this->db->or_like('asal', $search);
-                $this->db->or_like('tujuan', $search);
+    //function-fiunction datatable JO
+        function getJOData($postData,$status){
+            $response = array();
+        
+            ## Read value
+            $draw = $postData['draw'];
+            $start = $postData['start']; // mulai display per page
+            $rowperpage = $postData['length']; // Rows display per page
+            $columnIndex = $postData['order'][0]['column']; // Column index untuk sorting
+            $columnName = $postData['columns'][$columnIndex]['data']; // Column name untuk sorting
+            $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
+            $searchValue = $postData['search']['value']; // Search value
+        
+            ## Search 
+            $search_arr = array();
+            $searchQuery = "";
+            if($searchValue != ''){
+                $search_arr[] = " (Jo_id like '%".$searchValue."%' or 
+                    asal like '%".$searchValue."%' or 
+                    tujuan like '%".$searchValue."%' or 
+                    muatan like '%".$searchValue."%') ";
             }
-            $this->db->order_by($order_field, $order_ascdesc);
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
-            $hasil = $this->db->get('skb_job_order')->result_array();
+            $search_arr[] = " (parent_Jo_id='x' or parent_Jo_id='y')";
             if($status!="x"){
-                $hasil_fix = [];
-                for($i=0;$i<count($hasil);$i++){
-                    if($hasil[$i]["status"]==$status && ($hasil[$i]["parent_Jo_id"]=="x" || $hasil[$i]["parent_Jo_id"]=="y")){
-                        $hasil_fix[] = $hasil[$i];
-                    }
-                }
-                return $hasil_fix;
-            }else{
-                $hasil_fix = [];
-                for($i=0;$i<count($hasil);$i++){
-                    if($hasil[$i]["parent_Jo_id"]=="x" || $hasil[$i]["parent_Jo_id"]=="y"){
-                        $hasil_fix[] = $hasil[$i];
-                    }
-                }
-                return $hasil_fix;
+                $search_arr[] = " status='".$status."' ";
             }
-        }
-
-        public function count_filter_JO($search,$status)
-        {   
-            if($search!=""){
-                $this->db->like('JO_id', $search);
-                $this->db->or_like('customer_name', $search);
-                $this->db->or_like('muatan', $search);
-                $this->db->or_like('asal', $search);
-                $this->db->or_like('tujuan', $search);
+            if(count($search_arr) > 0){ //gabung kondisi where
+                $searchQuery = implode(" and ",$search_arr);
+            }
+        
+            ## Total record without filtering
+            $this->db->select('count(*) as allcount');
+            $this->db->where("(parent_Jo_id='x' or parent_Jo_id='y')");
+            $records = $this->db->get('skb_job_order')->result();
+            $totalRecords = $records[0]->allcount;
+        
+            ## Total record with filtering
+            $this->db->select('count(*) as allcount');
+            if($searchQuery != ''){
+                $this->db->where($searchQuery);
             }
             $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
-            $hasil_data = $this->db->get('skb_job_order')->result_array();
-
-            if($search!=""){
-                $this->db->like('JO_id', $search);
-                $this->db->or_like('customer_name', $search);
-                $this->db->or_like('muatan', $search);
-                $this->db->or_like('asal', $search);
-                $this->db->or_like('tujuan', $search);
+            $records = $this->db->get('skb_job_order')->result();
+            $totalRecordwithFilter = $records[0]->allcount;
+        
+            ## data hasil record
+            $this->db->select('*');
+            if($searchQuery != ''){
+                $this->db->where($searchQuery);
             }
+            $this->db->order_by($columnName, $columnSortOrder);
+            $this->db->limit($rowperpage, $start);
             $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
-            $hasil = $this->db->get('skb_job_order')->num_rows();
-
-            if($status!="x"){
-                $hasil_fix = 0;
-                for($i=0;$i<count($hasil_data);$i++){
-                    if($hasil_data[$i]["status"]==$status && ($hasil_data[$i]["parent_Jo_id"]=="x" || $hasil_data[$i]["parent_Jo_id"]=="y")){
-                        $hasil_fix +=1;
-                    }
-                }
-                return $hasil_fix;
-            }else{
-                $hasil_fix = 0;
-                for($i=0;$i<count($hasil_data);$i++){
-                    if($hasil_data[$i]["parent_Jo_id"]=="x" || $hasil_data[$i]["parent_Jo_id"]=="y"){
-                        $hasil_fix +=1;
-                    }
-                }
-                return $hasil_fix;
+            $records = $this->db->get('skb_job_order')->result();
+        
+            $data = array();
+            $n = 1;
+            foreach($records as $record ){
+                $data[] = array( 
+                    "no"=>$n,
+                    "Jo_id"=>$record->Jo_id,
+                    "customer_name"=>$record->customer_name,
+                    "paketan_id"=>$record->paketan_id,
+                    "kosongan_id"=>$record->kosongan_id,
+                    "tanggal_surat"=>$record->tanggal_surat,
+                    "status"=>$record->status
+                ); 
+                $n++;
             }
+            ## Response
+            $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordwithFilter,
+            "aaData" => $data
+            );
+        
+            return $response; 
         }
-     //akhir function-fiunction datatable JO
+    //akhir function-fiunction datatable JO
 
-     //function-fiunction datatable JO laporan
-        public function count_all_JO_report($tanggal,$bulan,$tahun,$status)
-        {
-            $this->db->join("skb_supir", "skb_supir.supir_id = skb_job_order.supir_id", 'left');
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
-            return $this->db->count_all_results("skb_job_order");
-        }
-
-        public function filter_JO_report($order_field, $order_ascdesc,$tanggal,$bulan,$tahun,$status)
-        {
+    //function-fiunction datatable JO laporan
+        function getJOReportData($postData,$status,$tanggal,$bulan,$tahun){
+            $response = array();
+        
+            ## Read value
+            $draw = $postData['draw'];
+            $start = $postData['start']; // mulai display per page
+            $rowperpage = $postData['length']; // Rows display per page
+            $columnIndex = $postData['order'][0]['column']; // Column index untuk sorting
+            $columnName = $postData['columns'][$columnIndex]['data']; // Column name untuk sorting
+            $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
+        
+            ## Search 
+            $search_arr = array();
+            $searchQuery = "";
             $like=$tahun."-".$bulan."-".$tanggal;
             if($like != "--"){
                 if ($tanggal != "x" && $bulan=="x" && $tahun=="x") {
-                    $this->db->like("tanggal_surat", "-".$tanggal);
+                    $search_arr[] = " tanggal_surat like '%-".$tanggal."'";
                 }
                 if ($tanggal == "x" && $bulan!="x" && $tahun=="x") {
-                    $this->db->like("tanggal_surat", "-".$bulan."-");
+                    $search_arr[] = " tanggal_surat like '%-".$bulan."-%'";
                 }
                 if ($tanggal == "x" && $bulan=="x" && $tahun!="x") {
-                    $this->db->like("tanggal_surat", $tahun."-");
+                    $search_arr[] = " tanggal_surat like '".$tahun."-%'";
                 }
                 if ($tanggal != "x" && $bulan=="x" && $tahun!="x") {
-                    $this->db->like("tanggal_surat", $tahun."-__-".$tanggal);
+                    $search_arr[] = " tanggal_surat like '".$tahun."-%-".$tanggal."'";
                 }
                 if ($tanggal == "x" && $bulan!="x" && $tahun!="x") {
-                    $this->db->like("tanggal_surat", $tahun."-".$bulan."-");
+                    $search_arr[] = " tanggal_surat like '".$tahun."-".$bulan."-%'";
                 }
                 if ($tanggal != "x" && $bulan!="x" && $tahun=="x") {
-                    $this->db->like("tanggal_surat", "-".$bulan."-".$tanggal);
+                    $search_arr[] = " tanggal_surat like '%-".$bulan."-".$tanggal."'";
                 }
                 if ($tanggal != "x" && $bulan!="x" && $tahun!="x") {
-                    $this->db->like("tanggal_surat", $tahun."-".$bulan."-".$tanggal);
+                    $search_arr[] = " tanggal_surat like '".$tahun."-".$bulan."-".$tanggal."'";
                 }
             }
+            $search_arr[] = " (parent_Jo_id='x' or parent_Jo_id='y')";
+            $search_arr[] = " status!='Dibatalkan' ";
             if($status!="x"){
-                $this->db->where("status",$status);
+                $search_arr[] = " status='".$status."' ";
             }
-            $this->db->order_by($order_field, $order_ascdesc);
-            $this->db->join("skb_supir", "skb_supir.supir_id = skb_job_order.supir_id", 'left');
+            if(count($search_arr) > 0){ //gabung kondisi where
+                $searchQuery = implode(" and ",$search_arr);
+            }
+        
+            ## Total record without filtering
+            $this->db->select('count(*) as allcount');
+            $this->db->where("status!='Dibatalkan'");
+            $this->db->where("(parent_Jo_id='x' or parent_Jo_id='y')");
+            $records = $this->db->get('skb_job_order')->result();
+            $totalRecords = $records[0]->allcount;
+        
+            ## Total record with filtering
+            $this->db->select('count(*) as allcount');
+            if($searchQuery != ''){
+                $this->db->where($searchQuery);
+            }
             $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
-            $hasil = $this->db->get('skb_job_order')->result_array();
-            $hasil_fix = [];
-            for($i=0;$i<count($hasil);$i++){
-                if(($hasil[$i]["parent_Jo_id"]=="x" || $hasil[$i]["parent_Jo_id"]=="y") && $hasil[$i]["status"]!="Dibatalkan"){
-                    $hasil_fix[] = $hasil[$i];
-                }
-            }
-            return $hasil_fix;
-        }
-
-        public function count_filter_JO_report($tanggal,$bulan,$tahun,$status)
-        {   
-            $like=$tahun."-".$bulan."-".$tanggal;
-            if($like != "--"){
-                if ($tanggal != "x" && $bulan=="x" && $tahun=="x") {
-                    $this->db->like("tanggal_surat", "-".$tanggal);
-                }
-                if ($tanggal == "x" && $bulan!="x" && $tahun=="x") {
-                    $this->db->like("tanggal_surat", "-".$bulan."-");
-                }
-                if ($tanggal == "x" && $bulan=="x" && $tahun!="x") {
-                    $this->db->like("tanggal_surat", $tahun."-");
-                }
-                if ($tanggal != "x" && $bulan=="x" && $tahun!="x") {
-                    $this->db->like("tanggal_surat", $tahun."-__-".$tanggal);
-                }
-                if ($tanggal == "x" && $bulan!="x" && $tahun!="x") {
-                    $this->db->like("tanggal_surat", $tahun."-".$bulan."-");
-                }
-                if ($tanggal != "x" && $bulan!="x" && $tahun=="x") {
-                    $this->db->like("tanggal_surat", "-".$bulan."-".$tanggal);
-                }
-                if ($tanggal != "x" && $bulan!="x" && $tahun!="x") {
-                    $this->db->like("tanggal_surat", $tahun."-".$bulan."-".$tanggal);
-                }
-            }
-            if($status!="x"){
-                $this->db->where("status",$status);
-            }
             $this->db->join("skb_supir", "skb_supir.supir_id = skb_job_order.supir_id", 'left');
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
-            $hasil_data = $this->db->get('skb_job_order')->result_array();
-            $hasil_fix = 0;
-            for($i=0;$i<count($hasil_data);$i++){
-                if(($hasil_data[$i]["parent_Jo_id"]=="x" || $hasil_data[$i]["parent_Jo_id"]=="y") && $hasil_data[$i]["status"]!="Dibatalkan"){
-                    $hasil_fix +=1;
-                }
+            $records = $this->db->get('skb_job_order')->result();
+            $totalRecordwithFilter = $records[0]->allcount;
+        
+            ## data hasil record
+            $this->db->select('*');
+            if($searchQuery != ''){
+                $this->db->where($searchQuery);
             }
-            return $hasil_fix;
+            $this->db->order_by($columnName, $columnSortOrder);
+            $this->db->limit($rowperpage, $start);
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
+            $this->db->join("skb_supir", "skb_supir.supir_id = skb_job_order.supir_id", 'left');
+            $records = $this->db->get('skb_job_order')->result();
+        
+            $data = array();
+            $n = 1;
+            foreach($records as $record ){
+                $data[] = array( 
+                    "no"=>$n,
+                    "Jo_id"=>$record->Jo_id,
+                    "customer_name"=>$record->customer_name,
+                    "supir_name"=>$record->supir_name,
+                    "mobil_no"=>$record->mobil_no,
+                    "customer_name"=>$record->customer_name,
+                    "uang_jalan_bayar"=>$record->uang_jalan_bayar,
+                    "paketan_id"=>$record->paketan_id,
+                    "kosongan_id"=>$record->kosongan_id,
+                    "tanggal_surat"=>$record->tanggal_surat,
+                    "status"=>$record->status
+                ); 
+                $n++;
+            }
+            ## Response
+            $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordwithFilter,
+            "aaData" => $data
+            );
+        
+            return $response; 
         }
     //akhir function-fiunction datatable JO laporan
 
@@ -676,51 +691,82 @@ class Model_Home extends CI_model
     // end Function rute
 
     //function-fiunction datatable JO
-        public function count_all_konfirmasi_JO()
-        {
+        function getJOKonfirmasiData($postData){
+            $response = array();
+        
+            ## Read value
+            $draw = $postData['draw'];
+            $start = $postData['start']; // mulai display per page
+            $rowperpage = $postData['length']; // Rows display per page
+            $columnIndex = $postData['order'][0]['column']; // Column index untuk sorting
+            $columnName = $postData['columns'][$columnIndex]['data']; // Column name untuk sorting
+            $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
+            $searchValue = $postData['search']['value']; // Search value
+        
+            ## Search 
+            $search_arr = array();
+            $searchQuery = "";
+            if($searchValue != ''){
+                $search_arr[] = " (Jo_id like '%".$searchValue."%' or 
+                    asal like '%".$searchValue."%' or 
+                    tujuan like '%".$searchValue."%' or 
+                    muatan like '%".$searchValue."%') ";
+            }
+            $search_arr[] = " status='Dalam Perjalanan' ";
+            $search_arr[] = " (parent_Jo_id='x' or parent_Jo_id='y')";
+            if(count($search_arr) > 0){ //gabung kondisi where
+                $searchQuery = implode(" and ",$search_arr);
+            }
+        
+            ## Total record without filtering
+            $this->db->select('count(*) as allcount');
             $this->db->where("status","Dalam Perjalanan");
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
-            return $this->db->count_all_results("skb_job_order");
-        }
-
-        public function filter_konfirmasi_JO($search, $order_field, $order_ascdesc)
-        {
-            if($search!=""){
-                $this->db->like('JO_id', $search);
-                $this->db->or_like('muatan', $search);
-                $this->db->or_like('asal', $search);
-                $this->db->or_like('tujuan', $search);
-            }
-            $this->db->order_by($order_field, $order_ascdesc);
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
-            $hasil = $this->db->get('skb_job_order')->result_array();
-            $hasil_fix = [];
-            for($i=0;$i<count($hasil);$i++){
-                if($hasil[$i]["status"]=="Dalam Perjalanan" && ($hasil[$i]["parent_Jo_id"]=="x" || $hasil[$i]["parent_Jo_id"]=="y")){
-                    $hasil_fix[] = $hasil[$i];
-                }
-            }
-            return $hasil_fix;
-        }
-
-        public function count_filter_konfirmasi_JO($search)
-        {   
-            if($search!=""){
-                $this->db->like('JO_id', $search);
-                $this->db->or_like('muatan', $search);
-                $this->db->or_like('asal', $search);
-                $this->db->or_like('tujuan', $search);
+            $this->db->where("(parent_Jo_id='x' or parent_Jo_id='y')");
+            $records = $this->db->get('skb_job_order')->result();
+            $totalRecords = $records[0]->allcount;
+        
+            ## Total record with filtering
+            $this->db->select('count(*) as allcount');
+            if($searchQuery != ''){
+                $this->db->where($searchQuery);
             }
             $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
-            $hasil_data = $this->db->get('skb_job_order')->result_array();
-            $hasil_fix = 0;
-            for($i=0;$i<count($hasil_data);$i++){
-                if($hasil_data[$i]["status"]=="Dalam Perjalanan" && ($hasil_data[$i]["parent_Jo_id"]=="x" || $hasil_data[$i]["parent_Jo_id"]=="y")){
-                    $hasil_fix +=1;
-                }
+            $records = $this->db->get('skb_job_order')->result();
+            $totalRecordwithFilter = $records[0]->allcount;
+        
+            ## data hasil record
+            $this->db->select('*');
+            if($searchQuery != ''){
+                $this->db->where($searchQuery);
             }
-            return $hasil_fix;
-
+            $this->db->order_by($columnName, $columnSortOrder);
+            $this->db->limit($rowperpage, $start);
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
+            $records = $this->db->get('skb_job_order')->result();
+        
+            $data = array();
+            $n = 1;
+            foreach($records as $record ){
+                $data[] = array( 
+                    "no"=>$n,
+                    "Jo_id"=>$record->Jo_id,
+                    "customer_name"=>$record->customer_name,
+                    "paketan_id"=>$record->paketan_id,
+                    "kosongan_id"=>$record->kosongan_id,
+                    "tanggal_surat"=>$record->tanggal_surat,
+                    "status"=>$record->status
+                ); 
+                $n++;
+            }
+            ## Response
+            $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordwithFilter,
+            "aaData" => $data
+            );
+        
+            return $response; 
         }
     //akhir function-fiunction datatable JO
 

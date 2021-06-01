@@ -724,7 +724,10 @@
                     }
                 },
                 "deferRender": true,
-                "paging":false,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
                 "columns": [
                     {
                         "data": "Jo_id",
@@ -904,7 +907,10 @@
                     "type": "POST"
                 },
                 "deferRender": true,
-                "paging":false,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
                 "columns": [
                     {
                         "data": "Jo_id",
@@ -1078,7 +1084,10 @@
                     }
                 },
                 "deferRender": true,
-                "paging":false,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
                 "searching":false,
                 "columns": [
                     {
@@ -1262,7 +1271,10 @@
                     }
                 },
                 "deferRender": true,
-                "paging":false,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
                 "searching":false,
                 "columns": [
                     {
@@ -3738,10 +3750,12 @@
                         data.customer = $('#customer_id').val();
                     }
                 },
-                "searching":false,
                 "paging":false,
                 "deferRender": true,
                 "columns": [
+                    {
+                        "data": "Jo_id"
+                    },
                     {
                         "data": "Jo_id",
                         render: function(data, type, row) {

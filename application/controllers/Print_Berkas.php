@@ -32,7 +32,7 @@ class Print_Berkas extends CI_Controller {
 			$pdf_name = 'JO_'.$data["tanggal"].'.pdf';
 		}
 	    $html = ob_get_clean();
-		$pdf = new Html2Pdf('P','A4','fr');   
+		$pdf = new Html2Pdf('L','A4','fr');   
 		$pdf->WriteHTML($html);   
 		$pdf->Output($pdf_name, 'D');
     }
@@ -106,6 +106,10 @@ class Print_Berkas extends CI_Controller {
 			$excel->setActiveSheetIndex(0)->setCellValue('D3', "TGL MUAT");
 			$excel->setActiveSheetIndex(0)->setCellValue('E3', "TGL BONGKAR");
 			$excel->setActiveSheetIndex(0)->setCellValue('F3', "UANG JALAN");
+			$excel->setActiveSheetIndex(0)->setCellValue('G3', "NO POL");
+			$excel->setActiveSheetIndex(0)->setCellValue('H3', "SUPIR");
+			$excel->setActiveSheetIndex(0)->setCellValue('I3', "TONASE");
+			$excel->setActiveSheetIndex(0)->setCellValue('J3', "NO INV");
 
 			//isi tabel
 			$numrow = 4;
@@ -116,6 +120,10 @@ class Print_Berkas extends CI_Controller {
 				$excel->setActiveSheetIndex(0)->setCellValue('D'.$numrow, $jo[$i]["tanggal_surat"]);
 				$excel->setActiveSheetIndex(0)->setCellValue('E'.$numrow, $jo[$i]["tanggal_bongkar"]);
 				$excel->setActiveSheetIndex(0)->setCellValue('F'.$numrow, "Rp".number_format($jo[$i]["uang_jalan"],2,",","."));
+				$excel->setActiveSheetIndex(0)->setCellValue('G'.$numrow, $jo[$i]["mobil_no"]);
+				$excel->setActiveSheetIndex(0)->setCellValue('H'.$numrow, $jo[$i]["supir_name"]);
+				$excel->setActiveSheetIndex(0)->setCellValue('I'.$numrow, $jo[$i]["tonase"]);
+				$excel->setActiveSheetIndex(0)->setCellValue('J'.$numrow, $jo[$i]["invoice_id"]);
 			
 				$numrow++; // Tambah BARIS
 			}
@@ -127,7 +135,10 @@ class Print_Berkas extends CI_Controller {
 			$excel->getActiveSheet()->getColumnDimension('D')->setWidth(15); // Set width kolom D
 			$excel->getActiveSheet()->getColumnDimension('E')->setWidth(15); // Set width kolom E
 			$excel->getActiveSheet()->getColumnDimension('F')->setWidth(15); // Set width kolom E
-			
+			$excel->getActiveSheet()->getColumnDimension('G')->setWidth(15); // Set width kolom E
+			$excel->getActiveSheet()->getColumnDimension('H')->setWidth(15); // Set width kolom E
+			$excel->getActiveSheet()->getColumnDimension('I')->setWidth(15); // Set width kolom E
+			$excel->getActiveSheet()->getColumnDimension('J')->setWidth(15); // Set width kolom E			
 			// tinggi otomatis
 			$excel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);
 

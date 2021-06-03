@@ -29,8 +29,8 @@
     <div class="tanggal">
         <span>Tanggal : <?=$tanggal?></span>
     </div>
-    <div>
-    <table  id="" width="100%" cellspacing="0">
+    <div style="font-size:small;">
+        <table  id="" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th class="text-center" width="12,5%"  scope="col">No JO</th>
@@ -80,9 +80,9 @@
                                 <td ><?= $value["customer_name"]?> (Reguler)</td>
                                 <td><?= $value["asal"]."-".$value["tujuan"]." (".$value["muatan"]?>)</td>
                             <?php }?>
-                            <th ><?= $value["tanggal_surat"]?></th>
-                            <th ><?= $value["tanggal_bongkar"]?></th>
-                            <th >Rp.<?= number_format($value["uang_jalan_bayar"],2,",",".")?></th>
+                            <td ><?= $value["tanggal_surat"]?></td>
+                            <td ><?= $value["tanggal_bongkar"]?></td>
+                            <td >Rp.<?= number_format($value["uang_jalan_bayar"],2,",",".")?></td>
                         </tr>
                     <?php } ?>
                     </tbody>

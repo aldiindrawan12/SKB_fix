@@ -36,22 +36,31 @@
     <div class="tanggal">
         <span>Tanggal : <?=$tanggal?></span>
     </div>
-    <div>
+    <div style="font-size:small;">
                 <table  id="" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th class="text-center" width="12,5%"  scope="col">No JO</th>
-                            <th class="text-center" width="12,5%" scope="col">Customer</th>
-                            <th class="text-center" width="30%" scope="col">Rute</th>
-                            <th class="text-center" width="12,5%" scope="col">Tgl Muat</th>
-                            <th class="text-center" width="12,5%" scope="col">Tgl Bongkar</th>
-                            <th class="text-center" width="12,5%"  scope="col">Uang Jalan</th>
+                            <th class="text-center"  scope="col">No JO</th>
+                            <th class="text-center" scope="col">Tgl Muat</th>
+                            <th class="text-center" scope="col">Tgl Bongkar</th>
+                            <th class="text-center" scope="col">No Pol</th>
+                            <th class="text-center" scope="col">Supir</th>
+                            <th class="text-center" scope="col">Customer</th>
+                            <th class="text-center" scope="col">Rute</th>
+                            <th class="text-center"  scope="col">Uang Jalan</th>
+                            <th class="text-center"  scope="col">Tonase</th>
+                            <th class="text-center"  scope="col">No Inv</th>
                         </tr>
                     </thead>
                     <tbody>
                     <?php foreach($jo as $value){ ?>
                         <tr>
                             <td ><?= $value["Jo_id"]?></td>
+                            <td ><?= change_tanggal($value["tanggal_surat"])?></td>
+                            <td ><?= change_tanggal($value["tanggal_bongkar"])?></td>
+                            <td ><?= $value["mobil_no"]?></td>
+                            <td ><?= $value["supir_name"]?></td>
+
                             <?php $n=0; 
                             for($i=0;$i<count($paketan);$i++){
                                     if($paketan[$i]["paketan_id"] == $value["paketan_id"]){
@@ -87,9 +96,10 @@
                                 <td ><?= $value["customer_name"]?> (Reguler)</td>
                                 <td><?= $value["asal"]."-".$value["tujuan"]." (".$value["muatan"]?>)</td>
                             <?php }?>
-                            <td ><?= change_tanggal($value["tanggal_surat"])?></td>
-                            <td ><?= change_tanggal($value["tanggal_bongkar"])?></td>
-                            <td >Rp.<?= number_format($value["uang_jalan_bayar"],2,",",".")?></td>
+                                
+                            <td>Rp.<?= number_format($value["uang_jalan_bayar"],2,",",".")?></td>
+                            <td><?= $value["tonase"]?></td>
+                            <td><?= $value["invoice_id"]?></td>
                         </tr>
                     <?php } ?>
                     </tbody>

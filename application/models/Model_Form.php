@@ -108,9 +108,14 @@ class Model_Form extends CI_model
     //end fungsi insert
     //fungsi acc
         public function accsupir($supir_id,$validasi){
-            $this->db->set("validasi",$validasi);
-            $this->db->where("supir_id",$supir_id);
-            $this->db->update("skb_supir");
+            if($validasi=="Ditolak"){
+                $this->db->where("supir_id",$supir_id);
+                $this->db->delete("skb_supir");
+            }else{
+                $this->db->set("validasi",$validasi);
+                $this->db->where("supir_id",$supir_id);
+                $this->db->update("skb_supir");
+            }
         }
         public function accdeletesupir($supir_id,$validasi){
             if($validasi=="Ditolak"){
@@ -164,9 +169,14 @@ class Model_Form extends CI_model
         }
 
         public function acccustomer($customer_id,$validasi){
-            $this->db->set("validasi",$validasi);
-            $this->db->where("customer_id",$customer_id);
-            $this->db->update("skb_customer");
+            if($validasi == "Ditolak"){
+                $this->db->where("customer_id",$customer_id);
+                $this->db->delete("skb_customer");
+            }else{  
+                $this->db->set("validasi",$validasi);
+                $this->db->where("customer_id",$customer_id);
+                $this->db->update("skb_customer");
+            }
         }
         public function accdeletecustomer($customer_id,$validasi){
             if($validasi=="Ditolak"){
@@ -192,9 +202,14 @@ class Model_Form extends CI_model
         }
 
         public function acctruck($truck_id,$validasi){
-            $this->db->set("validasi",$validasi);
-            $this->db->where("mobil_no",$truck_id);
-            $this->db->update("skb_mobil");
+            if($validasi == "Ditolak"){
+                $this->db->where("mobil_no",$truck_id);
+                $this->db->delete("skb_mobil");
+            }else{
+                $this->db->set("validasi",$validasi);
+                $this->db->where("mobil_no",$truck_id);
+                $this->db->update("skb_mobil");
+            }
         }
         public function accdeletetruck($mobil_no,$validasi){
             if($validasi=="Ditolak"){
@@ -220,9 +235,14 @@ class Model_Form extends CI_model
         }
 
         public function accrute($rute_id,$validasi){
-            $this->db->set("validasi_rute",$validasi);
-            $this->db->where("rute_id",$rute_id);
-            $this->db->update("skb_rute");
+            if($validasi=="Ditolak"){
+                $this->db->where("rute_id",$rute_id);
+                $this->db->delete("skb_rute");
+            }else{
+                $this->db->set("validasi_rute",$validasi);
+                $this->db->where("rute_id",$rute_id);
+                $this->db->update("skb_rute");
+            }
         }
         public function accdeleterute($rute_id,$validasi){
             if($validasi=="Ditolak"){
@@ -276,9 +296,14 @@ class Model_Form extends CI_model
         }
 
         public function accmerk($merk_id,$validasi){
-            $this->db->set("validasi",$validasi);
-            $this->db->where("merk_id",$merk_id);
-            $this->db->update("skb_merk_kendaraan");
+            if($validasi=="Ditolak"){
+                $this->db->where("merk_id",$merk_id);
+                $this->db->delete("skb_merk_kendaraan");
+            }else{
+                $this->db->set("validasi",$validasi);
+                $this->db->where("merk_id",$merk_id);
+                $this->db->update("skb_merk_kendaraan");
+            }
         }
         public function accdeletemerk($merk_id,$validasi){
             if($validasi=="Ditolak"){

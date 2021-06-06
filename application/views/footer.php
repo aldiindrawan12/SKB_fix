@@ -108,7 +108,25 @@
                         "data": "validasi",
                         className: 'text-center',
                         render: function(data, type, row) {
-                            let html = "<span>Tambah = "+data+"<br>Edit = "+row['validasi_edit']+"<br>Hapus = "+row['validasi_delete']+"</span>";
+                            tambah = "";
+                            edit = "";
+                            hapus = "";
+                            if(data=="ACC"){
+                                tambah = "<a class='btn btn-success rounded-pill btn-sm'>Tambah <i class='fas fa-check'></i></a>";
+                            }else{
+                                tambah = "<a class='btn btn-danger rounded-pill btn-sm'>Tambah <i class='fas fa-exclamation'></i></a>";
+                            }
+                            if(row['validasi_edit']=="ACC"){
+                                edit = "<a class='btn btn-success rounded-pill btn-sm'>Edit <i class='fas fa-check'></i></a>";
+                            }else{
+                                edit = "<a class='btn btn-danger rounded-pill btn-sm'>Edit <i class='fas fa-exclamation'></i></a>";
+                            }
+                            if(row['validasi_delete']=="ACC"){
+                                hapus = "<a class='btn btn-success rounded-pill btn-sm'>Hapus <i class='fas fa-check'></i></a>";
+                            }else{
+                                hapus = "<a class='btn btn-danger rounded-pill btn-sm'>Hapus <i class='fas fa-exclamation'></i></a>";
+                            }
+                            let html = "<span class='small'>"+tambah+"<br>"+edit+"<br>"+hapus+"</span>";
                             return html;
                         }
                     },
@@ -406,8 +424,27 @@
                     },
                     {
                         "data": "validasi",
+                        className: 'text-center',
                         render: function(data, type, row) {
-                            let html = "<span class='small'>Tambah = "+data+"<br>Edit = "+row['validasi_edit']+"<br>Hapus = "+row['validasi_delete']+"</span>";
+                            tambah = "";
+                            edit = "";
+                            hapus = "";
+                            if(data=="ACC"){
+                                tambah = "<a class='btn btn-success rounded-pill btn-sm'>Tambah <i class='fas fa-check'></i></a>";
+                            }else{
+                                tambah = "<a class='btn btn-danger rounded-pill btn-sm'>Tambah <i class='fas fa-exclamation'></i></a>";
+                            }
+                            if(row['validasi_edit']=="ACC"){
+                                edit = "<a class='btn btn-success rounded-pill btn-sm'>Edit <i class='fas fa-check'></i></a>";
+                            }else{
+                                edit = "<a class='btn btn-danger rounded-pill btn-sm'>Edit <i class='fas fa-exclamation'></i></a>";
+                            }
+                            if(row['validasi_delete']=="ACC"){
+                                hapus = "<a class='btn btn-success rounded-pill btn-sm'>Hapus <i class='fas fa-check'></i></a>";
+                            }else{
+                                hapus = "<a class='btn btn-danger rounded-pill btn-sm'>Hapus <i class='fas fa-exclamation'></i></a>";
+                            }
+                            let html = "<span class='small'>"+tambah+"<br>"+edit+"<br>"+hapus+"</span>";
                             return html;
                         }
                     },
@@ -1562,9 +1599,27 @@
                     },
                     {
                         "data": "validasi",
-                        className: 'text-center small',
+                        className: 'text-center',
                         render: function(data, type, row) {
-                            let html = "<span>Tambah = "+data+"<br>Edit = "+row['validasi_edit']+"<br>Hapus = "+row['validasi_delete']+"</span>";
+                            tambah = "";
+                            edit = "";
+                            hapus = "";
+                            if(data=="ACC"){
+                                tambah = "<a class='btn btn-success rounded-pill btn-sm'>Tambah <i class='fas fa-check'></i></a>";
+                            }else{
+                                tambah = "<a class='btn btn-danger rounded-pill btn-sm'>Tambah <i class='fas fa-exclamation'></i></a>";
+                            }
+                            if(row['validasi_edit']=="ACC"){
+                                edit = "<a class='btn btn-success rounded-pill btn-sm'>Edit <i class='fas fa-check'></i></a>";
+                            }else{
+                                edit = "<a class='btn btn-danger rounded-pill btn-sm'>Edit <i class='fas fa-exclamation'></i></a>";
+                            }
+                            if(row['validasi_delete']=="ACC"){
+                                hapus = "<a class='btn btn-success rounded-pill btn-sm'>Hapus <i class='fas fa-check'></i></a>";
+                            }else{
+                                hapus = "<a class='btn btn-danger rounded-pill btn-sm'>Hapus <i class='fas fa-exclamation'></i></a>";
+                            }
+                            let html = "<span class='small'>"+tambah+"<br>"+edit+"<br>"+hapus+"</span>";
                             return html;
                         }
                     },
@@ -1968,7 +2023,25 @@
                         "data": "validasi",
                         className: 'text-center',
                         render: function(data, type, row) {
-                            let html = "<span class='small'>Tambah = "+data+"<br>Edit = "+row['validasi_edit']+"<br>Hapus = "+row['validasi_delete']+"</span>";
+                            tambah = "";
+                            edit = "";
+                            hapus = "";
+                            if(data=="ACC"){
+                                tambah = "<a class='btn btn-success rounded-pill btn-sm'>Tambah <i class='fas fa-check'></i></a>";
+                            }else{
+                                tambah = "<a class='btn btn-danger rounded-pill btn-sm'>Tambah <i class='fas fa-exclamation'></i></a>";
+                            }
+                            if(row['validasi_edit']=="ACC"){
+                                edit = "<a class='btn btn-success rounded-pill btn-sm'>Edit <i class='fas fa-check'></i></a>";
+                            }else{
+                                edit = "<a class='btn btn-danger rounded-pill btn-sm'>Edit <i class='fas fa-exclamation'></i></a>";
+                            }
+                            if(row['validasi_delete']=="ACC"){
+                                hapus = "<a class='btn btn-success rounded-pill btn-sm'>Hapus <i class='fas fa-check'></i></a>";
+                            }else{
+                                hapus = "<a class='btn btn-danger rounded-pill btn-sm'>Hapus <i class='fas fa-exclamation'></i></a>";
+                            }
+                            let html = "<span class='small'>"+tambah+"<br>"+edit+"<br>"+hapus+"</span>";
                             return html;
                         }
                     },
@@ -2829,7 +2902,25 @@
                         "data": "validasi_rute",
                         className: 'text-center',
                         render: function(data, type, row) {
-                            let html = "<span>Tambah = "+data+"<br>Edit = "+row['validasi_rute_edit']+"<br>Hapus = "+row['validasi_rute_delete']+"</span>";
+                            tambah = "";
+                            edit = "";
+                            hapus = "";
+                            if(data=="ACC"){
+                                tambah = "<a class='btn btn-success rounded-pill btn-sm'>Tambah <i class='fas fa-check'></i></a>";
+                            }else{
+                                tambah = "<a class='btn btn-danger rounded-pill btn-sm'>Tambah <i class='fas fa-exclamation'></i></a>";
+                            }
+                            if(row['validasi_rute_edit']=="ACC"){
+                                edit = "<a class='btn btn-success rounded-pill btn-sm'>Edit <i class='fas fa-check'></i></a>";
+                            }else{
+                                edit = "<a class='btn btn-danger rounded-pill btn-sm'>Edit <i class='fas fa-exclamation'></i></a>";
+                            }
+                            if(row['validasi_rute_delete']=="ACC"){
+                                hapus = "<a class='btn btn-success rounded-pill btn-sm'>Hapus <i class='fas fa-check'></i></a>";
+                            }else{
+                                hapus = "<a class='btn btn-danger rounded-pill btn-sm'>Hapus <i class='fas fa-exclamation'></i></a>";
+                            }
+                            let html = "<span class='small'>"+tambah+"<br>"+edit+"<br>"+hapus+"</span>";
                             return html;
                         }
                     },

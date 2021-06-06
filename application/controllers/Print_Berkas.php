@@ -18,6 +18,13 @@ class Print_Berkas extends CI_Controller {
 		$this->load->model('model_detail');//load model
 		$this->load->model('model_form');//load model
     }
+	
+    function change_tanggal($data){
+        $data_tanggal = explode('-', $data);
+        $tanggal = $data_tanggal[2].'-'.$data_tanggal[1].'-'.$data_tanggal[0];
+        return $tanggal;
+    }
+
     public function cetaklaporanpdf($tanggal,$bulan,$tahun,$status_jo,$asal){
         $data["jo"] = $this->model_print->getjobyperiode($tanggal,$bulan,$tahun,$status_jo);
         $data["tanggal"] = $tanggal."-".$bulan."-".$tahun;
@@ -113,8 +120,8 @@ class Print_Berkas extends CI_Controller {
 				$excel->setActiveSheetIndex(0)->setCellValue('A'.$numrow, strval($jo[$i]["Jo_id"]));
 				$excel->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $isi_customer[$i]);
 				$excel->setActiveSheetIndex(0)->setCellValue('C'.$numrow, $isi_rute[$i]);
-				$excel->setActiveSheetIndex(0)->setCellValue('D'.$numrow, $jo[$i]["tanggal_surat"]);
-				$excel->setActiveSheetIndex(0)->setCellValue('E'.$numrow, $jo[$i]["tanggal_bongkar"]);
+				$excel->setActiveSheetIndex(0)->setCellValue('D'.$numrow, $this->change_tanggal($jo[$i]["tanggal_surat"]));
+				$excel->setActiveSheetIndex(0)->setCellValue('E'.$numrow, $this->change_tanggal($jo[$i]["tanggal_bongkar"]));
 				$excel->setActiveSheetIndex(0)->setCellValue('F'.$numrow, "Rp".number_format($jo[$i]["uang_jalan"],2,",","."));
 			
 				$numrow++; // Tambah BARIS

@@ -308,12 +308,12 @@
                             success: function(data) { //jika ambil data sukses
                                 $('#mobil_no_update').val(data["mobil_no"]); //set value
                                 $('#mobil_stnk_update').val(data["mobil_stnk"]); //set value
-                                $('#mobil_berlaku_update').val(data["mobil_berlaku"]); //set value
-                                $('#mobil_pajak_update').val(data["mobil_pajak"]); //set value
+                                $('#mobil_berlaku_update').val(change_tanggal(data["mobil_berlaku"])); //set value
+                                $('#mobil_pajak_update').val(change_tanggal(data["mobil_pajak"])); //set value
                                 $('#mobil_kir_update').val(data["mobil_kir"]); //set value
                                 $('#mobil_ijin_bongkar_update').val(data["mobil_ijin_bongkar"]); //set value
-                                $('#mobil_berlaku_kir_update').val(data["mobil_berlaku_kir"]); //set value
-                                $('#mobil_berlaku_ijin_bongkar_update').val(data["mobil_berlaku_ijin_bongkar"]); //set value
+                                $('#mobil_berlaku_kir_update').val(change_tanggal(data["mobil_berlaku_kir"])); //set value
+                                $('#mobil_berlaku_ijin_bongkar_update').val(change_tanggal(data["mobil_berlaku_ijin_bongkar"])); //set value
                                 $('#mobil_keterangan_update').val(data["mobil_keterangan"]); //set value
                             }
                         });
@@ -2152,13 +2152,13 @@
                                 $("#supir_name").val(data["supir_name"]);
                                 $("#supir_panggilan_update").val(data["supir_panggilan"]);
                                 $("#supir_tempat_lahir_update").val(data["supir_tempat_lahir"]);
-                                $("#supir_tgl_lahir_update").val(data["supir_tgl_lahir"]);
+                                $("#supir_tgl_lahir_update").val(change_tanggal(data["supir_tgl_lahir"]));
                                 $("#supir_alamat_update").val(data["supir_alamat"]);
                                 $("#supir_telp_update").val(data["supir_telp"]);
                                 $("#supir_ktp_update").val(data["supir_ktp"]);
                                 $("#supir_sim_update").val(data["supir_sim"]);
-                                $("#supir_tgl_sim_update").val(data["supir_tgl_sim"]);
-                                $("#supir_tgl_aktif_update").val(data["supir_tgl_aktif"]);
+                                $("#supir_tgl_sim_update").val(change_tanggal(data["supir_tgl_sim"]));
+                                $("#supir_tgl_aktif_update").val(change_tanggal(data["supir_tgl_aktif"]));
                                 $("#darurat_nama_update").val(data["darurat_nama"]);
                                 $("#darurat_telp_update").val(data["darurat_telp"]);
                                 $("#darurat_referensi_update").val(data["darurat_referensi"]);
@@ -3836,18 +3836,18 @@
     <script> //script set tanggal saat ini
         $(function(){
             $("#invoice_tgl").datepicker({
-                format: 'yyyy-mm-dd',
+                format: 'dd-mm-yyyy',
                 autoclose: true,
                 todayHighlight: true
             });
             //proses tanggal
             var date = new Date();
             if((date.getMonth()+1)<10){
-                $("#invoice_tgl").val(date.getFullYear()+"-0"+(date.getMonth()+1)+"-"+date.getDate());
-                $("#update_status_tanggal_nonaktif").val(date.getFullYear()+"-0"+(date.getMonth()+1)+"-"+date.getDate());
+                $("#invoice_tgl").val(date.getDate()+"-0"+(date.getMonth()+1)+"-"+date.getFullYear());
+                $("#update_status_tanggal_nonaktif").val(date.getDate()+"-0"+(date.getMonth()+1)+"-"+date.getFullYear());
             }else{
-                $("#invoice_tgl").val(date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate());
-                $("#update_status_tanggal_nonaktif").val(date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate());
+                $("#invoice_tgl").val(date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear());
+                $("#update_status_tanggal_nonaktif").val(date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear());
             }
         });
     </script>
@@ -3863,7 +3863,7 @@
                 timer: 500
             });
             $("#"+a.id).datepicker({
-                format: 'yyyy-mm-dd',
+                format: 'dd-mm-yyyy',
                 autoclose: true,
                 todayHighlight: true,
             });

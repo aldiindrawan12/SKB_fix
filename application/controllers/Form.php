@@ -10,6 +10,11 @@ class Form extends CI_Controller {
         $this->load->model('model_detail');//load model
     }
 
+    public function change_tanggal($tanggal){
+        $tanggal_array = explode("-",$tanggal);
+        return $tanggal_array[2]."-".$tanggal_array[1]."-".$tanggal_array[0];
+    }
+    
     // fungsi view form
         public function joborder(){
             if(!$_SESSION["user"]){
@@ -95,7 +100,7 @@ class Form extends CI_Controller {
             $data=array(
                 "customer_id"=>$this->input->post("customer_id"),
                 "invoice_kode"=>$this->input->post("invoice_id1").$this->input->post("invoice_id2").$this->input->post("invoice_id3"),
-                "tanggal_invoice"=>$this->input->post("invoice_tgl"),
+                "tanggal_invoice"=>$this->change_tanggal($this->input->post("invoice_tgl")),
                 "total_tonase"=>str_replace(".","",$this->input->post("invoice_tonase")),
                 "total"=>str_replace(".","",$this->input->post("invoice_total")),
                 "ppn"=>str_replace(".","",$this->input->post("invoice_ppn_nilai")),
@@ -193,7 +198,7 @@ class Form extends CI_Controller {
                 "uang_jalan"=>str_replace(".","",$this->input->post("Uang")),
                 "uang_jalan_bayar"=>str_replace(".","",$this->input->post("uang_jalan_bayar")),
                 "terbilang"=>$this->input->post("Terbilang"),
-                "tanggal_surat"=>$this->input->post("tanggal_jo"),
+                "tanggal_surat"=>$this->change_tanggal($this->input->post("tanggal_jo")),
                 "keterangan"=>$this->input->post("Keterangan"),
                 "customer_id"=>$this->input->post("Customer"),
                 "status"=>"Dalam Perjalanan",
@@ -411,8 +416,8 @@ class Form extends CI_Controller {
                 "supir_sim"=>$this->input->post("supir_sim"),
                 "supir_panggilan"=>$this->input->post("supir_panggilan"),
                 "status_aktif"=>"Aktif",
-                "supir_tgl_aktif"=>$this->input->post("supir_tgl_aktif"),
-                "supir_tgl_lahir"=>$this->input->post("supir_tgl_lahir"),
+                "supir_tgl_aktif"=>$this->change_tanggal($this->input->post("supir_tgl_aktif")),
+                "supir_tgl_lahir"=>$this->change_tanggal($this->input->post("supir_tgl_lahir")),
                 "supir_tempat_lahir"=>$this->input->post("supir_tempat_lahir"),
                 "file_foto"=>$file_foto,
                 "file_sim"=>$file_sim,
@@ -420,7 +425,7 @@ class Form extends CI_Controller {
                 "darurat_nama"=>$this->input->post("darurat_nama"),
                 "darurat_telp"=>$this->input->post("darurat_telp"),
                 "darurat_referensi"=>$this->input->post("darurat_referensi"),
-                "supir_tgl_sim"=>$this->input->post("supir_tgl_sim"),
+                "supir_tgl_sim"=>$this->change_tanggal($this->input->post("supir_tgl_sim")),
                 "validasi"=>"Pending",
                 "validasi_edit"=>"ACC",
                 "validasi_delete"=>"ACC",
@@ -457,13 +462,13 @@ class Form extends CI_Controller {
                 "mobil_type"=>$this->input->post("mobil_type"),
                 "mobil_dump"=>$this->input->post("mobil_dump"),
                 "mobil_tahun"=>$this->input->post("mobil_tahun"),
-                "mobil_berlaku"=>$this->input->post("mobil_berlaku"),
-                "mobil_pajak"=>$this->input->post("mobil_pajak"),
+                "mobil_berlaku"=>$this->change_tanggal($this->input->post("mobil_berlaku")),
+                "mobil_pajak"=>$this->change_tanggal($this->input->post("mobil_pajak")),
                 "mobil_stnk"=>$this->input->post("mobil_stnk"),
                 "mobil_kir"=>$this->input->post("mobil_kir"),
                 "mobil_ijin_bongkar"=>$this->input->post("mobil_ijin_bongkar"),
-                "mobil_berlaku_kir"=>$this->input->post("mobil_berlaku_kir"),
-                "mobil_berlaku_ijin_bongkar"=>$this->input->post("mobil_berlaku_ijin_bongkar"),
+                "mobil_berlaku_kir"=>$this->change_tanggal($this->input->post("mobil_berlaku_kir")),
+                "mobil_berlaku_ijin_bongkar"=>$this->change_tanggal($this->input->post("mobil_berlaku_ijin_bongkar")),
                 "validasi"=>"Pending",
                 "validasi_edit"=>"ACC",
                 "validasi_delete"=>"ACC",
@@ -592,13 +597,13 @@ class Form extends CI_Controller {
                 "supir_name" => $this->input->post("supir_name"),
                 "supir_panggilan" => $this->input->post("supir_panggilan_update"),
                 "supir_tempat_lahir" => $this->input->post("supir_tempat_lahir_update"),
-                "supir_tgl_lahir" => $this->input->post("supir_tgl_lahir_update"),
+                "supir_tgl_lahir" => $this->change_tanggal($this->input->post("supir_tgl_lahir_update")),
                 "supir_alamat" => $this->input->post("supir_alamat_update"),
                 "supir_telp" => $this->input->post("supir_telp_update"),
                 "supir_ktp" => $this->input->post("supir_ktp_update"),
                 "supir_sim" => $this->input->post("supir_sim_update"),
-                "supir_tgl_sim" => $this->input->post("supir_tgl_sim_update"),
-                "supir_tgl_aktif" => $this->input->post("supir_tgl_aktif_update"),
+                "supir_tgl_sim" => $this->change_tanggal($this->input->post("supir_tgl_sim_update")),
+                "supir_tgl_aktif" => $this->change_tanggal($this->input->post("supir_tgl_aktif_update")),
                 "darurat_nama" => $this->input->post("darurat_nama_update"),
                 "darurat_telp" => $this->input->post("darurat_telp_update"),
                 "darurat_referensi" => $this->input->post("darurat_referensi_update"),
@@ -612,12 +617,12 @@ class Form extends CI_Controller {
             $data = array(
                 "mobil_no" => $this->input->post("mobil_no_update"),
                 "mobil_stnk" => $this->input->post("mobil_stnk_update"),
-                "mobil_berlaku" => $this->input->post("mobil_berlaku_update"),
-                "mobil_pajak" => $this->input->post("mobil_pajak_update"),
+                "mobil_berlaku" => $this->change_tanggal($this->input->post("mobil_berlaku_update")),
+                "mobil_pajak" => $this->change_tanggal($this->input->post("mobil_pajak_update")),
                 "mobil_kir" => $this->input->post("mobil_kir_update"),
-                "mobil_berlaku_kir" => $this->input->post("mobil_berlaku_kir_update"),
+                "mobil_berlaku_kir" => $this->change_tanggal($this->input->post("mobil_berlaku_kir_update")),
                 "mobil_ijin_bongkar" => $this->input->post("mobil_ijin_bongkar_update"),
-                "mobil_berlaku_ijin_bongkar" => $this->input->post("mobil_berlaku_ijin_bongkar_update"),
+                "mobil_berlaku_ijin_bongkar" => $this->change_tanggal($this->input->post("mobil_berlaku_ijin_bongkar_update")),
                 "mobil_keterangan" => $this->input->post("mobil_keterangan_update")
             );
             $this->model_form->update_truck($data);
@@ -726,7 +731,7 @@ class Form extends CI_Controller {
         public function update_status_aktif_supir(){
             $data = array(
                 "supir_id"=>$this->input->post("update_status_supir_id"),
-                "supir_tgl_nonaktif"=>$this->input->post("update_status_tanggal_nonaktif"),
+                "supir_tgl_nonaktif"=>$this->change_tanggal($this->input->post("update_status_tanggal_nonaktif")),
                 "status_aktif"=>$this->input->post("update_status_status_aktif")
             );
             $this->model_form->update_status_aktif_supir($data);

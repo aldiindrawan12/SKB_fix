@@ -310,6 +310,104 @@
 </div>
 <!-- end pop up detail kendaraan -->
 
+<div class="modal fade " id="popup-acc-edit-truck" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary-dark">
+                <h5 class="block-title">Data Edit Kendaraan</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times</span>
+                </button>
+            </div>
+            <div class="font-size-sm m-3 text-justify row">
+                <div class="col">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="font-weight-bold" width= "35%">No Polisi</td>
+                                <td name="mobil_no_edit"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Jenis Kendaraan</td>
+                                <td name="mobil_jenis_edit"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Status Jalan</td>
+                                <td name="status_jalan_edit"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Keterangan</td>
+                                <td name="mobil_keterangan_edit"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Merk</td>
+                                <td name="mobil_merk_edit"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Type</td>
+                                <td name="mobil_type_edit"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Dump</td>
+                                <td name="mobil_dump_edit"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Tahun</td>
+                                <td name="mobil_tahun_edit"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Tgl.STNK 1 Tahunan</td>
+                                <td name="mobil_berlaku_edit"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Tgl.STNK 5 Tahunan</td>
+                                <td name="mobil_pajak_edit"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="font-weight-bold" width= "35%">No STNK</td>
+                                <td name="mobil_stnk_edit"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" width= "35%">No KIR</td>
+                                <td name="mobil_kir_edit"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Berlaku KIR</td>
+                                <td name="mobil_berlaku_kir_edit"></td>
+                            </tr>                            
+                            <tr>
+                                <td class="font-weight-bold" width= "35%">No Ijin Bongkar</td>
+                                <td name="mobil_ijin_bongkar_edit"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Berlaku Izin Bongkar</td>
+                                <td name="mobil_berlaku_ijin_bongkar_edit"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="container w-10 text-center">
+                    <img src="" alt="foto mobil" id="file_foto_edit" class="img-thumbnail " style="width:630px;height:900;">
+                </div>      
+                <div class="container w-10 text-center">
+                    <img src="" alt="foto stnk" id="file_stnk_edit " class="img-thumbnail"style="width:630px;height:900;">
+                </div>
+                <a class="btn btn-success ACC" onclick='acc_edit_truck(this)'>ACC</a>
+                <a class="btn btn-danger Tolak" onclick='tolak_edit_truck(this)'>Tolak</a>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    
+</div>
+
 <script>
     function merk(){
         $.ajax({ //ajax ambil data bon

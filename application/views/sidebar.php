@@ -54,14 +54,14 @@
                             <i class="fas fa-weight"></i>
                             <span>Rute dan Muatan</span>
                         </a>
-                        <a class="collapse-item" id="Kosongan_page"href="<?=base_url("index.php/home/kosongan")?>">  
+                        <!-- <a class="collapse-item" id="Kosongan_page"href="<?=base_url("index.php/home/kosongan")?>">  
                         <i class="fas fa-list-alt"></i>
                             <span>Rute Kosongan</span>
                         </a>
                         <a class="collapse-item" id="Paketan_page"href="<?=base_url("index.php/home/paketan")?>">  
                         <i class="fas fa-route"></i>
                             <span>Rute Paketan</span>
-                        </a>
+                        </a> -->
                     </div>
                 </div>
             </li>

@@ -157,7 +157,7 @@
                                     html +="<a class='btn btn-success btn-sm btn-acc-truck' href='javascript:void(0)' data-pk='"+data+"'>ACC Tambah<i class='fas fa-check-circle'></i></a><br>";
                                 }
                                 if(row["validasi_edit"]=="Pending"){
-                                    html += "<a class='btn btn-primary btn-sm btn-acc-edit-truck' href='javascript:void(0)' data-pk='"+data+"'>ACC Edit<i class='fas fa-check-circle'></i></a><br>";
+                                    html += "<a class='btn btn-primary btn-sm btn-acc-edit-truck' href='javascript:void(0)' data-pk='"+data+"' data-toggle='modal' data-target='#popup-acc-edit-truck'>ACC Edit<i class='fas fa-check-circle'></i></a><br>";
                                 }
                                 if(row["validasi_delete"]=="Pending"){
                                     html += "<a class='btn btn-danger btn-sm btn-acc-delete-truck' href='javascript:void(0)' data-pk='"+data+"'>ACC Delete<i class='fas fa-check-circle'></i></a><br>";    
@@ -296,43 +296,38 @@
                     });
                     $('.btn-acc-edit-truck').click(function() {
                         let pk = $(this).data('pk');
-                        Swal.fire({
-                            title: 'ACC Edit Data Kendaraan',
-                            icon: "question",
-                            text: 'Yakin anda ingin ACC Edit Data Kendaraan ini?',
-                            showDenyButton: true,
-                            showCancelButton:true,
-                            denyButtonText: `Tolak`,
-                            confirmButtonText: 'ACC',
-                            denyButtonColor: '#808080',
-                            confirmButtonColor: '#4BB543',
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                $.ajax({
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/accedittruck/ACC') ?>",
-                                    dataType: "text",
-                                    data: {
-                                        id: pk
-                                    },
-                                    success: function(data) {
-                                        location.reload();
-                                    }
-                                });
-                            }else if(result.isDenied){
-                                $.ajax({
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/accedittruck/Ditolak') ?>",
-                                    dataType: "text",
-                                    data: {
-                                        id: pk
-                                    },
-                                    success: function(data) {
-                                        location.reload();
-                                    }
-                                });
+                        $.ajax({ //ajax ambil data bon
+                            type: "GET",
+                            url: "<?php echo base_url('index.php/detail/gettruck') ?>",
+                            dataType: "JSON",
+                            data: {
+                                id: pk
+                            },
+                            success: function(data) { //jika ambil data sukses
+                                data_temp = JSON.parse(data["temp_mobil"])
+                                $('td[name="mobil_no_edit"]').text(data["mobil_no"]); //set value
+                                $('td[name="mobil_jenis_edit"]').text(data["mobil_jenis"]); //set value
+                                $('td[name="status_jalan_edit"]').text(data["status_jalan"]); //set value
+                                $('td[name="mobil_max_load_edit"]').text(data["mobil_max_load"]); //set value
+                                $('td[name="mobil_keterangan_edit"]').text(data_temp["mobil_keterangan"]); //set value
+                                $('td[name="mobil_merk_edit"]').text(data["mobil_merk"]); //set value
+                                $('td[name="mobil_type_edit"]').text(data["mobil_type"]); //set value
+                                $('td[name="mobil_dump_edit"]').text(data["mobil_dump"]); //set value
+                                $('td[name="mobil_tahun_edit"]').text(data["mobil_tahun"]); //set value
+                                $('td[name="mobil_berlaku_edit"]').text(change_tanggal(data_temp["mobil_berlaku"])); //set value
+                                $('td[name="mobil_pajak_edit"]').text(change_tanggal(data_temp["mobil_pajak"])); //set value
+                                $('#file_foto_edit').attr('src','<?= base_url("assets/berkas/kendaraan/")?>'+data["file_foto"]);
+                                $('#file_stnk_edit').attr('src','<?= base_url("assets/berkas/kendaraan/")?>'+data["file_stnk"]);
+                                $('td[name="mobil_stnk_edit"]').text(data_temp["mobil_stnk"]); //set value
+                                $('td[name="mobil_berlaku_kir_edit"]').text(change_tanggal(data_temp["mobil_berlaku_kir"])); //set value
+                                $('td[name="mobil_kir_edit"]').text(data_temp["mobil_kir"]); //set value
+                                $('td[name="mobil_berlaku_ijin_bongkar_edit"]').text(change_tanggal(data_temp["mobil_berlaku_ijin_bongkar"])); //set value
+                                $('td[name="mobil_ijin_bongkar_edit"]').text(data_temp["mobil_ijin_bongkar"]); //set value
+                                mobil_no = data["mobil_no"];
+                                $('.ACC').attr('id',mobil_no);
+                                $('.Tolak').attr('id',mobil_no);
                             }
-                        })
+                        });
                     });
                     $('.btn-acc-delete-truck').click(function() {
                         let pk = $(this).data('pk');
@@ -378,6 +373,32 @@
                 
             });
         });
+        function acc_edit_truck(id){
+            $.ajax({
+                type: "GET",
+                url: "<?php echo base_url('index.php/form/accedittruck/ACC') ?>",
+                dataType: "text",
+                data: {
+                    id: id.id
+                },
+                success: function(data) {
+                    location.reload();
+                }
+            });
+        }
+        function tolak_edit_truck(id){
+            $.ajax({
+                type: "GET",
+                url: "<?php echo base_url('index.php/form/accedittruck/Ditolak') ?>",
+                dataType: "text",
+                data: {
+                    id: id.id
+                },
+                success: function(data) {
+                    location.reload();
+                }
+            });
+        }
     </script>
     <!-- end kendaraan -->
 
@@ -473,7 +494,7 @@
                                     html +="<a class='btn btn-success btn-sm btn-acc-merk' href='javascript:void(0)' data-pk='"+data+"'>ACC Tambah<i class='fas fa-check-circle'></i></a><br>";
                                 }
                                 if(row["validasi_edit"]=="Pending"){
-                                    html += "<a class='btn btn-primary btn-sm btn-acc-edit-merk' href='javascript:void(0)' data-pk='"+data+"'>ACC Edit<i class='fas fa-check-circle'></i></a><br>";
+                                    html += "<a class='btn btn-primary btn-sm btn-acc-edit-merk' href='javascript:void(0)' data-pk='"+data+"' data-toggle='modal' data-target='#popup-acc-edit-merk'>ACC Edit<i class='fas fa-check-circle'></i></a><br>";
                                 }
                                 if(row["validasi_delete"]=="Pending"){
                                     html += "<a class='btn btn-danger btn-sm btn-acc-delete-merk' href='javascript:void(0)' data-pk='"+data+"'>ACC Delete<i class='fas fa-check-circle'></i></a><br>";    
@@ -573,43 +594,23 @@
                     });
                     $('.btn-acc-edit-merk').click(function() {
                         let pk = $(this).data('pk');
-                        Swal.fire({
-                            title: 'ACC Edit Data Merk',
-                            icon: "question",
-                            text: 'Yakin anda ingin ACC Edit Data Merk ini?',
-                            showDenyButton: true,
-                            showCancelButton:true,
-                            denyButtonText: `Tolak`,
-                            confirmButtonText: 'ACC',
-                            denyButtonColor: '#808080',
-                            confirmButtonColor: '#4BB543',
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                $.ajax({
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/acceditmerk/ACC') ?>",
-                                    dataType: "text",
-                                    data: {
-                                        id: pk
-                                    },
-                                    success: function(data) {
-                                        location.reload();
-                                    }
-                                });
-                            }else if(result.isDenied){
-                                $.ajax({
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/acceditmerk/Ditolak') ?>",
-                                    dataType: "text",
-                                    data: {
-                                        id: pk
-                                    },
-                                    success: function(data) {
-                                        location.reload();
-                                    }
-                                });
+                        $.ajax({ //ajax ambil data bon
+                            type: "GET",
+                            url: "<?php echo base_url('index.php/detail/getmerk') ?>",
+                            dataType: "JSON",
+                            data: {
+                                id: pk
+                            },
+                            success: function(data) { //jika ambil data sukses
+                                data_temp = JSON.parse(data["temp_merk"]);
+                                $('#merk_nama_edit').val(data_temp["merk_nama"]); //set value
+                                $('#merk_type_edit').val(data_temp["merk_type"]); //set value
+                                $('#merk_jenis_edit').val(data_temp["merk_jenis"]); //set value
+                                $('#merk_dump_edit').val(data_temp["merk_dump"]); //set value
+                                $('#ACC').attr('onclick','acc_edit_merk('+data["merk_id"]+')');
+                                $('#Tolak').attr('onclick','tolak_edit_merk('+data["merk_id"]+')');
                             }
-                        })
+                        });
                     });
                     $('.btn-acc-delete-merk').click(function() {
                         let pk = $(this).data('pk');
@@ -655,6 +656,32 @@
                 
             });
         });
+        function acc_edit_merk(id){
+            $.ajax({
+                type: "GET",
+                url: "<?php echo base_url('index.php/form/acceditmerk/ACC') ?>",
+                dataType: "text",
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    location.reload();
+                }
+            });
+        }
+        function tolak_edit_merk(id){
+            $.ajax({
+                type: "GET",
+                url: "<?php echo base_url('index.php/form/acceditmerk/Ditolak') ?>",
+                dataType: "text",
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    location.reload();
+                }
+            });
+        }
      </script>
     <!-- end merk -->
 
@@ -1651,7 +1678,7 @@
                                     html +="<a class='btn btn-success btn-sm btn-acc-customer' href='javascript:void(0)' data-pk='"+data+"'>ACC Tambah<i class='fas fa-check-circle'></i></a><br>";
                                 }
                                 if(row["validasi_edit"]=="Pending"){
-                                    html += "<a class='btn btn-primary btn-sm btn-acc-edit-customer' href='javascript:void(0)' data-pk='"+data+"'>ACC Edit<i class='fas fa-check-circle'></i></a><br>";
+                                    html += "<a class='btn btn-primary btn-sm btn-acc-edit-customer' href='javascript:void(0)' data-pk='"+data+"' data-toggle='modal' data-target='#popup-acc-edit-customer'>ACC Edit<i class='fas fa-check-circle'></i></a><br>";
                                 }
                                 if(row["validasi_delete"]=="Pending"){
                                     html += "<a class='btn btn-danger btn-sm btn-acc-delete-customer' href='javascript:void(0)' data-pk='"+data+"'>ACC Delete<i class='fas fa-check-circle'></i></a><br>";    
@@ -1774,43 +1801,24 @@
                     });
                     $('.btn-acc-edit-customer').click(function() {
                         let pk = $(this).data('pk');
-                        Swal.fire({
-                            title: 'ACC Edit Data Customer',
-                            icon: "question",
-                            text: 'Yakin anda ingin ACC Edit Data Customer ini?',
-                            showDenyButton: true,
-                            showCancelButton:true,
-                            denyButtonText: `Tolak`,
-                            confirmButtonText: 'ACC',
-                            denyButtonColor: '#808080',
-                            confirmButtonColor: '#4BB543',
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                $.ajax({
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/acceditcustomer/ACC') ?>",
-                                    dataType: "text",
-                                    data: {
-                                        id: pk
-                                    },
-                                    success: function(data) {
-                                        location.reload();
-                                    }
-                                });
-                            }else if(result.isDenied){
-                                $.ajax({
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/acceditcustomer/Ditolak') ?>",
-                                    dataType: "text",
-                                    data: {
-                                        id: pk
-                                    },
-                                    success: function(data) {
-                                        location.reload();
-                                    }
-                                });
+                        $.ajax({ //ajax ambil data customer
+                            type: "GET",
+                            url: "<?php echo base_url('index.php/detail/getcustomer') ?>",
+                            dataType: "JSON",
+                            data: {
+                                id: pk
+                            },
+                            success: function(data) { //jika ambil data sukses
+                                data_temp = JSON.parse(data["temp_customer"]);
+                                $('td[name="customer_name_edit"]').text(data_temp["customer_name"]); //set value
+                                $('td[name="customer_alamat_edit"]').text(data_temp["customer_alamat"]); //set value
+                                $('td[name="customer_kontak_person_edit"]').text(data_temp["customer_kontak_person"]); //set value
+                                $('td[name="customer_telp_edit"]').text(data_temp["customer_telp"]); //set value
+                                $('td[name="customer_keterangan_edit"]').text(data_temp["customer_keterangan"]); //set value
+                                $('#ACC').attr('onclick','acc_edit_customer('+data["customer_id"]+')');
+                                $('#Tolak').attr('onclick','tolak_edit_customer('+data["customer_id"]+')');
                             }
-                        })
+                        });
                     });
                     $('.btn-acc-delete-customer').click(function() {
                         let pk = $(this).data('pk');
@@ -1855,6 +1863,32 @@
                 }
             });
         });
+        function acc_edit_customer(id){
+            $.ajax({
+                type: "GET",
+                url: "<?php echo base_url('index.php/form/acceditcustomer/ACC') ?>",
+                dataType: "text",
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    location.reload();
+                }
+            });
+        }
+        function tolak_edit_customer(id){
+            $.ajax({
+                type: "GET",
+                url: "<?php echo base_url('index.php/form/acceditcustomer/Ditolak') ?>",
+                dataType: "text",
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    location.reload();
+                }
+            });
+        }
     </script>
     <!-- end Customer -->   
 
@@ -1960,51 +1994,6 @@
                             return html;
                         }
                     },
-                    // {
-                    //     "data": "supir_tgl_sim",
-                    //     className: 'text-center',
-                    //     "orderable": false,
-                    //         render: function(data, type, row) {
-                    //             var selisih = "";
-                    //             $.ajax({
-                    //                 async: false,
-                    //                 type: "GET",
-                    //                 url: "<?php echo base_url('index.php/form/generate_selisih_tanggal/') ?>"+data,
-                    //                 dataType: "text",
-                    //                 success: function(tanggal) {
-                    //                     selisih = tanggal;
-                    //                 }
-                    //             });
-                    //             if(row["sisa"][0]=="-"){
-                    //                 if(selisih>31){
-                    //                     let html = "<a class='btn btn-block btn-sm btn-success active'><i class='fa fa-fw fa-exclamation-circle'></i>"+row["sisa"]+"</a>";
-                    //                     return html;
-                    //                 }else{
-                    //                     let html = "<a class='btn btn-block btn-sm btn-warning'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
-                    //                     return html;
-                    //                 }
-                    //             }else{
-                    //                 let html = "<a class='btn btn-block btn-sm btn-danger'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>"+row["sisa"]+"</a>";
-                    //                 return html;
-                    //             }
-                    //         }
-
-                    // },
-                    // {
-                    //     "data": "status_jalan",
-                    //     className: 'text-center',
-                    //     "orderable": false,
-                    //         render: function(data, type, row) {
-                    //             if (data == "Jalan") {
-                    //                 let html = "<span class='btn-sm btn-block btn-success active'><i class='fa fa-fw fa-check mr-2'></i>" + data + "</span>";
-                    //                 return html;
-                    //             } else {
-                    //                 let html = "<span class='btn-sm btn-block btn-warning active'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>" + data + "</span>";
-                    //                 return html;
-                    //             }
-                    //         }
-
-                    // },
                     {
                         "data": "status_aktif",
                         className: 'text-center',
@@ -2072,7 +2061,7 @@
                                     html +="<a class='btn btn-success btn-sm btn-acc-supir' href='javascript:void(0)' data-pk='"+data+"'>ACC Tambah<i class='fas fa-check-circle'></i></a><br>";
                                 }
                                 if(row["validasi_edit"]=="Pending"){
-                                    html += "<a class='btn btn-primary btn-sm btn-acc-edit-supir' href='javascript:void(0)' data-pk='"+data+"'>ACC Edit<i class='fas fa-check-circle'></i></a><br>";
+                                    html += "<a class='btn btn-primary btn-sm btn-acc-edit-supir' href='javascript:void(0)' data-pk='"+data+"' data-toggle='modal' data-target='#popup-acc-edit-supir'>ACC Edit<i class='fas fa-check-circle'></i></a><br>";
                                 }
                                 if(row["validasi_delete"]=="Pending"){
                                     html += "<a class='btn btn-danger btn-sm btn-acc-delete-supir' href='javascript:void(0)' data-pk='"+data+"'>ACC Delete<i class='fas fa-check-circle'></i></a><br>";    
@@ -2232,43 +2221,32 @@
                     });
                     $('.btn-acc-edit-supir').click(function() {
                         let pk = $(this).data('pk');
-                        Swal.fire({
-                            title: 'ACC Edit Data Driver',
-                            icon: "question",
-                            text: 'Yakin anda ingin ACC Edit Data Driver ini?',
-                            showDenyButton: true,
-                            showCancelButton:true,
-                            denyButtonText: `Tolak`,
-                            confirmButtonText: 'ACC',
-                            denyButtonColor: '#808080',
-                            confirmButtonColor: '#4BB543',
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                $.ajax({
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/acceditsupir/ACC') ?>",
-                                    dataType: "text",
-                                    data: {
-                                        id: pk
-                                    },
-                                    success: function(data) {
-                                        location.reload();
-                                    }
-                                });
-                            }else if(result.isDenied){
-                                $.ajax({
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/acceditsupir/Ditolak') ?>",
-                                    dataType: "text",
-                                    data: {
-                                        id: pk
-                                    },
-                                    success: function(data) {
-                                        location.reload();
-                                    }
-                                });
+                        $.ajax({ //ajax ambil data supir
+                            type: "GET",
+                            url: "<?php echo base_url('index.php/detail/getsupir') ?>",
+                            dataType: "JSON",
+                            data: {
+                                id: pk
+                            },
+                            success: function(data) { //jika ambil data sukses
+                                data_temp = JSON.parse(data["temp_supir"]);
+                                $('td[name="supir_name_edit"]').text(data_temp["supir_name"]+" ("+data_temp["supir_panggilan"]+")"); //set value
+                                $('td[name="supir_alamat_edit"]').text(data_temp["supir_alamat"]); //set value
+                                $('td[name="supir_ttl_edit"]').text(data_temp["supir_tempat_lahir"]+","+change_tanggal(data_temp["supir_tgl_lahir"])); //set value
+                                $('td[name="supir_telp_edit"]').text(data_temp["supir_telp"]); //set value
+                                $('td[name="supir_ktp_edit"]').text(data_temp["supir_ktp"]); //set value
+                                $('td[name="supir_sim_edit"]').text(data_temp["supir_sim"]+" (s/d "+change_tanggal(data_temp["supir_tgl_sim"])+")"); //set value
+                                $('td[name="supir_keterangan_edit"]').text(data_temp["supir_keterangan"]); //set value
+                                $('td[name="darurat_nama_edit"]').text(data_temp["darurat_nama"]); //set value
+                                $('td[name="darurat_referensi_edit"]').text(data_temp["darurat_referensi"]); //set value
+                                $('td[name="darurat_telp_edit"]').text(data_temp["darurat_telp"]); //set value
+                                $('#foto_edit').attr('src','<?= base_url("assets/berkas/driver/")?>'+data_temp["file_foto"]);
+                                $('#sim_edit').attr('src','<?= base_url("assets/berkas/driver/")?>'+data_temp["file_sim"]);
+                                $('#ktp_edit').attr('src','<?= base_url("assets/berkas/driver/")?>'+data_temp["file_ktp"]);
+                                $('#ACC').attr('onclick','acc_edit_supir('+data["supir_id"]+')');
+                                $('#Tolak').attr('onclick','tolak_edit_supir('+data["supir_id"]+')');
                             }
-                        })
+                        });
                     });
                     $('.btn-acc-delete-supir').click(function() {
                         let pk = $(this).data('pk');
@@ -2313,6 +2291,32 @@
                 }
             });
         });
+        function acc_edit_supir(id){
+            $.ajax({
+                type: "GET",
+                url: "<?php echo base_url('index.php/form/acceditsupir/ACC') ?>",
+                dataType: "text",
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    location.reload();
+                }
+            });
+        }
+        function tolak_edit_supir(id){
+            $.ajax({
+                type: "GET",
+                url: "<?php echo base_url('index.php/form/acceditsupir/Ditolak') ?>",
+                dataType: "text",
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    location.reload();
+                }
+            });
+        }
     </script>
     <!-- End Supir -->
 
@@ -2890,14 +2894,6 @@
                             return html;
                         }
                     },
-                    // {
-                    //     "data": "rute_tagihan",
-                    //     className: 'text-center',
-                    //     render: function(data, type, row) {
-                    //         let html = 'Rp.'+rupiah(data);
-                    //         return html;
-                    //     }
-                    // },
                     {
                         "data": "validasi_rute",
                         className: 'text-center',
@@ -2951,7 +2947,7 @@
                                     html +="<a class='btn btn-success btn-sm btn-acc-rute' href='javascript:void(0)' data-pk='"+data+"'>ACC Tambah<i class='fas fa-check-circle'></i></a><br>";
                                 }
                                 if(row["validasi_rute_edit"]=="Pending"){
-                                    html += "<a class='btn btn-primary btn-sm btn-acc-edit-rute' href='javascript:void(0)' data-pk='"+data+"'>ACC Edit<i class='fas fa-check-circle'></i></a><br>";
+                                    html += "<a class='btn btn-primary btn-sm btn-acc-edit-rute' href='javascript:void(0)' data-pk='"+data+"' data-toggle='modal' data-target='#popup-acc-edit-rute'>ACC Edit<i class='fas fa-check-circle'></i></a><br>";
                                 }
                                 if(row["validasi_rute_delete"]=="Pending"){
                                     html += "<a class='btn btn-danger btn-sm btn-acc-delete-rute' href='javascript:void(0)' data-pk='"+data+"'>ACC Delete<i class='fas fa-check-circle'></i></a><br>";    
@@ -3097,43 +3093,30 @@
                     });
                     $('.btn-acc-edit-rute').click(function() {
                         let pk = $(this).data('pk');
-                        Swal.fire({
-                            title: 'ACC Edit Data Rute dan Muatan',
-                            icon: "question",
-                            text: 'Yakin anda ingin ACC Edit Data Rute dan Muatan ini?',
-                            showDenyButton: true,
-                            showCancelButton:true,
-                            denyButtonText: `Tolak`,
-                            confirmButtonText: 'ACC',
-                            denyButtonColor: '#808080',
-                            confirmButtonColor: '#4BB543',
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                $.ajax({
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/acceditrute/ACC') ?>",
-                                    dataType: "text",
-                                    data: {
-                                        id: pk
-                                    },
-                                    success: function(data) {
-                                        location.reload();
-                                    }
-                                });
-                            }else if(result.isDenied){
-                                $.ajax({
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/acceditrute/Ditolak') ?>",
-                                    dataType: "text",
-                                    data: {
-                                        id: pk
-                                    },
-                                    success: function(data) {
-                                        location.reload();
-                                    }
-                                });
+                        $.ajax({ //ajax ambil data customer
+                            type: "GET",
+                            url: "<?php echo base_url('index.php/form/getrutebyid') ?>",
+                            dataType: "JSON",
+                            data: {
+                                id: pk
+                            },
+                            success: function(data) { //jika ambil data sukses
+                                data_temp = JSON.parse(data["temp_rute"])
+                                $("#rute_id_edit").val(data["rute_id"]);
+                                $("#customer_id_edit").val(data["customer_id"]);
+                                $("#customer_name_edit").val(data["customer_name"]);
+                                $("#rute_dari_edit").val(data_temp["rute_dari"]);
+                                $("#rute_ke_edit").val(data_temp["rute_ke"]);
+                                $("#rute_muatan_edit").val(data_temp["rute_muatan"]);
+                                $("#jenis_mobil_edit").val(data["jenis_mobil"]);
+                                $("#rute_uj_engkel_edit").val(rupiah(data_temp["rute_uj_engkel"]));
+                                $("#rute_tagihan_edit").val(rupiah(data_temp["rute_tagihan"]));
+                                $("#rute_gaji_engkel_edit").val(rupiah(data_temp["rute_gaji_engkel"]));
+                                $("#rute_keterangan_edit").val(data_temp["rute_keterangan"]);
+                                $('#ACC').attr('onclick','acc_edit_rute('+data["rute_id"]+')');
+                                $('#Tolak').attr('onclick','tolak_edit_rute('+data["rute_id"]+')');
                             }
-                        })
+                        });
                     });
                     $('.btn-acc-delete-rute').click(function() {
                         let pk = $(this).data('pk');
@@ -3178,6 +3161,32 @@
                 }
             });
         });
+        function acc_edit_rute(id){
+            $.ajax({
+                type: "GET",
+                url: "<?php echo base_url('index.php/form/acceditrute/ACC') ?>",
+                dataType: "text",
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    location.reload();
+                }
+            });
+        }
+        function tolak_edit_rute(id){
+            $.ajax({
+                type: "GET",
+                url: "<?php echo base_url('index.php/form/acceditrute/Ditolak') ?>",
+                dataType: "text",
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    location.reload();
+                }
+            });
+        }
     </script>
     <!-- End rute -->
 

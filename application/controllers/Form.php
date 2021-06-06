@@ -510,19 +510,19 @@ class Form extends CI_Controller {
         }
 
         public function insert_rute(){
-            if($this->input->post("Tonase")==""){
+            // if($this->input->post("Tonase")==""){
                 $rute_gaji_engkel = str_replace(".","",$this->input->post("rute_gaji_engkel"));
                 // $rute_gaji_tronton = str_replace(".","",$this->input->post("rute_gaji_tronton"));
-                $rute_gaji_engkel_rumusan = 0;
+                // $rute_gaji_engkel_rumusan = 0;
                 // $rute_gaji_tronton_rumusan = 0;
-                $tonase = 0;
-            }else{
-                $rute_gaji_engkel = 0;
+                // $tonase = 0;
+            // }else{
+                // $rute_gaji_engkel = 0;
                 // $rute_gaji_tronton = 0;
-                $rute_gaji_engkel_rumusan = str_replace(".","",$this->input->post("rute_gaji_engkel_rumusan"));
+                // $rute_gaji_engkel_rumusan = str_replace(".","",$this->input->post("rute_gaji_engkel_rumusan"));
                 // $rute_gaji_tronton_rumusan = str_replace(".","",$this->input->post("rute_gaji_tronton_rumusan"))     ;
-                $tonase = str_replace(".","",$this->input->post("Tonase"));
-            }
+                // $tonase = str_replace(".","",$this->input->post("Tonase"));
+            // }
             $data=array(
                 "customer_id"=>$this->input->post("customer_id"),
                 "rute_dari"=>$this->input->post("rute_dari"),
@@ -534,8 +534,8 @@ class Form extends CI_Controller {
                 "rute_tagihan"=>str_replace(".","",$this->input->post("rute_tagihan")),
                 "rute_gaji_engkel"=>$rute_gaji_engkel,
                 // "rute_gaji_tronton"=>$rute_gaji_tronton,
-                "rute_tonase"=>$tonase,
-                "rute_gaji_engkel_rumusan"=>$rute_gaji_engkel_rumusan,
+                // "rute_tonase"=>$tonase,
+                // "rute_gaji_engkel_rumusan"=>$rute_gaji_engkel_rumusan,
                 // "rute_gaji_tronton_rumusan"=>$rute_gaji_tronton_rumusan,
                 "rute_status_hapus"=>"NO",
                 "validasi_rute"=>"Pending",
@@ -562,9 +562,9 @@ class Form extends CI_Controller {
                 "rute_tagihan"=>str_replace(".","",$this->input->post("rute_tagihan_update")),
                 "rute_gaji_engkel"=>str_replace(".","",$this->input->post("rute_gaji_engkel_update")),
                 // "rute_gaji_tronton"=>str_replace(".","",$this->input->post("rute_gaji_tronton_update")),
-                "rute_gaji_engkel_rumusan"=>str_replace(".","",$this->input->post("rute_gaji_engkel_rumusan_update")),
+                // "rute_gaji_engkel_rumusan"=>str_replace(".","",$this->input->post("rute_gaji_engkel_rumusan_update")),
                 // "rute_gaji_tronton_rumusan"=>str_replace(".","",$this->input->post("rute_gaji_tronton_rumusan_update")),
-                "rute_tonase"=>str_replace(".","",$this->input->post("rute_tonase_update")),
+                // "rute_tonase"=>str_replace(".","",$this->input->post("rute_tonase_update")),
                 "rute_keterangan"=>str_replace(".","",$this->input->post("rute_keterangan_update")),
                 // "ritase"=>str_replace(".","",$this->input->post("Ritase_update")),
             );

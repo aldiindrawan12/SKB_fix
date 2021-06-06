@@ -240,3 +240,48 @@
 </div>
 
 <!-- end pop up detail customer -->
+
+<div class="modal fade mt-5" id="popup-acc-edit-customer" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary-dark">
+                <h5 class="block-title">Data Edit Customer</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times</span>
+                </button>
+            </div>
+            <div class="font-size-sm m-3 text-justify">
+            <div class="">
+                <div class="">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="font-weight-bold" style="width: 20%;">Nama Customer</td>
+                                <td name="customer_name_edit"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" style="width: 20%;">Alamat</td>
+                                <td name="customer_alamat_edit"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" style="width: 20%;">Contact Person</td>
+                                <td name="customer_kontak_person_edit"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" style="width: 20%;">Telp/HP</td>
+                                <td name="customer_telp_edit"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" style="width: 20%;">Keterangan</td>
+                                <td name="customer_keterangan_edit"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <a class="btn btn-success" id="ACC">ACC</a>
+                    <a class="btn btn-danger" id="Tolak">Tolak</a>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>

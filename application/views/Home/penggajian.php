@@ -354,3 +354,92 @@
 </div>
 <!-- end pop up detail supir -->
 </div>
+
+<!-- pop up detail supir -->
+<div class="modal fade" id="popup-acc-edit-supir" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary-dark">
+                <h5 class="block-title">Data Edit Driver</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times</span>
+                </button>
+            </div>
+            <div class="font-size-sm text-justify">
+            <div class="row">
+                <div class="col">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="font-weight-bold" style="width: 40%;">Nama</td>
+                                <td name="supir_name_edit"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" style="width: 40%;">Alamat</td>
+                                <td name="supir_alamat_edit"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" style="width: 40%;">Tempat,Tanggal Lahir</td>
+                                <td name="supir_ttl_edit"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" style="width: 40%;">Telp/HP</td>
+                                <td name="supir_telp_edit"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" style="width: 40%;">No.KTP</td>
+                                <td name="supir_ktp_edit"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" style="width: 40%;">No.SIM</td>
+                                <td name="supir_sim_edit"></td>
+                            </tr>
+                            <tr>
+                            <td class="font-weight-bold" style="width: 40%;">Keterangan</td>
+                                <td name="supir_keterangan_edit"></td>
+                            </tr>
+                            <tr >
+                                <td class="font-weight-bold text-center" colspan=2>Anggota Keluarga Yang Dapat Dihubungi</td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" style="width: 40%;">Nama</td>
+                                <td name="darurat_nama_edit"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" style="width: 40%;">Telp/HP</td>
+                                <td name="darurat_telp_edit"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" style="width: 40%;">Referensi</td>
+                                <td name="darurat_referensi_edit"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>         
+                <div class="col">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <div class="container w-50">
+                                <img id="foto" alt="foto_edit" class="img-thumbnail">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="container w-50">
+                                <img id="sim" alt="sim_edit" class="img-thumbnail">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="container w-50">
+                                <img id="ktp" alt="ktp_edit" class="img-thumbnail">
+                            </div>
+                        </div>
+                    </div>
+                </div>     
+            </div>
+            <a class="btn btn-success" id="ACC">ACC</a>
+            <a class="btn btn-danger" id="Tolak">Tolak</a>
+        </div>
+    </div>
+    </div>
+</div>
+<!-- end pop up detail supir -->

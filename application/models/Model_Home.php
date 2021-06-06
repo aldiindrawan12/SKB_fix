@@ -793,8 +793,8 @@ class Model_Home extends CI_model
                     merk_jenis like '%".$searchValue."%') ";
             }
             $search_arr[] = " status_hapus='NO' ";
-            $search_arr[] = " validasi='ACC' ";
             if($asal=="addtruck"){
+                $search_arr[] = " validasi='ACC' ";
                 $search_arr[] = " validasi_edit='ACC' ";
                 $search_arr[] = " validasi_delete='ACC' ";
             }

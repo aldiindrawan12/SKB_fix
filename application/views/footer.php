@@ -39,6 +39,40 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="popup-ubah-password" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog mt-5 py-5" role="document">
+            <div class="modal-content ">
+                <div class="modal-header mb-3">
+                    <h5 class="modal-title" id="exampleModalLabel">Ubah Password</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times</span>
+                    </button>
+                </div>
+                <div class="container mb-3">
+                    <form action="<?= base_url('index.php/login/ubah_password')?>" method="POST" onsubmit="return cek_password();">
+                        <div class="form-group row">
+                            <label for="password_old" class="form-label col">Password Lama</label>
+                            <input type="password" id="password_old" name="password_old" required class="form-control col">
+                        </div>
+                        <div class="form-group row">
+                            <label for="password_new" class="form-label col">Password Baru</label>
+                            <input type="password" id="password_new" name="password_new" required class="form-control col">
+                        </div>
+                        <div class="form-group row">
+                            <label for="password_fix" class="form-label col">Konfirmasi Password Baru</label>
+                            <input type="password" id="password_fix" name="password_fix" required class="form-control col">
+                        </div>
+                        <div class="form-group mt-1 mr-4 ">
+                            <button type="submit" class="btn btn-success float-right" >Simpan</button>
+                            <button type="reset" class="btn btn-outline-danger mr-3 float-md-right">Reset</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <!-- Bootstrap core JavaScript-->
     <script src="<?=base_url("assets/vendor/jquery/jquery.min.js")?>"></script>
@@ -65,6 +99,36 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
     <script src="<?php echo base_url('assets/datepicker/js/bootstrap-datepicker.js')?>"></script>
     
+    <!-- cek password -->
+    <script>
+        function cek_password(){
+            password_old = $("#password_old").val();
+            password_new = $("#password_new").val();
+            password_fix = $("#password_fix").val();
+            validasi = "false";
+            $.ajax({
+                type: "GET",
+                url: "<?php echo base_url('index.php/login/cek_password/') ?>"+password_old+"/"+password_new+"/"+password_fix,
+                dataType: "text",
+                async:false,
+                success: function(data) { 
+                    validasi = data;
+                }
+            });
+            if(validasi!="true"){
+                if(validasi=="false lama"){
+                    alert("password lama tidak sesuai");
+                }else{
+                    alert("password baru tidak cocok");
+                }
+                return false;
+            }else{
+                return true;
+            }
+        }
+    </script>
+    <!-- end cek password -->
+
     <!-- kendaraan -->
     <script> //script datatables kendaraan
         $(document).ready(function() {

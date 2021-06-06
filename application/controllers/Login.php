@@ -28,6 +28,7 @@ class Login extends CI_Controller {
             $save_password = $user["password"];
             if($password == $save_password){
                 $this->session->set_flashdata('status-login', 'Berhasil');
+                $_SESSION["password"] = $save_password;
                 $_SESSION["user_id"] = $user["akun_id"];
                 $_SESSION["user"] = $user["akun_name"];
                 $_SESSION["role"] = $user["akun_role"];
@@ -40,5 +41,23 @@ class Login extends CI_Controller {
 			$this->session->set_flashdata('status-login', 'Username');
             redirect(base_url());
         }
+    }
+    public function cek_password($password_old,$password_new,$password_fix){
+        if(sha1($password_old) == $_SESSION["password"]){
+            if($password_fix==$password_new){
+                echo "true";
+            }else{
+                echo "false";
+            }
+        }else{
+            echo "false lama";
+        }
+    }
+    public function ubah_password(){
+        $password_new = sha1($this->input->post("password_new"));
+        $password_fix = sha1($this->input->post("password_fix"));
+        $this->model_login->ubah_password($password_new);
+        session_destroy();
+        redirect(base_url());
     }
 }

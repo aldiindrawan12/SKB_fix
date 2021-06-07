@@ -37,11 +37,9 @@
                             <p class="font-size-sm font-weight-bold"><?= $jo["Jo_id"] ?></p>
                             <hr>
                             <p class="font-weight-bold badge badge-success">Tipe Job Order</p>
-                            <?php if($tipe_jo=="paketan"){?>
-                                <p class="font-size-sm font-weight-bold">Paketan</p>
-                            <?php }else{?>
+                            
                                 <p class="font-size-sm font-weight-bold">Reguler</p>
-                            <?php }?>
+                            
                             <hr>
                             <p class="font-weight-bold badge badge-primary">Operator</p>
                             <p class="font-size-sm font-weight-bold"><?= $jo["user"] ?></p>
@@ -58,39 +56,12 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php if($tipe_jo=="paketan"){?>
-                                                <?php $data_rute = json_decode($paketan["paketan_data_rute"],true);?>
-                                                <?php for($i=0;$i<count($data_rute);$i++){?>
-                                                    <tr>
-                                                        <td><?= $data_rute[$i]["customer"]?></td>
-                                                        <td><?= $data_rute[$i]["dari"]?></td>
-                                                        <td><?= $data_rute[$i]["ke"]?></td>
-                                                        <td><?= $data_rute[$i]["muatan"]?></td>
-                                                    </tr>
-                                                <?php }?>
-                                            <?php }else{?>
-                                                <?php if($kosongan != null){?>
-                                                <tr>
-                                                    <td>Rute ke-1</td>
-                                                    <td><?= $kosongan["kosongan_dari"]?></td>
-                                                    <td><?= $kosongan["kosongan_ke"]?></td>
-                                                    <td>Kosongan</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Rute ke-2</td>
-                                                    <td><?= $jo["asal"]?></td>
-                                                    <td><?= $jo["tujuan"]?></td>
-                                                    <td><?= $jo["muatan"]?></td>
-                                                </tr>
-                                                <?php }else{?>
                                                     <tr>
                                                         <td>Rute ke-1</td>
                                                         <td><?= $jo["asal"]?></td>
                                                         <td><?= $jo["tujuan"]?></td>
                                                         <td><?= $jo["muatan"]?></td>
                                                     </tr>
-                                                <?php }?>
-                                            <?php }?>
                                         </tbody>
                                     </table>
                         </td>
@@ -139,24 +110,19 @@
                     </tr>
                     <tr>
                         <td class="font-weight-bold " style="width: 25%;">Uang Jalan</td>
-                        <td colspan=3><p>Rp.<?= number_format($jo["uang_jalan"],2,',','.')." (".$jo["terbilang"].")" ?></p></td>
+                        <td colspan=3><p>Rp.<?= number_format($jo["uang_jalan"],2,',','.') ?></p></td>
                     </tr>
                     <tr>
-                        <td class="font-weight-bold " style="width: 25%;">Uang Jalan Kosongan</td>
-                        <?php if($jo["uang_kosongan"]==0){
-                            $jo["uang_kosongan"] = 0;?>
-                            <td colspan=3><p>Rp.0 (Tidak Ada Rute Kosongan)</p></td>
-                        <?php }else{?>
-                            <td colspan=3><p>Rp.<?= number_format($jo["uang_kosongan"],2,',','.') ?></p></td>
-                        <?php }?>
+                        <td class="font-weight-bold " style="width: 25%;">Tambahan/Potongan Uang Jalan</td>
+                            <td colspan=3><p>Rp.<?= number_format($jo["nominal_tambahan"],2,',','.') ?> (<?= $jo["jenis_tambahan"]?>)</p></td>
                     </tr>
                     <tr>
                         <td class="font-weight-bold " style="width: 25%;">Total Uang Jalan</td>
-                        <td colspan=3><p>Rp.<?= number_format($jo["uang_jalan"]+$jo["uang_kosongan"],2,',','.')?></p></td>
+                        <td colspan=3><p>Rp.<?= number_format($jo["uang_total"],2,',','.')?></p></td>
                     </tr>
                     <tr>
                         <td class="font-weight-bold " style="width: 25%;">Uang Jalan Terbayar</td>
-                        <?php if($jo["uang_jalan_bayar"]>=$jo["uang_jalan"]+$jo["uang_kosongan"] || $jo["status"]=="Dibatalkan"){?>
+                        <?php if($jo["uang_jalan_bayar"]>=$jo["uang_total"] || $jo["status"]=="Dibatalkan"){?>
                             <td colspan=3>
                                 <div class="row ">
                                     <p class="col">Rp.<?= number_format($jo["uang_jalan_bayar"],2,',','.')?></p>
@@ -172,7 +138,7 @@
                             <td colspan=3>
                                 <div class="row ">
                                     <p class="col">Rp.<?= number_format($jo["uang_jalan_bayar"],2,',','.')?></p>
-                                    <a class='btn btn-primary btn-sm col-md-4' data-toggle="modal" data-target="#update_ju" onclick="sisa_uj(<?= $jo['uang_jalan']+$jo['uang_kosongan']-$jo['uang_jalan_bayar']?>)">
+                                    <a class='btn btn-primary btn-sm col-md-4' data-toggle="modal" data-target="#update_ju" onclick="sisa_uj(<?= $jo['uang_total']-$jo['uang_jalan_bayar']?>)">
                                         <span>Konfirmasi Bayar UJ</span>
                                     </a>
                                 </div>
@@ -308,7 +274,7 @@
 <script>
     function uang(a){
         $( '#'+a.id ).mask('000.000.000', {reverse: true});
-        var sisa = '<?= $jo['uang_jalan']+$jo['uang_kosongan']-$jo['uang_jalan_bayar']?>';
+        var sisa = '<?= $jo['uang_total']-$jo['uang_jalan_bayar']?>';
         var uang_bayar = $("#uang_jalan_bayar").val().split(".");
         var uang_bayar_fix = "";
         for(i=0;i<uang_bayar.length;i++){

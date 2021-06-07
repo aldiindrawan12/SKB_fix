@@ -4166,7 +4166,11 @@
                 drawCallback: function() {
                     $('.btn-pilih-rute').click(function() {
                         let pk = $(this).data('pk');
-                        $("#uang_jalan_total").val(0);
+                        if($("#nominal_tambahan").val()==""){
+                            $("#uang_jalan_total").val(0);
+                        }else{
+                            $("#uang_jalan_total").val($("#nominal_tambahan").val());
+                        }
                         $.ajax({
                             type: "GET",
                             url: "<?php echo base_url('index.php/detail/getrute') ?>",
@@ -4175,6 +4179,13 @@
                                 id: pk
                             },
                             success: function(data) { //jika ambil data sukses
+                                if($("#jenis_tambahan").val()=="Potongan"){
+                                    total = rupiah( parseInt(data["rute_uj_engkel"])-parseInt($("#uang_jalan_total").val().replaceAll(".","")) ) ;
+                                }else if($("#jenis_tambahan").val()=="Tambahan"){
+                                    total = rupiah( parseInt(data["rute_uj_engkel"])+parseInt($("#uang_jalan_total").val().replaceAll(".","")) ) ;
+                                }else{
+                                    total = rupiah( parseInt(data["rute_uj_engkel"])) ;
+                                }
                                 $('#Muatan').val(data["rute_muatan"]); //set value
                                 $('#Asal').val(data["rute_dari"]); //set value
                                 $('#Tujuan').val(data["rute_ke"]); //set value
@@ -4189,16 +4200,16 @@
                                 $('#Tonase').val(data["rute_tonase"]); //set value
                                 $('#Uang').val(rupiah(data["rute_uj_engkel"])); //set value
                                 $('#Tagihan').val(data["rute_tagihan"]); //set value
-                                $( '#uang_jalan_total' ).val(rupiah( parseInt(data["rute_uj_engkel"])+parseInt($("#uang_jalan_total").val().replaceAll(".","")) ) );
-                                uang = rupiah(data["rute_uj_engkel"]);
-                                $.ajax({
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/generate_terbilang_fix/') ?>"+uang,
-                                    dataType: "text",
-                                    success: function(data) {
-                                        $('#Terbilang').val(data);
-                                    }
-                                });
+                                $( '#uang_jalan_total' ).val(total);
+                                // uang = rupiah(data["rute_uj_engkel"]);
+                                // $.ajax({
+                                //     type: "GET",
+                                //     url: "<?php echo base_url('index.php/form/generate_terbilang_fix/') ?>"+uang,
+                                //     dataType: "text",
+                                //     success: function(data) {
+                                //         $('#Terbilang').val(data);
+                                //     }
+                                // });
                                 var mobil_jenis = $("#Jenis").val();
                                 $('#Kendaraan').find('option').remove().end(); //reset option select
                                 $.ajax({ //ajax set option kendaraan

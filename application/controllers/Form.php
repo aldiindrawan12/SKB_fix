@@ -167,18 +167,18 @@ class Form extends CI_Controller {
             redirect(base_url("index.php/home/paketan"));
         }
         public function insert_JO(){
-            $kosongan = $this->model_home->getkosonganbyid($this->input->post("kosongan_id"));
+            if($this->input->post("nominal_tambahan")==""){
+                $nominal_tambahan = 0;
+            }else{
+                $nominal_tambahan = str_replace(".","",$this->input->post("nominal_tambahan"));
+            }
             $jo_id = $this->model_form->getjoid();
             $isi_jo_id = [];
             for($i=0;$i<count($jo_id);$i++){
                 $isi_jo_id[] = $jo_id[$i]["Jo_id"];
             }
-            if(!$kosongan){
-                $kosongan_id = 0;
-                $uang_kosongan = 0;
-            }else{
-                $kosongan_id = $kosongan["kosongan_id"];
-                $uang_kosongan = $kosongan["kosongan_uang"];
+            if(count($isi_jo_id)==0){
+                $isi_jo_id[]=0;
             }
             //generate jo id
             $new_jo_id = "";
@@ -189,15 +189,12 @@ class Form extends CI_Controller {
             //end generate jo id
             $data["data"]=array(
                 "Jo_id"=>$new_jo_id,
-                "parent_Jo_id"=>'y',
                 "mobil_no"=>$this->input->post("Kendaraan"),
                 "supir_id"=>$this->input->post("Supir"),
                 "muatan"=>$this->input->post("Muatan"),
                 "asal"=>$this->input->post("Asal"),
                 "tujuan"=>$this->input->post("Tujuan"),
                 "uang_jalan"=>str_replace(".","",$this->input->post("Uang")),
-                "uang_jalan_bayar"=>str_replace(".","",$this->input->post("uang_jalan_bayar")),
-                "terbilang"=>$this->input->post("Terbilang"),
                 "tanggal_surat"=>$this->change_tanggal($this->input->post("tanggal_jo")),
                 "keterangan"=>$this->input->post("Keterangan"),
                 "customer_id"=>$this->input->post("Customer"),
@@ -205,16 +202,15 @@ class Form extends CI_Controller {
                 "status_upah"=>"Belum Dibayar",
                 "upah"=>str_replace(".","",$this->input->post("Upah")),
                 "tagihan"=>str_replace(".","",$this->input->post("Tagihan")),
-                "kosongan_id"=>$kosongan_id,
-                "paketan_id"=>0,
-                "uang_kosongan" =>$uang_kosongan,
-                "user"=>$_SESSION["user"]
+                "user"=>$_SESSION["user"],
+                "jenis_tambahan"=>$this->input->post("jenis_tambahan"),
+                "nominal_tambahan"=>$nominal_tambahan,
+                "uang_total"=>str_replace(".","",$this->input->post("uang_jalan_total")),
             );
             $this->model_form->insert_JO($data["data"]);
             $data["jo_id"] = $new_jo_id;
             $data["asal"] = "insert";
             $data["tipe_jo"] = "reguler";
-            $data["kosongan"] = $this->model_detail->getkosonganbyid($data["data"]["kosongan_id"],$new_jo_id);
             $data["supir"] = $this->model_home->getsupirbyid($data["data"]["supir_id"]);
             $data["mobil"] = $this->model_home->getmobilbyid($data["data"]["mobil_no"]);
             $this->load->view("print/jo_print",$data);
@@ -234,7 +230,6 @@ class Form extends CI_Controller {
             //end generate jo id
             $data["data"]=array(
                 "Jo_id"=>$new_jo_id,
-                "parent_Jo_id"=>'x',
                 "mobil_no"=>$this->input->post("Kendaraan"),
                 "supir_id"=>$this->input->post("Supir"),
                 "uang_jalan"=>str_replace(".","",$this->input->post("Uang")),

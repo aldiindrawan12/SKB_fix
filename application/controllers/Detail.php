@@ -46,15 +46,7 @@ class Detail extends CI_Controller {
                 $data["page"] = "Laporan_page";
                 $data["collapse_group"] = "Laporan";
             }
-
-            if($data["jo"]["paketan_id"]!=0){
-                $data["tipe_jo"]="paketan";
-                $data["paketan"] = $this->model_form->getpaketanbyid($data["jo"]["paketan_id"]);
-                $data["kosongan"] = $this->model_detail->getkosonganbyid(0,$Jo_id);
-            }else{     
-                $data["tipe_jo"]="reguler";
-                $data["kosongan"] = $this->model_detail->getkosonganbyid($data["jo"]["kosongan_id"],$Jo_id);
-            }
+            $data["tipe_jo"]="reguler";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             if(json_decode($data["akun_akses"]["akses"])[1]==0 && json_decode($data["akun_akses"]["akses"])[8]==0 && json_decode($data["akun_akses"]["akses"])[7]==0){
                 redirect(base_url());

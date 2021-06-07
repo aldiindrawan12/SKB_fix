@@ -108,7 +108,7 @@ class Form extends CI_Controller {
                 "batas_pembayaran"=>$this->input->post("invoice_payment"),
                 "invoice_keterangan"=>$this->input->post("invoice_keterangan"),
                 "status_bayar"=>"Belum Lunas",
-                "user_invoice"=>$_SESSION["user"]
+                "user_invoice"=>$_SESSION["user"]."(".date("Y-m-d H:i:s").")",
             );
             $data_jo = explode(",",$this->input->post("data_jo"));
             $this->model_form->insert_invoice($data,$data_jo);
@@ -202,7 +202,7 @@ class Form extends CI_Controller {
                 "status_upah"=>"Belum Dibayar",
                 "upah"=>str_replace(".","",$this->input->post("Upah")),
                 "tagihan"=>str_replace(".","",$this->input->post("Tagihan")),
-                "user"=>$_SESSION["user"],
+                "user"=>$_SESSION["user"]."(".date("Y-m-d H:i:s").")",
                 "jenis_tambahan"=>$this->input->post("jenis_tambahan"),
                 "nominal_tambahan"=>$nominal_tambahan,
                 "uang_total"=>str_replace(".","",$this->input->post("uang_jalan_total")),
@@ -690,8 +690,10 @@ class Form extends CI_Controller {
                     "jo_id" => $this->input->post("jo_id"),
                     "status" => $this->input->post("status"),
                     "tonase"=>$this->input->post("tonase"),
-                    "tanggal_bongkar"=>$this->input->post("tgl_bongkar"),
-                    "biaya_lain"=>$this->input->post("biaya_lain"),
+                    "tanggal_bongkar"=>$this->change_tanggal($this->input->post("tgl_bongkar")),
+                    "tanggal_muat"=>$this->change_tanggal($this->input->post("tgl_muat")),
+                    "biaya_lain"=>str_replace(".","",$this->input->post("biaya_lain")),
+                    "user_closing"=>$_SESSION["user"],
                     "tonase"=>$this->input->post("tonase"),
                     "keterangan"=>$keterangan,
                     // "tanggal_bongkar"=>date('Y-m-d'),

@@ -30,7 +30,7 @@
 </div>
 
 </div>
-<div class="modal fade mt-4 py-5" id="update_jo" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<div class="modal fade mt-4 py-5" id="update_jo" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
@@ -53,8 +53,12 @@
                             </div>
                             <div class="konfirmasi" style="display:none">
                                 <div class="form-group">
+                                    <label for="tgl_muat" class="form-label">Tanggal Muat</label>
+                                    <input autocomplete="off" class="form-control" type="text" name="tgl_muat" id="tgl_muat" onclick="tanggal_berlaku(this)">    
+                                </div>
+                                <div class="form-group">
                                     <label for="tgl_bongkar" class="form-label">Tanggal Bongkar</label>
-                                    <input autocomplete="off" class="form-control" type="text" name="tgl_bongkar" id="tgl_bongkar" onkeyup="uang()">    
+                                    <input autocomplete="off" class="form-control" type="text" name="tgl_bongkar" id="tgl_bongkar" onclick="tanggal_berlaku(this)">    
                                 </div>
                                 <div class="form-group">
                                     <label for="tonase" class="form-label">Muatan akhir (Tonase)</label>
@@ -115,7 +119,7 @@
     function uang(){
         $( '#tonase' ).mask('000.000.000', {reverse: true});
         // $( '#harga' ).mask('000.000.000', {reverse: true});
-        // $( '#upah' ).mask('000.000.000', {reverse: true});
+        $( '#biaya_lain' ).mask('000.000.000', {reverse: true});
         $( '#bonus' ).mask('000.000.000', {reverse: true});
     }
     function status_jenis(){

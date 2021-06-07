@@ -339,19 +339,12 @@ class Model_Form extends CI_model
     //end fungsi acc
     //fungsi update
         public function update_jo_status($data,$supir,$mobil){
-            $child_jo = $this->db->get_where("skb_job_order",array("parent_Jo_id"=>$data["jo_id"]))->result_array();
-            for($i=0;$i<count($child_jo);$i++){
-                $this->db->set("status","Sampai Tujuan");
-                $this->db->set("tanggal_bongkar",$data["tanggal_bongkar"]);
-                $this->db->set("biaya_lain",$data["biaya_lain"]);
-                $this->db->set("tonase",$data["tonase"]);
-                $this->db->where("Jo_id",$child_jo[$i]["Jo_id"]);
-                $this->db->update("skb_job_order");
-            }
-
+            $this->db->set("tanggal_muat",$data["tanggal_muat"]);
+            $this->db->set("biaya_lain",$data["biaya_lain"]);
             $this->db->set("tonase",$data["tonase"]);
             $this->db->set("keterangan",$data["keterangan"]);
             $this->db->set("status",$data["status"]);
+            $this->db->set("user_closing",$data["user_closing"]."(".date("Y-m-d H:i:s").")"); 
             $this->db->set("tanggal_bongkar",$data["tanggal_bongkar"]);
             $this->db->where("Jo_id",$data["jo_id"]);
             $this->db->update("skb_job_order");

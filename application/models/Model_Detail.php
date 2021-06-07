@@ -122,7 +122,7 @@ class Model_Detail extends CI_model
             "pembayaran_upah_bon"=>$kasbon,
             "pembayaran_upah_total"=>$gaji_grand_total,
             "pembayaran_upah_tanggal"=>date("Y-m-d"),
-            "user_upah"=>$_SESSION["user"]
+            "user_upah"=>$_SESSION["user"]."(".date("Y-m-d H:i:s").")"
         );
         $this->db->insert("skb_pembayaran_upah",$data);
         //end insert pembayaran upah 
@@ -167,14 +167,8 @@ class Model_Detail extends CI_model
     }
 
     public function update_jo_dibatalkan($Jo_id,$supir_id,$mobil_no,$uj){
-        $child_jo = $this->db->get_where("skb_job_order",array("parent_Jo_id"=>$Jo_id))->result_array();
-        for($i=0;$i<count($child_jo);$i++){
-            $this->db->set("status","Dibatalkan");
-            $this->db->where("Jo_id",$child_jo[$i]["Jo_id"]);
-            $this->db->update("skb_job_order");
-        }
-
         $this->db->set("status","Dibatalkan");
+        $this->db->set("user_closing",$_SESSION["user"]."(".date("Y-m-d H:i:s").")");
         $this->db->where("Jo_id",$Jo_id);
         $this->db->update("skb_job_order");
 

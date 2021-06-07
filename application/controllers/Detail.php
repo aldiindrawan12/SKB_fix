@@ -31,6 +31,17 @@ class Detail extends CI_Controller {
                 redirect(base_url());
             }
             $data["jo"] = $this->model_home->getjobyid($Jo_id);
+            $data["slip_gaji"] = $this->model_detail->getpembayaranupahbyid($data["jo"]["pembayaran_upah_id"]);
+            if(count($data["slip_gaji"])==0){
+                $data["slip_gaji"] = array(
+                    array(
+                        "user_upah"=>"",
+                        "pembayaran_upah_id"=>"",
+                        "pembayaran_upah_tanggal"=>"",
+                    )
+                );
+            }
+            $data["invoice"] = $this->model_detail->getinvoicebyid($data["jo"]["invoice_id"]); 
             $data["customer"] = $this->model_home->getcustomerbyid($data["jo"]["customer_id"]);
             $data["mobil"] = $this->model_home->getmobilbyid($data["jo"]["mobil_no"]);
             $data["supir"] = $this->model_home->getsupirbyid($data["jo"]["supir_id"]);

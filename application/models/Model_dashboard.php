@@ -220,52 +220,83 @@ class Model_Dashboard extends CI_model
         }
     // end Function Invoice Jatuh Tempo
     //function-fiunction datatable JO
-        public function count_all_JO($status)
-        {
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
-            return $this->db->count_all_results("skb_job_order");
+    function getJoNoInvoice($postData){
+        $tanggal_now = date("Y-m-d");
+        $response = array();
+    
+        ## Read value
+        $draw = $postData['draw'];
+        $start = $postData['start']; // mulai display per page
+        $rowperpage = $postData['length']; // Rows display per page
+        $columnIndex = $postData['order'][0]['column']; // Column index untuk sorting
+        $columnName = $postData['columns'][$columnIndex]['data']; // Column name untuk sorting
+        $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
+        $searchValue = $postData['search']['value']; // Search value
+    
+        ## Search 
+        $search_arr = array();
+        $searchQuery = "";
+        if($searchValue != ''){
+            $search_arr[] = " (Jo_id like '%".$searchValue."%' or 
+                muatan like '%".$searchValue."%' or 
+                asal like '%".$searchValue."%' or 
+                tujuan like'%".$searchValue."%') ";
         }
+        $search_arr[] = " status='Sampai Tujuan' ";
+        $search_arr[] = " invoice_id='' ";
 
-        public function filter_JO($search, $order_field, $order_ascdesc,$status)
-        {
-            if($search!=""){
-                $this->db->like('JO_id', $search);
-                $this->db->or_like('customer_name', $search);
-                $this->db->or_like('muatan', $search);
-                $this->db->or_like('asal', $search);
-                $this->db->or_like('tujuan', $search);
-            }
-            $this->db->order_by($order_field, $order_ascdesc);
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
-            $hasil = $this->db->get('skb_job_order')->result_array();
-                $hasil_fix = [];
-                for($i=0;$i<count($hasil);$i++){
-                    if($hasil[$i]["status"]==$status && $hasil[$i]["invoice_id"]=="" && $hasil[$i]["parent_Jo_id"]!="x"){
-                        $hasil_fix[] = $hasil[$i];
-                    }
-                }
-                return $hasil_fix;
+        if(count($search_arr) > 0){ //gabung kondisi where
+            $searchQuery = implode(" and ",$search_arr);
         }
-
-        public function count_filter_JO($search,$status)
-        {   
-            if($search!=""){
-                $this->db->like('JO_id', $search);
-                $this->db->or_like('customer_name', $search);
-                $this->db->or_like('muatan', $search);
-                $this->db->or_like('asal', $search);
-                $this->db->or_like('tujuan', $search);
-            }
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
-            $hasil_data = $this->db->get('skb_job_order')->result_array();
-                $hasil_fix = 0;
-                for($i=0;$i<count($hasil_data);$i++){
-                    if($hasil_data[$i]["status"]==$status && $hasil_data[$i]["invoice_id"]=="" && $hasil_data[$i]["parent_Jo_id"]!="x"){
-                        $hasil_fix +=1;
-                    }
-                }
-                return $hasil_fix;
+    
+        ## Total record without filtering
+        $this->db->select('count(*) as allcount');
+        $records = $this->db->get('skb_job_order')->result();
+        $totalRecords = $records[0]->allcount;
+    
+        ## Total record with filtering
+        $this->db->select('count(*) as allcount');
+        if($searchQuery != ''){
+            $this->db->where($searchQuery);
         }
+        $records = $this->db->get('skb_job_order')->result();
+        $totalRecordwithFilter = $records[0]->allcount;
+    
+        ## data hasil record
+        $this->db->select('*');
+        $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
+        if($searchQuery != ''){
+            $this->db->where($searchQuery);
+        }
+        $this->db->order_by($columnName, $columnSortOrder);
+        $this->db->limit($rowperpage, $start);
+        $records = $this->db->get('skb_job_order')->result();
+    
+        $data = array();
+        $n = 1;
+        foreach($records as $record ){
+            $data[] = array(
+                "no"=>$n,
+                "Jo_id"=>$record->Jo_id,
+                "customer_name"=>$record->customer_name,
+                "muatan"=>$record->muatan,
+                "asal"=>$record->asal,
+                "tujuan"=>$record->tujuan,
+                "tanggal_surat"=>$record->tanggal_surat,
+                "status"=>$record->status
+            ); 
+            $n++;
+        }
+        ## Response
+        $response = array(
+        "draw" => intval($draw),
+        "iTotalRecords" => $totalRecords,
+        "iTotalDisplayRecords" => $totalRecordwithFilter,
+        "aaData" => $data
+        );
+    
+        return $response; 
+    }
     //akhir function-fiunction datatable JO
     public function generate_selisih_tanggal($tanggal){
         $tanggal_now = date("Y-m-d");

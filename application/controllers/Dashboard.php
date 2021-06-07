@@ -149,31 +149,8 @@ class Dashboard extends CI_Controller {
         echo json_encode($callback);
     }
     public function view_JO_no_invoice(){
-        $search = $_POST['search']['value'];
-        $status = "Sampai Tujuan";
-        $order_index = $_POST['order'][0]['column'];
-        $order_field = $_POST['columns'][$order_index]['data'];
-        $order_ascdesc = $_POST['order'][0]['dir'];
-        $sql_total = $this->model_dashboard->count_all_JO($status);
-        $sql_data = $this->model_dashboard->filter_JO($search,$order_field, $order_ascdesc,$status);
-        $sql_filter = $this->model_dashboard->count_filter_JO($search,$status);
-        $data = array();
-        for($i=0;$i<count($sql_data);$i++){
-            array_push($data, $sql_data[$i]);
-        }
-        $no = 1;
-        for($i=0;$i<count($data);$i++){
-            $data[$i]['no'] = $no;   
-            $no++;
-        }
-        $callback = array(
-            'draw' => $_POST['draw'],
-            'recordsTotal' => $sql_total,
-            'recordsFiltered' => $sql_filter,
-            'data' => $data
-        );
-
-        header('Content-Type: application/json');
-        echo json_encode($callback);
+        $postData = $this->input->post();
+        $data = $this->model_dashboard->getJoNoInvoice($postData);
+        echo json_encode($data);
     }
 }

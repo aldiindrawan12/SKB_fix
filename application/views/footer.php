@@ -892,9 +892,15 @@
                     },
                     {
                         "data": "uang_total",
+                        render: function(data, type, row) {
+                            return "Rp."+rupiah(data);
+                        }
                     },
                     {
                         "data": "sisa_uj",
+                        render: function(data, type, row) {
+                            return "Rp."+rupiah(data);
+                        }
                     },
                     {
                         "data": "status",

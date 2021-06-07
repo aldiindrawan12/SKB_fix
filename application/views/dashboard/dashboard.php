@@ -83,7 +83,9 @@
                                 <th width ="10%" class="text-center" scope="col">No</th>
                                 <th width ="10%" class="text-center" scope="col">No JO</th>
                                 <th width ="17%" class="text-center" scope="col">Customer</th>
-                                <th width ="15%" class="text-center" scope="col">Rute dan Muatan</th>
+                                <th width ="15%" class="text-center" scope="col">Muatan</th>
+                                <th width ="15%" class="text-center" scope="col">Asal</th>
+                                <th width ="15%" class="text-center" scope="col">Tujuan</th>
                                 <th width ="1%" class="text-center" scope="col">Tanggal</th>
                                 <th width ="25%" scope="col">Status</th>
                                 <th width ="5%" scope="col">Detail</th>
@@ -759,7 +761,10 @@
                     "type": "POST"
                 },
                 "deferRender": true,
-                "paging":false,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
                 "columns": [
                     {
                         "data": "Jo_id",
@@ -776,22 +781,13 @@
                         "data": "customer_name"
                     },
                     {
-                        "data": "paketan_id",
-                        className: 'text-center',
-                        "orderable": false,
-                        render: function(data, type, row) {
-                            if(data!=0){
-                                let html = "<a class='btn btn-light btn-detail-rute-paketan' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-pk='"+data+"'><i class='fas fa-eye'></i></a>";
-                                return html;
-                            }
-                            if(row["kosongan_id"]!=0){
-                                let html = "<a class='btn btn-light btn-detail-rute-paketan-kosong' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-pk='"+row["kosongan_id"]+"'><i class='fas fa-eye'></i></a>";
-                                return html;
-                            }else{
-                                let html = "<a class='btn btn-light btn-detail-rute-paketan-reguler' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-pk='"+row["Jo_id"]+"'><i class='fas fa-eye'></i></a>";
-                                return html;
-                            }
-                        } 
+                        "data": "muatan"
+                    },
+                    {
+                        "data": "asal"
+                    },
+                    {
+                        "data": "tujuan"
                     },
                     {
                         "data": "tanggal_surat",
@@ -803,16 +799,8 @@
                         "data": "status",
                         className: 'text-center',
                             render: function(data, type, row) {
-                                if (data == "Sampai Tujuan") {
                                     let html = "<span class='btn-sm btn-block btn-success'><i class='fa fa-fw fa-check mr-2'></i>" + data + "</span>";
                                     return html;
-                                } else if(data == "Dalam Perjalanan"){
-                                    let html = "<span class='btn-sm btn-block btn-warning'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>" + data + "</span>";
-                                    return html;
-                                }else{
-                                    let html = "<span class='btn-sm btn-block btn-danger'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>" + data + "</span>";
-                                    return html;
-                                }
                             }
                     },
                     {

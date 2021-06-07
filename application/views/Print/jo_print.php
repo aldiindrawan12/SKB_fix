@@ -130,13 +130,13 @@
                         <tbody>
                             <tr class="text-center">
                                 <td width="30%">Yang Menyerahkan,</td>
-                                <td width="30%">Mengetahui,</td>
+                                <td width="30%">Yang Membuat</td>
                                 <td width="30%" >Yang Menerima</td>
                             </tr>
                             <tr class="text-center" style="height:200px">
-                                <td width="30%">('''kasir''')</td>
-                                <td width="30%">(bag.operasional)</td>
-                                <td width="30%" >('''supir''')</td>
+                                <td width="30%">(---------------)</td>
+                                <td width="30%">(---------------)</td>
+                                <td width="30%" >(---------------)</td>
                             </tr>
                         </tbody>
                     </table>

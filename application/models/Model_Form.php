@@ -343,6 +343,7 @@ class Model_Form extends CI_model
             for($i=0;$i<count($child_jo);$i++){
                 $this->db->set("status","Sampai Tujuan");
                 $this->db->set("tanggal_bongkar",$data["tanggal_bongkar"]);
+                $this->db->set("biaya_lain",$data["biaya_lain"]);
                 $this->db->set("tonase",$data["tonase"]);
                 $this->db->where("Jo_id",$child_jo[$i]["Jo_id"]);
                 $this->db->update("skb_job_order");

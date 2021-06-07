@@ -28,18 +28,23 @@
                 <option value="Sampai Tujuan">Sampai Tujuan</option>
             </select>
         </div>
-        <div class="table-responsive thead-dark">
-            <table class="table table-bordered  " id="Table-Job-Order" width="100%" cellspacing="0">
+        <div class="table-responsive thead-dark small">
+            <table class="table table-bordered  small" id="Table-Job-Order" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th width ="10%" class="text-center" scope="col">No</th>
-                        <th width ="10%" class="text-center" scope="col">No JO</th>
-                        <th width ="17%" class="text-center" scope="col">Customer</th>
-                        <th width ="17%" class="text-center" scope="col">Tipe JO</th>
-                        <th width ="15%" class="text-center" scope="col">Rute dan Muatan</th>
-                        <th width ="1%" class="text-center" scope="col">Tanggal</th>
-                        <th width ="25%" scope="col">Status</th>
-                        <th width ="5%" scope="col">Detail</th>
+                        <th  class="text-center" scope="col">No JO</th>
+                        <th class="text-center" scope="col">Tanggal</th>
+                        <th class="text-center" scope="col">Driver</th>
+                        <th class="text-center" scope="col">No Pol</th>
+                        <th class="text-center" scope="col">Jenis Mobil</th>
+                        <th  class="text-center" scope="col">Customer</th>
+                        <th  class="text-center" scope="col">Muatan</th>
+                        <th  class="text-center" scope="col">Dari</th>
+                        <th  class="text-center" scope="col">Ke</th>
+                        <th class="text-center" scope="col">Total UJ</th>
+                        <th class="text-center" scope="col">Sisa UJ</th>
+                        <th  scope="col">Status</th>
+                        <th scope="col">Detail</th>
                     </tr>
                 </thead>
                 <tbody>

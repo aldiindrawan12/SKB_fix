@@ -843,17 +843,38 @@
                     }
                 },
                 "deferRender": true,
-                "paging":false,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
                 "columns": [
+                    // {
+                    //     "data": "Jo_id",
+                    //     render: function(data, type, row) {
+                    //         let html = row["no"];
+                    //         return html;
+                    //     }
+                    // },
                     {
                         "data": "Jo_id",
+                        className: 'text-center'
+                    },
+                    {
+                        "data": "tanggal_surat",
                         render: function(data, type, row) {
-                            let html = row["no"];
-                            return html;
+                            return change_tanggal(data);
                         }
                     },
                     {
-                        "data": "Jo_id",
+                        "data": "supir_name",
+                        className: 'text-center'
+                    },
+                    {
+                        "data": "mobil_no",
+                        className: 'text-center'
+                    },
+                    {
+                        "data": "mobil_jenis",
                         className: 'text-center'
                     },
                     {
@@ -861,40 +882,19 @@
                         className: 'text-center'
                     },
                     {
-                        "data": "Jo_id",
-                        render: function(data, type, row) {
-                            if(row["paketan_id"]!=0){
-                                let html = "Paketan";
-                                return html;
-                            }else{
-                                let html = "Reguler";
-                                return html;
-                            }
-                        } 
+                        "data": "muatan",
                     },
                     {
-                        "data": "paketan_id",
-                        className: 'text-center',
-                        "orderable": false,
-                        render: function(data, type, row) {
-                            if(data!=0){
-                                let html = "<a class='btn btn-light btn-detail-rute-paketan' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-pk='"+data+"'><i class='fas fa-eye'></i></a>";
-                                return html;
-                            }
-                            if(row["kosongan_id"]!=0){
-                                let html = "<a class='btn btn-light btn-detail-rute-paketan-kosong' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-pk='"+row["kosongan_id"]+"'><i class='fas fa-eye'></i></a>";
-                                return html;
-                            }else{
-                                let html = "<a class='btn btn-light btn-detail-rute-paketan-reguler' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-pk='"+row["Jo_id"]+"'><i class='fas fa-eye'></i></a>";
-                                return html;
-                            }
-                        } 
+                        "data": "asal",
                     },
                     {
-                        "data": "tanggal_surat",
-                        render: function(data, type, row) {
-                            return change_tanggal(data);
-                        }
+                        "data": "tujuan",
+                    },
+                    {
+                        "data": "uang_total",
+                    },
+                    {
+                        "data": "sisa_uj",
                     },
                     {
                         "data": "status",
@@ -1023,7 +1023,10 @@
                     "type": "POST"
                 },
                 "deferRender": true,
-                "paging":false,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
                 "columns": [
                     {
                         "data": "Jo_id",
@@ -1034,34 +1037,13 @@
                         className: 'text-center'
                     },
                     {
-                        "data": "Jo_id",
-                        render: function(data, type, row) {
-                            if(row["paketan_id"]!=0){
-                                let html = "Paketan";
-                                return html;
-                            }else{
-                                let html = "Reguler";
-                                return html;
-                            }
-                        } 
+                        "data": "muatan",
                     },
                     {
-                        "data": "paketan_id",
-                        className: 'text-center',
-                        "orderable": false,
-                        render: function(data, type, row) {
-                            if(data!=0){
-                                let html = "<a class='btn btn-light btn-detail-rute-paketan' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-pk='"+data+"'><i class='fas fa-eye'></i></a>";
-                                return html;
-                            }
-                            if(row["kosongan_id"]!=0){
-                                let html = "<a class='btn btn-light btn-detail-rute-paketan-kosong' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-pk='"+row["kosongan_id"]+"'><i class='fas fa-eye'></i></a>";
-                                return html;
-                            }else{
-                                let html = "<a class='btn btn-light btn-detail-rute-paketan-reguler' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-pk='"+row["Jo_id"]+"'><i class='fas fa-eye'></i></a>";
-                                return html;
-                            }
-                        } 
+                        "data": "asal",
+                    },
+                    {
+                        "data": "tujuan",
                     },
                     {
                         "data": "tanggal_surat",

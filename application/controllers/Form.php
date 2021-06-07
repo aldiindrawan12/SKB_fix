@@ -690,8 +690,11 @@ class Form extends CI_Controller {
                     "jo_id" => $this->input->post("jo_id"),
                     "status" => $this->input->post("status"),
                     "tonase"=>$this->input->post("tonase"),
+                    "tanggal_bongkar"=>$this->input->post("tgl_bongkar"),
+                    "biaya_lain"=>$this->input->post("biaya_lain"),
+                    "tonase"=>$this->input->post("tonase"),
                     "keterangan"=>$keterangan,
-                    "tanggal_bongkar"=>date('Y-m-d'),
+                    // "tanggal_bongkar"=>date('Y-m-d'),
                 );
                 $this->model_form->update_jo_status($data,$supir,$mobil);
                 redirect(base_url("index.php/home/konfirmasi_jo"));

@@ -49,51 +49,17 @@ class Home extends CI_Controller {
         }
 
         public function view_konfirmasi_JO(){
-            $search = $_POST['search']['value'];
-            $order_index = $_POST['order'][0]['column'];
-            $order_field = $_POST['columns'][$order_index]['data'];
-            $order_ascdesc = $_POST['order'][0]['dir'];
-            $sql_total = $this->model_home->count_all_konfirmasi_JO();
-            $sql_data = $this->model_home->filter_konfirmasi_JO($search,$order_field, $order_ascdesc);
-            $sql_filter = $this->model_home->count_filter_konfirmasi_JO($search);
-            $callback = array(
-                'draw' => $_POST['draw'],
-                'recordsTotal' => $sql_total,
-                'recordsFiltered' => $sql_filter,
-                'data' => $sql_data
-            );
-
-            header('Content-Type: application/json');
-            echo json_encode($callback);
+            $status = "Dalam Perjalanan";
+            $postData = $this->input->post();
+            $data = $this->model_home->getJOData($postData,$status);
+            echo json_encode($data);
         }
 
         public function view_JO(){
-            $search = $_POST['search']['value'];
             $status = $this->input->post('status_JO');
-            $order_index = $_POST['order'][0]['column'];
-            $order_field = $_POST['columns'][$order_index]['data'];
-            $order_ascdesc = $_POST['order'][0]['dir'];
-            $sql_total = $this->model_home->count_all_JO($status);
-            $sql_data = $this->model_home->filter_JO($search,$order_field, $order_ascdesc,$status);
-            $sql_filter = $this->model_home->count_filter_JO($search,$status);
-            $data = array();
-            for($i=0;$i<count($sql_data);$i++){
-                array_push($data, $sql_data[$i]);
-            }
-            $no = 1;
-            for($i=0;$i<count($data);$i++){
-                $data[$i]['no'] = $no;   
-                $no++;
-            }
-            $callback = array(
-                'draw' => $_POST['draw'],
-                'recordsTotal' => $sql_total,
-                'recordsFiltered' => $sql_filter,
-                'data' => $data
-            );
-
-            header('Content-Type: application/json');
-            echo json_encode($callback);
+            $postData = $this->input->post();
+            $data = $this->model_home->getJOData($postData,$status);
+            echo json_encode($data);
         }
         public function view_JO_report(){
             $tanggal = $this->input->post('tanggal');

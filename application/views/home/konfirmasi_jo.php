@@ -8,14 +8,15 @@
     </div>
     <!-- tabel konfirmasi JO -->
     <div class="card-body">
-        <div class="table-responsive thead-dark">
+        <div class="table-responsive thead-dark small">
             <table class="table table-bordered  " id="Table-Konfirmasi-Job-Order" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th width ="10%" class="text-center" scope="col">No JO</th>
                         <th width ="17%" class="text-center" scope="col">Customer</th>
-                        <th width ="17%" class="text-center" scope="col">Tipe JO</th>
-                        <th width ="15%" class="text-center" scope="col">Rute dan Muatan</th>
+                        <th width ="17%" class="text-center" scope="col">Muatan</th>
+                        <th width ="15%" class="text-center" scope="col">Asal</th>
+                        <th width ="15%" class="text-center" scope="col">Tujuan</th>
                         <th width ="1%" class="text-center" scope="col">Tanggal</th>
                         <th width ="25%" scope="col">Konfirmasi</th>
                     </tr>
@@ -52,8 +53,16 @@
                             </div>
                             <div class="konfirmasi" style="display:none">
                                 <div class="form-group">
+                                    <label for="tgl_bongkar" class="form-label">Tanggal Bongkar</label>
+                                    <input autocomplete="off" class="form-control" type="text" name="tgl_bongkar" id="tgl_bongkar" onkeyup="uang()">    
+                                </div>
+                                <div class="form-group">
                                     <label for="tonase" class="form-label">Muatan akhir (Tonase)</label>
                                     <input autocomplete="off" class="form-control" type="text" name="tonase" id="tonase" onkeyup="uang()">    
+                                </div>
+                                <div class="form-group">
+                                    <label for="biaya_lain" class="form-label">Biaya Lain</label>
+                                    <input autocomplete="off" class="form-control" type="text" name="biaya_lain" id="biaya_lain" onkeyup="uang()">    
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="Keterangan" class="form-label">Keterangan/Catatan Tambahan</label>

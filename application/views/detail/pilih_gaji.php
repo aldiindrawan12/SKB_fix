@@ -25,6 +25,33 @@
                 <form action="<?= base_url("index.php/detail/detail_penggajian/").$supir["supir_id"]?>" method="POST">
                     <input type="text" name="jo" id="jo" required hidden>
                     <div class="form-group row">
+                        <label for="tahun_kerja" class="col-form-label col-sm-7 font-weight-bold">Tahun Kerja</label>
+                        <div class="col-sm-5">
+                            <select name="tahun_kerja" value="DESC" id="tahun_kerja" class="form-control selectpicker mb-4" data-live-search="true" required onchange="set_pilih_jo(this)">
+                                <option class="font-w700" disabled="disabled" selected value="">Tahun Kerja</option>
+                                <option value="2021">2021</option>
+                                <option value="2022">2022</option>
+                                <option value="2023">2023</option>
+                                <option value="2024">2024</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="bulan_kerja" class="col-form-label col-sm-7 font-weight-bold">Bulan Kerja</label>
+                        <div class="col-sm-5">
+                            <select name="bulan_kerja" value="DESC" id="bulan_kerja" class="form-control selectpicker mb-4" data-live-search="true" required onchange="set_pilih_jo(this)">
+                                <option class="font-w700" disabled="disabled" selected value="">Bulan Kerja</option>
+                                <?php $bulan = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+                                for($i=0;$i<count($bulan);$i++){
+                                    if($i<10){?>
+                                        <option value="<?= "0".($i+1)?>"><?=$bulan[$i]?></option>
+                                    <?php }else{ ?>
+                                        <option value="<?= ($i+1)?>"><?=$bulan[$i]?></option>
+                                <?php }} ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         <label for="gaji_total" class="col-form-label col-sm-7 font-weight-bold">Total</label>
                         <div class="col-sm-5">
                             <input autocomplete="off" type="text" class="form-control" id="gaji_total" name="gaji_total" required readonly>
@@ -49,11 +76,12 @@
                         </div>
                     </div>
                     <div class="container-fluid px-0">
-                    <button type="submit" class="btn btn-success  float-right" onclick="cek_jo()">Selanjutnya</button>
+                        <button type="submit" class="btn btn-success  float-right" onclick="cek_jo()">Selanjutnya</button>
+                        <button class="btn btn-danger  float-right" onclick="reset_form()">Reset</button>
                     </div>
                 </form>
             </div>
-            <div class="table-responsive col-md-7">
+            <div class="table-responsive col-md-12">
                 <table class="table table-bordered table-striped" id="Table-Penggajian" width="100%" cellspacing="0">
                     <thead>
                         <tr>
@@ -254,5 +282,16 @@
             if($("#jo").val()==""){
                 alert("silakan pilih perjalanan supir");
             }
+        }
+    </script>
+    <script>
+        function set_pilih_jo(a){
+            alert($("#tahun_kerja").val());
+            alert($("#bulan_kerja").val());
+        }
+    </script>
+    <script>
+        function reset_form(){
+            location.reload();
         }
     </script>

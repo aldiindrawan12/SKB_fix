@@ -110,6 +110,7 @@ class Form extends CI_Controller {
                 "ppn"=>str_replace(".","",$this->input->post("invoice_ppn_nilai")),
                 "grand_total"=>str_replace(".","",$this->input->post("invoice_grand_total")),
                 "batas_pembayaran"=>$this->input->post("invoice_payment"),
+                "tanggal_batas_pembayaran"=>date('Y-m-d', strtotime('+'.$this->input->post("invoice_payment").' days', strtotime($this->change_tanggal($this->input->post("invoice_tgl"))))),
                 "invoice_keterangan"=>$this->input->post("invoice_keterangan"),
                 "status_bayar"=>"Belum Lunas",
                 "user_invoice"=>$_SESSION["user"]."(".date("Y-m-d H:i:s").")",

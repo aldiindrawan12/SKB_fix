@@ -365,7 +365,10 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                "paging":false,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
                 "columns": [
                     {
                         "data": "mobil_no",
@@ -418,7 +421,10 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                "paging":false,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
                 "columns": [
                     {
                         "data": "mobil_no",
@@ -470,7 +476,10 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                "paging":false,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
                 "columns": [
                     {
                         "data": "mobil_no"
@@ -517,7 +526,10 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                "paging":false,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
                 "columns": [
                     {   
                         "data": "mobil_no"
@@ -564,7 +576,10 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                "paging":false,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
                 "columns": [
                     {   
                         "data": "mobil_no"
@@ -600,7 +615,10 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                "paging":false,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
                 "columns": [
                     {   
                         "data": "supir_name"
@@ -641,7 +659,10 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                "paging":false,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
                 "columns": [
                     {   
                         "data": "supir_name"
@@ -691,7 +712,10 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                "paging":false,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
                 "columns": [
                     {
                         "data": "invoice_kode",

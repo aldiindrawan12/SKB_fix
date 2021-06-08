@@ -72,7 +72,7 @@
                     <tr>
                         <td width="35%">Batas Pembayaran</td>
                         <td width="5%">:</td>
-                        <td><?= $invoice[0]["batas_pembayaran"]?></td>
+                        <td><?= $invoice[0]["batas_pembayaran"]?> hari (<?= $invoice[0]["tanggal_batas_pembayaran"]?>)</td>
                     </tr>
                     <tr>
                         <td width="35%">Keterangan/Catatan</td>

@@ -147,7 +147,7 @@
                 "deferRender": true,
                 "aLengthMenu": [
                     [1, 3, 50, 100],
-                    [1, 3, 50, 100]
+                    [10, 30, 50, 100]
                 ],
                 "columns": [
                     {
@@ -506,7 +506,10 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                "paging":false,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
                 "columns": [
                     {
                         "data": "merk_id",
@@ -789,7 +792,10 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                "paging":false,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
                 "columns": [
                     {
                         "data": "merk_id",
@@ -2939,7 +2945,10 @@
                     }
                 },
                 "deferRender": true,
-                "paging":false,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
                 "columns": [
                     {
                         "data": "rute_id",
@@ -4130,7 +4139,10 @@
                     }
                 },
                 "deferRender": true,
-                "paging":false,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
                 "columns": [
                     {
                         "data": "customer_name"

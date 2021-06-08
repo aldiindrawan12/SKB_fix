@@ -407,7 +407,7 @@ class Model_Home extends CI_model
 
         public function filter_supir($asal,$search, $limit, $start, $order_field, $order_ascdesc)
         {
-            $this->db->like('supir_name', $search);
+            $this->db->where('(supir_name like "%'.$search.'%" or supir_panggilan like "%'.$search.'%")');
             $this->db->where("status_hapus","NO");
             if($asal!="viewsupir"){
                 $this->db->where("validasi","ACC");
@@ -419,7 +419,7 @@ class Model_Home extends CI_model
 
         public function count_filter_supir($asal,$search)
         {
-            $this->db->like('supir_name', $search);
+            $this->db->where('(supir_name like "%'.$search.'%" or supir_panggilan like "%'.$search.'%")');
             $this->db->where("status_hapus","NO");
             if($asal!="viewsupir"){
                 $this->db->where("validasi","ACC");

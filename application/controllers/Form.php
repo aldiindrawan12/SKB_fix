@@ -598,6 +598,32 @@ class Form extends CI_Controller {
         }
         public function update_supir(){
             $supir_id = $this->input->post("supir_id");
+            $data_supir = $this->model_form->getsupirname( $supir_id);
+            $config['upload_path'] = './assets/berkas/driver'; //letak folder file yang akan diupload
+            $config['allowed_types'] = 'jpg|png|img|jpeg'; //jenis file yang dapat diterima
+            $config['max_size'] = '2000'; // kb
+            $this->load->library('upload', $config); //deklarasi library upload (config)
+            if ($this->upload->do_upload('file_foto_update')) {
+                $this->upload->data();
+                $file_foto =  $this->upload->data('file_name');
+            }
+            if ($this->upload->do_upload('file_sim_update')) {
+                $this->upload->data();
+                $file_sim =  $this->upload->data('file_name');
+            }
+            if ($this->upload->do_upload('file_ktp_update')) {
+                $this->upload->data();
+                $file_ktp =  $this->upload->data('file_name');
+            }
+            if($file_foto == null){
+                $file_foto = $data_supir["file_foto"];
+            }
+            if($file_sim == null){
+                $file_sim = $data_supir["file_sim"];
+            }
+            if($file_ktp == null){
+                $file_ktp = $data_supir["file_ktp"];
+            }
             $data = array(
                 "supir_name" => $this->input->post("supir_name"),
                 "supir_panggilan" => $this->input->post("supir_panggilan_update"),
@@ -613,6 +639,9 @@ class Form extends CI_Controller {
                 "darurat_telp" => $this->input->post("darurat_telp_update"),
                 "darurat_referensi" => $this->input->post("darurat_referensi_update"),
                 "supir_keterangan" => $this->input->post("supir_keterangan_update"),
+                "file_foto"=>$file_foto,
+                "file_sim"=>$file_sim,
+                "file_ktp"=>$file_ktp
             );
             $this->model_form->update_supir($data,$supir_id);
             $this->session->set_flashdata('status-update-supir', 'Berhasil');

@@ -130,6 +130,39 @@ class Model_Form extends CI_model
         public function acceditsupir($supir_id,$validasi){
             $data_supir = $this->db->get_where("skb_supir",array("supir_id"=>$supir_id))->row_array();
             $temp_supir = json_decode($data_supir["temp_supir"],true);
+            if($validasi!="Ditolak"){
+                if($data_supir["file_foto"] != $temp_supir["file_foto"]){
+                    $path_foto = './assets/berkas/driver/'.$data_supir["file_foto"];
+                    chmod($path_foto, 0777);
+                    unlink($path_foto);
+                }
+                if($data_supir["file_sim"] != $temp_supir["file_sim"]){
+                    $path_sim = './assets/berkas/driver/'.$data_supir["file_sim"];
+                    chmod($path_sim, 0777);
+                    unlink($path_sim);
+                }
+                if($data_supir["file_ktp"] != $temp_supir["file_ktp"]){
+                    $path_ktp = './assets/berkas/driver/'.$data_supir["file_ktp"];
+                    chmod($path_ktp, 0777);
+                    unlink($path_ktp);
+                }
+            }else{
+                if($data_supir["file_foto"] != $temp_supir["file_foto"]){
+                    $path_foto = './assets/berkas/driver/'.$temp_supir["file_foto"];
+                    chmod($path_foto, 0777);
+                    unlink($path_foto);
+                }
+                if($data_supir["file_sim"] != $temp_supir["file_sim"]){
+                    $path_sim = './assets/berkas/driver/'.$temp_supir["file_sim"];
+                    chmod($path_sim, 0777);
+                    unlink($path_sim);
+                }
+                if($data_supir["file_ktp"] != $temp_supir["file_ktp"]){
+                    $path_ktp = './assets/berkas/driver/'.$temp_supir["file_ktp"];
+                    chmod($path_ktp, 0777);
+                    unlink($path_ktp);
+                }
+            }
             $this->db->set("temp_supir","");
             $this->db->set("validasi_edit","ACC");
             $this->db->where("supir_id",$supir_id);

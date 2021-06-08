@@ -70,22 +70,30 @@
                             <label for="mobil_no" class="form-label font-weight-bold">Plat No Mobil</label>
                             <input autocomplete="off" type="text" class="form-control" id="mobil_no" name="mobil_no" required>
                         </div>
+                        <div class="form-group ">
+                            <label for="mobil_no_rangka" class="form-label font-weight-bold">No Rangka</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_no_rangka" name="mobil_no_rangka">
+                        </div>                        
+                        <div class="form-group ">
+                            <label for="mobil_no_mesin" class="form-label font-weight-bold">No Mesin</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_no_mesin" name="mobil_no_mesin">
+                        </div>
                         <div class="form-group">
-                            <input autocomplete="off" type="text" class="form-control" id="merk_id" name="merk_id" required hidden>
+                            <input autocomplete="off" type="text" class="form-control" id="merk_id" name="merk_id" hidden>
                             <label for="mobil_merk" class="form-label font-weight-bold" onclick="merk()"">Merk</label>
-                            <input autocomplete="off" type="text" class="form-control" id="mobil_merk" name="mobil_merk" required readonly>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_merk" name="mobil_merk" readonly>
                         </div>
                         <div class="form-group">
                             <label for="mobil_type" class="form-label font-weight-bold">Type</label>
-                            <input autocomplete="off" type="text" class="form-control" id="mobil_type" name="mobil_type" required readonly>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_type" name="mobil_type" readonly>
                         </div>
                         <div class="form-group">
                             <label class="form-label font-weight-bold" for="mobil_jenis">Jenis Mobil</label>
-                            <input autocomplete="off" type="text" class="form-control" id="mobil_jenis" name="mobil_jenis" required readonly>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_jenis" name="mobil_jenis" readonly>
                         </div>
                         <div class="form-group">
                             <label class="form-label font-weight-bold" for="mobil_dump">Dump</label>
-                            <input autocomplete="off" type="text" class="form-control" id="mobil_dump" name="mobil_dump" required readonly>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_dump" name="mobil_dump" readonly>
                         </div>
                         <div class="form-group">
                             <label for="mobil_keterangan" class="form-label font-weight-bold">Keterangan</label>
@@ -95,49 +103,57 @@
                     <div class="col">
                         <div class="form-group">
                             <label for="mobil_tahun" class="form-label font-weight-bold">Tahun</label>
-                            <input autocomplete="off" type="text" class="form-control" id="mobil_tahun" name="mobil_tahun" required>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_tahun" name="mobil_tahun">
                         </div>
                         <div class="form-group">
-                            <label for="mobil_max_load" class="form-label font-weight-bold">Muatan Maksimal Mobil (Ton)</label>
-                            <input autocomplete="off" type="number" class="form-control" id="mobil_max_load" name="mobil_max_load" required>
+                            <label for="mobil_bpkb" class="form-label font-weight-bold">No BPKB</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_bpkb" name="mobil_bpkb">
                         </div>
                         <div class="form-group">
                             <label for="mobil_berlaku" class="form-label font-weight-bold">Tgl Pajak 1 Tahunan STNK</label>
-                            <input autocomplete="off" type="text" class="form-control" id="mobil_berlaku" name="mobil_berlaku" required onclick="tanggal_berlaku(this)">
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_berlaku" name="mobil_berlaku" onclick="tanggal_berlaku(this)">
                         </div>
                         <div class="form-group">
                             <label for="mobil_pajak" class="form-label font-weight-bold">Tgl Pajak 5 Tahunan STNK</label>
-                            <input autocomplete="off" type="text" class="form-control" id="mobil_pajak" name="mobil_pajak" required onclick="tanggal_berlaku(this)">
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_pajak" name="mobil_pajak" onclick="tanggal_berlaku(this)">
                         </div>
                         <div class="form-group">
                             <label for="mobil_stnk" class="form-label font-weight-bold">No STNK</label>
-                            <input autocomplete="off" type="text" class="form-control" id="mobil_stnk" name="mobil_stnk" required>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_stnk" name="mobil_stnk">
+                        </div>
+                        <div class="form-group">
+                            <label for="mobil_usaha" class="form-label font-weight-bold">No Usaha</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_usaha" name="mobil_usaha">
+                        </div>
+                        <div class="form-group">
+                            <label for="mobil_berlaku_usaha" class="form-label font-weight-bold">Berlaku No Usaha</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_berlaku_usaha" name="mobil_berlaku_usaha" onclick="tanggal_berlaku(this)">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-group">
                             <label for="mobil_kir" class="form-label font-weight-bold">No KIR</label>
-                            <input autocomplete="off" type="text" class="form-control" id="mobil_kir" name="mobil_kir" required>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_kir" name="mobil_kir">
                         </div>
                         <div class="form-group">
                             <label for="mobil_berlaku_kir" class="form-label font-weight-bold">Berlaku KIR</label>
-                            <input autocomplete="off" type="text" class="form-control" id="mobil_berlaku_kir" name="mobil_berlaku_kir" required onclick="tanggal_berlaku(this)">
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_berlaku_kir" name="mobil_berlaku_kir" onclick="tanggal_berlaku(this)">
                         </div>
                         <div class="form-group">
                             <label for="mobil_ijin_bongkar" class="form-label font-weight-bold">No Izin Bongkar</label>
-                            <input autocomplete="off" type="text" class="form-control" id="mobil_ijin_bongkar" name="mobil_ijin_bongkar" required >
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_ijin_bongkar" name="mobil_ijin_bongkar" >
                         </div>
                         <div class="form-group">
                             <label for="mobil_berlaku_ijin_bongkar" class="form-label font-weight-bold">Berlaku Izin Bongkar</label>
-                            <input autocomplete="off" type="text" class="form-control" id="mobil_berlaku_ijin_bongkar" name="mobil_berlaku_ijin_bongkar" required onclick="tanggal_berlaku(this)">
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_berlaku_ijin_bongkar" name="mobil_berlaku_ijin_bongkar" onclick="tanggal_berlaku(this)">
                         </div>
                         <div class="form-group">
-                            <label for="file_foto" class="form-label font-weight-bold">Foto STNK</label>
-                            <input type="file" class="form-control" id="file_foto" name="file_foto" required onchange="upload_foto(this)">
+                            <label for="file_foto" class="form-label font-weight-bold">Foto Mobil</label>
+                            <input type="file" class="form-control" id="file_foto" name="file_foto" onchange="upload_foto(this)">
                         </div>
                         <div class="form-group">
                             <label for="file_STNK" class="form-label font-weight-bold">Foto STNK</label>
-                            <input type="file" class="form-control" id="file_STNK" name="file_STNK" required onchange="upload_foto(this)"> 
+                            <input type="file" class="form-control" id="file_STNK" name="file_STNK" onchange="upload_foto(this)"> 
                         </div>
                     </div>
                 </div>  
@@ -155,7 +171,7 @@
 
 <!-- pop up update truck -->
 <div class="modal fade" id="popup-update-truck" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
-    <div class="modal-dialog modal-md" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
                 <h5 class="font-weight-bold">Update Kendaraan</h5>
@@ -164,46 +180,106 @@
                 </button>
             </div>
             <div class="font-size-sm m-3 text-justify">
-                <form action="<?= base_url("index.php/form/update_truck")?>" method="POST">     
-                        <div class="form-group">
-                            <input autocomplete="off" type="text" class="form-control" id="mobil_no_update" name="mobil_no_update" required readonly>
+                <?php echo form_open_multipart('form/update_truck'); ?>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group ">
+                            <label for="mobil_no_update" class="form-label font-weight-bold">Plat No Mobil</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_no_update" name="mobil_no_update" required>
+                        </div>
+                        <div class="form-group ">
+                            <label for="mobil_no_rangka_update" class="form-label font-weight-bold">No Rangka</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_no_rangka_update" name="mobil_no_rangka_update">
+                        </div>                        
+                        <div class="form-group ">
+                            <label for="mobil_no_mesin_update" class="form-label font-weight-bold">No Mesin</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_no_mesin_update" name="mobil_no_mesin_update">
                         </div>
                         <div class="form-group">
-                            <label for="mobil_stnk_update" class="form-label font-weight-bold">NO STNK</label>
-                            <input autocomplete="off" type="text" class="form-control" id="mobil_stnk_update" name="mobil_stnk_update" required>
+                            <input autocomplete="off" type="text" class="form-control" id="merk_id_update" name="merk_id_update" hidden>
+                            <label for="mobil_merk_update" class="form-label font-weight-bold" onclick="merk()"">Merk</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_merk_update" name="mobil_merk_update" readonly>
                         </div>
                         <div class="form-group">
-                            <label for="mobil_berlaku_update" class="form-label font-weight-bold">Tgl.STNK 1 Tahunan</label>
-                            <input autocomplete="off" type="text" class="form-control" id="mobil_berlaku_update" name="mobil_berlaku_update" required onclick="tanggal_berlaku(this)">
+                            <label for="mobil_type_update" class="form-label font-weight-bold">Type</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_type_update" name="mobil_type_update" readonly>
                         </div>
                         <div class="form-group">
-                            <label for="mobil_pajak_update" class="form-label font-weight-bold">Tgl.STNK 5 Tahunan</label>
-                            <input autocomplete="off" type="text" class="form-control" id="mobil_pajak_update" name="mobil_pajak_update" required onclick="tanggal_berlaku(this)">
+                            <label class="form-label font-weight-bold" for="mobil_jenis_update">Jenis Mobil</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_jenis_update" name="mobil_jenis_update" readonly>
                         </div>
                         <div class="form-group">
-                            <label for="mobil_kir_update" class="form-label font-weight-bold">KIR</label>
-                            <input autocomplete="off" type="text" class="form-control" id="mobil_kir_update" name="mobil_kir_update" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="mobil_berlaku_kir_update" class="form-label font-weight-bold">Tgl.Berlaku KIR</label>
-                            <input autocomplete="off" type="text" class="form-control" id="mobil_berlaku_kir_update" name="mobil_berlaku_kir_update" required onclick="tanggal_berlaku(this)">
-                        </div>
-                        <div class="form-group">
-                            <label for="mobil_ijin_bongkar_update" class="form-label font-weight-bold">Ijin Bongkar</label>
-                            <input autocomplete="off" type="text" class="form-control" id="mobil_ijin_bongkar_update" name="mobil_ijin_bongkar_update" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="mobil_berlaku_ijin_bongkar_update" class="form-label font-weight-bold">Tgl.Berlaku Izin Bongkar</label>
-                            <input autocomplete="off" type="text" class="form-control" id="mobil_berlaku_ijin_bongkar_update" name="mobil_berlaku_ijin_bongkar_update" required onclick="tanggal_berlaku(this)">
+                            <label class="form-label font-weight-bold" for="mobil_dump_update">Dump</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_dump_update" name="mobil_dump_update" readonly>
                         </div>
                         <div class="form-group">
                             <label for="mobil_keterangan_update" class="form-label font-weight-bold">Keterangan</label>
-                            <textarea class="form-control" id="mobil_keterangan_update" name="mobil_keterangan_update" rows="3"></textarea>
+                            <textarea class="form-control" name="mobil_keterangan_update" rows="3"></textarea>
                         </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-success mb-3 float-right">Simpan</button>
+                    </div>    
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="mobil_tahun_update" class="form-label font-weight-bold">Tahun</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_tahun_update" name="mobil_tahun_update">
+                        </div>
+                        <div class="form-group">
+                            <label for="mobil_bpkb_update" class="form-label font-weight-bold">No BPKB</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_bpkb_update" name="mobil_bpkb_update">
+                        </div>
+                        <div class="form-group">
+                            <label for="mobil_berlaku_update" class="form-label font-weight-bold">Tgl Pajak 1 Tahunan STNK</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_berlaku_update" name="mobil_berlaku_update" onclick="tanggal_berlaku(this)">
+                        </div>
+                        <div class="form-group">
+                            <label for="mobil_pajak_update" class="form-label font-weight-bold">Tgl Pajak 5 Tahunan STNK</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_pajak_update" name="mobil_pajak_update" onclick="tanggal_berlaku(this)">
+                        </div>
+                        <div class="form-group">
+                            <label for="mobil_stnk_update" class="form-label font-weight-bold">No STNK</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_stnk_update" name="mobil_stnk_update">
+                        </div>
+                        <div class="form-group">
+                            <label for="mobil_usaha_update" class="form-label font-weight-bold">No Usaha</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_usaha_update" name="mobil_usaha_update">
+                        </div>
+                        <div class="form-group">
+                            <label for="mobil_berlaku_usaha_update" class="form-label font-weight-bold">Berlaku No Usaha</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_berlaku_usaha_update" name="mobil_berlaku_usaha_update" onclick="tanggal_berlaku(this)">
+                        </div>
                     </div>
-                </form>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="mobil_kir_update" class="form-label font-weight-bold">No KIR</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_kir_update" name="mobil_kir_update">
+                        </div>
+                        <div class="form-group">
+                            <label for="mobil_berlaku_kir_update" class="form-label font-weight-bold">Berlaku KIR</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_berlaku_kir_update" name="mobil_berlaku_kir_update" onclick="tanggal_berlaku(this)">
+                        </div>
+                        <div class="form-group">
+                            <label for="mobil_ijin_bongkar_update" class="form-label font-weight-bold">No Izin Bongkar</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_ijin_bongkar_update" name="mobil_ijin_bongkar_update" >
+                        </div>
+                        <div class="form-group">
+                            <label for="mobil_berlaku_ijin_bongkar_update" class="form-label font-weight-bold">Berlaku Izin Bongkar</label>
+                            <input autocomplete="off" type="text" class="form-control" id="mobil_berlaku_ijin_bongkar_update" name="mobil_berlaku_ijin_bongkar_update" onclick="tanggal_berlaku(this)">
+                        </div>
+                        <div class="form-group">
+                            <label for="file_foto_update" class="form-label font-weight-bold">Foto Mobil</label>
+                            <input type="file" class="form-control" id="file_foto_update" name="file_foto_update" onchange="upload_foto(this)">
+                        </div>
+                        <div class="form-group">
+                            <label for="file_STNK_update" class="form-label font-weight-bold">Foto STNK</label>
+                            <input type="file" class="form-control" id="file_STNK_update" name="file_STNK_update" onchange="upload_foto(this)"> 
+                        </div>
+                    </div>
+                </div>  
+            </div>
+            <div class="form-group mt-1 mr-4 ">
+                <button type="submit" class="btn btn-success float-right">Simpan</button>
+                <button type="reset" class="btn btn-outline-danger mr-3 float-md-right" onclick="reset_form()">Reset</button>
+            </div>
+            <?php echo form_close();?>
             </div>
         </div>
     </div>
@@ -227,6 +303,14 @@
                             <tr>
                                 <td class="font-weight-bold" width= "35%">No Polisi</td>
                                 <td name="mobil_no"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" width= "35%">No Rangka</td>
+                                <td name="mobil_no_rangka"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" width= "35%">No Mesin</td>
+                                <td name="mobil_no_mesin"></td>
                             </tr>
                             <tr>
                                 <td class="font-weight-bold">Jenis Kendaraan</td>
@@ -271,6 +355,10 @@
                     <table class="table table-bordered">
                         <tbody>
                             <tr>
+                                <td class="font-weight-bold">No BPKB</td>
+                                <td name="mobil_bpkb"></td>
+                            </tr>
+                            <tr>
                                 <td class="font-weight-bold" width= "35%">No STNK</td>
                                 <td name="mobil_stnk"></td>
                             </tr>
@@ -289,6 +377,14 @@
                             <tr>
                                 <td class="font-weight-bold">Berlaku Izin Bongkar</td>
                                 <td name="mobil_berlaku_ijin_bongkar"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">No Mobil Usaha</td>
+                                <td name="mobil_usaha"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Berlaku No Mobil Usaha</td>
+                                <td name="mobil_berlaku_usaha"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -326,6 +422,14 @@
                             <tr>
                                 <td class="font-weight-bold" width= "35%">No Polisi</td>
                                 <td name="mobil_no_edit"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" width= "35%">No Rangka</td>
+                                <td name="mobil_no_rangka_edit"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" width= "35%">No Mesin</td>
+                                <td name="mobil_no_mesin_edit"></td>
                             </tr>
                             <tr>
                                 <td class="font-weight-bold">Jenis Kendaraan</td>
@@ -370,6 +474,10 @@
                     <table class="table table-bordered">
                         <tbody>
                             <tr>
+                                <td class="font-weight-bold">No BPKB</td>
+                                <td name="mobil_bpkb_edit"></td>
+                            </tr>
+                            <tr>
                                 <td class="font-weight-bold" width= "35%">No STNK</td>
                                 <td name="mobil_stnk_edit"></td>
                             </tr>
@@ -389,6 +497,14 @@
                                 <td class="font-weight-bold">Berlaku Izin Bongkar</td>
                                 <td name="mobil_berlaku_ijin_bongkar_edit"></td>
                             </tr>
+                            <tr>
+                                <td class="font-weight-bold">No Mobil Usaha</td>
+                                <td name="mobil_usaha_edit"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold">Berlaku No Mobil Usaha</td>
+                                <td name="mobil_berlaku_usaha_edit"></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -396,7 +512,7 @@
                     <img src="" alt="foto mobil" id="file_foto_edit" class="img-thumbnail " style="width:630px;height:900;">
                 </div>      
                 <div class="container w-10 text-center">
-                    <img src="" alt="foto stnk" id="file_stnk_edit " class="img-thumbnail"style="width:630px;height:900;">
+                    <img src="" alt="foto stnk" id="file_stnk_edit" class="img-thumbnail"style="width:630px;height:900;">
                 </div>
                 <a class="btn btn-success ACC" onclick='acc_edit_truck(this)'>ACC</a>
                 <a class="btn btn-danger Tolak" onclick='tolak_edit_truck(this)'>Tolak</a>

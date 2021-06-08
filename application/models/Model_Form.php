@@ -217,6 +217,7 @@ class Model_Form extends CI_model
             }else{
                 $this->db->set("status_hapus","YES");
             }
+            $this->db->set("mobil_no",rand(0,999999)."/".$mobil_no);
             $this->db->set("validasi_delete","ACC");
             $this->db->where("mobil_no",$mobil_no);
             $this->db->update("skb_mobil");
@@ -224,6 +225,29 @@ class Model_Form extends CI_model
         public function accedittruck($mobil_no,$validasi){
             $data_mobil = $this->db->get_where("skb_mobil",array("mobil_no"=>$mobil_no))->row_array();
             $temp_mobil = json_decode($data_mobil["temp_mobil"],true);
+            if($validasi!="Ditolak"){
+                if($data_mobil["file_foto"] != $temp_mobil["file_foto"]){
+                    $path_foto = './assets/berkas/kendaraan/'.$data_mobil["file_foto"];
+                    chmod($path_foto, 0777);
+                    unlink($path_foto);
+                }
+                if($data_mobil["file_stnk"] != $temp_mobil["file_stnk"]){
+                    $path_stnk = './assets/berkas/kendaraan/'.$data_mobil["file_stnk"];
+                    chmod($path_stnk, 0777);
+                    unlink($path_stnk);
+                }
+            }else{
+                if($data_mobil["file_foto"] != $temp_mobil["file_foto"]){
+                    $path_foto = './assets/berkas/kendaraan/'.$temp_mobil["file_foto"];
+                    chmod($path_foto, 0777);
+                    unlink($path_foto);
+                }
+                if($data_mobil["file_stnk"] != $temp_mobil["file_stnk"]){
+                    $path_stnk = './assets/berkas/kendaraan/'.$temp_mobil["file_stnk"];
+                    chmod($path_stnk, 0777);
+                    unlink($path_stnk);
+                }
+            }
             $this->db->set("temp_mobil","");
             $this->db->set("validasi_edit","ACC");
             $this->db->where("mobil_no",$mobil_no);

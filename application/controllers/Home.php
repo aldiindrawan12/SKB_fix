@@ -319,34 +319,9 @@ class Home extends CI_Controller {
             $this->load->view('footer');
         }
         public function view_truck(){
-            $search = $_POST['search']['value'];
-            // $limit = $_POST['length'];
-            // $start = $_POST['start'];
-            // $status = $this->input->post('searchStatus');
-            $order_index = $_POST['order'][0]['column'];
-            $order_field = $_POST['columns'][$order_index]['data'];
-            $order_ascdesc = $_POST['order'][0]['dir'];
-            $sql_total = $this->model_home->count_all_truck();
-            $sql_data = $this->model_home->filter_truck($search, $order_field, $order_ascdesc);
-            $sql_filter = $this->model_home->count_filter_truck($search);
-            $data = array();
-            for($i=0;$i<count($sql_data);$i++){
-                array_push($data, $sql_data[$i]);
-            }
-            $no = 1;
-            for($i=0;$i<count($data);$i++){
-                $data[$i]['no'] = $no;   
-                $no++;
-            }
-            $callback = array(
-                'draw' => $_POST['draw'],
-                'recordsTotal' => $sql_total,
-                'recordsFiltered' => $sql_filter,
-                'data' => $data
-            );
-
-            header('Content-Type: application/json');
-            echo json_encode($callback);
+            $postData = $this->input->post();
+            $data = $this->model_home->getTruckData($postData);
+            echo json_encode($data);
         }
     //end fungsi untuk truk
     

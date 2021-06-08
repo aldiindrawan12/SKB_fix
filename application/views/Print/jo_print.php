@@ -57,7 +57,8 @@
             <?php }?>
             <hr>
         </div>
-        <div class="card-body">
+        <div class="card-body"> 
+                <p ><strong><?= $data["user"]?></strong></p>
                 <div class="table-responsive">
                     <table class="" id="" width="100%" cellspacing="0">
                         <tbody>

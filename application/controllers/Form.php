@@ -11,8 +11,12 @@ class Form extends CI_Controller {
     }
 
     public function change_tanggal($tanggal){
-        $tanggal_array = explode("-",$tanggal);
-        return $tanggal_array[2]."-".$tanggal_array[1]."-".$tanggal_array[0];
+        if($tanggal==""){
+            return "";
+        }else{
+            $tanggal_array = explode("-",$tanggal);
+            return $tanggal_array[2]."-".$tanggal_array[1]."-".$tanggal_array[0];   
+        }
     }
     
     // fungsi view form
@@ -435,6 +439,8 @@ class Form extends CI_Controller {
             $config['upload_path'] = './assets/berkas/kendaraan'; //letak folder file yang akan diupload
             $config['allowed_types'] = 'jpg|png|img|jpeg'; //jenis file yang dapat diterima
             $config['max_size'] = '2000'; // kb
+            $file_stnk="";
+            $file_foto="";
             $this->load->library('upload', $config); //deklarasi library upload (config)
             if ($this->upload->do_upload('file_foto')) {
                 $this->upload->data();
@@ -448,7 +454,11 @@ class Form extends CI_Controller {
             $data=array(
                 "mobil_no"=>$this->input->post("mobil_no"),
                 "mobil_jenis"=>$this->input->post("mobil_jenis"),
-                "mobil_max_load"=>$this->input->post("mobil_max_load"),
+                "mobil_no_rangka"=>$this->input->post("mobil_no_rangka"),
+                "mobil_no_mesin"=>$this->input->post("mobil_no_mesin"),
+                "mobil_usaha"=>$this->input->post("mobil_usaha"),
+                "mobil_berlaku_usaha"=>$this->change_tanggal($this->input->post("mobil_berlaku_usaha")),
+                "mobil_bpkb"=>$this->input->post("mobil_bpkb"),
                 "status_jalan"=>"Tidak Jalan",
                 "status_hapus"=>"NO",
                 "mobil_keterangan"=>$this->input->post("mobil_keterangan"),
@@ -609,6 +619,25 @@ class Form extends CI_Controller {
             redirect(base_url("index.php/home/penggajian"));
         }
         public function update_truck(){
+            $data_mobil = $this->model_detail->gettruckbyid( $this->input->post("mobil_no_update"));
+            $config['upload_path'] = './assets/berkas/kendaraan'; //letak folder file yang akan diupload
+            $config['allowed_types'] = 'jpg|png|img|jpeg'; //jenis file yang dapat diterima
+            $config['max_size'] = '2000'; // kb
+            $this->load->library('upload', $config); //deklarasi library upload (config)
+            if ($this->upload->do_upload('file_foto_update')) {
+                $this->upload->data();
+                $file_foto =  $this->upload->data('file_name');   
+            }
+            if ($this->upload->do_upload('file_STNK_update')) {
+                $this->upload->data();
+                $file_stnk =  $this->upload->data('file_name');
+            }
+            if($file_foto == null){
+                $file_foto = $data_mobil["file_foto"];
+            }
+            if($file_stnk == null){
+                $file_stnk = $data_mobil["file_stnk"];
+            }
             $data = array(
                 "mobil_no" => $this->input->post("mobil_no_update"),
                 "mobil_stnk" => $this->input->post("mobil_stnk_update"),
@@ -618,7 +647,20 @@ class Form extends CI_Controller {
                 "mobil_berlaku_kir" => $this->change_tanggal($this->input->post("mobil_berlaku_kir_update")),
                 "mobil_ijin_bongkar" => $this->input->post("mobil_ijin_bongkar_update"),
                 "mobil_berlaku_ijin_bongkar" => $this->change_tanggal($this->input->post("mobil_berlaku_ijin_bongkar_update")),
-                "mobil_keterangan" => $this->input->post("mobil_keterangan_update")
+                "mobil_keterangan" => $this->input->post("mobil_keterangan_update"),
+                "mobil_jenis"=>$this->input->post("mobil_jenis_update"),
+                "mobil_no_rangka"=>$this->input->post("mobil_no_rangka_update"),
+                "mobil_no_mesin"=>$this->input->post("mobil_no_mesin_update"),
+                "mobil_usaha"=>$this->input->post("mobil_usaha_update"),
+                "mobil_berlaku_usaha"=>$this->change_tanggal($this->input->post("mobil_berlaku_usaha_update")),
+                "mobil_bpkb"=>$this->input->post("mobil_bpkb_update"),
+                "merk_id"=>$this->input->post("merk_id_update"),
+                "mobil_merk"=>$this->input->post("mobil_merk_update"),
+                "mobil_type"=>$this->input->post("mobil_type_update"),
+                "mobil_dump"=>$this->input->post("mobil_dump_update"),
+                "mobil_tahun"=>$this->input->post("mobil_tahun_update"),
+                "file_foto"=>$file_foto,
+                "file_stnk"=>$file_stnk
             );
             $this->model_form->update_truck($data);
             $this->session->set_flashdata('status-update-truck', 'Berhasil');

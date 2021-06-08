@@ -145,7 +145,10 @@
                     "type": "POST",
                 },
                 "deferRender": true,
-                "paging":false,
+                "aLengthMenu": [
+                    [1, 3, 50, 100],
+                    [1, 3, 50, 100]
+                ],
                 "columns": [
                     {
                         "data": "mobil_no",
@@ -274,6 +277,11 @@
                             success: function(data) { //jika ambil data sukses
                             // alert(data);
                                 $('td[name="mobil_no"]').text(data["mobil_no"]); //set value
+                                $('td[name="mobil_no_rangka"]').text(data["mobil_no_rangka"]); //set value
+                                $('td[name="mobil_no_mesin"]').text(data["mobil_no_mesin"]); //set value
+                                $('td[name="mobil_bpkb"]').text(data["mobil_bpkb"]); //set value
+                                $('td[name="mobil_usaha"]').text(data["mobil_usaha"]); //set value
+                                $('td[name="mobil_berlaku_usaha"]').text(data["mobil_berlaku_usaha"]); //set value
                                 $('td[name="mobil_jenis"]').text(data["mobil_jenis"]); //set value
                                 $('td[name="status_jalan"]').text(data["status_jalan"]); //set value
                                 $('td[name="mobil_max_load"]').text(data["mobil_max_load"]); //set value
@@ -307,6 +315,17 @@
                             },
                             success: function(data) { //jika ambil data sukses
                                 $('#mobil_no_update').val(data["mobil_no"]); //set value
+                                $('#mobil_no_rangka_update').val(data["mobil_no_rangka"]); //set value
+                                $('#mobil_no_mesin_update').val(data["mobil_no_mesin"]); //set value
+                                $('#mobil_merk_update').val(data["mobil_merk"]); //set value
+                                $('#mobil_type_update').val(data["mobil_type"]); //set value
+                                $('#mobil_jenis_update').val(data["mobil_jenis"]); //set value
+                                $('#mobil_dump_update').val(data["mobil_dump"]); //set value
+                                $('#mobil_tahun_update').val(data["mobil_tahun"]); //set value
+                                $('#mobil_bpkb_update').val(data["mobil_bpkb"]); //set value
+                                $('#mobil_usaha_update').val(data["mobil_usaha"]); //set value
+                                $('#mobil_berlaku_usaha_update').val(data["mobil_berlaku_usaha"]); //set value
+
                                 $('#mobil_stnk_update').val(data["mobil_stnk"]); //set value
                                 $('#mobil_berlaku_update').val(change_tanggal(data["mobil_berlaku"])); //set value
                                 $('#mobil_pajak_update').val(change_tanggal(data["mobil_pajak"])); //set value
@@ -370,6 +389,11 @@
                             success: function(data) { //jika ambil data sukses
                                 data_temp = JSON.parse(data["temp_mobil"])
                                 $('td[name="mobil_no_edit"]').text(data["mobil_no"]); //set value
+                                $('td[name="mobil_no_rangka_edit"]').text(data_temp["mobil_no_rangka"]); //set value
+                                $('td[name="mobil_no_mesin_edit"]').text(data_temp["mobil_no_mesin"]); //set value
+                                $('td[name="mobil_bpkb_edit"]').text(data_temp["mobil_bpkb"]); //set value
+                                $('td[name="mobil_usaha_edit"]').text(data_temp["mobil_usaha"]); //set value
+                                $('td[name="mobil_berlaku_usaha_edit"]').text(change_tanggal(data_temp["mobil_berlaku_usaha"])); //set value
                                 $('td[name="mobil_jenis_edit"]').text(data["mobil_jenis"]); //set value
                                 $('td[name="status_jalan_edit"]').text(data["status_jalan"]); //set value
                                 $('td[name="mobil_max_load_edit"]').text(data["mobil_max_load"]); //set value
@@ -380,8 +404,8 @@
                                 $('td[name="mobil_tahun_edit"]').text(data["mobil_tahun"]); //set value
                                 $('td[name="mobil_berlaku_edit"]').text(change_tanggal(data_temp["mobil_berlaku"])); //set value
                                 $('td[name="mobil_pajak_edit"]').text(change_tanggal(data_temp["mobil_pajak"])); //set value
-                                $('#file_foto_edit').attr('src','<?= base_url("assets/berkas/kendaraan/")?>'+data["file_foto"]);
-                                $('#file_stnk_edit').attr('src','<?= base_url("assets/berkas/kendaraan/")?>'+data["file_stnk"]);
+                                $('#file_foto_edit').attr('src','<?= base_url("assets/berkas/kendaraan/")?>'+data_temp["file_foto"]);
+                                $('#file_stnk_edit').attr('src','<?= base_url("assets/berkas/kendaraan/")?>'+data_temp["file_stnk"]);
                                 $('td[name="mobil_stnk_edit"]').text(data_temp["mobil_stnk"]); //set value
                                 $('td[name="mobil_berlaku_kir_edit"]').text(change_tanggal(data_temp["mobil_berlaku_kir"])); //set value
                                 $('td[name="mobil_kir_edit"]').text(data_temp["mobil_kir"]); //set value
@@ -4831,9 +4855,13 @@
 
     <script>
         function change_tanggal(data){
-            var data_tanggal = data.split("-");
-            var tanggal = data_tanggal[2]+"-"+data_tanggal[1]+"-"+data_tanggal[0];
-            return tanggal;
+            if(data==""){
+                return "";
+            }else{
+                var data_tanggal = data.split("-");
+                var tanggal = data_tanggal[2]+"-"+data_tanggal[1]+"-"+data_tanggal[0];
+                return tanggal;
+            }
         }
     </script>
     

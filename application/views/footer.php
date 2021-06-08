@@ -1558,7 +1558,7 @@
                 "serverSide": true,
                 "ordering": true,
                 "order": [
-                    [3, 'desc']
+                    [0, 'desc']
                 ],
                 "ajax": {
                     "url": "<?php echo base_url('index.php/home/view_bon/') ?>",
@@ -1588,9 +1588,8 @@
                         "data": "bon_tanggal",
                         className: 'text-center',
                         render: function(data, type, row) {
-                            var date_time = data.split(" ");
-                            var data_tanggal = date_time[0].split("-");
-                            var tanggal = data_tanggal[2]+"-"+data_tanggal[1]+"-"+data_tanggal[0]+" "+date_time[1];
+                            var data_tanggal = data.split("-");
+                            var tanggal = data_tanggal[2]+"-"+data_tanggal[1]+"-"+data_tanggal[0];
                             return tanggal;
                         }
                     },
@@ -2441,7 +2440,7 @@
                         className: 'text-center font-weight-bold',
                         "orderable": false,
                         render: function(data, type, row) {
-                            let html = "<a class='btn btn-light' href='<?= base_url('index.php/detail/detail_report_bon/"+data+"')?>'><i class='fas fa-eye'></i></a>";
+                            let html = "<a class='btn btn-light' href='<?= base_url('index.php/detail/detail_report_bon/"+data+"/detail')?>'><i class='fas fa-eye'></i></a>";
                             return html;
                         }
                     }

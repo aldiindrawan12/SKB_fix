@@ -30,10 +30,14 @@
                         </select>
                     </div>
                     <div class="col-md-4 col-md-offset-4 mb-4">
-                    <label for="Nominal" class="form-label font-weight-bold">Nominal</label>
+                        <label for="Nominal" class="form-label font-weight-bold">Nominal</label>
                         <input autocomplete="off" type="text" class="form-control" id="Nominal" name="Nominal" required onkeyup="nominal()">
                     </div>
-                    <div class="col-md-8 mb-4 ">
+                    <div class="col-md-4 col-md-offset-4 mb-4">
+                        <label for="Tanggal" class="form-label font-weight-bold">Tanggal</label>
+                        <input autocomplete="off" type="text" class="form-control" id="Tanggal" name="Tanggal" required onclick="tanggal_berlaku(this)">
+                    </div>
+                    <div class="col-md-4 mb-4 ">
                         <label for="Keterangan" class="form-label font-weight-bold">Keterangan/Catatan</label>
                         <textarea class="form-control" name="Keterangan" id="Keterangan" rows="3"></textarea>
                     </div>

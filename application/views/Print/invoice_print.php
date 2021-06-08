@@ -1,8 +1,36 @@
 <?php
     function change_tanggal($data){
-        $data_tanggal = explode('-', $data);
-        $tanggal = $data_tanggal[2].'-'.$data_tanggal[1].'-'.$data_tanggal[0];
-        return $tanggal;
+        if($data==""){
+            return "";
+        }else{
+            $data_tanggal = explode('-', $data);
+            $tanggal = $data_tanggal[2].'-'.$data_tanggal[1].'-'.$data_tanggal[0];
+            return $tanggal;
+        }
+    }
+    function generate_terbilang($uang){
+        $uang = abs($uang);
+        $huruf = array("", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "sebelas");
+        $temp = "";
+
+        if ($uang < 12) {
+            $temp = " ". $huruf[$uang];
+        } else if ($uang <20) {
+            $temp = generate_terbilang($uang - 10). " Belas";
+        } else if ($uang < 100) {
+            $temp = generate_terbilang($uang/10)." Puluh". generate_terbilang($uang % 10);
+        } else if ($uang < 200) {
+            $temp = " Seratus" . generate_terbilang($uang - 100);
+        } else if ($uang < 1000) {
+            $temp = generate_terbilang($uang/100) . " Ratus" . generate_terbilang($uang % 100);
+        } else if ($uang < 2000) {
+            $temp = " Seribu" . generate_terbilang($uang - 1000);
+        } else if ($uang < 1000000) {
+            $temp = generate_terbilang($uang/1000) . " Ribu" . generate_terbilang($uang % 1000);
+        } else if ($uang < 1000000000) {
+            $temp = generate_terbilang($uang/1000000) . " Juta" . generate_terbilang($uang % 1000000);
+        }     
+        return $temp;
     }
 ?>
 <!DOCTYPE html>
@@ -59,52 +87,55 @@
                 <table class="table table-bordered small" id="Table-Jo" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th class="text-center" width="10%" scope="col">Tgl JO</th>
-                            <th class="text-center" width="13%" scope="col">Tgl Bngkr</th>
+                            <th class="text-center" width="25%" scope="col">No</th>
+                            <th class="text-center" width="13%" scope="col">Tgl Muat</th>
+                            <th class="text-center" width="13%" scope="col">Tgl Bongkar</th>
                             <th class="text-center" width="10%" scope="col">Mobil</th>
-                            <th class="text-center" width="10%" scope="col">rute</th>
-                            <th class="text-center" width="8%" scope="col">Total Muatan</th>
-                            <th class="text-center" width="10%" scope="col">Jumlah</th>
+                            <th class="text-center" width="25%" scope="col">Muatan</th>
+                            <th class="text-center" width="25%" scope="col">Dari</th>
+                            <th class="text-center" width="25%" scope="col">Ke</th>
+                            <th class="text-center" width="10%" scope="col">Total Muatan</th>
+                            <th class="text-center" width="10%" scope="col">Jumlah Tagihan</th>
                         </tr>
                     </thead>
                     <tbody>
-                    <?php foreach($invoice as $value){?>
+                    <?php $n=1;
+                        foreach($invoice as $value){?>
                         <tr>
-                            <td><?= change_tanggal($value["tanggal_surat"]) ?></td>
-                            <td><?= change_tanggal($value["tanggal_bongkar"])   ?></td>
+                            <td><?= $n?></td>
+                            <td><?= change_tanggal($value["tanggal_muat"])?></td>
+                            <td><?= change_tanggal($value["tanggal_bongkar"])?></td>
                             <td><?= $value["mobil_no"]?></td>
-                            <?php $n=0;?>
-                            <?php 
-                            for($i=0;$i<count($kosongan);$i++){
-                                if($value["kosongan_id"]!="0"){
-                                    if($kosongan[$i]["kosongan_id"] == $value["kosongan_id"]){
-                                        $n++?>
-                                        <td>
-                                            <?= $kosongan[$i]["kosongan_dari"]."=>".$kosongan[$i]["kosongan_ke"]."=>"?>kosongan<br>
-                                            <?= $value["asal"]."=>".$value["tujuan"]."=>".$value["muatan"]?><br>
-                                        </td>    
-                                <?php break;}
-                                }
-                            }?>
-                            <?php if($n==0){?>
-                                <td><?= $value["asal"]."=>".$value["tujuan"]."=>".$value["muatan"]?></td>
-                            <?php }?>
+                            <td><?= $value["muatan"]?></td>
+                            <td><?= $value["asal"]?></td>
+                            <td><?= $value["tujuan"]?></td>
                             <td><?= $value["tonase"]?></td>
                             <td>Rp.<?= number_format($value["tagihan"],2,',','.')?></td>
                         </tr>
-                    <?php }?>
+                    <?php $n++;}?>
                         <tr>
-                            <td colspan=5>Total</td>
+                            <td colspan=8>Total</td>
                             <td>Rp.<?= number_format($invoice[0]["total"],2,',','.')?></td>
                         </tr>
-                        <tr>
-                            <td colspan=5>PPN 10%</td>
-                            <td>Rp.<?= number_format($invoice[0]["ppn"],2,',','.')?></td>
-                        </tr>
-                        <tr>
-                            <td colspan=5>Jumlah</td>
-                            <td>Rp.<?= number_format($invoice[0]["grand_total"],2,',','.')?></td>
-                        </tr>
+                        <?php if($invoice[0]["ppn"]!=0){?>
+                            <tr>
+                                <td colspan=8>PPN 10%</td>
+                                <td>Rp.<?= number_format($invoice[0]["ppn"],2,',','.')?></td>
+                            </tr>
+                            <tr>
+                                <td colspan=8>Jumlah</td>
+                                <td>Rp.<?= number_format($invoice[0]["grand_total"],2,',','.')?></td>
+                            </tr>
+                        <?php }?>
+                        <?php if($invoice[0]["ppn"]!=0){?>
+                            <tr>
+                                <td colspan=9>Terbilang = #<?= generate_terbilang($invoice[0]["grand_total"])?> Rupiah #</td>
+                            </tr>
+                        <?php }else{?>
+                            <tr>
+                                <td colspan=9>Terbilang = #<?= generate_terbilang($invoice[0]["total"])?> Rupiah #</td>
+                            </tr>
+                        <?php }?>
                     </tbody>
                 </table>
                 <table class="small">

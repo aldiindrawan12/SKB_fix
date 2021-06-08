@@ -61,19 +61,19 @@
                             </div>
                             <div class="form-group">
                                 <label for="customer_alamat" class="form-label font-weight-bold">Alamat</label>
-                                <input autocomplete="off" type="text" class="form-control" id="customer_alamat" name="customer_alamat" required>
+                                <input autocomplete="off" type="text" class="form-control" id="customer_alamat" name="customer_alamat">
                             </div>
                             <div class="form-group">
                                 <label for="customer_kontak_person" class="form-label font-weight-bold">Contact Person</label>
-                                <input autocomplete="off" type="text" class="form-control" id="customer_kontak_person" name="customer_kontak_person" required>
+                                <input autocomplete="off" type="text" class="form-control" id="customer_kontak_person" name="customer_kontak_person">
                             </div>
                             <div class="form-group">
                                 <label for="customer_telp" class="form-label font-weight-bold">Telp./HP</label>
-                                <input autocomplete="off" type="text" class="form-control" id="customer_telp" name="customer_telp" required>
+                                <input autocomplete="off" type="text" class="form-control" id="customer_telp" name="customer_telp">
                             </div>
                             <div class="form-group">
                                 <label for="customer_keterangan" class="form-label font-weight-bold">Keterangan</label>
-                                <input autocomplete="off" type="text" class="form-control" id="customer_keterangan" name="customer_keterangan" required>
+                                <input autocomplete="off" type="text" class="form-control" id="customer_keterangan" name="customer_keterangan">
                             </div>
                         </div>
                         <!-- <div class="col table-bordered ml-2 rounded">
@@ -130,19 +130,19 @@
                             </div>
                             <div class="form-group">
                                 <label for="customer_alamat_update" class="form-label font-weight-bold">Alamat</label>
-                                <input autocomplete="off" type="text" class="form-control" id="customer_alamat_update" name="customer_alamat_update" required>
+                                <input autocomplete="off" type="text" class="form-control" id="customer_alamat_update" name="customer_alamat_update">
                             </div>
                             <div class="form-group">
                                 <label for="customer_kontak_person_update" class="form-label font-weight-bold">Contact Person</label>
-                                <input autocomplete="off" type="text" class="form-control" id="customer_kontak_person_update" name="customer_kontak_person_update" required>
+                                <input autocomplete="off" type="text" class="form-control" id="customer_kontak_person_update" name="customer_kontak_person_update">
                             </div>
                             <div class="form-group">
                                 <label for="customer_telp_update" class="form-label font-weight-bold">Telp./HP</label>
-                                <input autocomplete="off" type="text" class="form-control" id="customer_telp_update" name="customer_telp_update" required>
+                                <input autocomplete="off" type="text" class="form-control" id="customer_telp_update" name="customer_telp_update">
                             </div>
                             <div class="form-group">
                                 <label for="customer_keterangan_update" class="form-label font-weight-bold">Keterangan</label>
-                                <input autocomplete="off" type="text" class="form-control" id="customer_keterangan_update" name="customer_keterangan_update" required>
+                                <input autocomplete="off" type="text" class="form-control" id="customer_keterangan_update" name="customer_keterangan_update">
                             </div>
                     </div>
                     <!-- <div class="col table-bordered ml-2">

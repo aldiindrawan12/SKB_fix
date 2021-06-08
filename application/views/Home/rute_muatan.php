@@ -79,8 +79,11 @@
                         <div class="col border rounded mr-3 ml-3 mb-3 mt-3">
                             <div class="form-group">
                                 <label for="jenis_mobil" class="form-label font-weight-bold ">Jenis Mobil</label> 
-                                <select name="jenis_mobil" id="jenis_mobil" class="form-control mb-4" required>
+                                <select name="jenis_mobil" id="jenis_mobil" class="form-control mb-4 selectpicker" data-live-search="true" required>
                                     <option class="font-w700" disabled="disabled" selected value="">Jenis Mobil</option>
+                                    <?php foreach($mobil as $value){?>
+                                        <option value="<?=$value["mobil_jenis"]?>"><?=$value["mobil_jenis"]?></option>
+                                    <?php } ?>
                                 </select>
                             </div>
                             <small class="font-weight-bold">Detail Uang Jalan (Uj)</small>
@@ -135,7 +138,7 @@
                             </div> -->
                             <div class="form-group">
                                 <label for="rute_keterangan" class="form-label font-weight-bold">Keterangan</label>
-                                <input autocomplete="off" type="text" class="form-control" id="rute_keterangan" name="rute_keterangan" required>
+                                <textarea name="rute_keterangan" id="rute_keterangan" rows="5" class="form-control"></textarea>
                             </div>
                         </div>
                     </div>
@@ -408,26 +411,26 @@
     }
 </script>
 <script>
-    function mobil(){
-        $('#jenis_mobil').find('option').remove().end(); //reset option select
-        var isi_muatan = [];
-        $.ajax({
-            type: "GET",
-            url: "<?php echo base_url('index.php/form/getallmobil/') ?>",
-            dataType: "JSON",
-            success: function(data) {
-                if(data.length==0){
-                    $('#jenis_mobil').append('<option class="font-w700" disabled="disabled" selected value="">Kosong</option>'); 
-                }else{
-                    $('#jenis_mobil').append('<option class="font-w700" disabled="disabled" selected value="">Jenis Mobil</option>'); 
-                    for(i=0;i<data.length;i++){
-                        if(!isi_muatan.includes(data[i]["mobil_jenis"])){
-                            $('#jenis_mobil').append('<option value="'+data[i]["mobil_jenis"]+'">'+data[i]["mobil_jenis"]+'</option>'); 
-                            isi_muatan.push(data[i]["mobil_jenis"]);
-                        }
-                    }
-                }
-            }
-        });
-    }
+    // function mobil(){
+    //     $('#jenis_mobil').find('option').remove().end(); //reset option select
+    //     var isi_muatan = [];
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "<?php echo base_url('index.php/form/getallmobil/') ?>",
+    //         dataType: "JSON",
+    //         success: function(data) {
+    //             if(data.length==0){
+    //                 $('#jenis_mobil').append('<option class="font-w700" disabled="disabled" selected value="">Kosong</option>'); 
+    //             }else{
+    //                 $('#jenis_mobil').append('<option class="font-w700" disabled="disabled" selected value="">Jenis Mobil</option>'); 
+    //                 for(i=0;i<data.length;i++){
+    //                     if(!isi_muatan.includes(data[i]["mobil_jenis"])){
+    //                         $('#jenis_mobil').append('<option value="'+data[i]["mobil_jenis"]+'">'+data[i]["mobil_jenis"]+'</option>'); 
+    //                         isi_muatan.push(data[i]["mobil_jenis"]);
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     });
+    // }
 </script>

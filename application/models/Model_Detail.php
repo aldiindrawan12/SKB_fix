@@ -2,6 +2,15 @@
 // error_reporting(0);
 class Model_Detail extends CI_model
 {
+    public function change_tanggal($tanggal){
+        if($tanggal==""){
+            return "";
+        }else{
+            $tanggal_array = explode("-",$tanggal);
+            return $tanggal_array[2]."-".$tanggal_array[1]."-".$tanggal_array[0];   
+        }
+    }
+
     public function updatestatusjo($data,$supir,$mobil){ //update status jo saat sampai tujuan
         $this->db->set("tonase",$data["tonase"]);
         $this->db->set("bonus",$data["bonus"]);
@@ -33,6 +42,14 @@ class Model_Detail extends CI_model
     }
 
     public function getbonbysupir($supir_id){ //bon by Supir
+        $this->db->join("skb_supir","skb_supir.supir_id=skb_bon.supir_id","left");
+        return $this->db->get_where("skb_bon",array("skb_bon.supir_id"=>$supir_id))->result_array();
+    }
+
+    public function getbonbysupirperiode($supir_id,$tanggal1,$tanggal2){ //bon by Supir
+
+
+        $this->db->where("bon_tanggal BETWEEN CAST('".$this->change_tanggal($tanggal1)."' AS DATE) AND CAST('".$this->change_tanggal($tanggal2)."' AS DATE)");
         $this->db->join("skb_supir","skb_supir.supir_id=skb_bon.supir_id","left");
         return $this->db->get_where("skb_bon",array("skb_bon.supir_id"=>$supir_id))->result_array();
     }
@@ -142,6 +159,7 @@ class Model_Detail extends CI_model
                     "bon_jenis"=>"Potong Gaji",
                     "bon_nominal"=>$kasbon,
                     "bon_keterangan"=>"Potongan Kasbon Dari Pembayaran Gaji",
+                    "pembayaran_upah_id"=>max($isi_pembayaran_upah_id)+1,
                     "bon_tanggal"=>date("Y-m-d H:i:s")
                 );
                 $this->db->insert("skb_bon",$data);

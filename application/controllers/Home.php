@@ -523,7 +523,7 @@ class Home extends CI_Controller {
             }
             $data["page"] = "Satuan_page";
             $data["collapse_group"] = "Master_Data";
-            // $data["satuan"] = $this->model_home->getallsatuan();
+            $data["mobil"] = $this->model_form->getallmobil();
             $data["customer"] = $this->model_home->getcustomer();
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             if(json_decode($data["akun_akses"]["akses"])[0]==0){

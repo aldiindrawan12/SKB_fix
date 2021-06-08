@@ -74,18 +74,6 @@ class Detail extends CI_Controller {
                 redirect(base_url());
             }
             $data["invoice"] = $this->model_detail->getinvoicebyid(str_replace("%20"," ",$invoice_id));
-            $paketan_id = [];
-            $kosongan_id = [];
-            for($i=0;$i<count($data["invoice"]);$i++){
-                $data_paketan = $this->model_form->getpaketanbyid($data["invoice"][$i]["paketan_id"]);
-                $paketan_id[] = $data_paketan;
-                $data_kosongan = $this->model_print->getkosonganbyid($data["invoice"][$i]["kosongan_id"]);
-                if($data_kosongan){
-                    $kosongan_id[] = $data_kosongan;    
-                }
-            }
-            $data["paketan"] = $paketan_id;
-            $data["kosongan"] = $kosongan_id;
             $data["customer"] = $this->model_home->getcustomerbyid($data["invoice"][0]["customer_id"]);
             $data["page"] = "Invoice_Customer_page";
             $data["collapse_group"] = "Perintah_Kerja";
@@ -196,14 +184,27 @@ class Detail extends CI_Controller {
     //end fungsi untuk Detail bon
     
     //fungsi untuk Detail report bon
-        function detail_report_bon($supir_id)
+        function detail_report_bon($supir_id,$asal)
         {
             if(!$_SESSION["user"]){
     			$this->session->set_flashdata('status-login', 'False');
                 redirect(base_url());
             }
-            $data["transaksi_bon"] = $this->model_detail->getbonbysupir($supir_id);
+            if($asal=="periode"){
+                $data["tanggal1"] = $this->input->post("tanggal1");
+                $data["tanggal2"] = $this->input->post("tanggal2");
+                if($data["tanggal1"]==""){
+                    $data["transaksi_bon"] = $this->model_detail->getbonbysupir($supir_id);                
+                }else{
+                    $data["transaksi_bon"] = $this->model_detail->getbonbysupirperiode($supir_id,$data["tanggal1"],$data["tanggal2"]);
+                }
+            }else{
+                $data["tanggal1"] = "";
+                $data["tanggal2"] = "";
+                $data["transaksi_bon"] = $this->model_detail->getbonbysupir($supir_id);                
+            }
             $data["supir"] = $this->model_home->getsupirbyid($supir_id)["supir_name"];
+            $data["supir_id"] = $this->model_home->getsupirbyid($supir_id)["supir_id"];
             $data["page"] = "Laporan_Bon_page";
             $data["collapse_group"] = "Laporan";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);

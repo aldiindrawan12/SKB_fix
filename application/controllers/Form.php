@@ -339,7 +339,7 @@ class Form extends CI_Controller {
                 "bon_jenis"=>$this->input->post("Jenis"),
                 "bon_nominal"=>str_replace(".","",$this->input->post("Nominal")),
                 "bon_keterangan"=>$this->input->post("Keterangan"),
-                "bon_tanggal"=>date("Y-m-d H:i:s"),
+                "bon_tanggal"=>$this->change_tanggal($this->input->post("Tanggal")),
                 "user"=>$_SESSION["user"]
             );
             $data["bon_id"] = max($isi_bon_id)+1;

@@ -1,8 +1,7 @@
 <?php
     function change_tanggal($data){
-        $date_time = explode(' ', $data);
-        $data_tanggal = explode('-', $date_time[0]);
-        $tanggal = $data_tanggal[2].'-'.$data_tanggal[1].'-'.$data_tanggal[0]." ".$date_time[1];
+        $data_tanggal = explode('-', $data);
+        $tanggal = $data_tanggal[2].'-'.$data_tanggal[1].'-'.$data_tanggal[0];
         return $tanggal;
     }
 ?>

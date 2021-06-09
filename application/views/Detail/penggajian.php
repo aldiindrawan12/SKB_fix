@@ -5,6 +5,13 @@
         return $tanggal;
     }
     $data_jo_id = explode(",",$pilih_jo["jo_id"]);
+    if($bulan=='x'){
+        $bulan=0;
+    }
+    $data_bulan = ["x","Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+    if($tahun=="x"){
+        $tahun=date("Y");
+    }
 ?>
 <!-- tampilan detail penggajian supir -->
 <div class="container small">
@@ -16,6 +23,11 @@
             <table class="w-50">
                 <tbody>
                     <tr>
+                        <td width="25%">Tanggal</td>
+                        <td width="5%">:</td>
+                        <td><?= date("d-m-Y")?></td>
+                    </tr>
+                    <tr>
                         <td width="25%">Id Supir</td>
                         <td width="5%">:</td>
                         <td><?= $supir["supir_id"]?></td>
@@ -24,6 +36,11 @@
                         <td width="25%">Nama Supir</td>
                         <td width="5%">:</td>
                         <td><?= $supir["supir_name"]?></td>
+                    </tr>
+                    <tr>
+                        <td width="25%">Bulan Kerja</td>
+                        <td width="5%">:</td>
+                        <td><?= $data_bulan[$bulan]."-".$tahun?></td>
                     </tr>
                 </tbody>
             </table>
@@ -34,59 +51,54 @@
                     <thead>
                         <tr>
                             <th class="text-center" width="10%" scope="col">JO ID</th>
-                            <th class="text-center" width="10%" scope="col">Tgl Keluar</th>
+                            <th class="text-center" width="10%" scope="col">Tgl Muat</th>
                             <th class="text-center" width="13%" scope="col">Tgl Bongkar</th>
+                            <th class="text-center" width="13%" scope="col">Customer</th>
                             <th class="text-center" width="10%" scope="col">Muatan</th>
                             <th class="text-center" width="10%" scope="col">Dari</th>
                             <th class="text-center" width="10%" scope="col">Ke</th>
                             <th class="text-center" width="10%" scope="col">Uang Jalan</th>
-                            <th class="text-center" width="8%" scope="col">Total Muatan</th>
+                            <th class="text-center" width="8%" scope="col">Tonase</th>
+                            <th class="text-center" width="8%" scope="col">Biaya Lain</th>
                             <th class="text-center" width="10%" scope="col">Upah</th>
                         </tr>
                     </thead>
                     <tbody>
                     <?php $uang_jalan = 0;
                     foreach($jo as $value){ 
-                        if($value["uang_kosongan"]!=""){
-                            $uang_jalan += $value["uang_jalan"]+$value["uang_kosongan"];   
-                        }else{
                             $uang_jalan += $value["uang_jalan"];
-                        }
                         ?>
                         <tr>
                             <td><?= $value["Jo_id"]?></td>
-                            <td><?= change_tanggal($value["tanggal_surat"])?></td>
+                            <td><?= change_tanggal($value["tanggal_muat"])?></td>
                             <td><?= change_tanggal($value["tanggal_bongkar"])?></td>
+                            <td><?= $value["customer_name"]?></td>
                             <td><?= $value["muatan"]?></td>
                             <td><?= $value["asal"]?></td>
                             <td><?= $value["tujuan"]?></td>
-                            <?php
-                                if($value["uang_kosongan"]!=""){
-                                    echo "<td>Rp.".number_format($value["uang_jalan"]+$value["uang_kosongan"],2,',','.')."</td>";
-                                }else{
-                                    echo "<td>Rp.".number_format($value["uang_jalan"],2,',','.')."</td>";
-                                }
-                            ?>
+                            <td>Rp.<?= number_format($value["uang_jalan"],2,',','.')?></td>;
                             <td><?= $value["tonase"]?></td>
+                            <td>Rp.<?= number_format($value["biaya_lain"],2,',','.')?></td>;
                             <td>Rp.<?= number_format($value["upah"],2,',','.')?></td>
                         </tr>
                     <?php } ?>
                         <tr>
-                            <td colspan=6>Total</td>
+                            <td colspan=7>Total</td>
                             <td>Rp.<?= number_format($uang_jalan,2,',','.')?></td>
+                            <td></td>
                             <td></td>
                             <td>Rp.<?=$pilih_jo["gaji_total"]?></td>
                         </tr>
                         <tr>
-                            <td colspan=8>Potong Kasbon</td>
+                            <td colspan=10>Potong Kasbon</td>
                             <td>Rp.<?=$pilih_jo["kasbon"]?></td>
                         </tr>
                         <tr>
-                            <td colspan=8>Bonus</td>
+                            <td colspan=10>Bonus</td>
                             <td>Rp.<?=$pilih_jo["bonus"]?></td>
                         </tr>
                         <tr>
-                            <td colspan=8>Grand Total Upah</td>
+                            <td colspan=10>Grand Total Upah</td>
                             <td id="grand_total">Rp.<?=$pilih_jo["gaji_grand_total"]?></td>
                         </tr>
                     </tbody>
@@ -100,9 +112,9 @@
 
 <div class="container">
     <button onclick="print_rincian()" class="btn btn-success">Cetak Rincian Gaji</button>
-    <button onclick="isi_rekening()" class="btn btn-primary">Cetak Memo Transfer</button>
-    <button onclick="print_memo_tunai()" class="btn btn-primary">Cetak Memo Tunai</button>
-    <button onclick="selesai()" class="btn btn-primary">Selesai</button>
+    <!-- <button onclick="isi_rekening()" class="btn btn-primary">Cetak Memo Transfer</button>
+    <button onclick="print_memo_tunai()" class="btn btn-primary">Cetak Memo Tunai</button> -->
+    <button onclick="selesai()" class="btn btn-primary">Simpan</button>
 </div>
 <hr>
 <!-- form rekening supir -->
@@ -127,6 +139,27 @@
     </div>
 </div>
 <!-- end form rekening supir -->
+
+<div class="container" style="display:none" id="footer-surat">
+    <div class="table-responsive">
+        <table width="100%">
+            <tbody>
+                <tr class="text-center">
+                    <td width="25%">Dibuat Oleh,</td>
+                    <td width="25%">Disetujui Oleh,</td>
+                    <td width="25%">Diserahkan Oleh,</td>
+                    <td width="25%" >Diterima Oleh</td>
+                </tr>
+                <tr class="text-center" style="height:200px">
+                    <td width="25%">(...............)</td>
+                    <td width="25%">(...............)</td>
+                    <td width="25%">(...............)</td>
+                    <td width="25%">(...............)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
 <!-- memo tf -->
     <div class="container" style="display:none">
@@ -304,7 +337,7 @@
     }
     function print_rincian(){
         var restorepage = document.body.innerHTML;
-        var printcontent = document.getElementById('identitas').innerHTML+document.getElementById('rincian').innerHTML;
+        var printcontent = document.getElementById('identitas').innerHTML+document.getElementById('rincian').innerHTML+document.getElementById('footer-surat').innerHTML;
         document.body.innerHTML = printcontent;
         window.print();
         document.body.innerHTML = restorepage;
@@ -314,20 +347,9 @@
         <?php for($i=0;$i<count($data_jo_id);$i++){?>
             data_jo_id.push("<?= $data_jo_id[$i]?>");
         <?php }?>
-        Swal.fire({
-                title: 'konfirmasi Pembayaran Gaji',
-                text:'Apakah Pembayaran Gaji Sudah Selesai?',
-                showDenyButton: true,
-                denyButtonText: `Batal`,
-                confirmButtonText: 'Ya,Selesai',
-                denyButtonColor: '#808080',
-                confirmButtonColor: 'green',
-                icon: "question",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
+        $.ajax({
                         type: "GET",
-                        url: "<?php echo base_url('index.php/detail/update_upah') ?>",
+                        url: "<?php echo base_url('index.php/detail/insert_upah') ?>",
                         dataType: "text",
                         data: {
                             gaji_grand_total:"<?= $pilih_jo["gaji_grand_total"]?>",
@@ -336,12 +358,12 @@
                             kasbon:"<?= $pilih_jo["kasbon"]?>",
                             bonus:"<?= $pilih_jo["bonus"]?>",
                             jo_id:data_jo_id,
+                            bulan_kerja:"<?= $data_bulan[$bulan]."-".$tahun?>"
                         },
                         success: function(data) {
                             window.location = "<?= base_url("index.php/home/gaji")?>";
                         }
-                    });      
-                }
-            })
+                    }); 
+        
     }
 </script>

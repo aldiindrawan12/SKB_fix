@@ -37,12 +37,10 @@
                     <thead>
                         <tr>
                             <th class="text-center" width="5%" scope="col">No Pembayaran</th>
-                            <th class="text-center" width="15%" scope="col">Operator</th>
-                            <th class="text-center" width="10%" scope="col">Tgl Pembayaran</th>
-                            <th class="text-center" width="13%" scope="col">Nominal</th>
-                            <th class="text-center" width="10%" scope="col">Bonus</th>
-                            <th class="text-center" width="10%" scope="col">Potong Kasbon</th>
-                            <th class="text-center" width="10%" scope="col">Total</th>
+                            <th class="text-center" width="10%" scope="col">Tgl Slip Gaji</th>
+                            <th class="text-center" width="10%" scope="col">Bulan Kerja</th>
+                            <th class="text-center" width="10%" scope="col">Total Gaji</th>
+                            <th class="text-center" width="10%" scope="col">Status</th>
                             <th class="text-center" width="10%" scope="col">Detail</th>
                         </tr>
                     </thead>
@@ -59,23 +57,18 @@
                         ?>
                         <tr>
                             <td><?= $value["pembayaran_upah_id"]?></td>
-                            <td><?= $value["user_upah"]?></td>
                             <td><?= change_tanggal($value["pembayaran_upah_tanggal"])?></td>
-                            <td>Rp.<?= number_format($value["pembayaran_upah_nominal"],2,",",".")?></td>
-                            <td>Rp.<?= number_format($value["pembayaran_upah_bonus"],2,",",".")?></td>
-                            <td>Rp.<?= number_format($value["pembayaran_upah_bon"],2,",",".")?></td>
+                            <td><?= $value["bulan_kerja"]?></td>
                             <td>Rp.<?= number_format($value["pembayaran_upah_nominal"]+$value["pembayaran_upah_bonus"]-
                             $value["pembayaran_upah_bon"],2,',','.') ?></td>
+                            <?php if($value["pembayaran_upah_status"]=="Lunas"){?>
+                                <td class="text-success"><?= $value["pembayaran_upah_status"]?></td>
+                            <?php }else{ ?>
+                                <td class="text-danger"><?= $value["pembayaran_upah_status"]?></td>
+                            <?php }?>
                             <td class="text-center"><a class='btn btn-light' href='<?= base_url('index.php/detail/detail_penggajian_report_pembayaran/'.$supir["supir_id"]."/".$value["pembayaran_upah_id"])?>'><i class='fas fa-eye'></i></a></td>
                         </tr>
                     <?php } ?>
-                        <tr>
-                            <td colspan=3>Grand Total</td>
-                            <td>Rp.<?= number_format($nominal,2,',','.')?></td>
-                            <td>Rp.<?= number_format($bonus,2,',','.')?></td>
-                            <td>Rp.<?= number_format($bon,2,',','.')?></td>
-                            <td>Rp.<?= number_format($grand,2,',','.')?></td>
-                        </tr>
                     </tbody>
                 </table>
             </div>

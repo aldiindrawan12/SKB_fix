@@ -91,9 +91,34 @@ class Model_Detail extends CI_model
         return $this->db->get_where("skb_job_order",array("skb_job_order.supir_id"=>$supir_id,"skb_job_order.status"=>"Sampai Tujuan"))->result_array();
     }
 
+    public function getjobbysupirbulan($supir_id,$tahun,$bulan){ //JO by supir
+        if($bulan=="x" && $tahun=="x"){
+            $bulan_kerja = "";
+        }else if($bulan=="x"){
+            $bulan_kerja = "'".$tahun."%'";
+            $this->db->where("tanggal_muat like ".$bulan_kerja);
+        }else if($tahun=="x"){
+            $bulan_kerja = "'%-".$bulan."-%'";
+            $this->db->where("tanggal_muat like ".$bulan_kerja);
+        }else{
+            $bulan_kerja = "'".$tahun."-".$bulan."-%'";
+            $this->db->where("tanggal_muat like ".$bulan_kerja);
+        }
+        $this->db->where("pembayaran_upah_id","0");
+        $this->db->where("upah!=","0");
+        $this->db->join("skb_customer","skb_customer.customer_id=skb_job_order.customer_id","left");
+        $this->db->join("skb_supir","skb_supir.supir_id=skb_job_order.supir_id","left");
+        return $this->db->get_where("skb_job_order",array("skb_job_order.supir_id"=>$supir_id,"skb_job_order.status"=>"Sampai Tujuan"))->result_array();
+    }
+
     public function getpembayaranupah($supir_id){
         $this->db->join("skb_supir","skb_supir.supir_id=skb_pembayaran_upah.supir_id","left");
         return $this->db->get_where("skb_pembayaran_upah",array("skb_pembayaran_upah.supir_id"=>$supir_id))->result_array();
+    }
+
+    public function getjobypembayaranupah($upah_id){
+        $this->db->select("Jo_id");
+        return $this->db->get_where("skb_job_order",array("pembayaran_upah_id"=>$upah_id))->result_array();
     }
 
     public function getpembayaranupahbyid($pembayaran_id){
@@ -104,6 +129,53 @@ class Model_Detail extends CI_model
     public function getinvoicebyjo($jo_id){ //invoice by JO
         $this->db->join("skb_job_order","skb_job_order.Jo_id=skb_invoice.jo_id","left");
         return $this->db->get_where("skb_invoice",array("skb_invoice.jo_id"=>$jo_id))->row_array();
+    }
+
+    public function insert_upah($data){ //update upah saat bayar gaji/upah
+        $supir_id = $data["supir_id"];
+        $supir = $this->db->get_where("skb_supir",array("supir_id"=>$supir_id))->row_array();
+        $Jo_id = $data["Jo_id"];
+        $gaji_grand_total = $data["gaji_grand_total"];
+        $gaji_total = $data["gaji_total"];
+        $kasbon = $data["kasbon"];
+        $bonus = $data["bonus"];
+
+        
+        //insert pembayaran upah 
+        $this->db->select("pembayaran_upah_id");
+        $pembayaran_upah_id = $this->db->get("skb_pembayaran_upah")->result_array();
+        $isi_pembayaran_upah_id = [];
+        if($pembayaran_upah_id){
+            for($i=0;$i<count($pembayaran_upah_id);$i++){
+                $isi_pembayaran_upah_id[] = $pembayaran_upah_id[$i]["pembayaran_upah_id"];
+            }
+        }else{
+            $isi_pembayaran_upah_id[] = 0;
+        }
+        date_default_timezone_set('Asia/Jakarta');
+        $data=array(
+            "supir_id"=>$supir_id,
+            "pembayaran_upah_id"=>max($isi_pembayaran_upah_id)+1, 
+            "pembayaran_upah_nominal"=>$gaji_total,
+            "pembayaran_upah_bonus"=>$bonus,
+            "pembayaran_upah_bon"=>$kasbon,
+            "pembayaran_upah_total"=>$gaji_grand_total,
+            "pembayaran_upah_tanggal"=>date("Y-m-d"),
+            "pembayaran_upah_status"=>"Belum Lunas",
+            "bulan_kerja"=>$data["bulan_kerja"],
+            "user_upah"=>$_SESSION["user"]."(".date("Y-m-d H:i:s").")"
+        );
+        $this->db->insert("skb_pembayaran_upah",$data);
+        //end insert pembayaran upah 
+        //update status upah pada jo id
+            if($Jo_id != null){
+                for($i=0;$i<count($Jo_id);$i++){
+                    $this->db->set("pembayaran_upah_id",max($isi_pembayaran_upah_id)+1);
+                    $this->db->where("Jo_id",$Jo_id[$i]);
+                    $this->db->update("skb_job_order");
+                }
+            }
+        //end update status upah pada jo id
     }
 
     public function update_upah($data){ //update upah saat bayar gaji/upah
@@ -120,30 +192,6 @@ class Model_Detail extends CI_model
             $this->db->update("skb_supir");
         //end set kasbon supir
 
-        //insert pembayaran upah 
-        $this->db->select("pembayaran_upah_id");
-        $pembayaran_upah_id = $this->db->get("skb_pembayaran_upah")->result_array();
-        $isi_pembayaran_upah_id = [];
-        if($pembayaran_upah_id){
-            for($i=0;$i<count($pembayaran_upah_id);$i++){
-                $isi_pembayaran_upah_id[] = $pembayaran_upah_id[$i]["pembayaran_upah_id"];
-            }
-        }else{
-            $isi_pembayaran_upah_id[] = 0;
-        }
-        date_default_timezone_set('Asia/Jakarta');
-        $data=array(
-            "supir_id"=>$supir_id,
-            "pembayaran_upah_nominal"=>$gaji_total,
-            "pembayaran_upah_bonus"=>$bonus,
-            "pembayaran_upah_bon"=>$kasbon,
-            "pembayaran_upah_total"=>$gaji_grand_total,
-            "pembayaran_upah_tanggal"=>date("Y-m-d"),
-            "user_upah"=>$_SESSION["user"]."(".date("Y-m-d H:i:s").")"
-        );
-        $this->db->insert("skb_pembayaran_upah",$data);
-        //end insert pembayaran upah 
-        
         //insert kasbon 
             if($kasbon>0){
                 $this->db->select("bon_id");
@@ -165,12 +213,13 @@ class Model_Detail extends CI_model
                 $this->db->insert("skb_bon",$data);
             }
         //end insert kasbon 
-
+        $this->db->set("pembayaran_upah_status","Lunas");
+        $this->db->where("pembayaran_upah_id",$data["pembayaran_upah_id"]);
+        $this->db->update("skb_pembayaran_upah");
         //update status upah pada jo id
             if($Jo_id != null){
                 for($i=0;$i<count($Jo_id);$i++){
                     $this->db->set("status_upah","Sudah Dibayar");
-                    $this->db->set("pembayaran_upah_id",max($isi_pembayaran_upah_id)+1);
                     $this->db->where("Jo_id",$Jo_id[$i]);
                     $this->db->update("skb_job_order");
                 }

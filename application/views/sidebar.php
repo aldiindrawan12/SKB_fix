@@ -110,7 +110,11 @@
                         </a>
                         <a class="collapse-item" id="Gaji_page" href="<?=base_url("index.php/home/gaji")?>">
                             <i class="fas fa-dollar-sign"></i>
-                            <span>Transaksi Gaji Supir</span>
+                            <span>Bikin Slip Gaji</span>
+                        </a>
+                        <a class="collapse-item" id="Laporan_Gaji_page" href="<?=base_url("index.php/home/report_gaji")?>">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                            <span>Data Slip Gaji</span>
                         </a>
                     </div>
                 </div>
@@ -133,10 +137,10 @@
                             <i class="fas fa-file-invoice-dollar"></i>
                             <span>Laporan Uang Jalan</span>
                         </a>
-                        <a class="collapse-item" id="Laporan_Gaji_page" href="<?=base_url("index.php/home/report_gaji")?>">
+                        <!-- <a class="collapse-item" id="Laporan_Gaji_page" href="<?=base_url("index.php/home/report_gaji")?>">
                             <i class="fas fa-file-invoice-dollar"></i>
                             <span>Laporan Gaji Supir</span>
-                        </a>
+                        </a> -->
                         <a class="collapse-item" id="Laporan_Bon_page" href="<?=base_url("index.php/home/report_bon")?>">
                             <i class="fas fa-file-invoice-dollar"></i>
                             <span>Laporan Bon Supir</span>

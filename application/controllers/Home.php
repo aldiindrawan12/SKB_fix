@@ -226,7 +226,7 @@ class Home extends CI_Controller {
                 redirect(base_url());
             }
             $data["page"] = "Laporan_Gaji_page";
-            $data["collapse_group"] = "Laporan";
+            $data["collapse_group"] = "Penggajian";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             if(json_decode($data["akun_akses"]["akses"])[9]==0){
                 redirect(base_url());

@@ -2501,7 +2501,7 @@
                         className: 'text-center font-weight-bold',
                         "orderable": false,
                         render: function(data, type, row) {
-                            let html = "<a class='btn btn-light' href='<?= base_url('index.php/detail/pilih_gaji/"+data+"')?>'><i class='fas fa-dollar-sign'></i></a>";
+                            let html = "<a class='btn btn-light' href='<?= base_url('index.php/detail/pilih_gaji/"+data+"/home/x/x')?>'><i class='fas fa-dollar-sign'></i></a>";
                             return html;
                         }
                     }

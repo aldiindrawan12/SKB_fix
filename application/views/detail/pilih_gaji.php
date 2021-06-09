@@ -22,13 +22,18 @@
         </div>
         <div class="card-body row" id="rincian">
             <div class="col-md-5 ">
-                <form action="<?= base_url("index.php/detail/detail_penggajian/").$supir["supir_id"]?>" method="POST">
+                <form action="<?= base_url("index.php/detail/detail_penggajian/").$supir["supir_id"]?>" method="POST" id="form-pilih-jo">
                     <input type="text" name="jo" id="jo" required hidden>
                     <div class="form-group row">
                         <label for="tahun_kerja" class="col-form-label col-sm-7 font-weight-bold">Tahun Kerja</label>
                         <div class="col-sm-5">
                             <select name="tahun_kerja" value="DESC" id="tahun_kerja" class="form-control selectpicker mb-4" data-live-search="true" required onchange="set_pilih_jo(this)">
-                                <option class="font-w700" disabled="disabled" selected value="">Tahun Kerja</option>
+                                <option class="font-w700" selected value="x">Semua Tahun Kerja</option>
+                                <?php if($tahun=='x'){?>
+                                    <option class="font-w700" selected value="x">Tahun Kerja</option>
+                                <?php }else{ ?>
+                                    <option class="font-w700" selected value="<?= $tahun?>"><?= $tahun?></option>
+                                <?php } ?>
                                 <option value="2021">2021</option>
                                 <option value="2022">2022</option>
                                 <option value="2023">2023</option>
@@ -40,14 +45,27 @@
                         <label for="bulan_kerja" class="col-form-label col-sm-7 font-weight-bold">Bulan Kerja</label>
                         <div class="col-sm-5">
                             <select name="bulan_kerja" value="DESC" id="bulan_kerja" class="form-control selectpicker mb-4" data-live-search="true" required onchange="set_pilih_jo(this)">
-                                <option class="font-w700" disabled="disabled" selected value="">Bulan Kerja</option>
-                                <?php $bulan = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
-                                for($i=0;$i<count($bulan);$i++){
-                                    if($i<10){?>
-                                        <option value="<?= "0".($i+1)?>"><?=$bulan[$i]?></option>
-                                    <?php }else{ ?>
-                                        <option value="<?= ($i+1)?>"><?=$bulan[$i]?></option>
-                                <?php }} ?>
+                                <?php $bulan = ["Sadasd","Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+                                if($bulan_index!=10){
+                                    $bulan_index=str_replace("0","",$bulan_index);
+                                }
+                                if($bulan_index=='x'){?>
+                                    <option class="font-w700" selected value="x">Bulan Kerja</option>
+                                <?php }else{ ?>
+                                    <option class="font-w700" selected value="<?= $bulan_index?>"><?= $bulan[$bulan_index]?></option>
+                                <?php } ?>
+                                <option value="01"><?=$bulan[1]?></option>
+                                <option value="02"><?=$bulan[2]?></option>
+                                <option value="03"><?=$bulan[3]?></option>
+                                <option value="04"><?=$bulan[4]?></option>
+                                <option value="05"><?=$bulan[5]?></option>
+                                <option value="06"><?=$bulan[6]?></option>
+                                <option value="07"><?=$bulan[7]?></option>
+                                <option value="08"><?=$bulan[8]?></option>
+                                <option value="09"><?=$bulan[9]?></option>
+                                <option value="10"><?=$bulan[10]?></option>
+                                <option value="11"><?=$bulan[11]?></option>
+                                <option value="12"><?=$bulan[12]?></option>
                             </select>
                         </div>
                     </div>
@@ -77,7 +95,7 @@
                     </div>
                     <div class="container-fluid px-0">
                         <button type="submit" class="btn btn-success  float-right" onclick="cek_jo()">Selanjutnya</button>
-                        <button class="btn btn-danger  float-right" onclick="reset_form()">Reset</button>
+                        <button type="reset" class="btn btn-danger  float-right" onclick="reset_form()">Reset</button>
                     </div>
                 </form>
             </div>
@@ -86,13 +104,15 @@
                     <thead>
                         <tr>
                             <th class="text-center" width="10%" scope="col">JO ID</th>
-                            <th class="text-center" width="10%" scope="col">Tgl Keluar</th>
+                            <th class="text-center" width="10%" scope="col">Tgl Muat</th>
                             <th class="text-center" width="13%" scope="col">Tgl Bongkar</th>
-                            <!-- <th class="text-center" width="10%" scope="col">Muatan</th>
+                            <th class="text-center" width="13%" scope="col">Customer</th>
+                            <th class="text-center" width="10%" scope="col">Muatan</th>
                             <th class="text-center" width="10%" scope="col">Dari</th>
                             <th class="text-center" width="10%" scope="col">Ke</th>
-                            <th class="text-center" width="10%" scope="col">Uang Jalan</th> -->
+                            <th class="text-center" width="10%" scope="col">Tonase</th>
                             <th class="text-center" width="10%" scope="col">Upah</th>
+                            <th class="text-center" width="10%" scope="col">Detail</th>
                             <th class="text-center" width="10%" scope="col">Pilih</th>
                         </tr>
                     </thead>
@@ -100,19 +120,15 @@
                     <?php foreach($jo as $value){?>
                         <tr>
                             <td><?= $value["Jo_id"]?></td>
-                            <td><?= $value["tanggal_surat"]?></td>
+                            <td><?= $value["tanggal_muat"]?></td>
                             <td><?= $value["tanggal_bongkar"]?></td>
-                            <!-- <td><?= $value["muatan"]?></td>
+                            <td><?= $value["customer_name"]?></td>
+                            <td><?= $value["muatan"]?></td>
                             <td><?= $value["asal"]?></td>
-                            <td><?= $value["tujuan"]?></td> -->
-                            <!-- <?php
-                                if($value["uang_kosongan"]!=""){
-                                    echo "<td>Rp.".number_format($value["uang_jalan"]+$value["uang_kosongan"],2,',','.')."</td>";
-                                }else{
-                                    echo "<td>Rp.".number_format($value["uang_jalan"],2,',','.')."</td>";
-                                }
-                            ?> -->
-                            <td>Rp.<?= number_format($value["upah"]+$value["bonus"],2,',','.')?></td>
+                            <td><?= $value["tujuan"]?></td>
+                            <td><?= $value["tonase"]?></td>
+                            <td>Rp.<?= number_format($value["upah"],2,',','.')?></td>
+                            <td><a class='btn btn-light' target="_blank" href='<?= base_url('index.php/detail/detail_jo/'.$value["Jo_id"].'/JO')?>'><i class='fas fa-eye'></i></a></td>
                             <td><input class='' id="<?= $value["Jo_id"]?>" data-toggle='toggle' type='checkbox' data-size='medium' data-onstyle='success' data-offstyle='danger' onchange="pilih_gaji(this)"></td>
                         </tr>
                     <?php } ?>
@@ -286,8 +302,12 @@
     </script>
     <script>
         function set_pilih_jo(a){
-            alert($("#tahun_kerja").val());
-            alert($("#bulan_kerja").val());
+            // alert($("#tahun_kerja").val());
+            // alert($("#bulan_kerja").val());
+            // document.getElementById("form-pilih-jo").reset();
+            tahun = $("#tahun_kerja").val();
+            bulan = $("#bulan_kerja").val();
+            location.replace('<?= base_url("index.php/detail/pilih_gaji/").$supir["supir_id"]."/form/"?>'+tahun+"/"+bulan);
         }
     </script>
     <script>

@@ -277,6 +277,8 @@ class Detail extends CI_Controller {
             }else{
                 $kasbon = $this->input->post("kasbon");
             }
+            $data["bulan"] = $this->input->post("bulan_kerja");
+            $data["tahun"] = $this->input->post("tahun_kerja");
             $data["pilih_jo"] = array(
                 "jo_id" => $this->input->post("jo"),
                 "gaji_total" => $this->input->post("gaji_total"),
@@ -304,13 +306,28 @@ class Detail extends CI_Controller {
             $this->load->view('footer');
         }
 
-        public function pilih_gaji($supir_id)
+        public function pilih_gaji($supir_id,$asal,$tahun,$bulan)
         {
+            if($asal=="form"){
+                if($tahun=="x"){
+                    $data["tahun"]="x";
+                }else{
+                    $data["tahun"]=$tahun;
+                }
+                if($bulan=="x"){
+                    $data["bulan_index"]='x';
+                }else{
+                    $data["bulan_index"]=$bulan;
+                }
+            }else{
+                $data["tahun"]="x";
+                $data["bulan_index"]="x";
+            }
             if(!$_SESSION["user"]){
     			$this->session->set_flashdata('status-login', 'False');
                 redirect(base_url());
             }
-            $data["jo"] = $this->model_detail->getjobbysupir($supir_id);
+            $data["jo"] = $this->model_detail->getjobbysupirbulan($supir_id,$data["tahun"],$data["bulan_index"]);
             $data["supir"] = $this->model_home->getsupirbyid($supir_id);
             $data["page"] = "Gaji_page";
             $data["collapse_group"] = "Penggajian";
@@ -332,7 +349,7 @@ class Detail extends CI_Controller {
             $data["pembayaran_upah"] = $this->model_detail->getpembayaranupah($supir_id);
             $data["supir"] = $this->model_home->getsupirbyid($supir_id);
             $data["page"] = "Laporan_Gaji_page";
-            $data["collapse_group"] = "Laporan";
+            $data["collapse_group"] = "Penggajian";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             if(json_decode($data["akun_akses"]["akses"])[9]==0){
                 redirect(base_url());
@@ -350,9 +367,10 @@ class Detail extends CI_Controller {
                 redirect(base_url());
             }
             $data["pembayaran_upah"] = $this->model_detail->getpembayaranupahbyid($pembayaran_id);
+            $data["jo_pembayaran_upah"] = $this->model_detail->getjobypembayaranupah($data["pembayaran_upah"][0]["pembayaran_upah_id"]);
             $data["supir"] = $this->model_home->getsupirbyid($supir_id);
             $data["page"] = "Laporan_Gaji_page";
-            $data["collapse_group"] = "Laporan";
+            $data["collapse_group"] = "Penggajian";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             if(json_decode($data["akun_akses"]["akses"])[9]==0){
                 redirect(base_url());
@@ -370,10 +388,25 @@ class Detail extends CI_Controller {
                 "gaji_grand_total"=>str_replace(".","",$this->input->get("gaji_grand_total")),
                 "gaji_total"=>str_replace(".","",$this->input->get("gaji_total")),
                 "bonus"=>str_replace(".","",$this->input->get("bonus")),
-                "Jo_id"=>$this->input->get("jo_id")
+                "Jo_id"=>$this->input->get("jo_id"),
+                "pembayaran_upah_id"=>$this->input->get("pembayaran_upah_id")
             );
             $this->model_detail->update_upah($data);
-            echo $data["supir_id"]."=".$data["kasbon"]."=".$data["gaji_grand_total"]."=".$data["gaji_total"]."=".$data["bonus"];
+            echo $data["pembayaran_upah_id"];
+        }
+
+        public function insert_upah(){
+            $data = array(
+                "supir_id"=>$this->input->get("supir_id"),
+                "kasbon"=>str_replace(".","",$this->input->get("kasbon")),
+                "gaji_grand_total"=>str_replace(".","",$this->input->get("gaji_grand_total")),
+                "gaji_total"=>str_replace(".","",$this->input->get("gaji_total")),
+                "bonus"=>str_replace(".","",$this->input->get("bonus")),
+                "Jo_id"=>$this->input->get("jo_id"),
+                "bulan_kerja"=>$this->input->get("bulan_kerja")
+            );
+            $this->model_detail->insert_upah($data);
+            echo $data["Jo_id"];
         }
     //end fungsi untuk Detail penggajian
     

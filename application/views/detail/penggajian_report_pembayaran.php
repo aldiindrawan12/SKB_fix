@@ -9,7 +9,7 @@
 <div class="container small">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-center">Data Upah Supir</h6>
+            <h6 class="m-0 font-weight-bold text-center">Detail Slip Gaji</h6>
         </div>
         <div class="card-body" id="identitas">
             <table class="w-50">
@@ -24,9 +24,9 @@
                         <?php } ?>
                     </tr>
                     <tr>
-                        <td width="25%">Id Supir</td>
+                        <td width="25%">No Slip Gaji</td>
                         <td width="5%">:</td>
-                        <td><?= $supir["supir_id"]?></td>
+                        <td><?= $pembayaran_upah[0]["pembayaran_upah_id"]?></td>
                     </tr>
                     <tr>
                         <td width="25%">Nama Supir</td>
@@ -59,6 +59,7 @@
                             <th class="text-center" width="10%" scope="col">Ke</th>
                             <th class="text-center" width="10%" scope="col">Uang Jalan</th>
                             <th class="text-center" width="8%" scope="col">Total Muatan</th>
+                            <th class="text-center" width="8%" scope="col">Total Muatan</th>
                             <th class="text-center" width="10%" scope="col">Upah</th>
                         </tr>
                     </thead>
@@ -82,25 +83,26 @@
                                     echo "<td>Rp.".number_format($value["uang_jalan"],2,',','.')."</td>";
                             ?>
                             <td><?= $value["tonase"]?></td>
+                            <td>Rp.<?= number_format($value["biaya_lain"],2,',','.')?></td>
                             <td>Rp.<?= number_format($value["upah"],2,',','.')?></td>
                         </tr>
                     <?php } ?>
                         <tr>
-                            <td colspan=6>Total</td>
+                            <td colspan=7>Total</td>
                             <td>Rp.<?= number_format($uang_jalan,2,',','.')?></td>
                             <td></td>
                             <td>Rp.<?= number_format($pembayaran_upah[0]["pembayaran_upah_nominal"],2,",",".")?></td>
                         </tr>
                         <tr>
-                            <td colspan=8>Potong Kasbon</td>
+                            <td colspan=9>Potong Kasbon</td>
                             <td>Rp.<?= number_format($pembayaran_upah[0]["pembayaran_upah_bon"],2,",",".")?></td>
                         </tr>
                         <tr>
-                            <td colspan=8>Bonus</td>
+                            <td colspan=9>Bonus</td>
                             <td>Rp.<?= number_format($pembayaran_upah[0]["pembayaran_upah_bonus"],2,",",".")?></td>
                         </tr>
                         <tr>
-                            <td colspan=8>Grand Total Upah</td>
+                            <td colspan=9>Grand Total Upah</td>
                             <td id="grand_total">Rp.<?= number_format($pembayaran_upah[0]["pembayaran_upah_total"],2,",",".")?></td>
                         </tr>
                     </tbody>
@@ -376,7 +378,6 @@
                             jo_id:data_jo_id,
                         },
                         success: function(data) {
-                            alert(data);
                             window.location = "<?= base_url("index.php/detail/detail_penggajian_report_pembayaran/").$supir["supir_id"]."/".$pembayaran_upah[0]["pembayaran_upah_id"]?>";
                         }
                     });      

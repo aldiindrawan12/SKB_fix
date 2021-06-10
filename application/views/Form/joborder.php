@@ -54,14 +54,14 @@
                         <label class="form-label font-weight-bold" for="Jenis">Jenis Mobil</label>
                         <input autocomplete="off" type="text" class="form-control" name="Jenis" id="Jenis" required readonly>
                     </div>
-                    <div class="col-md-4 col-md-offset-4 mb-4">
+                    <!-- <div class="col-md-4 col-md-offset-4 mb-4">
                         <label class="form-label font-weight-bold" for="Type_Tonase">Tipe Tonase</label>
                         <input autocomplete="off" type="text" class="form-control" name="Type_Tonase" id="Type_Tonase" required readonly>
                     </div>
                     <div class="col-md-4 col-md-offset-4 mb-4 Tonase">
                         <label class="form-label font-weight-bold" for="Tonase">Tonase</label>
                         <input autocomplete="off" type="text" class="form-control" name="Tonase" id="Tonase" required readonly>
-                    </div>
+                    </div> -->
                     <div class="col-md-4 col-md-offset-4 mb-4">
                         <label for="Uang" class="form-label font-weight-bold">Uang Jalan</label>
                         <input autocomplete="off" type="text" class="form-control" id="Uang" name="Uang" value=0 required readonly>

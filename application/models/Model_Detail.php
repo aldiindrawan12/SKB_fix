@@ -163,7 +163,7 @@ class Model_Detail extends CI_model
             "pembayaran_upah_tanggal"=>date("Y-m-d"),
             "pembayaran_upah_status"=>"Belum Lunas",
             "bulan_kerja"=>$data["bulan_kerja"],
-            "user_upah"=>$_SESSION["user"]."(".date("Y-m-d H:i:s").")"
+            "user_upah"=>$_SESSION["user"]."(".date("d-m-Y H:i:s").")"
         );
         $this->db->insert("skb_pembayaran_upah",$data);
         //end insert pembayaran upah 
@@ -186,6 +186,7 @@ class Model_Detail extends CI_model
         $gaji_total = $data["gaji_total"];
         $kasbon = $data["kasbon"];
         $bonus = $data["bonus"];
+
         //set kasbon supir
             $this->db->set("supir_kasbon",$supir["supir_kasbon"]-$kasbon);
             $this->db->where("supir_id",$supir_id);
@@ -201,16 +202,17 @@ class Model_Detail extends CI_model
                     $isi_bon_id[] = $bon_id[$i]["bon_id"];
                 }
                 date_default_timezone_set('Asia/Jakarta');
-                $data=array(
+                $data_bon=array(
                     "bon_id"=>max($isi_bon_id)+1,
                     "supir_id"=>$supir_id,
                     "bon_jenis"=>"Potong Gaji",
                     "bon_nominal"=>$kasbon,
                     "bon_keterangan"=>"Potongan Kasbon Dari Pembayaran Gaji",
-                    "pembayaran_upah_id"=>max($isi_pembayaran_upah_id)+1,
-                    "bon_tanggal"=>date("Y-m-d H:i:s")
+                    "pembayaran_upah_id"=>$data["pembayaran_upah_id"],
+                    "bon_tanggal"=>date("Y-m-d"),
+                    "user"=>$_SESSION["user"]."(".date("d-m-Y H:i:s").")"
                 );
-                $this->db->insert("skb_bon",$data);
+                $this->db->insert("skb_bon",$data_bon);
             }
         //end insert kasbon 
         $this->db->set("pembayaran_upah_status","Lunas");
@@ -235,7 +237,7 @@ class Model_Detail extends CI_model
 
     public function update_jo_dibatalkan($Jo_id,$supir_id,$mobil_no,$uj){
         $this->db->set("status","Dibatalkan");
-        $this->db->set("user_closing",$_SESSION["user"]."(".date("Y-m-d H:i:s").")");
+        $this->db->set("user_closing",$_SESSION["user"]."(".date("d-m-Y H:i:s").")");
         $this->db->where("Jo_id",$Jo_id);
         $this->db->update("skb_job_order");
 

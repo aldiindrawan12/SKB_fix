@@ -113,7 +113,7 @@ class Form extends CI_Controller {
                 "tanggal_batas_pembayaran"=>date('Y-m-d', strtotime('+'.$this->input->post("invoice_payment").' days', strtotime($this->change_tanggal($this->input->post("invoice_tgl"))))),
                 "invoice_keterangan"=>$this->input->post("invoice_keterangan"),
                 "status_bayar"=>"Belum Lunas",
-                "user_invoice"=>$_SESSION["user"]."(".date("Y-m-d H:i:s").")",
+                "user_invoice"=>$_SESSION["user"]."(".date("d-m-Y H:i:s").")",
             );
             $data_jo = explode(",",$this->input->post("data_jo"));
             $this->model_form->insert_invoice($data,$data_jo);
@@ -192,6 +192,7 @@ class Form extends CI_Controller {
             }
             $new_jo_id = $new_jo_id.(max($isi_jo_id)+1);
             //end generate jo id
+            $data["customer"] = $this->model_home->getcustomerbyid($this->input->post("Customer"));
             $data["data"]=array(
                 "Jo_id"=>$new_jo_id,
                 "mobil_no"=>$this->input->post("Kendaraan"),
@@ -207,7 +208,7 @@ class Form extends CI_Controller {
                 "status_upah"=>"Belum Dibayar",
                 "upah"=>str_replace(".","",$this->input->post("Upah")),
                 "tagihan"=>str_replace(".","",$this->input->post("Tagihan")),
-                "user"=>$_SESSION["user"]."(".date("Y-m-d H:i:s").")",
+                "user"=>$_SESSION["user"]."(".date("d-m-Y H:i:s").")",
                 "jenis_tambahan"=>$this->input->post("jenis_tambahan"),
                 "nominal_tambahan"=>$nominal_tambahan,
                 "uang_total"=>str_replace(".","",$this->input->post("uang_jalan_total")),
@@ -341,7 +342,8 @@ class Form extends CI_Controller {
                 "bon_nominal"=>str_replace(".","",$this->input->post("Nominal")),
                 "bon_keterangan"=>$this->input->post("Keterangan"),
                 "bon_tanggal"=>$this->change_tanggal($this->input->post("Tanggal")),
-                "user"=>$_SESSION["user"]
+                "pembayaran_upah_id"=>"-",
+                "user"=>$_SESSION["user"]."(".date("d-m-Y H:i:s").")",
             );
             $data["bon_id"] = max($isi_bon_id)+1;
             $this->model_form->insert_bon($data["data"]);
@@ -395,14 +397,20 @@ class Form extends CI_Controller {
             if ($this->upload->do_upload('file_foto')) {
                 $this->upload->data();
                 $file_foto =  $this->upload->data('file_name');
+            }else{
+                $file_foto="";
             }
             if ($this->upload->do_upload('file_sim')) {
                 $this->upload->data();
                 $file_sim =  $this->upload->data('file_name');
+            }else{
+                $file_sim="";
             }
             if ($this->upload->do_upload('file_ktp')) {
                 $this->upload->data();
                 $file_ktp =  $this->upload->data('file_name');
+            }else{
+                $file_ktp="";
             }
             $data=array(
                 "supir_name"=>$this->input->post("Supir"),
@@ -791,7 +799,9 @@ class Form extends CI_Controller {
                 "bon_jenis"=>"Pembatalan JO",
                 "bon_nominal"=>$data_jo["uang_jalan_bayar"],
                 "bon_keterangan"=>"Pembatalan JO",
-                "bon_tanggal"=>date("Y-m-d H:i:s")
+                "bon_tanggal"=>date("Y-m-d"),
+                "pembayaran_upah_id"=>"-",
+                "user"=>$_SESSION["user"]."(".date("d-m-Y H:i:s").")",
             );
             $data["bon_id"] = max($isi_bon_id)+1;
             $this->model_form->insert_bon($data["data"]);

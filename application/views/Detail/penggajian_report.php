@@ -45,16 +45,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <?php $nominal = 0;
-                    $bonus = 0;
-                    $bon = 0;
-                    $grand = 0;
-                    foreach($pembayaran_upah as $value){ 
-                        $nominal += $value["pembayaran_upah_nominal"];
-                        $bonus += $value["pembayaran_upah_bonus"];
-                        $bon += $value["pembayaran_upah_bon"];
-                        $grand += $value["pembayaran_upah_nominal"]+$value["pembayaran_upah_bonus"]-$value["pembayaran_upah_bon"];
-                        ?>
+                    <?php foreach($pembayaran_upah as $value){ ?>
                         <tr>
                             <td><?= $value["pembayaran_upah_id"]?></td>
                             <td><?= change_tanggal($value["pembayaran_upah_tanggal"])?></td>

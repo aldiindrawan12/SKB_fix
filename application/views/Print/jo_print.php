@@ -48,17 +48,14 @@
 </head>
 <body class="text-dark">
     <div class="container w-50">
+        <div class="container mr-0 w-50 mb-5">
+            <p><?= $data["user"]?></p>
+        </div>
         <div class="body-card text-center">
             <span class="h3">Bukti Titipan Uang Jalan</span><br>
-            <?php if($tipe_jo=="paketan"){?>
-                <span class="h3">Tipe Paketan</span>
-            <?php }else{?>
-                <span class="h3">Tipe Reguler</span>
-            <?php }?>
             <hr>
         </div>
         <div class="card-body"> 
-                <p ><strong><?= $data["user"]?></strong></p>
                 <div class="table-responsive">
                     <table class="" id="" width="100%" cellspacing="0">
                         <tbody>
@@ -68,14 +65,24 @@
                                 <td ><strong>#<?= $jo_id?></strong></td>
                             </tr>
                             <tr>
-                                <td width="30%">No Pol</td>
+                                <td width="30%">Tanggal</td>
                                 <td width="5%">:</td>
-                                <td><?= $mobil["mobil_no"]." || ".$mobil["mobil_jenis"]?></td>
+                                <td ><?= change_tanggal($data["tanggal_surat"])?></td>
                             </tr>
                             <tr>
                                 <td width="30%">Supir</td>
                                 <td width="5%">:</td>
                                 <td><?= $supir["supir_name"]?></td>
+                            </tr>
+                            <tr>
+                                <td width="30%">No Pol</td>
+                                <td width="5%">:</td>
+                                <td><?= $mobil["mobil_no"]." || ".$mobil["mobil_jenis"]?></td>
+                            </tr>
+                            <tr>
+                                <td width="30%">Customer</td>
+                                <td width="5%">:</td>
+                                <td><?= $customer["customer_name"]?></td>
                             </tr>
                             <tr>
                                 <td width="30%">Rute</td>
@@ -100,7 +107,7 @@
                                 <td>Rp.<?= number_format($data["uang_jalan"],2,',','.')?></td>
                             </tr>
                                 <tr>
-                                    <td width="30%">Tambahan/Potongan Uang Jalan</td>
+                                    <td width="30%">Tambahan/Potongan UJ</td>
                                     <td width="5%">:</td>
                                         <td>Rp.<?= number_format($data["nominal_tambahan"],2,",",".")?> (<?= $data["jenis_tambahan"]?>)</td>
                                 </tr>

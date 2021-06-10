@@ -66,7 +66,7 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label font-weight-bold " for="invoice_payment">Payment (hari)</label>
-                        <input autocomplete="off" type="text" class="form-control" id="invoice_payment" name="invoice_payment" required>
+                        <input autocomplete="off" type="text" class="form-control" id="invoice_payment" name="invoice_payment" required onkeyup="hanyaangka(this)">
                     </div>
                     <input type="text" id="data_jo" name="data_jo" required hidden>
                 </div>
@@ -80,6 +80,7 @@
             </div>
             <div class="col">
                 <button type="submit" class="btn btn-success float-right mt-3">Simpan</button>
+                <button type="reset" class="btn btn-danger float-right mt-3" onclick="reset_form()">Reset</button>
             </div>
         </form>
     </div>
@@ -93,13 +94,17 @@
             <table class="table table-bordered" id="pilih-jo" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th class="text-center" width="" scope="col">Tipe JO</th>
-                        <th class="text-center" width="" scope="col">Rute dan Muatan</th>
-                        <th class="text-center" width="" scope="col">Tgl.Brgkt</th>
+                        <th class="text-center" width="" scope="col">ID JO</th>
+                        <th class="text-center" width="" scope="col">Nopol</th>
+                        <th class="text-center" width="" scope="col">Tgl.Muat</th>
                         <th class="text-center" width="" scope="col">Tgl.Plng</th>
+                        <th class="text-center" width="" scope="col">Muatan</th>
+                        <th class="text-center" width="" scope="col">Dari</th>
+                        <th class="text-center" width="" scope="col">Ke</th>
                         <th class="text-center" width="" scope="col">Tonase</th>
                         <th class="text-center" width="" scope="col">Inv./Tagihan</th>
                         <th class="text-center" width="" scope="col">Pilih</th>
+                        <th class="text-center" width="" scope="col">Detail</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -150,5 +155,15 @@
         }else{
             $("#invoice_id3").val("-"+date.getMonth()+"-"+date.getFullYear());
         }
+    }
+    function reset_form(){
+        location.reload();
+    }
+    function hanyaangka(a){
+		var charCode = (a.which) ? a.which : event.keyCode;
+	   if (charCode > 31 && (charCode < 48 || charCode > 57)){
+           alert("Masukkan Hanya Angka Saja dan Tanpa Tanda Baca");
+           $("#"+a.id).val("");
+       }
     }
 </script>

@@ -588,7 +588,7 @@ class Model_Form extends CI_model
             return $this->db->get("skb_rute")->result_array();
         }
         public function getmobilbyjenis($mobil_jenis){
-            return $this->db->get_where("skb_mobil",array("mobil_jenis"=>$mobil_jenis,"status_jalan"=>"Tidak Jalan","validasi"=>"ACC"))->result_array();
+            return $this->db->get_where("skb_mobil",array("mobil_jenis"=>$mobil_jenis,"status_jalan"=>"Tidak Jalan","status_hapus"=>"NO","validasi"=>"ACC"))->result_array();
         }
         public function getallmobil(){
             return $this->db->get_where("skb_mobil",array("status_hapus"=>"No"))->result_array();

@@ -170,12 +170,24 @@ class Print_Berkas extends CI_Controller {
                 redirect(base_url());
             }
 			$data["data"] = $this->model_home->getjobyid($jo_id);
+			$data["customer"] = $this->model_home->getcustomerbyid($data["data"]["customer_id"]);
 			$data["tipe_jo"] = "reguler";
 			$data["jo_id"] = $data["data"]["Jo_id"];
 			$data["asal"] = "detail";
             $data["supir"] = $this->model_home->getsupirbyid($data["data"]["supir_id"]);
             $data["mobil"] = $this->model_home->getmobilbyid($data["data"]["mobil_no"]);
 			$this->load->view("print/jo_print",$data);
+		}
+		public function print_bon($bon_id){
+            if(!$_SESSION["user"]){
+    			$this->session->set_flashdata('status-login', 'False');
+                redirect(base_url());
+            }
+			$data["data"] = $this->model_detail->getbonbyid($bon_id);
+            $data["supir"] = $this->model_home->getsupirbyid($data["data"]["supir_id"]);
+			$data["asal"]="detail";
+            $data["data_jo"] = array("Jo_id"=>"0");
+			$this->load->view("print/bon_print",$data);
 		}
 	// end fungsi cetak invoice,gaji,memo
 

@@ -48,6 +48,9 @@
                 </button>
             </div>
             <div class="font-size-sm m-3 text-justify">
+            <a class='btn btn-primary btn-sm ' id="link_print_bon">
+                <span>Cetak Nota Kas Bon</span>
+            </a>
             <table class="table table-bordered">
                 <tbody>
                     <tr>
@@ -67,12 +70,20 @@
                         <td name="nominal"></td>
                     </tr>
                     <tr>
+                        <td class="font-weight-bold" style="width: 20%;">Terbilang</td>
+                        <td name="terbilang"></td>
+                    </tr>
+                    <tr>
                         <td class="font-weight-bold" style="width: 20%;">Tanggal Transaksi</td>
                         <td name="tanggal"></td>
                     </tr>
                     <tr>
                         <td class="font-weight-bold" style="width: 20%;">Keterangan</td>
                         <td name="keterangan"></td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold" style="width: 20%;">No Slip Gaji</td>
+                        <td name="pembayaran_upah_id"></td>
                     </tr>
                     <tr>
                         <td class="font-weight-bold" style="width: 20%;">Operator</td>

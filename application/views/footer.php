@@ -138,7 +138,7 @@
                 "serverSide": true,
                 "ordering": true,
                 "order": [
-                    [0, 'asc']
+                    [5, 'desc']
                 ],
                 "ajax": {
                     "url": "<?php echo base_url('index.php/home/view_truck/') ?>",
@@ -146,7 +146,7 @@
                 },
                 "deferRender": true,
                 "aLengthMenu": [
-                    [1, 3, 50, 100],
+                    [10, 30, 50, 100],
                     [10, 30, 50, 100]
                 ],
                 "columns": [
@@ -1641,12 +1641,22 @@
                                 $('td[name="supir"]').text(data["supir_name"]); //set value
                                 $('td[name="jenis"]').text(data["bon_jenis"]); //set value
                                 $('td[name="nominal"]').text("Rp."+rupiah(data["bon_nominal"])); //set value
-                                var date_time = data["bon_tanggal"].split(" ");
-                                var data_tanggal = date_time[0].split("-");
-                                var tanggal = data_tanggal[2]+"-"+data_tanggal[1]+"-"+data_tanggal[0]+" "+date_time[1];
+                                nominal = rupiah(data["bon_nominal"]);
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/generate_terbilang_fix/') ?>"+nominal,
+                                    dataType: "text",
+                                    success: function(data) {
+                                        $('td[name="terbilang"]').text(data);
+                                    }
+                                });
+                                var data_tanggal = data["bon_tanggal"].split("-");
+                                var tanggal = data_tanggal[2]+"-"+data_tanggal[1]+"-"+data_tanggal[0];
                                 $('td[name="tanggal"]').text(tanggal); //set value
                                 $('td[name="keterangan"]').text(data["bon_keterangan"]); //set value
+                                $('td[name="pembayaran_upah_id"]').text(data["pembayaran_upah_id"]); //set value
                                 $('td[name="operator"]').text(data["user"]); //set value
+                                $('#link_print_bon').attr('href','<?= base_url("index.php/print_berkas/print_bon/")?>'+data["bon_id"]);
                             }
                         });
                     });
@@ -2071,7 +2081,7 @@
                         className: 'font-weight-bold',
                         "orderable": false,
                         render: function(data, type, row) {
-                            let html = 'Rp.'+rupiah(row["supir_kasbon"])+"<a class='btn btn-light float-right' href='<?= base_url('index.php/detail/detail_report_bon/"+data+"')?>'><i class='fas fa-eye'></i></a>";
+                            let html = 'Rp.'+rupiah(row["supir_kasbon"])+"<a class='btn btn-light float-right' href='<?= base_url('index.php/detail/detail_report_bon/"+data+"/detail')?>'><i class='fas fa-eye'></i></a>";
                             return html;
                         }
                     },
@@ -2687,8 +2697,11 @@
                     },
                     {
                         "data": "batas_pembayaran",
-                        className: 'text-center'
-                    },
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            return data+" hari ("+change_tanggal(row["tanggal_batas_pembayaran"])+")";
+                        }
+                    },  
                     {
                         "data": "status_bayar",
                         className: 'text-center',
@@ -2764,7 +2777,10 @@
                     },
                     {
                         "data": "batas_pembayaran",
-                        className: 'text-center'
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            return data+" hari ("+change_tanggal(row["tanggal_batas_pembayaran"])+")";
+                        }
                     },
                     {
                         "data": "status_bayar",
@@ -3912,48 +3928,54 @@
                 "deferRender": true,
                 "columns": [
                     {
-                        "data": "Jo_id",
-                        render: function(data, type, row) {
-                            if(row["paketan_id"]!=0){
-                                let html = "Paketan";
-                                return html;
-                            }else{
-                                let html = "Reguler";
-                                return html;
-                            }
-                        } 
+                        "data": "Jo_id"
                     },
+                    // {
+                    //     "data": "paketan_id",
+                    //     className: 'text-center',
+                    //     "orderable": false,
+                    //     render: function(data, type, row) {
+                    //         if(data!=0){
+                    //             let html = "<a class='btn btn-light btn-detail-rute-paketan' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-pk='"+data+"'><i class='fas fa-eye'></i></a>";
+                    //             return html;
+                    //         }
+                    //         if(row["kosongan_id"]!=0){
+                    //             let html = "<a class='btn btn-light btn-detail-rute-paketan-kosong' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-jo='"+row["Jo_id"]+"' data-pk='"+row["kosongan_id"]+"'><i class='fas fa-eye'></i></a>";
+                    //             return html;
+                    //         }else{
+                    //             let html = "<a class='btn btn-light btn-detail-rute-paketan-reguler' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-pk='"+row["Jo_id"]+"'><i class='fas fa-eye'></i></a>";
+                    //             return html;
+                    //         }
+                    //     } 
+                    // },
                     {
-                        "data": "paketan_id",
-                        className: 'text-center',
-                        "orderable": false,
-                        render: function(data, type, row) {
-                            if(data!=0){
-                                let html = "<a class='btn btn-light btn-detail-rute-paketan' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-pk='"+data+"'><i class='fas fa-eye'></i></a>";
-                                return html;
-                            }
-                            if(row["kosongan_id"]!=0){
-                                let html = "<a class='btn btn-light btn-detail-rute-paketan-kosong' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-jo='"+row["Jo_id"]+"' data-pk='"+row["kosongan_id"]+"'><i class='fas fa-eye'></i></a>";
-                                return html;
-                            }else{
-                                let html = "<a class='btn btn-light btn-detail-rute-paketan-reguler' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-pk='"+row["Jo_id"]+"'><i class='fas fa-eye'></i></a>";
-                                return html;
-                            }
-                        } 
-                    },
-                    {
-                        "data": "tanggal_surat",
+                        "data": "tanggal_muat",
                         render: function(data, type, row) {
                             return change_tanggal(data);
                         }
-                    },{
+                    },
+                    {
                         "data": "tanggal_bongkar",
                         render: function(data, type, row) {
                             return change_tanggal(data);
                         }
-                    },{
+                    },
+                    {
+                        "data": "mobil_no"
+                    },
+                    {
+                        "data": "muatan"
+                    },
+                    {
+                        "data": "asal"
+                    },
+                    {
+                        "data": "tujuan"
+                    },
+                    {
                         "data": "tonase"
-                    },{
+                    },
+                    {
                         "data": "tagihan",
                         render: function(data, type, row) {
                             let html = "Rp."+rupiah(data);
@@ -3966,6 +3988,14 @@
                         "orderable": false,
                         render: function(data, type, row) {
                             let html = "<input class='btn-check-invoice' data-pk='"+data+"' data-toggle='toggle' type='checkbox' data-size='medium' data-onstyle='success' data-offstyle='danger'>";
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "Jo_id",
+                        "orderable": false,
+                        render: function(data, type, row) {
+                            let html = "<a class='btn btn-light' target='_blank'  href='<?= base_url('index.php/detail/detail_jo/"+data+"/JO')?>'><i class='fas fa-eye'></i></a>";
                             return html;
                         }
                     }
@@ -4248,7 +4278,7 @@
                                         }else{
                                             $('#Kendaraan').append('<option class="font-w700" disabled="disabled" selected value="">Kendaraan Pengiriman</option>'); 
                                             for(i=0;i<data.length;i++){
-                                                    $('#Kendaraan').append('<option value="'+data[i]["mobil_no"]+'">'+data[i]["mobil_no"]+'  ||  '+data[i]["mobil_max_load"]+' Ton  ||  '+data[i]["mobil_jenis"]+'</option>'); 
+                                                    $('#Kendaraan').append('<option value="'+data[i]["mobil_no"]+'">'+data[i]["mobil_no"]+'  ||  '+data[i]["mobil_jenis"]+'</option>'); 
                                             }
                                         }
                                     }

@@ -2,7 +2,7 @@
 <div class="container small">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-center">Data Upah Supir</h6>
+            <h6 class="m-0 font-weight-bold text-center">Slip Gaji</h6>
         </div>
         <div class="card-body" id="identitas">
             <table class="w-50">
@@ -76,7 +76,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="kasbon" class="col-form-label col-sm-7 font-weight-bold">Bayar Kasbon (Rp.<?= number_format($supir["supir_kasbon"],2,",",".")?>)</label>
+                        <label for="kasbon" class="col-form-label col-sm-7 font-weight-bold">Bayar Kasbon (Terhutang Rp.<?= number_format($supir["supir_kasbon"],2,",",".")?>)</label>
                         <div class="col-sm-5">
                             <input autocomplete="off" type="text" class="form-control" id="kasbon" name="kasbon" onkeyup="batas_kasbon(this)">
                         </div>

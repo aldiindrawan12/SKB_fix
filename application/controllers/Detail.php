@@ -130,7 +130,8 @@ class Detail extends CI_Controller {
                 "bon_jenis"=>"Pembatalan JO",
                 "bon_nominal"=>$data_jo["uang_jalan"],
                 "bon_keterangan"=>"Pembatalan JO",
-                "bon_tanggal"=>date("Y-m-d H:i:s")
+                "bon_tanggal"=>date("Y-m-d H:i:s"),
+                "user"=>$_SESSION["user"]."(".date("d-m-Y H:i:s").")",
             );
             $data["bon_id"] = max($isi_bon_id)+1;
             $this->model_form->insert_bon($data["data"]);

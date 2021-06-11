@@ -381,7 +381,12 @@ class Detail extends CI_Controller {
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('detail/penggajian_report',$data);
-            $this->load->view('footer');
+        }
+
+        public function view_laporan_penggajian($supir_id){
+            $postData = $this->input->post();
+            $data = $this->model_detail->getGajiData($postData,$supir_id);
+            echo json_encode($data);
         }
 
         public function detail_penggajian_report_pembayaran($supir_id,$pembayaran_id)

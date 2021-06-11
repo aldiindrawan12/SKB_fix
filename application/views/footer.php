@@ -3933,8 +3933,10 @@
                         data.customer = $('#customer_id').val();
                     }
                 },
-                "searching":false,
-                "paging":false,
+                "aLengthMenu": [
+                    [1, 3, 50, 100],
+                    [1, 3, 50, 100]
+                ],
                 "deferRender": true,
                 "columns": [
                     {

@@ -283,4 +283,64 @@ class Model_Detail extends CI_model
         $this->db->update("skb_mobil");
     }
     //end fungsi untuk update supir dan mobil JO
+
+    function getGajiData($postData,$supir_id){
+        $response = array();
+    
+        ## Read value
+        $draw = $postData['draw'];
+        $start = $postData['start']; // mulai display per page
+        $rowperpage = $postData['length']; // Rows display per page
+        $columnIndex = $postData['order'][0]['column']; // Column index untuk sorting
+        $columnName = $postData['columns'][$columnIndex]['data']; // Column name untuk sorting
+        $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
+        $searchValue = $postData['search']['value']; // Search value
+    
+        ## Search 
+        $search_arr = array();
+        $searchQuery = "";
+        if($searchValue != ''){
+            $search_arr[] = " (pembayaran_upah_id like '%".$searchValue."%')";
+        }
+        $search_arr[] = " skb_pembayaran_upah.supir_id=".$supir_id;
+        if(count($search_arr) > 0){ //gabung kondisi where
+            $searchQuery = implode(" and ",$search_arr);
+        }
+    
+        ## Total record without filtering
+        $this->db->select('count(*) as allcount');
+        $this->db->where("supir_id",$supir_id);
+        $records = $this->db->get('skb_pembayaran_upah')->result();
+        $totalRecords = $records[0]->allcount;
+    
+        ## Total record with filtering
+        $this->db->select('count(*) as allcount');
+        if($searchQuery != ''){
+            $this->db->where($searchQuery);
+        }
+        $this->db->join("skb_supir", "skb_supir.supir_id = skb_pembayaran_upah.supir_id", 'left');
+        $records = $this->db->get('skb_pembayaran_upah')->result();
+        $totalRecordwithFilter = $records[0]->allcount;
+    
+        ## data hasil record
+        $this->db->select('*');
+        if($searchQuery != ''){
+            $this->db->where($searchQuery);
+        }
+        $this->db->order_by($columnName, $columnSortOrder);
+        $this->db->limit($rowperpage, $start);
+        $this->db->join("skb_supir", "skb_supir.supir_id = skb_pembayaran_upah.supir_id", 'left');
+        $records = $this->db->get('skb_pembayaran_upah')->result();
+    
+        $data = $records;
+        ## Response
+        $response = array(
+        "draw" => intval($draw),
+        "iTotalRecords" => $totalRecords,
+        "iTotalDisplayRecords" => $totalRecordwithFilter,
+        "aaData" => $data
+        );
+    
+        return $response; 
+    }
 }

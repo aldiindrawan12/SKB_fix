@@ -666,18 +666,17 @@ class Model_Form extends CI_model
             return $this->db->count_all_results("skb_job_order");
         }
 
-        public function filter_jo($order_field, $order_ascdesc,$customer_id,$search,$limit,$start)
+        public function filter_jo($order_field, $order_ascdesc,$customer_id,$search)
         {
             $this->db->where("(Jo_id like '%".$search."%' or muatan like '%".$search."%' or asal like '%".$search."%' or tujuan like '%".$search."%')");
             $this->db->where("customer_id",$customer_id);
             $this->db->where("status","Sampai Tujuan");
             $this->db->where("invoice_id","");
-            $this->db->limit($limit, $start);
             $this->db->order_by($order_field, $order_ascdesc);
             return $this->db->get('skb_job_order')->result_array();
         }
 
-        public function count_filter_jo($customer_id,$search,$limit,$start)
+        public function count_filter_jo($customer_id,$search)
         {
             $this->db->where("(Jo_id like '%".$search."%' or muatan like '%".$search."%' or asal like '%".$search."%' or tujuan like '%".$search."%')");
             $this->db->where("customer_id",$customer_id);

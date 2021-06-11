@@ -97,14 +97,12 @@ class Form extends CI_Controller {
         public function view_pilih_jo(){
             $customer_id = $this->input->post("customer");
             $search = $_POST['search']['value'];
-            $limit = $_POST['length'];
-            $start = $_POST['start'];
             $order_index = $_POST['order'][0]['column'];
             $order_field = $_POST['columns'][$order_index]['data'];
             $order_ascdesc = $_POST['order'][0]['dir'];
             $sql_total = $this->model_form->count_all_jo($customer_id);
-            $sql_data = $this->model_form->filter_jo($order_field, $order_ascdesc,$customer_id,$search,$limit,$start);
-            $sql_filter = $this->model_form->count_filter_jo($customer_id,$search,$limit,$start);
+            $sql_data = $this->model_form->filter_jo($order_field, $order_ascdesc,$customer_id,$search);
+            $sql_filter = $this->model_form->count_filter_jo($customer_id,$search);
             $callback = array(
                 'draw' => $_POST['draw'],
                 'recordsTotal' => $sql_total,

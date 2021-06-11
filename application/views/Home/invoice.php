@@ -27,11 +27,7 @@
                     </div>
                     <div class="form-group">
                         <label for="invoice_id" class="form-label font-weight-bold">Invoice Kode</label>
-                        <div class="row">
-                            <input autocomplete="off" type="text" class="form-control col-md-2 ml-3 mr-1" id="invoice_id1" name="invoice_id1" required>
-                            <input autocomplete="off" type="text" class="form-control col-md-4  mr-1" id="invoice_id2" name="invoice_id2" required readonly>
-                            <input autocomplete="off" type="text" class="form-control col-md-3" id="invoice_id3" name="invoice_id3" required readonly>
-                        </div>
+                        <input autocomplete="off" type="text" class="form-control col-md-10" id="invoice_id" name="invoice_id" required readonly>
                     </div>
                     <div class="form-group">
                         <label for="invoice_tgl" class="form-label font-weight-bold">Tgl.Invoice</label>
@@ -74,7 +70,7 @@
 
                 <div class="form-group mt-3">
                         <label for="invoice_keterangan" class="form-label font-weight-bold">Keterangan</label>
-                        <textarea class="form-control" name="invoice_keterangan" id="invoice_keterangan" rows="11" required></textarea>
+                        <textarea class="form-control" name="invoice_keterangan" id="invoice_keterangan" rows="11"></textarea>
                     </div>
                 </div>
             </div>
@@ -148,13 +144,22 @@
 <script>
     function customer(){
         var nama_customer = $("#customer_id option:selected").text();
-        var date = new Date();
-        $("#invoice_id2").val("-"+nama_customer);
-        if(date.getMonth()<10){
-            $("#invoice_id3").val("-0"+date.getMonth()+"-"+date.getFullYear());
-        }else{
-            $("#invoice_id3").val("-"+date.getMonth()+"-"+date.getFullYear());
-        }
+        $.ajax({
+            type: "GET",
+            url: "<?php echo base_url('index.php/home/no_invoice') ?>",
+            dataType: "text",
+            data: {
+                customer_name: nama_customer
+            },
+            success: function(data) {
+                var date = new Date();
+                if(date.getMonth()<10){
+                    $("#invoice_id").val(data+"-"+nama_customer+"-0"+(date.getMonth()+1)+"-"+date.getFullYear());
+                }else{
+                    $("#invoice_id").val(data+"-"+nama_customer+"-"+(date.getMonth()+1)+"-"+date.getFullYear());
+                }
+            }
+        })
     }
     function reset_form(){
         location.reload();

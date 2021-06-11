@@ -3672,6 +3672,7 @@
             var update_rute = '<?= $this->session->flashdata('status-update-satuan'); ?>';
             var delete_satuan = '<?= $this->session->flashdata('status-delete-satuan'); ?>';
             var merk = '<?= $this->session->flashdata('status-add-merk'); ?>';
+            var invoice = '<?= $this->session->flashdata('status-insert-invoice'); ?>';
             var update_merk = '<?= $this->session->flashdata('status-update-merk'); ?>';
             var delete_merk = '<?= $this->session->flashdata('status-delete-merk'); ?>';
             var supir_jo = '<?= $this->session->flashdata('supir_jo'); ?>';
@@ -3690,6 +3691,15 @@
                         title: "Berhasil",
                         icon: "success",
                         text: "Menambahkan akun baru",
+                        type: "success",
+                        timer: 2000
+                    });
+            }
+            if(invoice == "Berhasil"){
+                Swal.fire({
+                        title: "Berhasil",
+                        icon: "success",
+                        text: "Menambahkan Invoice baru",
                         type: "success",
                         timer: 2000
                     });

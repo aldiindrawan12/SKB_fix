@@ -139,23 +139,13 @@ class Model_Detail extends CI_model
         $gaji_total = $data["gaji_total"];
         $kasbon = $data["kasbon"];
         $bonus = $data["bonus"];
+        $pembayaran_upah_id = $data["pembayaran_upah_id"];
 
-        
         //insert pembayaran upah 
-        $this->db->select("pembayaran_upah_id");
-        $pembayaran_upah_id = $this->db->get("skb_pembayaran_upah")->result_array();
-        $isi_pembayaran_upah_id = [];
-        if($pembayaran_upah_id){
-            for($i=0;$i<count($pembayaran_upah_id);$i++){
-                $isi_pembayaran_upah_id[] = $pembayaran_upah_id[$i]["pembayaran_upah_id"];
-            }
-        }else{
-            $isi_pembayaran_upah_id[] = 0;
-        }
         date_default_timezone_set('Asia/Jakarta');
         $data=array(
             "supir_id"=>$supir_id,
-            "pembayaran_upah_id"=>max($isi_pembayaran_upah_id)+1, 
+            "pembayaran_upah_id"=>$pembayaran_upah_id, 
             "pembayaran_upah_nominal"=>$gaji_total,
             "pembayaran_upah_bonus"=>$bonus,
             "pembayaran_upah_bon"=>$kasbon,
@@ -170,7 +160,7 @@ class Model_Detail extends CI_model
         //update status upah pada jo id
             if($Jo_id != null){
                 for($i=0;$i<count($Jo_id);$i++){
-                    $this->db->set("pembayaran_upah_id",max($isi_pembayaran_upah_id)+1);
+                    $this->db->set("pembayaran_upah_id",$pembayaran_upah_id);
                     $this->db->where("Jo_id",$Jo_id[$i]);
                     $this->db->update("skb_job_order");
                 }
@@ -199,11 +189,19 @@ class Model_Detail extends CI_model
                 $bon_id = $this->db->get("skb_bon")->result_array();
                 $isi_bon_id = [];
                 for($i=0;$i<count($bon_id);$i++){
-                    $isi_bon_id[] = $bon_id[$i]["bon_id"];
+                    $explode_bon = explode("-",$bon_id[$i]["bon_id"]);
+                    if(count($explode_bon)>1){
+                        if($explode_bon[2]==date("m") && $explode_bon[3]==date('Y')){
+                            $isi_bon_id[] = $explode_bon[0];
+                        }
+                    }
+                }
+                if(count($isi_bon_id)==0){
+                    $isi_bon_id[]=0;
                 }
                 date_default_timezone_set('Asia/Jakarta');
                 $data_bon=array(
-                    "bon_id"=>max($isi_bon_id)+1,
+                    "bon_id"=>(max($isi_bon_id)+1)."-BON-".date("m")."-".date("Y"),
                     "supir_id"=>$supir_id,
                     "bon_jenis"=>"Potong Gaji",
                     "bon_nominal"=>$kasbon,

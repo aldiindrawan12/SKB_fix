@@ -469,6 +469,24 @@ class Home extends CI_Controller {
             $this->load->view('home/invoice_customer');
             $this->load->view('footer');
         }
+
+        public function no_invoice(){
+            $customer_name = $this->input->get("customer_name");
+            $invoice_id = $this->model_form->getinvoiceid();
+            $isi_invoice_id = [];
+            for($i=0;$i<count($invoice_id);$i++){
+                $explode_invoice = explode("-",$invoice_id[$i]["invoice_kode"]);
+                if(count($explode_invoice)>1){
+                    if($explode_invoice[1]==$customer_name && $explode_invoice[2]==date("m") && $explode_invoice[3]==date('Y')){
+                        $isi_invoice_id[] = $explode_invoice[0];
+                    }
+                }
+            }
+            if(count($isi_invoice_id)==0){
+                $isi_invoice_id[]=0;
+            }
+            echo (max($isi_invoice_id)+1);
+        }
     // end Invoice
 
     //Akun

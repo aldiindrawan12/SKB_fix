@@ -8,6 +8,10 @@
             <div class="container">
                 <form action="<?=base_url("index.php/form/insert_bon")?>" method="POST" class="row">
                     <div class="col-md-4 col-md-offset-4 mb-4">
+                        <label for="" class="form-label font-weight-bold">No Bon</label>
+                        <input autocomplete="off" type="text" class="form-control" id="bon_id" name="bon_id" required readonly value="<?= $bon_id_new?>">
+                    </div>
+                    <div class="col-md-4 col-md-offset-4 mb-4">
                         <label class="form-label font-weight-bold" for="Supir_bon">Supir</label>
                         <select name="Supir_bon" id="Supir_bon" class="form-control selectpicker" data-live-search="true" required onchange="bon_user()">
                             <option class="font-w700" disabled="disabled" selected value="">Supir Pengiriman</option>

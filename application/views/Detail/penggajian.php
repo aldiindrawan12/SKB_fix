@@ -28,9 +28,9 @@
                         <td><?= date("d-m-Y")?></td>
                     </tr>
                     <tr>
-                        <td width="25%">Id Supir</td>
+                        <td width="25%">No Slip Gaji</td>
                         <td width="5%">:</td>
-                        <td><?= $supir["supir_id"]?></td>
+                        <td><?= $no_slip_gaji?></td>
                     </tr>
                     <tr>
                         <td width="25%">Nama Supir</td>
@@ -358,7 +358,8 @@
                             kasbon:"<?= $pilih_jo["kasbon"]?>",
                             bonus:"<?= $pilih_jo["bonus"]?>",
                             jo_id:data_jo_id,
-                            bulan_kerja:"<?= $data_bulan[$bulan]."-".$tahun?>"
+                            bulan_kerja:"<?= $data_bulan[$bulan]."-".$tahun?>",
+                            pembayaran_upah_id:"<?= $no_slip_gaji?>",
                         },
                         success: function(data) {
                             window.location = "<?= base_url("index.php/home/gaji")?>";

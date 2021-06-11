@@ -121,11 +121,19 @@ class Detail extends CI_Controller {
             $bon_id = $this->model_form->getbonid();
             $isi_bon_id = [];
             for($i=0;$i<count($bon_id);$i++){
-                $isi_bon_id[] = $bon_id[$i]["bon_id"];
+                $explode_bon = explode("-",$bon_id[$i]["bon_id"]);
+                if(count($explode_bon)>1){
+                    if($explode_bon[2]==date("m") && $explode_bon[3]==date('Y')){
+                        $isi_bon_id[] = $explode_bon[0];
+                    }
+                }
+            }
+            if(count($isi_bon_id)==0){
+                $isi_bon_id[]=0;
             }
             date_default_timezone_set('Asia/Jakarta');
             $data["data"]=array(
-                "bon_id"=>max($isi_bon_id)+1,
+                "bon_id"=>(max($isi_bon_id)+1)."-BON-".date("m")."-".date("Y"),
                 "supir_id"=>$data_jo["supir_id"],
                 "bon_jenis"=>"Pembatalan JO",
                 "bon_nominal"=>$data_jo["uang_jalan"],
@@ -133,7 +141,7 @@ class Detail extends CI_Controller {
                 "bon_tanggal"=>date("Y-m-d H:i:s"),
                 "user"=>$_SESSION["user"]."(".date("d-m-Y H:i:s").")",
             );
-            $data["bon_id"] = max($isi_bon_id)+1;
+            $data["bon_id"] = (max($isi_bon_id)+1)."-BON-".date("m")."-".date("Y");
             $this->model_form->insert_bon($data["data"]);
             $this->model_detail->update_jo_dibatalkan($data_jo["Jo_id"],$data_jo["supir_id"],$data_jo["mobil_no"],$data_jo["uang_jalan"]);
             $data["supir"] = $this->model_home->getsupirbyid($data["data"]["supir_id"]);
@@ -264,6 +272,21 @@ class Detail extends CI_Controller {
     //fungsi untuk Detail penggajian
         public function detail_penggajian($supir_id)
         {
+            $slip_id = $this->model_form->getpembayaranupahid();
+            $isi_slip_id = [];
+            for($i=0;$i<count($slip_id);$i++){
+                $explode_slip = explode("-",$slip_id[$i]["pembayaran_upah_id"]);
+                if(count($explode_slip)>1){
+                    if($explode_slip[2]==date("m") && $explode_slip[3]==date('Y')){
+                        $isi_slip_id[] = $explode_slip[0];
+                    }
+                }
+            }
+            if(count($isi_slip_id)==0){
+                $isi_slip_id[]=0;
+            }
+            $data["no_slip_gaji"]=(max($isi_slip_id)+1)."-GAJI-".date("m")."-".date('Y');
+
             if(!$_SESSION["user"]){
     			$this->session->set_flashdata('status-login', 'False');
                 redirect(base_url());
@@ -404,7 +427,8 @@ class Detail extends CI_Controller {
                 "gaji_total"=>str_replace(".","",$this->input->get("gaji_total")),
                 "bonus"=>str_replace(".","",$this->input->get("bonus")),
                 "Jo_id"=>$this->input->get("jo_id"),
-                "bulan_kerja"=>$this->input->get("bulan_kerja")
+                "bulan_kerja"=>$this->input->get("bulan_kerja"),
+                "pembayaran_upah_id"=>$this->input->get("pembayaran_upah_id")
             );
             $this->model_detail->insert_upah($data);
             echo $data["Jo_id"];

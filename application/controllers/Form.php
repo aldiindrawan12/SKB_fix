@@ -62,10 +62,24 @@ class Form extends CI_Controller {
         }
 
         public function bon(){
+            $bon_id = $this->model_form->getbonid();
+            $isi_bon_id = [];
+            for($i=0;$i<count($bon_id);$i++){
+                $explode_bon = explode("-",$bon_id[$i]["bon_id"]);
+                if(count($explode_bon)>1){
+                    if($explode_bon[2]==date("m") && $explode_bon[3]==date('Y')){
+                        $isi_bon_id[] = $explode_bon[0];
+                    }
+                }
+            }
+            if(count($isi_bon_id)==0){
+                $isi_bon_id[]=0;
+            }
             if(!$_SESSION["user"]){
     			$this->session->set_flashdata('status-login', 'False');
                 redirect(base_url());
             }
+            $data["bon_id_new"] = (max($isi_bon_id)+1)."-BON-".date("m")."-".date("Y");
             $data["supir"] = $this->model_home->getsupir();
             $data["page"] = "Bon_page";
             $data["collapse_group"] = "Penggajian";
@@ -103,7 +117,7 @@ class Form extends CI_Controller {
         public function insert_invoice(){
             $data=array(
                 "customer_id"=>$this->input->post("customer_id"),
-                "invoice_kode"=>$this->input->post("invoice_id1").$this->input->post("invoice_id2").$this->input->post("invoice_id3"),
+                "invoice_kode"=>$this->input->post("invoice_id"),
                 "tanggal_invoice"=>$this->change_tanggal($this->input->post("invoice_tgl")),
                 "total_tonase"=>str_replace(".","",$this->input->post("invoice_tonase")),
                 "total"=>str_replace(".","",$this->input->post("invoice_total")),
@@ -115,6 +129,7 @@ class Form extends CI_Controller {
                 "status_bayar"=>"Belum Lunas",
                 "user_invoice"=>$_SESSION["user"]."(".date("d-m-Y H:i:s").")",
             );
+            $this->session->set_flashdata('status-insert-invoice', 'Berhasil');
             $data_jo = explode(",",$this->input->post("data_jo"));
             $this->model_form->insert_invoice($data,$data_jo);
             redirect(base_url("index.php/home/invoice"));
@@ -328,15 +343,9 @@ class Form extends CI_Controller {
                 $this->load->view("print/jo_print",$data);
         }
         public function insert_bon(){
-            $bon_id = $this->model_form->getbonid();
-            $isi_bon_id = [];
-            for($i=0;$i<count($bon_id);$i++){
-                $isi_bon_id[] = $bon_id[$i]["bon_id"];
-            }
-
             date_default_timezone_set('Asia/Jakarta');
             $data["data"]=array(
-                "bon_id"=>max($isi_bon_id)+1,
+                "bon_id"=>$this->input->post("bon_id"),
                 "supir_id"=>$this->input->post("Supir_bon"),
                 "bon_jenis"=>$this->input->post("Jenis"),
                 "bon_nominal"=>str_replace(".","",$this->input->post("Nominal")),
@@ -345,7 +354,6 @@ class Form extends CI_Controller {
                 "pembayaran_upah_id"=>"-",
                 "user"=>$_SESSION["user"]."(".date("d-m-Y H:i:s").")",
             );
-            $data["bon_id"] = max($isi_bon_id)+1;
             $this->model_form->insert_bon($data["data"]);
             $data["supir"] = $this->model_home->getsupirbyid($data["data"]["supir_id"]);
             $data["asal"] = "insert";
@@ -790,11 +798,19 @@ class Form extends CI_Controller {
             $bon_id = $this->model_form->getbonid();
             $isi_bon_id = [];
             for($i=0;$i<count($bon_id);$i++){
-                $isi_bon_id[] = $bon_id[$i]["bon_id"];
+                $explode_bon = explode("-",$bon_id[$i]["bon_id"]);
+                if(count($explode_bon)>1){
+                    if($explode_bon[2]==date("m") && $explode_bon[3]==date('Y')){
+                        $isi_bon_id[] = $explode_bon[0];
+                    }
+                }
+            }
+            if(count($isi_bon_id)==0){
+                $isi_bon_id[]=0;
             }
             date_default_timezone_set('Asia/Jakarta');
             $data["data"]=array(
-                "bon_id"=>max($isi_bon_id)+1,
+                "bon_id"=>(max($isi_bon_id)+1)."-BON-".date("m")."-".date("Y"),
                 "supir_id"=>$data_jo["supir_id"],
                 "bon_jenis"=>"Pembatalan JO",
                 "bon_nominal"=>$data_jo["uang_jalan_bayar"],
@@ -803,7 +819,7 @@ class Form extends CI_Controller {
                 "pembayaran_upah_id"=>"-",
                 "user"=>$_SESSION["user"]."(".date("d-m-Y H:i:s").")",
             );
-            $data["bon_id"] = max($isi_bon_id)+1;
+            $data["bon_id"] = (max($isi_bon_id)+1)."-BON-".date("m")."-".date("Y");
             $this->model_form->insert_bon($data["data"]);
             $this->model_detail->update_jo_dibatalkan($data_jo["Jo_id"],$data_jo["supir_id"],$data_jo["mobil_no"],$data_jo["uang_jalan"]);
             $data["supir"] = $this->model_home->getsupirbyid($data["data"]["supir_id"]);

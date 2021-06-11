@@ -41,6 +41,14 @@ class Model_Form extends CI_model
             $this->db->select("bon_id");
             return $this->db->get("skb_bon")->result_array();
         }
+        public function getpembayaranupahid(){
+            $this->db->select("pembayaran_upah_id");
+            return $this->db->get("skb_pembayaran_upah")->result_array();
+        }
+        public function getinvoiceid(){
+            $this->db->select("invoice_kode");
+            return $this->db->get("skb_invoice")->result_array();
+        }
     //end fungsi get
     //fungsi insert
         public function insert_JO($data){

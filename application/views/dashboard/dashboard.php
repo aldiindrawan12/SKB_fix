@@ -76,18 +76,20 @@
                 <h6 class="m-0 font-weight-bold btn-facebook disabled h4 p-3 " style="border-radius:10px;  background-color:#91c788;">Job Order Belum Ada Invoice</h6>
             </div>  
             <div class="card-body row justify-content-md-center small">
-                <div class="table-responsive col-md-12 border border-primary rounded p-1">
+                <div class="table-responsive col-md-12 border border-primary rounded p-1 small">
                     <table class="table table-bordered" id="Table-JO-Belum-Invoice" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th width ="10%" class="text-center" scope="col">No</th>
                                 <th width ="10%" class="text-center" scope="col">No JO</th>
+                                <th width ="10%" class="text-center" scope="col">Driver</th>
+                                <th width ="10%" class="text-center" scope="col">No Pol</th>
+                                <th width ="10%" class="text-center" scope="col">Mobil</th>
                                 <th width ="17%" class="text-center" scope="col">Customer</th>
                                 <th width ="15%" class="text-center" scope="col">Muatan</th>
                                 <th width ="15%" class="text-center" scope="col">Asal</th>
                                 <th width ="15%" class="text-center" scope="col">Tujuan</th>
                                 <th width ="1%" class="text-center" scope="col">Tanggal</th>
-                                <th width ="25%" scope="col">Status</th>
                                 <th width ="5%" scope="col">Detail</th>
                             </tr>
                         </thead>
@@ -802,6 +804,15 @@
                         className: 'text-center'
                     },
                     {
+                        "data": "supir_name"
+                    },
+                    {
+                        "data": "mobil_no"
+                    },
+                    {
+                        "data": "mobil_jenis"
+                    },
+                    {
                         "data": "customer_name"
                     },
                     {
@@ -818,14 +829,6 @@
                         render: function(data, type, row) {
                             return change_tanggal(data);
                         }
-                    },
-                    {
-                        "data": "status",
-                        className: 'text-center',
-                            render: function(data, type, row) {
-                                    let html = "<span class='btn-sm btn-block btn-success'><i class='fa fa-fw fa-check mr-2'></i>" + data + "</span>";
-                                    return html;
-                            }
                     },
                     {
                         "data": "Jo_id",

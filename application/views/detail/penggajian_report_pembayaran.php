@@ -24,6 +24,11 @@
                         <?php } ?>
                     </tr>
                     <tr>
+                        <td width="25%">Tanggal Slip Gaji</td>
+                        <td width="5%">:</td>
+                        <td><?= change_tanggal($pembayaran_upah[0]["pembayaran_upah_tanggal"])?></td>
+                    </tr>
+                    <tr>
                         <td width="25%">No Slip Gaji</td>
                         <td width="5%">:</td>
                         <td><?= $pembayaran_upah[0]["pembayaran_upah_id"]?></td>
@@ -59,7 +64,7 @@
                             <th class="text-center" width="10%" scope="col">Ke</th>
                             <th class="text-center" width="10%" scope="col">Uang Jalan</th>
                             <th class="text-center" width="8%" scope="col">Total Muatan</th>
-                            <th class="text-center" width="8%" scope="col">Total Muatan</th>
+                            <th class="text-center" width="8%" scope="col">Biaya Lain</th>
                             <th class="text-center" width="10%" scope="col">Upah</th>
                         </tr>
                     </thead>
@@ -88,8 +93,9 @@
                         </tr>
                     <?php } ?>
                         <tr>
-                            <td colspan=7>Total</td>
+                            <td colspan=6>Total</td>
                             <td>Rp.<?= number_format($uang_jalan,2,',','.')?></td>
+                            <td></td>
                             <td></td>
                             <td>Rp.<?= number_format($pembayaran_upah[0]["pembayaran_upah_nominal"],2,",",".")?></td>
                         </tr>

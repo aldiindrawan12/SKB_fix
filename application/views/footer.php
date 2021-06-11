@@ -281,7 +281,7 @@
                                 $('td[name="mobil_no_mesin"]').text(data["mobil_no_mesin"]); //set value
                                 $('td[name="mobil_bpkb"]').text(data["mobil_bpkb"]); //set value
                                 $('td[name="mobil_usaha"]').text(data["mobil_usaha"]); //set value
-                                $('td[name="mobil_berlaku_usaha"]').text(data["mobil_berlaku_usaha"]); //set value
+                                $('td[name="mobil_berlaku_usaha"]').text(change_tanggal(data["mobil_berlaku_usaha"])); //set value
                                 $('td[name="mobil_jenis"]').text(data["mobil_jenis"]); //set value
                                 $('td[name="status_jalan"]').text(data["status_jalan"]); //set value
                                 $('td[name="mobil_max_load"]').text(data["mobil_max_load"]); //set value
@@ -324,7 +324,7 @@
                                 $('#mobil_tahun_update').val(data["mobil_tahun"]); //set value
                                 $('#mobil_bpkb_update').val(data["mobil_bpkb"]); //set value
                                 $('#mobil_usaha_update').val(data["mobil_usaha"]); //set value
-                                $('#mobil_berlaku_usaha_update').val(data["mobil_berlaku_usaha"]); //set value
+                                $('#mobil_berlaku_usaha_update').val(change_tanggal(data["mobil_berlaku_usaha"])); //set value
 
                                 $('#mobil_stnk_update').val(data["mobil_stnk"]); //set value
                                 $('#mobil_berlaku_update').val(change_tanggal(data["mobil_berlaku"])); //set value
@@ -4909,6 +4909,8 @@
     <script>
         function change_tanggal(data){
             if(data==""){
+                return "";
+            }else if(data=="0000-00-00"){
                 return "";
             }else{
                 var data_tanggal = data.split("-");

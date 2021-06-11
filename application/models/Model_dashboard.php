@@ -343,6 +343,8 @@ class Model_Dashboard extends CI_model
             ## data hasil record
             $this->db->select('*');
             $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
+            $this->db->join("skb_supir", "skb_supir.supir_id = skb_job_order.supir_id", 'left');
+            $this->db->join("skb_mobil", "skb_mobil.mobil_no = skb_job_order.mobil_no", 'left');
             if($searchQuery != ''){
                 $this->db->where($searchQuery);
             }
@@ -356,6 +358,9 @@ class Model_Dashboard extends CI_model
                 $data[] = array(
                     "no"=>$n,
                     "Jo_id"=>$record->Jo_id,
+                    "supir_name"=>$record->supir_name,
+                    "mobil_no"=>$record->mobil_no,
+                    "mobil_jenis"=>$record->mobil_jenis,
                     "customer_name"=>$record->customer_name,
                     "muatan"=>$record->muatan,
                     "asal"=>$record->asal,

@@ -104,7 +104,7 @@ class Model_Detail extends CI_model
             $bulan_kerja = "'".$tahun."-".$bulan."-%'";
             $this->db->where("tanggal_muat like ".$bulan_kerja);
         }
-        $this->db->where("pembayaran_upah_id","0");
+        $this->db->where("pembayaran_upah_id","");
         $this->db->where("upah!=","0");
         $this->db->join("skb_customer","skb_customer.customer_id=skb_job_order.customer_id","left");
         $this->db->join("skb_supir","skb_supir.supir_id=skb_job_order.supir_id","left");

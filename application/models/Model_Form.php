@@ -253,12 +253,27 @@ class Model_Form extends CI_model
             }
         }
         public function accdeletetruck($mobil_no,$validasi){
+            $this->db->select("mobil_no");
+            $data_mobil = $this->db->get("skb_mobil")->result_array();
+            $isi_mobil_no = [];
+            for($i=0;$i<count($data_mobil);$i++){
+                $explode_bon = explode("/",$data_mobil[$i]["mobil_no"]);
+                if(count($explode_bon)>=1){
+                    if(count($explode_bon)==2){
+                        $isi_mobil_no[] = $explode_bon[0];
+                    }
+                }
+            }
+            if(count($isi_mobil_no)==0){
+                $isi_mobil_no[]=0;
+            }
+            $new_mobil_no=(max($isi_mobil_no)+1)."/".$mobil_no;
             if($validasi=="Ditolak"){
                 $this->db->set("status_hapus","NO");
             }else{
                 $this->db->set("status_hapus","YES");
             }
-            $this->db->set("mobil_no",rand(0,999999)."/".$mobil_no);
+            $this->db->set("mobil_no",$new_mobil_no);
             $this->db->set("validasi_delete","ACC");
             $this->db->where("mobil_no",$mobil_no);
             $this->db->update("skb_mobil");
@@ -409,7 +424,7 @@ class Model_Form extends CI_model
             $this->db->set("tonase",$data["tonase"]);
             $this->db->set("keterangan",$data["keterangan"]);
             $this->db->set("status",$data["status"]);
-            $this->db->set("user_closing",$data["user_closing"]."(".date("Y-m-d H:i:s").")"); 
+            $this->db->set("user_closing",$data["user_closing"]."(".date("d-m-Y H:i:s").")"); 
             $this->db->set("tanggal_bongkar",$data["tanggal_bongkar"]);
             $this->db->where("Jo_id",$data["jo_id"]);
             $this->db->update("skb_job_order");

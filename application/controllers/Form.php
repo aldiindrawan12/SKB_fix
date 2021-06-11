@@ -5,6 +5,7 @@ class Form extends CI_Controller {
     public function __construct()
 	{
 		parent::__construct();
+        date_default_timezone_set('Asia/Jakarta');
 		$this->load->model('model_form');//load model
         $this->load->model('model_home');//load model
         $this->load->model('model_detail');//load model

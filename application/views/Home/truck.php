@@ -20,7 +20,7 @@
                 <thead>
                     <tr>
                         <th class="text-center" width="3%" scope="col">No</th>
-                        <th class="text-center" width="8%" scope="col">NoPol</th>
+                        <th class="text-center" width="8%" scope="col">No Polisi</th>
                         <th class="text-center" width="12%" scope="col">Merk</th>
                         <th class="text-center" width="12%" scope="col">Type</th>
                         <th class="text-center" width="10%" scope="col">Jenis</th>

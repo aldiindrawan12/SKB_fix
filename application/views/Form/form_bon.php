@@ -8,6 +8,10 @@
             <div class="container">
                 <form action="<?=base_url("index.php/form/insert_bon")?>" method="POST" class="row">
                     <div class="col-md-4 col-md-offset-4 mb-4">
+                        <label for="Tanggal" class="form-label font-weight-bold">Tanggal</label>
+                        <input autocomplete="off" type="text" class="form-control" id="Tanggal" name="Tanggal" required onclick="tanggal_berlaku(this)">
+                    </div>
+                    <div class="col-md-4 col-md-offset-4 mb-4">
                         <label for="" class="form-label font-weight-bold">No Bon</label>
                         <input autocomplete="off" type="text" class="form-control" id="bon_id" name="bon_id" required readonly value="<?= $bon_id_new?>">
                     </div>
@@ -36,10 +40,6 @@
                     <div class="col-md-4 col-md-offset-4 mb-4">
                         <label for="Nominal" class="form-label font-weight-bold">Nominal</label>
                         <input autocomplete="off" type="text" class="form-control" id="Nominal" name="Nominal" required onkeyup="nominal()">
-                    </div>
-                    <div class="col-md-4 col-md-offset-4 mb-4">
-                        <label for="Tanggal" class="form-label font-weight-bold">Tanggal</label>
-                        <input autocomplete="off" type="text" class="form-control" id="Tanggal" name="Tanggal" required onclick="tanggal_berlaku(this)">
                     </div>
                     <div class="col-md-4 mb-4 ">
                         <label for="Keterangan" class="form-label font-weight-bold">Keterangan/Catatan</label>

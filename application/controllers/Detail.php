@@ -153,6 +153,11 @@ class Detail extends CI_Controller {
             $data = $this->model_home->getjobyid($jo_id);
             echo json_encode($data);       
         }
+        public function getjokonfirmasi(){
+            $jo_id = $this->input->get('id');
+            $data = $this->model_home->getjobyidkonfirmasi($jo_id);
+            echo json_encode($data);       
+        }
     //end fungsi untuk Detail jo dan invoice
 
     //fungsi untuk Detail customer

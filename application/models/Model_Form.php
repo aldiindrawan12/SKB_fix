@@ -426,6 +426,7 @@ class Model_Form extends CI_model
             $this->db->set("status",$data["status"]);
             $this->db->set("user_closing",$data["user_closing"]."(".date("d-m-Y H:i:s").")"); 
             $this->db->set("tanggal_bongkar",$data["tanggal_bongkar"]);
+            $this->db->set("total_tagihan",$data["total_tagihan"]);
             $this->db->where("Jo_id",$data["jo_id"]);
             $this->db->update("skb_job_order");
 
@@ -613,34 +614,20 @@ class Model_Form extends CI_model
         public function getmobilbyjenis($mobil_jenis){
             return $this->db->get_where("skb_mobil",array("mobil_jenis"=>$mobil_jenis,"status_jalan"=>"Tidak Jalan","status_hapus"=>"NO","validasi"=>"ACC"))->result_array();
         }
+        public function getmobilbyno($mobil_no){
+            return $this->db->get_where("skb_mobil",array("mobil_no"=>$mobil_no))->row_array();
+        }
         public function getallmobil(){
             return $this->db->get_where("skb_mobil",array("status_hapus"=>"No"))->result_array();
         }
         public function getrutefix($data){
-            if($data["rute_tonase"]!=0){
                 $data_where = array(
                     "customer_id"=>$data["customer_id"],
                     "rute_muatan"=>$data["muatan"],
                     "rute_dari"=>$data["rute_dari"],
                     "rute_ke"=>$data["rute_ke"],
                     "rute_status_hapus"=>"NO",
-                    "rute_tonase"=>$data["rute_tonase"]
                 );
-            }else{
-                $data_where = array(
-                    "customer_id"=>$data["customer_id"],
-                    "rute_muatan"=>$data["muatan"],
-                    "rute_dari"=>$data["rute_dari"],
-                    "rute_ke"=>$data["rute_ke"],
-                    "rute_status_hapus"=>"NO",
-                    "rute_tonase"=>"0"
-                );
-            }
-            if($data["mobil_jenis"]=="Sedang(Engkel)"){
-                $this->db->select("rute_uj_engkel,rute_gaji_engkel,rute_tonase,rute_gaji_engkel_rumusan,rute_tagihan");
-            }else{
-                $this->db->select("rute_uj_tronton,rute_gaji_tronton,rute_tonase,rute_gaji_tronton_rumusan,rute_tagihan");
-            }
             $this->db->where($data_where);
             return $this->db->get("skb_rute")->row_array();
         }

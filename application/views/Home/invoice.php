@@ -7,9 +7,17 @@
         <div class="card-body">
         <form action="<?=base_url("index.php/form/insert_invoice")?>" method="POST">
             <div class="row">
-                <div class="col-md-4 border rounded mr-4 ml-3">
-                    <div class="form-group mt-3">
-                        <label class="form-label font-weight-bold " for="customer_id">Customer</label>
+                <div class="col-md-6 border rounded">
+                    <div class="form-group">
+                        <label for="invoice_tgl" class="form-label font-weight-bold">Tgl.Invoice</label>
+                        <input autocomplete="off" type="text" class="form-control col-md-10" id="invoice_tgl" name="invoice_tgl" required>
+                    </div>          
+                    <div class="form-group">
+                        <label for="invoice_id" class="form-label font-weight-bold">Invoice Kode</label>
+                        <input autocomplete="off" type="text" class="form-control col-md-10" id="invoice_id" name="invoice_id" required readonly>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label font-weight-bold mr-3" for="customer_id">Customer</label>
                         <select name="customer_id" id="customer_id" class="form-control selectpicker col-md-10" data-live-search="true" required onchange="customer()">
                             <option class="font-w700 " disabled="disabled" selected value="">Customer</option>
                             <?php foreach($customer as $value){?>
@@ -26,16 +34,11 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="invoice_id" class="form-label font-weight-bold">Invoice Kode</label>
-                        <input autocomplete="off" type="text" class="form-control col-md-10" id="invoice_id" name="invoice_id" required readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="invoice_tgl" class="form-label font-weight-bold">Tgl.Invoice</label>
-                        <input autocomplete="off" type="text" class="form-control col-md-10" id="invoice_tgl" name="invoice_tgl" required>
-                    </div>                    
+                        <label class="form-label font-weight-bold " for="invoice_payment">Payment (hari)</label>
+                        <input autocomplete="off" type="text" class="form-control col-md-10" id="invoice_payment" name="invoice_payment" required onkeyup="hanyaangka(this)">
+                    </div>          
                 </div>
-                <div class="col-md-4 border rounded mr-4">
-                         
+                <div class="col-md-6 border rounded">
                     <div class="form-group row mt-3">
                         <label for="invoice_tonase" class="col-form-label col-sm-5 font-weight-bold">Total Tonase</label>
                         <div class="col-sm-7">
@@ -60,23 +63,16 @@
                             <input autocomplete="off" type="text" class="form-control" id="invoice_grand_total" name="invoice_grand_total" required readonly>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label font-weight-bold " for="invoice_payment">Payment (hari)</label>
-                        <input autocomplete="off" type="text" class="form-control" id="invoice_payment" name="invoice_payment" required onkeyup="hanyaangka(this)">
-                    </div>
                     <input type="text" id="data_jo" name="data_jo" required hidden>
-                </div>
-                <div class="col-md-3 border rounded mr-2">
-
-                <div class="form-group mt-3">
+                    <div class="form-group mt-3">
                         <label for="invoice_keterangan" class="form-label font-weight-bold">Keterangan</label>
-                        <textarea class="form-control" name="invoice_keterangan" id="invoice_keterangan" rows="11"></textarea>
+                        <textarea class="form-control" name="invoice_keterangan" id="invoice_keterangan" rows="3"></textarea>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <button type="submit" class="btn btn-success float-right mt-3">Simpan</button>
-                <button type="reset" class="btn btn-danger float-right mt-3" onclick="reset_form()">Reset</button>
+            <div class="col text-center">
+                <button type="submit" class="btn btn-success mt-3">Simpan</button>
+                <button type="reset" class="btn btn-danger mt-3" onclick="reset_form()">Reset</button>
             </div>
         </form>
     </div>
@@ -84,21 +80,22 @@
 </div>
 
 <!-- table invoice -->
-<div class="card shadow mb-5">
+<div class="card shadow mb-5 small">
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="pilih-jo" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th class="text-center" width="" scope="col">ID JO</th>
-                        <th class="text-center" width="" scope="col">Nopol</th>
                         <th class="text-center" width="" scope="col">Tgl.Muat</th>
                         <th class="text-center" width="" scope="col">Tgl.Plng</th>
+                        <th class="text-center" width="" scope="col">Nopol</th>
                         <th class="text-center" width="" scope="col">Muatan</th>
                         <th class="text-center" width="" scope="col">Dari</th>
                         <th class="text-center" width="" scope="col">Ke</th>
                         <th class="text-center" width="" scope="col">Tonase</th>
-                        <th class="text-center" width="" scope="col">Inv./Tagihan</th>
+                        <th class="text-center" width="" scope="col">Harga</th>
+                        <th class="text-center" width="" scope="col">Total</th>
                         <th class="text-center" width="" scope="col">Pilih</th>
                         <th class="text-center" width="" scope="col">Detail</th>
                     </tr>

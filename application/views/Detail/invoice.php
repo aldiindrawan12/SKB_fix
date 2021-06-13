@@ -36,7 +36,10 @@
 <!-- Basic Card Example -->
 <div class="card shadow mb-4 ml-5 mr-5 py-2 px-2">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Detail Invoice</h6>
+        <h6 class="m-0 font-weight-bold text-primary float-left">Detail Invoice</h6>
+        <a href="<?= base_url("index.php/home/invoice_customer")?>" class="btn btn-danger btn-circle btn-sm float-right">
+            <i class="fas fa-times"></i>
+        </a>
     </div>
     <div class="card-body">
             <div class="container small">
@@ -46,7 +49,7 @@
                 <div class="card-body">
                     <a class="btn btn-primary" onclick="cetak_invoice()"><span class="small">Cetak Invoice</span></a>
                     <?php if($invoice[0]["status_bayar"] == "Belum Lunas" && ($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User")){?>
-                        <a class="btn btn-warning" data-toggle="modal" data-target="#popup-konfirmasi-status" href="" id="<?= $invoice[0]["invoice_kode"]?>" onclick="update_status(this)"><span class="small">Tandai Lunas</span></a>
+                        <!-- <a class="btn btn-warning" data-toggle="modal" data-target="#popup-konfirmasi-status" href="" id="<?= $invoice[0]["invoice_kode"]?>" onclick="update_status(this)"><span class="small">Tandai Lunas</span></a> -->
                     <?php }?>
                     <table class="w-50 mt-4">
                         <tbody>
@@ -107,7 +110,8 @@
                                     <th class="text-center" width="25%" scope="col">Dari</th>
                                     <th class="text-center" width="25%" scope="col">Ke</th>
                                     <th class="text-center" width="10%" scope="col">Total Muatan</th>
-                                    <th class="text-center" width="10%" scope="col">Jumlah Tagihan</th>
+                                    <th class="text-center" width="10%" scope="col">Harga</th>
+                                    <th class="text-center" width="10%" scope="col">Total</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -121,21 +125,22 @@
                                     <td><?= $value["muatan"]?></td>
                                     <td><?= $value["asal"]?></td>
                                     <td><?= $value["tujuan"]?></td>
-                                    <td><?= $value["tonase"]?></td>
+                                    <td><?= number_format($value["tonase"],0,',','.')?></td>
                                     <td>Rp.<?= number_format($value["tagihan"],2,',','.')?></td>
+                                    <td>Rp.<?= number_format($value["total_tagihan"],2,',','.')?></td>
                                     </tr>
                                 <?php $n++;}?>
                                 <tr>
-                                    <td colspan=8>Total</td>
+                                    <td colspan=9>Total</td>
                                     <td>Rp.<?= number_format($invoice[0]["total"],2,',','.')?></td>
                                 </tr>
                                 <?php if($invoice[0]["ppn"]!=0){?>
                                     <tr>
-                                        <td colspan=8>PPN 10%</td>
+                                        <td colspan=9>PPN 10%</td>
                                         <td>Rp.<?= number_format($invoice[0]["ppn"],2,',','.')?></td>
                                     </tr>
                                     <tr>
-                                        <td colspan=8>Jumlah</td>
+                                        <td colspan=9>Jumlah</td>
                                         <td>Rp.<?= number_format($invoice[0]["grand_total"],2,',','.')?></td>
                                     </tr>
                                 <?php }?>

@@ -179,19 +179,19 @@
                             edit = "";
                             hapus = "";
                             if(data=="ACC"){
-                                tambah = "<a class='btn btn-success rounded-pill btn-sm'>Tambah <i class='fas fa-check'></i></a>";
+                                tambah = "<a class='btn btn-success rounded-pill btn-sm'><i class='fas fa-check'></i></a>";
                             }else{
-                                tambah = "<a class='btn btn-danger rounded-pill btn-sm'>Tambah <i class='fas fa-exclamation'></i></a>";
+                                tambah = "<a class='btn btn-danger rounded-pill btn-sm'><i class='fas fa-exclamation'></i></a>";
                             }
                             if(row['validasi_edit']=="ACC"){
-                                edit = "<a class='btn btn-success rounded-pill btn-sm'>Edit <i class='fas fa-check'></i></a>";
+                                edit = "<a class='btn btn-success rounded-pill btn-sm'><i class='fas fa-check'></i></a>";
                             }else{
-                                edit = "<a class='btn btn-danger rounded-pill btn-sm'>Edit <i class='fas fa-exclamation'></i></a>";
+                                edit = "<a class='btn btn-danger rounded-pill btn-sm'><i class='fas fa-exclamation'></i></a>";
                             }
                             if(row['validasi_delete']=="ACC"){
-                                hapus = "<a class='btn btn-success rounded-pill btn-sm'>Hapus <i class='fas fa-check'></i></a>";
+                                hapus = "<a class='btn btn-success rounded-pill btn-sm'><i class='fas fa-check'></i></a>";
                             }else{
-                                hapus = "<a class='btn btn-danger rounded-pill btn-sm'>Hapus <i class='fas fa-exclamation'></i></a>";
+                                hapus = "<a class='btn btn-danger rounded-pill btn-sm'><i class='fas fa-exclamation'></i></a>";
                             }
                             let html = "<span class='small'>"+tambah+"<br>"+edit+"<br>"+hapus+"</span>";
                             return html;
@@ -542,19 +542,19 @@
                             edit = "";
                             hapus = "";
                             if(data=="ACC"){
-                                tambah = "<a class='btn btn-success rounded-pill btn-sm'>Tambah <i class='fas fa-check'></i></a>";
+                                tambah = "<a class='btn btn-success rounded-pill btn-sm'><i class='fas fa-check'></i></a>";
                             }else{
-                                tambah = "<a class='btn btn-danger rounded-pill btn-sm'>Tambah <i class='fas fa-exclamation'></i></a>";
+                                tambah = "<a class='btn btn-danger rounded-pill btn-sm'><i class='fas fa-exclamation'></i></a>";
                             }
                             if(row['validasi_edit']=="ACC"){
-                                edit = "<a class='btn btn-success rounded-pill btn-sm'>Edit <i class='fas fa-check'></i></a>";
+                                edit = "<a class='btn btn-success rounded-pill btn-sm'><i class='fas fa-check'></i></a>";
                             }else{
-                                edit = "<a class='btn btn-danger rounded-pill btn-sm'>Edit <i class='fas fa-exclamation'></i></a>";
+                                edit = "<a class='btn btn-danger rounded-pill btn-sm'><i class='fas fa-exclamation'></i></a>";
                             }
                             if(row['validasi_delete']=="ACC"){
-                                hapus = "<a class='btn btn-success rounded-pill btn-sm'>Hapus <i class='fas fa-check'></i></a>";
+                                hapus = "<a class='btn btn-success rounded-pill btn-sm'><i class='fas fa-check'></i></a>";
                             }else{
-                                hapus = "<a class='btn btn-danger rounded-pill btn-sm'>Hapus <i class='fas fa-exclamation'></i></a>";
+                                hapus = "<a class='btn btn-danger rounded-pill btn-sm'><i class='fas fa-exclamation'></i></a>";
                             }
                             let html = "<span class='small'>"+tambah+"<br>"+edit+"<br>"+hapus+"</span>";
                             return html;
@@ -874,8 +874,8 @@
                 },
                 "deferRender": true,
                 "aLengthMenu": [
-                    [10, 30, 50, 100],
-                    [10, 30, 50, 100]
+                    [50, 100],
+                    [50, 100]
                 ],
                 "columns": [
                     // {
@@ -894,6 +894,22 @@
                         render: function(data, type, row) {
                             return change_tanggal(data);
                         }
+                    },
+                    {
+                        "data": "status",
+                        className: 'text-center',
+                            render: function(data, type, row) {
+                                if (data == "Sampai Tujuan") {
+                                    let html = "<span class='text-success'>" + data + "</span>";
+                                    return html;
+                                } else if(data == "Dalam Perjalanan"){
+                                    let html = "<span class='text-warning'>" + data + "</span>";
+                                    return html;
+                                }else{
+                                    let html = "<span class='text-danger'>" + data + "</span>";
+                                    return html;
+                                }
+                            }
                     },
                     {
                         "data": "supir_name",
@@ -933,26 +949,17 @@
                         }
                     },
                     {
-                        "data": "status",
-                        className: 'text-center',
-                            render: function(data, type, row) {
-                                if (data == "Sampai Tujuan") {
-                                    let html = "<span class='btn-sm btn-block btn-success'><i class='fa fa-fw fa-check mr-2'></i>" + data + "</span>";
-                                    return html;
-                                } else if(data == "Dalam Perjalanan"){
-                                    let html = "<span class='btn-sm btn-block btn-warning'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>" + data + "</span>";
-                                    return html;
-                                }else{
-                                    let html = "<span class='btn-sm btn-block btn-danger'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>" + data + "</span>";
-                                    return html;
-                                }
-                            }
+                        "data": "biaya_lain",
+                        render: function(data, type, row) {
+                            return "Rp."+rupiah(data);
+                        }
                     },
                     {
                         "data": "Jo_id",
                         "orderable": false,
                         render: function(data, type, row) {
-                            let html = "<a class='btn btn-light' href='<?= base_url('index.php/detail/detail_jo/"+data+"/JO')?>'><i class='fas fa-eye'></i></a>";
+                            let html = "<a class='btn btn-sm' href='<?= base_url('index.php/detail/detail_jo/"+data+"/JO')?>'><i class='fas fa-eye'></i></a>";
+                            html += "<a class='btn btn-sm ' href='<?= base_url('index.php/print_berkas/uang_jalan/')?>"+data+"/home'><i class='fas fa-print'></i></a>";
                             return html;
                         }
                     }
@@ -1103,12 +1110,22 @@
                         $('#jo_id').val(pk); //set value
                         $.ajax({ //ajax ambil data bon
                             type: "GET",
-                            url: "<?php echo base_url('index.php/detail/getjo') ?>",
+                            url: "<?php echo base_url('index.php/detail/getjokonfirmasi') ?>",
                             dataType: "JSON",
                             data: {
                                 id: pk
                             },
                             success: function(data) { //jika ambil data sukses
+                                $('td[name="customer_name"]').text(data["customer_name"]); //set value
+                                $('td[name="Jo_id"]').text(data["Jo_id"]); //set value
+                                $('td[name="supir_name"]').text(data["supir_name"]); //set value
+                                $('td[name="mobil_no"]').text(data["mobil_no"]); //set value
+                                $('td[name="mobil_jenis"]').text(data["mobil_jenis"]); //set value
+                                $('td[name="tanggal_surat"]').text(change_tanggal(data["tanggal_surat"])); //set value
+                                $('td[name="muatan"]').text(data["muatan"]); //set value
+                                $('td[name="asal"]').text(data["asal"]); //set value
+                                $('td[name="tujuan"]').text(data["tujuan"]); //set value
+                                $('td[name="uang"]').text("Rp."+rupiah(data["uang_total"])); //set value
                                 $("#form_update_jo").attr('action','<?php echo base_url("index.php/form/update_jo_status/")?>'+data['supir_id']+'/'+data['mobil_no'])
                             }
                         });
@@ -1723,19 +1740,19 @@
                             edit = "";
                             hapus = "";
                             if(data=="ACC"){
-                                tambah = "<a class='btn btn-success rounded-pill btn-sm'>Tambah <i class='fas fa-check'></i></a>";
+                                tambah = "<a class='btn btn-success rounded-pill btn-sm'><i class='fas fa-check'></i></a>";
                             }else{
-                                tambah = "<a class='btn btn-danger rounded-pill btn-sm'>Tambah <i class='fas fa-exclamation'></i></a>";
+                                tambah = "<a class='btn btn-danger rounded-pill btn-sm'><i class='fas fa-exclamation'></i></a>";
                             }
                             if(row['validasi_edit']=="ACC"){
-                                edit = "<a class='btn btn-success rounded-pill btn-sm'>Edit <i class='fas fa-check'></i></a>";
+                                edit = "<a class='btn btn-success rounded-pill btn-sm'><i class='fas fa-check'></i></a>";
                             }else{
-                                edit = "<a class='btn btn-danger rounded-pill btn-sm'>Edit <i class='fas fa-exclamation'></i></a>";
+                                edit = "<a class='btn btn-danger rounded-pill btn-sm'><i class='fas fa-exclamation'></i></a>";
                             }
                             if(row['validasi_delete']=="ACC"){
-                                hapus = "<a class='btn btn-success rounded-pill btn-sm'>Hapus <i class='fas fa-check'></i></a>";
+                                hapus = "<a class='btn btn-success rounded-pill btn-sm'><i class='fas fa-check'></i></a>";
                             }else{
-                                hapus = "<a class='btn btn-danger rounded-pill btn-sm'>Hapus <i class='fas fa-exclamation'></i></a>";
+                                hapus = "<a class='btn btn-danger rounded-pill btn-sm'><i class='fas fa-exclamation'></i></a>";
                             }
                             let html = "<span class='small'>"+tambah+"<br>"+edit+"<br>"+hapus+"</span>";
                             return html;
@@ -2107,19 +2124,19 @@
                             edit = "";
                             hapus = "";
                             if(data=="ACC"){
-                                tambah = "<a class='btn btn-success rounded-pill btn-sm'>Tambah <i class='fas fa-check'></i></a>";
+                                tambah = "<a class='btn btn-success rounded-pill btn-sm'><i class='fas fa-check'></i></a>";
                             }else{
-                                tambah = "<a class='btn btn-danger rounded-pill btn-sm'>Tambah <i class='fas fa-exclamation'></i></a>";
+                                tambah = "<a class='btn btn-danger rounded-pill btn-sm'><i class='fas fa-exclamation'></i></a>";
                             }
                             if(row['validasi_edit']=="ACC"){
-                                edit = "<a class='btn btn-success rounded-pill btn-sm'>Edit <i class='fas fa-check'></i></a>";
+                                edit = "<a class='btn btn-success rounded-pill btn-sm'><i class='fas fa-check'></i></a>";
                             }else{
-                                edit = "<a class='btn btn-danger rounded-pill btn-sm'>Edit <i class='fas fa-exclamation'></i></a>";
+                                edit = "<a class='btn btn-danger rounded-pill btn-sm'><i class='fas fa-exclamation'></i></a>";
                             }
                             if(row['validasi_delete']=="ACC"){
-                                hapus = "<a class='btn btn-success rounded-pill btn-sm'>Hapus <i class='fas fa-check'></i></a>";
+                                hapus = "<a class='btn btn-success rounded-pill btn-sm'><i class='fas fa-check'></i></a>";
                             }else{
-                                hapus = "<a class='btn btn-danger rounded-pill btn-sm'>Hapus <i class='fas fa-exclamation'></i></a>";
+                                hapus = "<a class='btn btn-danger rounded-pill btn-sm'><i class='fas fa-exclamation'></i></a>";
                             }
                             let html = "<span class='small'>"+tambah+"<br>"+edit+"<br>"+hapus+"</span>";
                             return html;
@@ -3002,19 +3019,19 @@
                             edit = "";
                             hapus = "";
                             if(data=="ACC"){
-                                tambah = "<a class='btn btn-success rounded-pill btn-sm'>Tambah <i class='fas fa-check'></i></a>";
+                                tambah = "<a class='btn btn-success rounded-pill btn-sm'><i class='fas fa-check'></i></a>";
                             }else{
-                                tambah = "<a class='btn btn-danger rounded-pill btn-sm'>Tambah <i class='fas fa-exclamation'></i></a>";
+                                tambah = "<a class='btn btn-danger rounded-pill btn-sm'><i class='fas fa-exclamation'></i></a>";
                             }
                             if(row['validasi_rute_edit']=="ACC"){
-                                edit = "<a class='btn btn-success rounded-pill btn-sm'>Edit <i class='fas fa-check'></i></a>";
+                                edit = "<a class='btn btn-success rounded-pill btn-sm'><i class='fas fa-check'></i></a>";
                             }else{
-                                edit = "<a class='btn btn-danger rounded-pill btn-sm'>Edit <i class='fas fa-exclamation'></i></a>";
+                                edit = "<a class='btn btn-danger rounded-pill btn-sm'><i class='fas fa-exclamation'></i></a>";
                             }
                             if(row['validasi_rute_delete']=="ACC"){
-                                hapus = "<a class='btn btn-success rounded-pill btn-sm'>Hapus <i class='fas fa-check'></i></a>";
+                                hapus = "<a class='btn btn-success rounded-pill btn-sm'><i class='fas fa-check'></i></a>";
                             }else{
-                                hapus = "<a class='btn btn-danger rounded-pill btn-sm'>Hapus <i class='fas fa-exclamation'></i></a>";
+                                hapus = "<a class='btn btn-danger rounded-pill btn-sm'><i class='fas fa-exclamation'></i></a>";
                             }
                             let html = "<span class='small'>"+tambah+"<br>"+edit+"<br>"+hapus+"</span>";
                             return html;
@@ -3139,6 +3156,7 @@
                                 $("#jenis_mobil_detail").val(data["jenis_mobil"]);
                                 $("#rute_uj_engkel_detail").val(rupiah(data["rute_uj_engkel"]));
                                 // $("#rute_uj_tronton_detail").val(rupiah(data["rute_uj_tronton"]));
+                                $("#Ritase_detail").val(data["ritase"]);
                                 $("#rute_tagihan_detail").val(rupiah(data["rute_tagihan"]));
                                 $("#rute_gaji_engkel_detail").val(rupiah(data["rute_gaji_engkel"]));
                                 // $("#rute_gaji_tronton_detail").val(rupiah(data["rute_gaji_tronton"]));
@@ -3208,6 +3226,7 @@
                                 $("#rute_dari_edit").val(data_temp["rute_dari"]);
                                 $("#rute_ke_edit").val(data_temp["rute_ke"]);
                                 $("#rute_muatan_edit").val(data_temp["rute_muatan"]);
+                                $("#ritase_edit").val(data["ritase"]);
                                 $("#jenis_mobil_edit").val(data["jenis_mobil"]);
                                 $("#rute_uj_engkel_edit").val(rupiah(data_temp["rute_uj_engkel"]));
                                 $("#rute_tagihan_edit").val(rupiah(data_temp["rute_tagihan"]));
@@ -3289,368 +3308,6 @@
         }
     </script>
     <!-- End rute -->
-
-    <!-- paketan -->
-    <script> //script datatables rute
-        $(document).ready(function() {
-            var table = null;
-            table = $('#Table-Paketan').DataTable({
-                "processing": true,
-                "serverSide": true,
-                "ordering": true,
-                "order": [
-                    [0, 'desc']
-                ],
-                "ajax": {
-                    "url": "<?php echo base_url('index.php/home/view_paketan/viewpaketan')?>",
-                    "type": "POST",
-                    'data': function(data) {
-                        data.customer = "x";
-                    }
-                },
-                "deferRender": true,
-                "paging":false,
-                "columns": [
-                    {
-                        "data": "paketan_id",
-                        className: 'text-center',
-                        render: function(data, type, row) {
-                            let html = row["no"];
-                            return html;
-                        }
-                    },
-                    {
-                        "data": "paketan_id",
-                        className: 'text-center',
-                        "orderable": false,
-                        render: function(data, type, row) {
-                            let html = "<a class='btn btn-light btn-detail-rute-paketan' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-pk='"+data+"'><i class='fas fa-eye'></i></a>";
-                            return html;
-                        } 
-                    },
-                    {
-                        "data": "jenis_mobil"
-                    },
-                    {
-                        "data": "ritase"
-                    },
-                    {
-                        "data": "paketan_uj",
-                        className: 'text-center',
-                        render: function(data, type, row) {
-                            let html = 'Rp.'+rupiah(data);
-                            return html;
-                        }
-                    },
-                    {
-                        "data": "validasi_paketan",
-                        className: 'text-center',
-                        render: function(data, type, row) {
-                            let html = "<span>Tambah = "+data+"<br>Edit = "+row['validasi_paketan_edit']+"<br>Hapus = "+row['validasi_paketan_delete']+"</span>";
-                            return html;
-                        }  
-                    },
-                    {
-                        "data": "paketan_id",
-                        className: 'text-center',
-                        "orderable": false,
-                        render: function(data, type, row) {
-                            let html = "";
-                                if(row["validasi_paketan"]!="Pending" && row["validasi_paketan_edit"]!="Pending" && row["validasi_paketan_delete"]!="Pending"){
-                                    html += "<a class='btn btn-light btn-update-paketan' data-toggle='modal' data-target='#popup-update-paketan' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a> || "+
-                                    "<a class='btn btn-light btn-delete-paketan' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
-                                    return html;
-                                }
-                                return html;
-                        } 
-                    },
-                    {
-                        "data": "paketan_id",
-                        className: 'text-center',
-                        "orderable": false,
-                        render: function(data, type, row) {
-                            var role_user = "<?=$_SESSION['role']?>";
-                            let html = "";
-                            if(role_user=="Supervisor" || role_user=="Super User"){
-                                if(row["validasi_paketan"]=="Pending"){
-                                    html +="<a class='btn btn-success btn-sm btn-acc-paketan' href='javascript:void(0)' data-pk='"+data+"'>ACC Tambah<i class='fas fa-check-circle'></i></a><br>";
-                                }
-                                if(row["validasi_paketan_edit"]=="Pending"){
-                                    html += "<a class='btn btn-primary btn-sm btn-acc-edit-paketan' href='javascript:void(0)' data-pk='"+data+"'>ACC Edit<i class='fas fa-check-circle'></i></a><br>";
-                                }
-                                if(row["validasi_paketan_delete"]=="Pending"){
-                                    html += "<a class='btn btn-danger btn-sm btn-acc-delete-paketan' href='javascript:void(0)' data-pk='"+data+"'>ACC Delete<i class='fas fa-check-circle'></i></a><br>";    
-                                }
-                                return html;
-                            }else{
-                                return "";
-                            }
-                        } 
-                    }
-                ],
-                drawCallback: function() {
-                    $('.btn-delete-paketan').click(function() {
-                        let pk = $(this).data('pk');
-                        // alert(pk);
-                        Swal.fire({
-                            title: 'Hapus Rute Paketan',
-                            text:'Yakin anda ingin menghapus Rute Paketan ini?',
-                            showDenyButton: true,
-                            denyButtonText: `Batal`,
-                            confirmButtonText: 'Hapus',
-                            denyButtonColor: '#808080',
-                            confirmButtonColor: '#FF0000',
-                            icon: "warning",
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                $.ajax({
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/deletepaketan') ?>",
-                                    dataType: "text",
-                                    data: {
-                                        id: pk
-                                    },
-                                    success: function(data) {
-                                        location.reload();
-                                    }
-                                });
-                            }
-                        })
-                    });
-                    $('.btn-update-paketan').click(function() {
-                        let pk = $(this).data('pk');
-                        $.ajax({ //ajax ambil data customer
-                            type: "GET",
-                            url: "<?php echo base_url('index.php/form/getpaketanbyid') ?>",
-                            dataType: "JSON",
-                            data: {
-                                id: pk
-                            },
-                            success: function(data) { //jika ambil data sukses
-                                var data_rute = JSON.parse(data["paketan_data_rute"]);
-                                let html = "";
-                                for(i=0;i<data_rute.length;i++){
-                                    html += "<tr>"+
-                                    "<td>"+data_rute[i]["customer"]+"</td>"+
-                                    "<td>"+data_rute[i]["dari"]+"</td>"+
-                                    "<td>"+data_rute[i]["ke"]+"</td>"+
-                                    "<td>"+data_rute[i]["muatan"]+"</td>"+
-                                    "</tr>"
-                                }
-                                $("#table-data-rute-update tbody").html(html);
-
-                                var data_mobil = data["jenis_mobil"];
-                                $('#jenis_mobil_update').find('option').remove().end(); //reset option select
-                                var isi_jenis = [];
-                                $.ajax({
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/getallmobil/') ?>",
-                                    dataType: "JSON",
-                                    success: function(data) {
-                                        if(data.length==0){
-                                            $('#jenis_mobil_update').append('<option class="font-w700" disabled="disabled" selected value="">Kosong</option>'); 
-                                        }else{
-                                            $('#jenis_mobil_update').append('<option class="font-w700" selected value="'+data_mobil+'">'+data_mobil+'</option>'); 
-                                            for(i=0;i<data.length;i++){
-                                                if(!isi_jenis.includes(data[i]["mobil_jenis"])){
-                                                    $('#jenis_mobil_update').append('<option value="'+data[i]["mobil_jenis"]+'">'+data[i]["mobil_jenis"]+'</option>'); 
-                                                    isi_jenis.push(data[i]["mobil_jenis"]);
-                                                }
-                                            }
-                                        }
-                                    }
-                                });
-                                
-                                if(data["paketan_tonase"]==0){  
-                                    $("#Gaji_update").val("FIX");
-                                    $("#paketan_gaji_rumusan_update").attr("readonly",true);
-                                    $("#paketan_gaji_update").removeAttr("readonly");
-                                    $("#Tonase_update").attr("readonly",true);
-                                }else{
-                                    $("#Gaji_update").val("NON-FIX");
-                                    $("#paketan_gaji_rumusan_update").removeAttr("readonly");
-                                    $("#paketan_gaji_update").attr("readonly",true);
-                                    $("#Tonase_update").removeAttr("readonly");
-                                }
-                                $("#paketan_id_update").val(data["paketan_id"]);
-                                $("#paketan_uj_update").val(rupiah(data["paketan_uj"]));
-                                $("#Ritase_update").val(data["ritase"]);
-                                $("#paketan_gaji_rumusan_update").val(rupiah(data["paketan_gaji_rumusan"]));
-                                $("#paketan_gaji_update").val(rupiah(data["paketan_gaji"]));
-                                $("#paketan_tagihan_update").val(rupiah(data["paketan_tagihan"]));
-                                $("#Tonase_update").val(rupiah(data["paketan_tonase"]));
-                                $("#paketan_keterangan_update").val(data["paketan_keterangan"]);
-                            }
-                        });
-                    });
-                    $('.btn-detail-rute-paketan').click(function() {
-                        let pk = $(this).data('pk');
-                        $.ajax({
-                            type: "GET",
-                            url: "<?php echo base_url('index.php/form/getrutepaketanbyid') ?>",
-                            dataType: "JSON",
-                            data: {
-                                id: pk
-                            },
-                            success: function(data) { //jika ambil data sukses
-                                // alert(data[0]["dari"]);
-                                let html = "";
-                                for(i=0;i<data.length;i++){
-                                    html += "<tr>"+
-                                    "<td>"+data[i]["customer"]+"</td>"+
-                                    "<td>"+data[i]["dari"]+"</td>"+
-                                    "<td>"+data[i]["ke"]+"</td>"+
-                                    "<td>"+data[i]["muatan"]+"</td>"+
-                                    "</tr>"
-                                }
-                                $("#table-data-rute-paketan tbody").html(html);
-                            }
-                        });
-                        $.ajax({
-                            type: "GET",
-                            url: "<?php echo base_url('index.php/form/getpaketanbyid') ?>",
-                            dataType: "JSON",
-                            data: {
-                                id: pk
-                            },
-                            success: function(data) { //jika ambil data sukses
-                                $("#detail-keterangan").text(data["paketan_keterangan"]);
-                                $("#detail-tonase").text(data["paketan_tonase"]);
-                                if(data["paketan_tonase"]==0){  
-                                    $("#detail-gaji").text("FIX");
-                                }else{
-                                    $("#detail-gaji").text("NON-FIX");
-                                }
-                                $("#detail-gaji-fix").text("Rp."+rupiah(data["paketan_gaji"]));
-                                $("#detail-gaji-nonfix").text("Rp."+rupiah(data["paketan_gaji_rumusan"]));
-                            }
-                        });
-                    });
-                    $('.btn-acc-paketan').click(function() {
-                        let pk = $(this).data('pk');
-                        Swal.fire({
-                            title: 'ACC Tambah Rute Paketan',
-                            icon: "question",
-                            text: 'Yakin anda ingin ACC Data Rute Paketan ini?',
-                            showDenyButton: true,
-                            showCancelButton: true,
-                            denyButtonText: `Tolak`,
-                            confirmButtonText: 'ACC',
-                            denyButtonColor: '#808080',
-                            confirmButtonColor: '#4BB543',
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                $.ajax({
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/accpaketan/ACC') ?>",
-                                    dataType: "text",
-                                    data: {
-                                        id: pk
-                                    },
-                                    success: function(data) {
-                                        location.reload();
-                                    }
-                                });
-                            }else if(result.isDenied){
-                                $.ajax({
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/accpaketan/Ditolak') ?>",
-                                    dataType: "text",
-                                    data: {
-                                        id: pk
-                                    },
-                                    success: function(data) {
-                                        location.reload();
-                                    }
-                                });
-                            }
-                        })
-                    });
-                    $('.btn-acc-edit-paketan').click(function() {
-                        let pk = $(this).data('pk');
-                        Swal.fire({
-                            title: 'ACC Edit Data Rute Paketan',
-                            icon: "question",
-                            text: 'Yakin anda ingin ACC Edit Data Rute Paketan ini?',
-                            showDenyButton: true,
-                            showCancelButton: true,
-                            denyButtonText: `Tolak`,
-                            confirmButtonText: 'ACC',
-                            denyButtonColor: '#808080',
-                            confirmButtonColor: '#4BB543',
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                $.ajax({
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/acceditpaketan/ACC') ?>",
-                                    dataType: "text",
-                                    data: {
-                                        id: pk
-                                    },
-                                    success: function(data) {
-                                        location.reload();
-                                    }
-                                });
-                            }else if(result.isDenied){
-                                $.ajax({
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/acceditpaketan/Ditolak') ?>",
-                                    dataType: "text",
-                                    data: {
-                                        id: pk
-                                    },
-                                    success: function(data) {
-                                        location.reload();
-                                    }
-                                });
-                            }
-                        })
-                    });
-                    $('.btn-acc-delete-paketan').click(function() {
-                        let pk = $(this).data('pk');
-                        Swal.fire({
-                            title: 'ACC Hapus Data Rute Paketan',
-                            icon: "question",
-                            text: 'Yakin anda ingin ACC Hapus Data Rute Paketan ini?',
-                            showDenyButton: true,
-                            showCancelButton: true,
-                            denyButtonText: `Tolak`,
-                            confirmButtonText: 'ACC',
-                            denyButtonColor: '#808080',
-                            confirmButtonColor: '#4BB543',
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                $.ajax({
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/accdeletepaketan/ACC') ?>",
-                                    dataType: "text",
-                                    data: {
-                                        id: pk
-                                    },
-                                    success: function(data) {
-                                        location.reload();
-                                    }
-                                });
-                            }else if(result.isDenied){
-                                $.ajax({
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/accdeletepaketan/Ditolak') ?>",
-                                    dataType: "text",
-                                    data: {
-                                        id: pk
-                                    },
-                                    success: function(data) {
-                                        location.reload();
-                                    }
-                                });
-                            }
-                        })
-                    });
-                }
-            });
-        });
-    </script>
-    <!-- End paketan -->
 
     <!-- script alert-alert -->
     <script>
@@ -3891,9 +3548,11 @@
             if((date.getMonth()+1)<10){
                 $("#invoice_tgl").val(date.getDate()+"-0"+(date.getMonth()+1)+"-"+date.getFullYear());
                 $("#update_status_tanggal_nonaktif").val(date.getDate()+"-0"+(date.getMonth()+1)+"-"+date.getFullYear());
+                $("#tanggal_jo").val(date.getDate()+"-0"+(date.getMonth()+1)+"-"+date.getFullYear());
             }else{
                 $("#invoice_tgl").val(date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear());
                 $("#update_status_tanggal_nonaktif").val(date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear());
+                $("#tanggal_jo").val(date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear());
             }
         });
     </script>
@@ -3982,10 +3641,21 @@
                         "data": "tujuan"
                     },
                     {
-                        "data": "tonase"
+                        "data": "tonase",
+                        render: function(data, type, row) {
+                            let html = rupiah(data);
+                            return html;
+                        }
                     },
                     {
                         "data": "tagihan",
+                        render: function(data, type, row) {
+                            let html = "Rp."+rupiah(data);
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "total_tagihan",
                         render: function(data, type, row) {
                             let html = "Rp."+rupiah(data);
                             return html;
@@ -4031,10 +3701,10 @@
                                 if(data_jo.includes(pk)==true){
                                     if($("#invoice_tonase").val()=="" || $("#invoice_tonase").val()=="0"){
                                         var tonase = parseInt(data["tonase"]);
-                                        var total = parseInt(data["tagihan"]);
+                                        var total = parseInt(data["total_tagihan"]);
                                     }else{
                                         var tonase = parseInt($("#invoice_tonase").val().replaceAll(".",""))+parseInt(data["tonase"]);
-                                        var total = parseInt($("#invoice_total").val().replaceAll(".",""))+parseInt(data["tagihan"]);
+                                        var total = parseInt($("#invoice_total").val().replaceAll(".",""))+parseInt(data["total_tagihan"]);
                                     }
                                     if($("#invoice_ppn").val()=="Ya"){
                                         var ppn = total*0.1;
@@ -4048,7 +3718,7 @@
                                     $("#invoice_grand_total").val(rupiah(grand_total));
                                 }else{
                                     var tonase = parseInt($("#invoice_tonase").val().replaceAll(".",""))-parseInt(data["tonase"]);
-                                    var total = parseInt($("#invoice_total").val().replaceAll(".",""))-parseInt(data["tagihan"]);
+                                    var total = parseInt($("#invoice_total").val().replaceAll(".",""))-parseInt(data["total_tagihan"]);
                                     $("#invoice_tonase").val(rupiah(tonase));
                                     $("#invoice_total").val(rupiah(total));
                                     if($("#invoice_ppn").val()=="Ya"){
@@ -4303,401 +3973,6 @@
         });
     </script>
 
-    <script> //script pilih rute untuk paketan
-        $(document).ready(function() {
-            var table = null;
-            table = $('#Table-Add-Rute-Paketan').DataTable({
-                "processing": true,
-                "serverSide": true,
-                "ordering": true,
-                "order": [
-                    [0, 'desc']
-                ],
-                "ajax": {
-                    "url": "<?php echo base_url('index.php/home/view_rute/addjo')?>",
-                    "type": "POST",
-                    'data': function(data) {
-                        data.customer = $("#Customer").val();
-                    }
-                },
-                "deferRender": true,
-                "paging":false,
-                "columns": [
-                    {
-                        "data": "customer_name"
-                    },
-                    {
-                        "data": "rute_muatan"
-                    },
-                    {
-                        "data": "rute_dari"
-                    },
-                    {
-                        "data": "rute_ke"
-                    },
-                    {
-                        "data": "rute_uj_engkel",
-                        render: function(data, type, row) {
-                            return "Rp."+rupiah(data);
-                        }
-                    },
-                    {
-                        "data": "rute_tagihan",
-                        render: function(data, type, row) {
-                            return "Rp."+rupiah(data);
-                        }
-                    },
-                    {
-                        "data": "rute_id",
-                        className: 'text-center font-weight-bold',
-                        "orderable": false,
-                        render: function(data, type, row) {
-                            let html ="<a class='btn btn-light btn-pilih-rute' data-dismiss='modal' aria-label='Close' href='javascript:void(0)' data-pk='"+data+"'>Pilih<i class='fas fa-eye'></i></a>";
-                            return html;
-                        }
-                    }
-                ],   
-                drawCallback: function() {
-                    $('.btn-pilih-rute').click(function() {
-                        let pk = $(this).data('pk');
-                        add_rute("rute",pk)
-                    });
-                },
-            });
-            $("#Customer").change(function() {
-                table.ajax.reload();
-            });
-        });
-    </script>
-
-    <script>//add kosongan dan rute pada add paketan
-        var data_rute = [];
-        var n_kosongan = 0;
-        var n_rute = 0;
-        function add_rute(tipe,a){
-            var html = "";
-            var uj = 0;
-            if(tipe=="kosongan"){
-                var kosongan_id = $("#kosongan_id").val();
-                if( kosongan_id != 0 ){
-                    n_kosongan += 1;
-                    $("#btn-add-kosongan").hide();
-                    data_rute.push("k"+kosongan_id);
-                }
-            }else{
-                var rute_id = a;
-                n_rute += 1;
-                if(n_rute==2){
-                    $("#btn-add-rute").hide();
-                }
-                data_rute.push("r"+rute_id);
-            }
-            for(i=0;i<data_rute.length;i++){
-                if(data_rute[i][0]=="k"){
-                    $.ajax({
-                        type: "GET",
-                        url: "<?php echo base_url('index.php/detail/getkosongan') ?>",
-                        dataType: "JSON",
-                        data: {
-                            id: data_rute[i].replace("k","")
-                        },
-                        success: function(data) { //jika ambil data sukses
-                            html += "<tr>"+
-                                "<td>-</td>"+
-                                "<td>"+data["kosongan_dari"]+"</td>"+
-                                "<td>"+data["kosongan_ke"]+"</td>"+
-                                "<td>Kosongan</td>"+
-                                "<td>Rp."+rupiah(data["kosongan_uang"])+"</td>"+
-                                "<td>-</td>"+
-                                "</tr>";
-                            $("#table-data-rute tbody").html(html);
-                            uj += parseInt(data["kosongan_uang"]);
-                            $("#paketan_uj").val(rupiah(uj));
-                        }
-                    });
-                }else{
-                    $.ajax({
-                        type: "GET",
-                        url: "<?php echo base_url('index.php/detail/getrute') ?>",
-                        dataType: "JSON",
-                        data: {
-                            id: data_rute[i].replace("r","")
-                        },
-                        success: function(data) {
-                            html += "<tr>"+
-                            "<td>"+data["customer_name"]+"</td>"+
-                            "<td>"+data["rute_dari"]+"</td>"+
-                            "<td>"+data["rute_ke"]+"</td>"+
-                            "<td>"+data["rute_muatan"]+"</td>"+
-                            "<td>Rp."+rupiah(data["rute_uj_engkel"])+"</td>"+
-                            "<td>Rp."+rupiah(data["rute_tagihan"])+"</td>"+
-                            "</tr>";
-                            $("#table-data-rute tbody").html(html);
-                            uj += parseInt(data["rute_uj_engkel"]);
-                            $("#paketan_uj").val(rupiah(uj));
-                        }
-                    })
-                }
-            }
-            $("#data_rute").val(data_rute);
-        }
-    </script>
-
-    <script> //script datatables kosongan
-        $(document).ready(function() {
-            var table = null;
-            table = $('#Table-Kosongan').DataTable({
-                "processing": true,
-                "serverSide": true,
-                "ordering": true,
-                "order": [
-                    [0, 'desc']
-                ],
-                "ajax": {
-                    "url": "<?php echo base_url('index.php/home/view_kosongan/') ?>",
-                    "type": "POST",
-                },
-                "deferRender": true,
-                "paging":false,
-                "columns": [
-                    {
-                        "data": "kosongan_id",
-                        className: 'text-center',
-                        render: function(data, type, row) {
-                            let html = row["no"];
-                            return html;
-                        }
-                    },
-                    {
-                        "data": "kosongan_dari",
-                    },
-                    {
-                        "data": "kosongan_ke"
-                    },
-                    {
-                        "data": "kosongan_uang",
-                        render: function(data, type, row) {
-                            let html = "Rp."+rupiah(data);
-                            return html;
-                        }
-                    },
-                    {
-                        "data": "validasi",
-                        className: 'text-center',
-                        render: function(data, type, row) {
-                            let html = "<span class='small'>Tambah = "+data+"<br>Edit = "+row['validasi_edit']+"<br>Hapus = "+row['validasi_delete']+"</span>";
-                            return html;
-                        }   
-                    },
-                    {
-                        "data": "kosongan_id",
-                        className: 'text-center font-weight-bold',
-                        "orderable": false,
-                        render: function(data, type, row) {
-                            let html = "";
-                                if(row["validasi"]!="Pending" && row["validasi_edit"]!="Pending" && row["validasi_delete"]!="Pending"){
-                                    html += "<a class='btn btn-light btn-update-kosongan' href='javascript:void(0)' data-toggle='modal' data-target='#popup-update-kosongan' data-pk='"+data+"'><i class='fas fa-pen-square'></i></a> || "+
-                                    "<a class='btn btn-light btn-delete-kosongan' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-trash-alt'></i></a>";
-                                    return html;
-                                }
-                                return html;
-                        }
-                    },
-                    {
-                        "data": "kosongan_id",
-                        className: 'text-center font-weight-bold',
-                        "orderable": false,
-                        render: function(data, type, row) {
-                            var role_user = "<?=$_SESSION['role']?>";
-                            let html = "";
-                            if(role_user=="Supervisor" || role_user=="Super User"){
-                                if(row["validasi"]=="Pending"){
-                                    html +="<a class='btn btn-success btn-sm btn-acc-kosongan' href='javascript:void(0)' data-pk='"+data+"'>ACC Tambah<i class='fas fa-check-circle'></i></a><br>";
-                                }
-                                if(row["validasi_edit"]=="Pending"){
-                                    html += "<a class='btn btn-primary btn-sm btn-acc-edit-kosongan' href='javascript:void(0)' data-pk='"+data+"'>ACC Edit<i class='fas fa-check-circle'></i></a><br>";
-                                }
-                                if(row["validasi_delete"]=="Pending"){
-                                    html += "<a class='btn btn-danger btn-sm btn-acc-delete-kosongan' href='javascript:void(0)' data-pk='"+data+"'>ACC Delete<i class='fas fa-check-circle'></i></a><br>";    
-                                }
-                                return html;
-                            }else{
-                                return "";
-                            }
-                        }
-                    }
-                ],
-                drawCallback: function() {
-                    $('.btn-delete-kosongan').click(function() {
-                        let pk = $(this).data('pk');
-                        Swal.fire({
-                            title: 'Hapus Rute Kosongan',
-                            text:'Yakin anda akan menghapus data Rute Kosongan ini?',
-                            showDenyButton: true,
-                            denyButtonText: `Batal`,
-                            denyButtonColor: '#808080',
-                            confirmButtonText: 'Hapus',
-                            confirmButtonColor: '#FF0000',
-                            icon: "warning"
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                $.ajax({
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/deletekosongan') ?>",
-                                    dataType: "text",
-                                    data: {
-                                        id: pk
-                                    },
-                                    success: function(data) {
-                                        location.reload();
-                                    }
-                                });
-                            }
-                        })
-                    });               
-                    $('.btn-update-kosongan').click(function() {
-                        let pk = $(this).data('pk');
-                        // alert(pk);
-                        $.ajax({
-                            type: "GET",
-                            url: "<?php echo base_url('index.php/detail/getkosongan') ?>",
-                            dataType: "JSON",
-                            data: {
-                                id: pk
-                            },
-                            success: function(data) { //jika ambil data sukses
-                                $('#kosongan_id_update').val(pk); //set value
-                                $('#kosongan_dari_update').val(data["kosongan_dari"]); //set value
-                                $('#kosongan_ke_update').val(data["kosongan_ke"]); //set value
-                                $('#kosongan_uang_update').val(rupiah(data["kosongan_uang"])); //set value
-                            }
-                        });
-                    });
-                    $('.btn-acc-kosongan').click(function() {
-                        let pk = $(this).data('pk');
-                        Swal.fire({
-                            title: 'ACC Tambah Rute Kosongan',
-                            icon: "question",
-                            text: 'Yakin anda ingin ACC Data Rute Kosongan ini?',
-                            showDenyButton: true,
-                            showCancelButton:true,
-                            denyButtonText: `Tolak`,
-                            confirmButtonText: 'ACC',
-                            denyButtonColor: '#808080',
-                            confirmButtonColor: '#4BB543',
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                $.ajax({ //ajax ambil data bon
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/acckosongan/ACC') ?>",
-                                    dataType: "JSON",
-                                    data: {
-                                        id: pk
-                                    },
-                                    success: function(data) { //jika ambil data sukses
-                                        location.reload();
-                                    }
-                                });
-                            }else if(result.isDenied){
-                                $.ajax({ //ajax ambil data bon
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/acckosongan/Ditolak') ?>",
-                                    dataType: "JSON",
-                                    data: {
-                                        id: pk
-                                    },
-                                    success: function(data) { //jika ambil data sukses
-                                        location.reload();
-                                    }
-                                });
-                            }
-                        })
-                    });
-                    $('.btn-acc-edit-kosongan').click(function() {
-                        let pk = $(this).data('pk');
-                        Swal.fire({
-                            title: 'ACC Edit Data Rute Kosongan',
-                            icon: "question",
-                            text: 'Yakin anda ingin ACC Edit Data Rute Kosongan ini?',
-                            showDenyButton: true,
-                            showCancelButton:true,
-                            denyButtonText: `Tolak`,
-                            confirmButtonText: 'ACC',
-                            denyButtonColor: '#808080',
-                            confirmButtonColor: '#4BB543',
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                $.ajax({ //ajax ambil data bon
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/acceditkosongan/ACC') ?>",
-                                    dataType: "JSON",
-                                    data: {
-                                        id: pk
-                                    },
-                                    success: function(data) { //jika ambil data sukses
-                                        location.reload();
-                                    }
-                                });
-                            }else if(result.isDenied){
-                                $.ajax({ //ajax ambil data bon
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/acceditkosongan/Ditolak') ?>",
-                                    dataType: "JSON",
-                                    data: {
-                                        id: pk
-                                    },
-                                    success: function(data) { //jika ambil data sukses
-                                        location.reload();
-                                    }
-                                });
-                            }
-                        })
-                    });
-                    $('.btn-acc-delete-kosongan').click(function() {
-                        let pk = $(this).data('pk');
-                        Swal.fire({
-                            title: 'ACC Hapus Data Rute Kosongan',
-                            icon: "question",
-                            text: 'Yakin anda ingin ACC Hapus Data Rute Kosongan ini?',
-                            showDenyButton: true,
-                            showCancelButton:true,
-                            denyButtonText: `Tolak`,
-                            confirmButtonText: 'ACC',
-                            denyButtonColor: '#808080',
-                            confirmButtonColor: '#4BB543',
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                $.ajax({ //ajax ambil data bon
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/accdeletekosongan/ACC') ?>",
-                                    dataType: "JSON",
-                                    data: {
-                                        id: pk
-                                    },
-                                    success: function(data) { //jika ambil data sukses
-                                        location.reload();
-                                    }
-                                });
-                            }else if(result.isDenied){
-                                $.ajax({ //ajax ambil data bon
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/accdeletekosongan/Ditolak') ?>",
-                                    dataType: "JSON",
-                                    data: {
-                                        id: pk
-                                    },
-                                    success: function(data) { //jika ambil data sukses
-                                        location.reload();
-                                    }
-                                });
-                            }
-                        })
-                    });
-                },
-            });
-        });
-    </script>
-
     <script>
         function upload_foto(a){
             var filePath = a.value;
@@ -4725,183 +4000,6 @@
             }
         }
     </script>
-
-    <!-- pilih rute paketan untuk jo paketan-->
-    <script> //script datatables rute
-        $(document).ready(function() {
-            var table = null;
-            table = $('#Table-Pilih-Rute-Paketan').DataTable({
-                "processing": true,
-                "serverSide": true,
-                "ordering": true,
-                "order": [
-                    [0, 'desc']
-                ],
-                "ajax": {
-                    "url": "<?php echo base_url('index.php/home/view_paketan/addjo')?>",
-                    "type": "POST",
-                    'data': function(data) {
-                        data.customer = 'x';
-                    }
-                },
-                "deferRender": true,
-                "paging":false,
-                "columns": [
-                    {
-                        "data": "paketan_id",
-                        className: 'text-center',
-                        render: function(data, type, row) {
-                            let html = row["no"];
-                            return html;
-                        }
-                    },
-                    {
-                        "data": "paketan_id",
-                        className: 'text-center',
-                        "orderable": false,
-                        render: function(data, type, row) {
-                            let html = "<a class='btn btn-light btn-detail-rute-paketan' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-pk='"+data+"'><i class='fas fa-eye'></i></a>";
-                            return html;
-                        } 
-                    },
-                    {
-                        "data": "jenis_mobil"
-                    },
-                    {
-                        "data": "ritase"
-                    },
-                    {
-                        "data": "paketan_uj",
-                        className: 'text-center',
-                        render: function(data, type, row) {
-                            let html = 'Rp.'+rupiah(data);
-                            return html;
-                        }
-                    },
-                    {
-                        "data": "paketan_id",
-                        className: 'text-center font-weight-bold',
-                        "orderable": false,
-                        render: function(data, type, row) {
-                            let html ="<a class='btn btn-light btn-pilih-rute-paketan' href='javascript:void(0)' data-pk='"+data+"'>Pilih<i class='fas fa-eye'></i></a>";
-                            return html;
-                        }
-                    }
-                ],   
-                drawCallback: function() {
-                    $('.btn-pilih-rute-paketan').click(function() {
-                        let pk = $(this).data('pk');
-                        $.ajax({
-                            type: "GET",
-                            url: "<?php echo base_url('index.php/detail/getpaketan') ?>",
-                            dataType: "JSON",
-                            data: {
-                                id: pk
-                            },
-                            success: function(data) { //jika ambil data sukses
-                                if(data["paketan_tonase"]==0){
-                                    $('#Type_Tonase').val("FIX"); //set value
-                                    $('#Upah').val(data["paketan_gaji"]); //set value
-                                }else{
-                                    $('#Type_Tonase').val("NON-FIX"); //set value
-                                    $('#Upah').val(data["paketan_gaji_rumusan"]); //set value
-                                }
-                                $('#Jenis').val(data["jenis_mobil"]); //set value
-                                $('#Tonase').val(data["paketan_tonase"]); //set value
-                                $('#Uang').val(rupiah(data["paketan_uj"])); //set value
-                                $('#paketan_id').val(data["paketan_id"]); //set value
-                                $('#Tagihan').val(data["paketan_tagihan"]); //set value
-                                uang = rupiah(data["paketan_uj"]);
-                                $.ajax({
-                                    type: "GET",
-                                    url: "<?php echo base_url('index.php/form/generate_terbilang_fix/') ?>"+uang,
-                                    dataType: "text",
-                                    success: function(data) {
-                                        $('#Terbilang').val(data);
-                                    }
-                                });
-                                var mobil_jenis = $("#Jenis").val();
-                                $('#Kendaraan').find('option').remove().end(); //reset option select
-                                $.ajax({ //ajax set option kendaraan
-                                    type: "POST",
-                                    url: "<?php echo base_url('index.php/form/getmobilbyjenis') ?>",
-                                    dataType: "JSON",
-                                    data: {
-                                        mobil_jenis: mobil_jenis,
-                                    },
-                                    success: function(data) {
-                                        if(data.length==0){
-                                            $('#Kendaraan').append('<option class="font-w700" disabled="disabled" selected value="">Kosong</option>'); 
-                                        }else{
-                                            $('#Kendaraan').append('<option class="font-w700" disabled="disabled" selected value="">Kendaraan Pengiriman</option>'); 
-                                            for(i=0;i<data.length;i++){
-                                                    $('#Kendaraan').append('<option value="'+data[i]["mobil_no"]+'">'+data[i]["mobil_no"]+'  ||  '+data[i]["mobil_max_load"]+' Ton  ||  '+data[i]["mobil_jenis"]+'</option>'); 
-                                            }
-                                        }
-                                    }
-                                });
-                                var data_rute = JSON.parse(data["paketan_data_rute"]);
-                                let html = "";
-                                for(i=0;i<data_rute.length;i++){
-                                    html += "<tr>"+
-                                    "<td>"+data_rute[i]["customer"]+"</td>"+
-                                    "<td>"+data_rute[i]["dari"]+"</td>"+
-                                    "<td>"+data_rute[i]["ke"]+"</td>"+
-                                    "<td>"+data_rute[i]["muatan"]+"</td>"+
-                                    "</tr>"
-                                }
-                                $("#table-data-rute-paketan tbody").html(html);
-                            }
-                        });
-                    });
-                    $('.btn-detail-rute-paketan').click(function() {
-                        let pk = $(this).data('pk');
-                        $.ajax({
-                            type: "GET",
-                            url: "<?php echo base_url('index.php/form/getrutepaketanbyid') ?>",
-                            dataType: "JSON",
-                            data: {
-                                id: pk
-                            },
-                            success: function(data) { //jika ambil data sukses
-                                // alert(data[0]["dari"]);
-                                let html = "";
-                                for(i=0;i<data.length;i++){
-                                    html += "<tr>"+
-                                    "<td>"+data[i]["customer"]+"</td>"+
-                                    "<td>"+data[i]["dari"]+"</td>"+
-                                    "<td>"+data[i]["ke"]+"</td>"+
-                                    "<td>"+data[i]["muatan"]+"</td>"+
-                                    "</tr>"
-                                }
-                                $("#table-data-rute-paketan tbody").html(html);
-                            }
-                        });
-                        $.ajax({
-                            type: "GET",
-                            url: "<?php echo base_url('index.php/form/getpaketanbyid') ?>",
-                            dataType: "JSON",
-                            data: {
-                                id: pk
-                            },
-                            success: function(data) { //jika ambil data sukses
-                                $("#detail-keterangan").text(data["paketan_keterangan"]);
-                                $("#detail-tonase").text(data["paketan_tonase"]);
-                                if(data["paketan_tonase"]==0){  
-                                    $("#detail-gaji").text("FIX");
-                                }else{
-                                    $("#detail-gaji").text("NON-FIX");
-                                }
-                                $("#detail-gaji-fix").text("Rp."+rupiah(data["paketan_gaji"]));
-                                $("#detail-gaji-nonfix").text("Rp."+rupiah(data["paketan_gaji_rumusan"]));
-                            }
-                        });
-                    });
-                },
-            });
-        });
-    </script>
-    <!-- End pilih rute paketan untuk jo paketan-->
 
     <script>
         function change_tanggal(data){

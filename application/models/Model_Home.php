@@ -59,6 +59,13 @@ class Model_Home extends CI_model
             $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
             return $this->db->get_where("skb_job_order",array("Jo_id"=>$jo_id))->row_array();
         }
+        public function getjobyidkonfirmasi($jo_id) //JO by ID
+        {
+            $this->db->join("skb_mobil", "skb_mobil.mobil_no = skb_job_order.mobil_no", 'left');
+            $this->db->join("skb_supir", "skb_supir.supir_id = skb_job_order.supir_id", 'left');
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
+            return $this->db->get_where("skb_job_order",array("Jo_id"=>$jo_id))->row_array();
+        }
     //end funcction get
 
      //function-fiunction datatable truck
@@ -224,6 +231,7 @@ class Model_Home extends CI_model
                     "tanggal_surat"=>$record->tanggal_surat,
                     "status"=>$record->status,
                     "uang_total"=>$record->uang_total,
+                    "biaya_lain"=>$record->biaya_lain,
                     "sisa_uj"=>$record->uang_total-$record->uang_jalan_bayar
                 ); 
                 $n++;
@@ -667,13 +675,11 @@ class Model_Home extends CI_model
                     "customer_name"=>$record->customer_name,
                     "rute_ke"=>$record->rute_ke,
                     "jenis_mobil"=>$record->jenis_mobil,
-                    "rute_tonase"=>$record->rute_tonase,
                     "rute_dari"=>$record->rute_dari,
                     "rute_tagihan"=>$record->rute_tagihan,
                     "rute_muatan"=>$record->rute_muatan,
                     "rute_uj_engkel"=>$record->rute_uj_engkel,
                     "rute_gaji_engkel"=>$record->rute_gaji_engkel,
-                    "rute_gaji_engkel_rumusan"=>$record->rute_gaji_engkel_rumusan,
                     "validasi_rute"=>$record->validasi_rute,
                     "validasi_rute_edit"=>$record->validasi_rute_edit,
                     "validasi_rute_delete"=>$record->validasi_rute_delete,
@@ -829,134 +835,4 @@ class Model_Home extends CI_model
             return $response; 
         }
     //akhir function-fiunction datatable merk
-
-    //function-fiunction datatable kosongan
-        public function count_all_kosongan()
-        {
-            $this->db->where("status_hapus","NO");
-            return $this->db->count_all_results("skb_kosongan");
-        }
-
-        public function filter_kosongan($search, $order_field, $order_ascdesc)
-        {
-            if($search!=""){
-                $this->db->like('kosongan_dari', $search);
-                $this->db->or_like('kosongan_ke', $search);
-            }
-            $this->db->order_by($order_field, $order_ascdesc);
-            $hasil = $this->db->get('skb_kosongan')->result_array();
-            $hasil_fix = [];
-            for($i=0;$i<count($hasil);$i++){
-                if($hasil[$i]["status_hapus"]=="NO"){
-                    $hasil_fix[] = $hasil[$i];
-                }
-            }
-            return $hasil_fix;   
-        }
-
-        public function count_filter_kosongan($search)
-        {
-            if($search!=""){
-                $this->db->like('kosongan_dari', $search);
-                $this->db->or_like('kosongan_ke', $search);
-            }
-            $hasil_data = $this->db->get('skb_kosongan')->result_array();
-                $hasil_fix = 0;
-                for($i=0;$i<count($hasil_data);$i++){
-                    if($hasil_data[$i]["status_hapus"]=="NO"){
-                        $hasil_fix +=1;
-                    }
-                }
-                return $hasil_fix;
-        }
-    //akhir function-fiunction datatable kosongan
-
-    //function-fiunction datatable paketan
-        public function count_all_paketan($asal,$customer)
-        {
-            if($customer!="x"){
-                $this->db->where("skb_paketan.customer_id",$customer);
-            }
-            $this->db->where("paketan_status_hapus","NO");
-            if($asal=="addjo"){
-                $this->db->where("validasi_paketan","ACC");
-            }
-            return $this->db->count_all_results("skb_paketan");
-        }
-
-        public function filter_paketan($asal,$customer,$search, $order_field, $order_ascdesc)
-        {
-            if($search!=""){
-                $this->db->like('jenis_mobil', $search);
-                $this->db->or_like('ritase', $search);
-            }
-            $this->db->order_by($order_field, $order_ascdesc);
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_paketan.customer_id", 'left');
-            $hasil = $this->db->get('skb_paketan')->result_array();
-            $hasil_fix = [];
-            for($i=0;$i<count($hasil);$i++){
-                if($asal=="addjo"){
-                    if($customer=='x'){
-                        if($hasil[$i]["paketan_status_hapus"]=="NO" && $hasil[$i]["validasi_paketan"]=="ACC" && $hasil[$i]["validasi_paketan_edit"]=="ACC" && $hasil[$i]["validasi_paketan_delete"]=="ACC"){
-                            $hasil_fix[] = $hasil[$i];
-                        }
-                    }else{
-                        if($hasil[$i]["customer_id"]==$customer && $hasil[$i]["paketan_status_hapus"]=="NO" && $hasil[$i]["validasi_paketan"]=="ACC" && $hasil[$i]["validasi_paketan_edit"]=="ACC" && $hasil[$i]["validasi_paketan_delete"]=="ACC"){
-                            $hasil_fix[] = $hasil[$i];
-                        }
-                    }
-                }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewpaketan"){
-                    if($customer=='x'){
-                        if($hasil[$i]["paketan_status_hapus"]=="NO"){
-                            $hasil_fix[] = $hasil[$i];
-                        }
-                    }else{
-                        if($hasil[$i]["customer_id"]==$customer && $hasil[$i]["paketan_status_hapus"]=="NO"){
-                            $hasil_fix[] = $hasil[$i];
-                        }
-                    }
-                }else{
-                    $hasil_fix[] = $hasil[$i];
-                }
-            }
-            return $hasil_fix;   
-        }
-
-        public function count_filter_paketan($asal,$customer,$search)
-        {
-            if($search!=""){
-                $this->db->like('jenis_mobil', $search);
-                $this->db->or_like('ritase', $search);
-            }
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_paketan.customer_id", 'left');
-            $hasil_data = $this->db->get('skb_paketan')->result_array();
-                $hasil_fix = 0;
-                for($i=0;$i<count($hasil_data);$i++){
-                    if($asal=="addjo"){
-                        if($customer=='x'){
-                            if($hasil_data[$i]["paketan_status_hapus"]=="NO" && $hasil_data[$i]["validasi_paketan"]=="ACC" && $hasil_data[$i]["validasi_paketan_edit"]=="ACC" && $hasil_data[$i]["validasi_paketan_delete"]=="ACC"){
-                                $hasil_fix +=1;
-                            }
-                        }else{
-                            if($hasil_data[$i]["customer_id"]==$customer && $hasil_data[$i]["paketan_status_hapus"]=="NO" && $hasil_data[$i]["validasi_paketan"]=="ACC" && $hasil_data[$i]["validasi_paketan_edit"]=="ACC" && $hasil_data[$i]["validasi_paketan_delete"]=="ACC"){
-                                $hasil_fix +=1;
-                            }
-                        }
-                    }else if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User" && $asal=="viewpaketan"){
-                        if($customer=='x'){
-                            if($hasil_data[$i]["paketan_status_hapus"]=="NO"){
-                                $hasil_fix +=1;
-                            }
-                        }else{
-                            if($hasil_data[$i]["customer_id"]==$customer && $hasil_data[$i]["paketan_status_hapus"]=="NO"){
-                                $hasil_fix +=1;
-                            }
-                        }
-                    }else{
-                        $hasil_fix +=1;
-                    }
-                }
-                return $hasil_fix;
-        }
-    //akhir function-fiunction datatable paketan
 }

@@ -18,7 +18,7 @@
             <div class="container ">
                 <div class="float-right mb-3">
                     <?php if($jo["status"]=="Dalam Perjalanan"){?>                    
-                        <a class='btn btn-primary btn-sm ' href='<?= base_url("index.php/print_berkas/uang_jalan/").$jo["Jo_id"]?>' id="">
+                        <a class='btn btn-primary btn-sm ' href='<?= base_url("index.php/print_berkas/uang_jalan/").$jo["Jo_id"]."/detail"?>' id="">
                             <span>Cetak Bukti Uang Jalan</span>
                         </a>
                     <?php }?>

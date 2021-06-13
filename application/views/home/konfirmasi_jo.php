@@ -31,17 +31,60 @@
 
 </div>
 <div class="modal fade mt-4 py-5" id="update_jo" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
-    <div class="modal-dialog modal-md" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
-                <h5 class="font-weight-bold">Pilih Status JO</h5>
+                <h5 class="font-weight-bold">Update Status JO</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="container mt-3">
                 <div class="row">
-                    <div class="col table-borderless ">
+                    <div class="col-md-6">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td class="font-weight-bold" style="width: 20%;">ID Job Order</td>
+                                    <td name="Jo_id"></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold" style="width: 20%;">Tanggal</td>
+                                    <td name="tanggal_surat"></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold" style="width: 20%;">Supir</td>
+                                    <td name="supir_name"></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold" style="width: 20%;">No Polisi</td>
+                                    <td name="mobil_no"></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold" style="width: 20%;">Jenis Mobil</td>
+                                    <td name="mobil_jenis"></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold" style="width: 20%;">Customer</td>
+                                    <td name="customer_name"></td>
+                                </tr>                                <tr>
+                                    <td class="font-weight-bold" style="width: 20%;">Muatan</td>
+                                    <td name="muatan"></td>
+                                </tr>                                <tr>
+                                    <td class="font-weight-bold" style="width: 20%;">Dari</td>
+                                    <td name="asal"></td>
+                                </tr>                                <tr>
+                                    <td class="font-weight-bold" style="width: 20%;">Ke</td>
+                                    <td name="tujuan"></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold" style="width: 20%;">Total UJ</td>
+                                    <td name="uang"></td>
+                                </tr>
+                            </tbody>
+                        </table>                
+                    </div>
+                    <div class="col-md-6 table-borderless ">
                         <form id="form_update_jo" method="POST">
                             <input type="text" name="jo_id" id="jo_id" hidden>
                             <div class="form-group">

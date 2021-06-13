@@ -22,6 +22,21 @@ class Form extends CI_Controller {
     
     // fungsi view form
         public function joborder(){
+            $jo_id = $this->model_form->getjoid();
+            $isi_jo_id = [];
+            for($i=0;$i<count($jo_id);$i++){
+                $isi_jo_id[] = $jo_id[$i]["Jo_id"];
+            }
+            if(count($isi_jo_id)==0){
+                $isi_jo_id[]=0;
+            }
+            //generate jo id
+            $new_jo_id = "";
+            for($i=0;$i<6-strlen(max($isi_jo_id)+1);$i++){
+                $new_jo_id .= "0";
+            }
+            $data["new_jo_id"] = $new_jo_id.(max($isi_jo_id)+1);
+            //end generate jo id
             if(!$_SESSION["user"]){
     			$this->session->set_flashdata('status-login', 'False');
                 redirect(base_url());
@@ -194,24 +209,9 @@ class Form extends CI_Controller {
             }else{
                 $nominal_tambahan = str_replace(".","",$this->input->post("nominal_tambahan"));
             }
-            $jo_id = $this->model_form->getjoid();
-            $isi_jo_id = [];
-            for($i=0;$i<count($jo_id);$i++){
-                $isi_jo_id[] = $jo_id[$i]["Jo_id"];
-            }
-            if(count($isi_jo_id)==0){
-                $isi_jo_id[]=0;
-            }
-            //generate jo id
-            $new_jo_id = "";
-            for($i=0;$i<7-strlen(max($isi_jo_id)+1);$i++){
-                $new_jo_id .= "0";
-            }
-            $new_jo_id = $new_jo_id.(max($isi_jo_id)+1);
-            //end generate jo id
             $data["customer"] = $this->model_home->getcustomerbyid($this->input->post("Customer"));
             $data["data"]=array(
-                "Jo_id"=>$new_jo_id,
+                "Jo_id"=>$this->input->post("Jo_id"),
                 "mobil_no"=>$this->input->post("Kendaraan"),
                 "supir_id"=>$this->input->post("Supir"),
                 "muatan"=>$this->input->post("Muatan"),
@@ -231,7 +231,7 @@ class Form extends CI_Controller {
                 "uang_total"=>str_replace(".","",$this->input->post("uang_jalan_total")),
             );
             $this->model_form->insert_JO($data["data"]);
-            $data["jo_id"] = $new_jo_id;
+            $data["jo_id"] = $data["data"]["Jo_id"];
             $data["asal"] = "insert";
             $data["tipe_jo"] = "reguler";
             $data["supir"] = $this->model_home->getsupirbyid($data["data"]["supir_id"]);
@@ -779,12 +779,12 @@ class Form extends CI_Controller {
                 $data = array(
                     "jo_id" => $this->input->post("jo_id"),
                     "status" => $this->input->post("status"),
-                    "tonase"=>$this->input->post("tonase"),
                     "tanggal_bongkar"=>$this->change_tanggal($this->input->post("tgl_bongkar")),
                     "tanggal_muat"=>$this->change_tanggal($this->input->post("tgl_muat")),
                     "biaya_lain"=>str_replace(".","",$this->input->post("biaya_lain")),
                     "user_closing"=>$_SESSION["user"],
-                    "tonase"=>$this->input->post("tonase"),
+                    "tonase"=>str_replace(".","",$this->input->post("tonase")),
+                    "total_tagihan"=>$data_jo["tagihan"]*str_replace(".","",$this->input->post("tonase")),
                     "keterangan"=>$keterangan,
                     // "tanggal_bongkar"=>date('Y-m-d'),
                 );
@@ -849,6 +849,7 @@ class Form extends CI_Controller {
             redirect(base_url("index.php/home/akun"));
         }
     //end fungsi update
+
     //fungsi delete
         public function deletesupir(){
             $supir_id = $this->input->get("id");
@@ -899,6 +900,7 @@ class Form extends CI_Controller {
             echo $mobil_no;
         }
     //end fungsi delete
+
     //fungsi acc
         public function accsupir($validasi){
             $supir_id = $this->input->get("id");
@@ -1012,6 +1014,7 @@ class Form extends CI_Controller {
             echo $merk_id;
         }
     //end fungsi acc
+
     //fungsi get
         public function getsupirname(){
             $supir_id = $this->input->get("id");
@@ -1048,6 +1051,7 @@ class Form extends CI_Controller {
             echo json_encode($data);
         }
     //end fungsi get
+
     //fungsi lain
         public function generate_terbilang($uang){
             $uang = abs($uang);
@@ -1105,14 +1109,17 @@ class Form extends CI_Controller {
             $mobil = $this->model_form->getmobilbyjenis($mobil_jenis);
             echo json_encode($mobil);        
         }
+        public function getmobilbyno(){
+            $mobil_no = $this->input->post("mobil_no");
+            $mobil = $this->model_form->getmobilbyno($mobil_no);
+            echo json_encode($mobil);        
+        }
         public function getrutefix(){
             $data = array(
                 "customer_id" => $this->input->post("customer_id"),
                 "muatan" => $this->input->post("rute_muatan"),
                 "rute_dari" => $this->input->post("rute_asal"),
-                "rute_ke" => $this->input->post("rute_ke"),
-                "mobil_jenis" => $this->input->post("mobil_jenis"),
-                "rute_tonase"=>$this->input->post("rute_tonase"),
+                "rute_ke" => $this->input->post("rute_ke")
             );   
             $rute = $this->model_form->getrutefix($data);
             echo json_encode($rute);        

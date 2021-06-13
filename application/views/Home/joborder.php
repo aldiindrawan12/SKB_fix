@@ -12,7 +12,7 @@
                 <a class="dropdown-item" href="<?=base_url("index.php/form/joborder")?>">Reguler</a>
                 <a class="dropdown-item" href="<?=base_url("index.php/form/joborderpaketan")?>">Paketan</a>
             </div> -->
-        </div>
+        <!-- </div> -->
     </div> 
     <div class="card shadow mb-4">
     <div class="card-header py-3">
@@ -34,6 +34,7 @@
                     <tr>
                         <th  class="text-center" scope="col">No JO</th>
                         <th class="text-center" scope="col">Tanggal</th>
+                        <th  scope="col">Status</th>
                         <th class="text-center" scope="col">Driver</th>
                         <th class="text-center" scope="col">No Pol</th>
                         <th class="text-center" scope="col">Jenis Mobil</th>
@@ -43,8 +44,8 @@
                         <th  class="text-center" scope="col">Ke</th>
                         <th class="text-center" scope="col">Total UJ</th>
                         <th class="text-center" scope="col">Sisa UJ</th>
-                        <th  scope="col">Status</th>
-                        <th scope="col">Detail</th>
+                        <th class="text-center" scope="col">Biaya Lain</th>
+                        <th scope="col">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>

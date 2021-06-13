@@ -1,14 +1,14 @@
 <div class="container">
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800 mt-3 mb-3">Seluruh Data Transaksi BON</h1>
-            <a href="<?=base_url("index.php/form/bon")?>" class="btn btn-primary btn-icon-split">
+    <div class="text-center mb-4">
+        <h1 class="h3 mb-0 text-gray-800 mt-3 mb-3">Data Nota Kasbon</h1>
+            <!-- <a href="<?=base_url("index.php/form/bon")?>" class="btn btn-primary btn-icon-split">
             <span class="icon text-white-100">
                 <i class="fas fa-plus"></i> 
             </span>
                 <span class="text">
                 Buat Transaksi BON
                 </span>
-            </a>
+            </a> -->
     </div> 
     <!-- tabel transaksi bon -->
     <div class="card shadow mb-4">

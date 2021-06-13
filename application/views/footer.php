@@ -2834,6 +2834,100 @@
     </script>
     <!-- End Invoice Lunas-->
     
+    
+    <!-- Seluruh invoice-->
+    <script>
+        $(document).ready(function() {
+            var table = null;
+            table = $('#Table-Seluruh-Invoice').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ordering": true,
+                "order": [
+                    [2, 'desc']
+                ],
+                "ajax": {
+                    "url": "<?php echo base_url('index.php/home/view_seluruh_invoice') ?>",
+                    "type": "POST"
+                },
+                "deferRender": true,
+                "aLengthMenu": [
+                    [50, 100],
+                    [50, 100]
+                ],
+                "columns": [
+                    {
+                        "data": "invoice_kode",
+                        className: 'text-center'
+                    },
+                    {
+                        "data": "tanggal_invoice",
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            return change_tanggal(data);
+                        }
+                    },
+                    {
+                        "data": "customer_name"
+                    },
+                    {
+                        "data": "grand_total",
+                        render: function(data, type, row) {
+                            let html = 'Rp.'+rupiah(data);
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "grand_total",
+                        render: function(data, type, row) {
+                            let html = 'Sisa Tagihan';
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "batas_pembayaran",
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            return data+" hari ("+change_tanggal(row["tanggal_batas_pembayaran"])+")";
+                        }
+                    },
+                    {
+                        "data": "status_bayar",
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            if (data == "Lunas") {
+                                    let html = "<span class='text-success'><i class='fa fa-fw fa-check mr-2'></i>" + data + "</span>";
+                                    return html;
+                                } else {
+                                    let html = "<span class='text-warning'><i class='fa fa fa-fw fa-exclamation-circle mr-2'></i>" + data + "</span>";
+                                    return html;
+                                }
+                        }
+                    },
+                    {
+                        "data": "invoice_kode",
+                        className: 'text-center',
+                        "orderable": false,
+                        render: function(data, type, row) {
+                            let html = "btn payment";
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "invoice_kode",
+                        className: 'text-center',
+                        "orderable": false,
+                        render: function(data, type, row) {
+                            let html = "<a class='btn btn-light' href='<?= base_url('index.php/detail/detail_invoice/"+data+"')?>'><i class='fas fa-eye'></i></a>";
+                            return html;
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+    <!-- End Seluruh Invoice-->
+
     <!-- scrip angka rupiah -->
     <script>
             function rupiah(uang){

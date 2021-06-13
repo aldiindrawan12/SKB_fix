@@ -45,10 +45,10 @@ class Form extends CI_Controller {
             $data["mobil"] = $this->model_home->gettruck();
             $data["supir"] = $this->model_home->getsupir();
             $data["kosongan"] = $this->model_home->getkosongan();
-            $data["page"] = "JO_page";
-            $data["collapse_group"] = "Perintah_Kerja";
+            $data["page"] = "Buat_JO_page";
+            $data["collapse_group"] = "Job_Order";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
-            if(json_decode($data["akun_akses"]["akses"])[1]==0){
+            if(json_decode($data["akun_akses"]["akses"])[14]==0){
                 redirect(base_url());
             }
             $this->load->view('header',$data);
@@ -97,10 +97,10 @@ class Form extends CI_Controller {
             }
             $data["bon_id_new"] = (max($isi_bon_id)+1)."-BON-".date("m")."-".date("Y");
             $data["supir"] = $this->model_home->getsupir();
-            $data["page"] = "Bon_page";
-            $data["collapse_group"] = "Penggajian";
+            $data["page"] = "Buat_Bon_page";
+            $data["collapse_group"] = "Kasbon";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
-            if(json_decode($data["akun_akses"]["akses"])[5]==0){
+            if(json_decode($data["akun_akses"]["akses"])[13]==0){
                 redirect(base_url());
             }
             $this->load->view('header',$data);
@@ -367,7 +367,7 @@ class Form extends CI_Controller {
             $data_akun=array(
                 "akun_name"=>$this->input->post("nama"),
                 "akun_role"=>$this->input->post("role"),
-                "akses"=>'["1","1","1","1","1","1","1","1","1","1","1","1"]'
+                "akses"=>'["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"]'
             );
             $this->model_form->insert_akun($data_akun);
             $akun = $this->model_form->getakunbyname($data_akun["akun_name"]);
@@ -840,8 +840,10 @@ class Form extends CI_Controller {
         public function update_konfigurasi($akun_id){
             $konfigurasi = [$this->input->post("cekpage1"),$this->input->post("cekpage2"),$this->input->post("cekpage3"),
             $this->input->post("cekpage4"),$this->input->post("cekpage5"),$this->input->post("cekpage6"),
-            $this->input->post("cekpage7"),$this->input->post("cekpage8"),$this->input->post("cekpage9"),
-            $this->input->post("cekpage10"),$this->input->post("cekpage11"),$this->input->post("cekpage12")];
+            $this->input->post("cekpage7"),"1","1",
+            $this->input->post("cekpage10"),$this->input->post("cekpage11"),$this->input->post("cekpage12"),
+            $this->input->post("cekpage13"),$this->input->post("cekpage14"),$this->input->post("cekpage15"),
+            $this->input->post("cekpage16"),$this->input->post("cekpage17"),$this->input->post("cekpage18")];
             // for($i=0;$i<count($konfigurasi);$i++){
             //     echo $konfigurasi[$i]."<br>";
             // }

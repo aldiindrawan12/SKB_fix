@@ -35,6 +35,8 @@ class Model_Dashboard extends CI_model
             $search_arr[] = "datediff('".$tanggal_now."',mobil_pajak)>-31 ";
         }else if($fungsi=="ijin"){
             $search_arr[] = "datediff('".$tanggal_now."',mobil_berlaku_ijin_bongkar)>-31 ";
+        }else if($fungsi=="usaha"){
+            $search_arr[] = "datediff('".$tanggal_now."',mobil_berlaku_usaha)>-31 ";
         }else{
             $search_arr[] = " status_jalan='Tidak Jalan' ";
         }
@@ -79,6 +81,8 @@ class Model_Dashboard extends CI_model
                 $tanggal = $record->mobil_pajak;
             }else if($fungsi=="ijin"){
                 $tanggal = $record->mobil_berlaku_ijin_bongkar;
+            }else if($fungsi=="usaha"){
+                $tanggal = $record->mobil_berlaku_usaha;
             }else{
                 $tanggal = "0000-00-00";
             }
@@ -105,6 +109,8 @@ class Model_Dashboard extends CI_model
                 "mobil_berlaku"=>$record->mobil_berlaku,
                 "mobil_pajak"=>$record->mobil_pajak,
                 "mobil_berlaku_kir"=>$record->mobil_berlaku_kir,
+                "mobil_berlaku_usaha"=>$record->mobil_berlaku_usaha,
+                "mobil_usaha"=>$record->mobil_usaha,
                 "mobil_berlaku_ijin_bongkar"=>$record->mobil_berlaku_ijin_bongkar,
             ); 
             $n++;

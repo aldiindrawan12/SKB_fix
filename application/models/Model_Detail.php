@@ -42,6 +42,7 @@ class Model_Detail extends CI_model
     }
 
     public function getbonbysupir($supir_id){ //bon by Supir
+        $this->db->order_by('bon_tanggal', 'DESC');
         $this->db->join("skb_supir","skb_supir.supir_id=skb_bon.supir_id","left");
         return $this->db->get_where("skb_bon",array("skb_bon.supir_id"=>$supir_id))->result_array();
     }
@@ -111,9 +112,13 @@ class Model_Detail extends CI_model
         return $this->db->get_where("skb_job_order",array("skb_job_order.supir_id"=>$supir_id,"skb_job_order.status"=>"Sampai Tujuan"))->result_array();
     }
 
-    public function getpembayaranupah($supir_id){
+    // public function getpembayaranupah($supir_id){
+    //     $this->db->join("skb_supir","skb_supir.supir_id=skb_pembayaran_upah.supir_id","left");
+    //     return $this->db->get_where("skb_pembayaran_upah",array("skb_pembayaran_upah.supir_id"=>$supir_id))->result_array();
+    // }
+    public function getpembayaranupah(){
         $this->db->join("skb_supir","skb_supir.supir_id=skb_pembayaran_upah.supir_id","left");
-        return $this->db->get_where("skb_pembayaran_upah",array("skb_pembayaran_upah.supir_id"=>$supir_id))->result_array();
+        return $this->db->get("skb_pembayaran_upah")->result_array();
     }
 
     public function getjobypembayaranupah($upah_id){
@@ -284,7 +289,7 @@ class Model_Detail extends CI_model
     }
     //end fungsi untuk update supir dan mobil JO
 
-    function getGajiData($postData,$supir_id){
+    function getGajiData($postData){
         $response = array();
     
         ## Read value
@@ -302,14 +307,12 @@ class Model_Detail extends CI_model
         if($searchValue != ''){
             $search_arr[] = " (pembayaran_upah_id like '%".$searchValue."%')";
         }
-        $search_arr[] = " skb_pembayaran_upah.supir_id=".$supir_id;
         if(count($search_arr) > 0){ //gabung kondisi where
             $searchQuery = implode(" and ",$search_arr);
         }
     
         ## Total record without filtering
         $this->db->select('count(*) as allcount');
-        $this->db->where("supir_id",$supir_id);
         $records = $this->db->get('skb_pembayaran_upah')->result();
         $totalRecords = $records[0]->allcount;
     

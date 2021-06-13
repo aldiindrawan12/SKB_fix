@@ -17,68 +17,21 @@
     <div class="card-body">
             <div class="container ">
                 <div class="float-right mb-3">
-                    <?php if($jo["status"]=="Dalam Perjalanan"){?>                    
                         <a class='btn btn-primary btn-sm ' href='<?= base_url("index.php/print_berkas/uang_jalan/").$jo["Jo_id"]."/detail"?>' id="">
                             <span>Cetak Bukti Uang Jalan</span>
                         </a>
-                    <?php }?>
                 </div>
             </div>
         <!-- tampilan detail jo -->
         <div class="container" id="detail-jo">
             <table class="table table-bordered">
-                <tbody>         
+                <tbody>     
                     <tr>
-                        <td class="d-none d-sm-table-cell text-center " rowspan="24" style="width: 15%;">
-                            <p class="badge badge-info">Customer</p>
-                            <?php if($customer){?>
-                            <p class="font-size-sm font-weight-bold"><?= $customer["customer_name"] ?></p>
-                            <?php }else{?>
-                                <p class="font-size-sm font-weight-bold">-</p>
-                            <?php }?>
-                            <hr>
-                            <p class="font-weight-bold badge badge-success">ID JO</p>
-                            <p class="font-size-sm font-weight-bold"><?= $jo["Jo_id"] ?></p>
-                            <hr>
-                            <p class="font-weight-bold badge badge-success">Tipe Job Order</p>
-                            <p class="font-size-sm font-weight-bold">Reguler</p>
-                            <hr>
-                            <p class="font-weight-bold badge badge-primary">Pembuat JO</p>
-                            <p class="font-size-sm font-weight-bold"><?= $jo["user"] ?></p>
-                            <hr>
-                            <p class="font-weight-bold badge badge-primary">Penutup JO</p>
-                            <p class="font-size-sm font-weight-bold"><?= $jo["user_closing"] ?></p>
-                            <hr>
-                            <p class="font-weight-bold badge badge-primary">Pembuat Invoice</p>
-                            <p class="font-size-sm font-weight-bold"><?= $invoice[0]["user_invoice"] ?></p>
-                            <hr>
-                            <p class="font-weight-bold badge badge-primary">Pembuat Slip Gaji</p>
-                            <p class="font-size-sm font-weight-bold"><?= $slip_gaji[0]["user_upah"] ?></p>
-                        </td>
-                        <td class="font-weight-bold" style="width: 25%;">Rute Muatan</td>
-                        <td colspan=3>
-                            <table class="table table-bordered small">
-                                <thead>
-                                    <tr>
-                                        <th>Keterangan</th>
-                                        <th>Dari</th>
-                                        <th>Ke</th>
-                                        <th>Muatan</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Rute ke-1</td>
-                                        <td><?= $jo["asal"]?></td>
-                                        <td><?= $jo["tujuan"]?></td>
-                                        <td><?= $jo["muatan"]?></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
+                        <td class="font-weight-bold" style="width: 25%;">ID JO</td>
+                        <td colspan=3><?= $jo["Jo_id"] ?></td>
                     </tr>
                     <tr>
-                        <td class="font-weight-bold" style="width: 25%;">Tanggal Surat</td>
+                        <td class="font-weight-bold" style="width: 25%;">Tanggal JO</td>
                         <td colspan=3><?= change_tanggal($jo["tanggal_surat"]) ?></td>
                     </tr>
                     <tr>
@@ -110,6 +63,31 @@
                             <?php }else{?>
                                 <td colspan=3><?= $mobil["mobil_no"]." == ".$mobil["mobil_jenis"] ?></td>
                             <?php }?>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold" style="width: 25%;">Customer</td>
+                        <td colspan=3><?= $customer["customer_name"] ?></td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold" style="width: 25%;">Rute Muatan</td>
+                        <td colspan=3>
+                            <table class="table table-bordered small">
+                                <thead>
+                                    <tr>
+                                        <th>Dari</th>
+                                        <th>Ke</th>
+                                        <th>Muatan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><?= $jo["asal"]?></td>
+                                        <td><?= $jo["tujuan"]?></td>
+                                        <td><?= $jo["muatan"]?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
                     </tr>
                     <tr>
                         <td class="font-weight-bold " style="width: 25%;">Uang Jalan</td>
@@ -164,28 +142,53 @@
                         <td class="font-weight-bold" style="width: 25%;">Tanggal Bongkar</td>
                         <td colspan=3><?= change_tanggal($jo["tanggal_bongkar"]) ?></td>
                     </tr>
-                    <tr class="text-center">
-                        <td colspan=3><strong>Detail Muatan</strong></td>
+                    <tr>
+                        <td class="font-weight-bold" style="width: 25%;">Berat Muatan</td>
+                        <td colspan=3><?= $jo["tonase"] ?></td>
                     </tr>
                     <tr>
-                        <td >Muatan Tonase : <?= $jo["tonase"]?></td>
-                        <td colspan=2>Biaya Lain-lain : Rp.<?= number_format($jo["biaya_lain"],2,',','.')?></td>
-                    </tr>
-                    <tr class="text-center">
-                        <td colspan=3><strong>Detail Upah</strong></td>
+                        <td class="font-weight-bold" style="width: 25%;">Biaya Lain-lain</td>
+                        <td colspan=3>Rp.<?= number_format($jo["biaya_lain"],2,',','.')?></td>
                     </tr>
                     <tr>
-                        <td ><?= $slip_gaji[0]["pembayaran_upah_id"]?></td>
-                        <td ><?= change_tanggal($slip_gaji[0]["pembayaran_upah_tanggal"])?></td>
-                        <td >Rp.<?= number_format($jo["upah"],2,',','.')?></td>
-                    </tr>
-                    <tr class="text-center">
-                        <td colspan=3><strong>Detail Invoice</strong></td>
+                        <td class="font-weight-bold" style="width: 25%;">No Slip Gaji</td>
+                        <td colspan=3><?= $slip_gaji[0]["pembayaran_upah_id"] ?></td>
                     </tr>
                     <tr>
-                        <td ><?= $invoice[0]["invoice_id"]?></td>
-                        <td ><?= change_tanggal($invoice[0]["tanggal_invoice"])?></td>
-                        <td >Rp.<?= number_format($jo["tagihan"],2,',','.')?></td>
+                        <td class="font-weight-bold" style="width: 25%;">Tanggal Slip Gaji</td>
+                        <td colspan=3><?= change_tanggal($slip_gaji[0]["pembayaran_upah_tanggal"]) ?></td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold" style="width: 25%;">Nominal Gaji</td>
+                        <td colspan=3>Rp.<?= number_format($jo["upah"],2,',','.')?></td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold" style="width: 25%;">No Invoice</td>
+                        <td colspan=3><?= $invoice[0]["invoice_id"]?></td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold" style="width: 25%;">Tanggal Invoice</td>
+                        <td colspan=3><?= change_tanggal($invoice[0]["tanggal_invoice"])?></td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold" style="width: 25%;">Nominal Invoice</td>
+                        <td colspan=3>Rp.<?= number_format($jo["total_tagihan"],2,',','.')?></td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold" style="width: 25%;">Pembuat JO</td>
+                        <td colspan=3><?= $jo["user"]?></td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold" style="width: 25%;">Penutup JO</td>
+                        <td colspan=3><?= $jo["user_closing"]?></td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold" style="width: 25%;">Pembuat Slip Gaji</td>
+                        <td colspan=3><?= $slip_gaji[0]["user_upah"]?></td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold" style="width: 25%;">Pembuat Invoice</td>
+                        <td colspan=3><?= $invoice[0]["user_invoice"]?></td>
                     </tr>
                 </tbody>
             </table>

@@ -27,78 +27,16 @@
 <div class="card-footer bg-white">
 <div class="table-responsive">
 <form action="<?= base_url("index.php/form/update_konfigurasi/".$akun["akun_id"])?>" method="POST">
-    <table width="100%" cellspacing="0">
-        <tbody >
-            <?php //$collapse = ["Master Data","Perintah Kerja","Penggajian","Laporan","Sistem dan Konfigurasi","XXXX"];
-                    $page = ["Master Data","Job Order","Konfirmasi Job Order","Tambah Invoice","Data Invoice",
-                    "Transaksi Bon","Transaksi Gaji","Laporan Job Order","Laporan Uang Jalan","Laporan Gaji Supir",
-                    "Laporan Bon Supir","Konfigurasi Akun"];?>
-            <!-- <tr>
-                <input type="text" class="cek1" name="cek1" hidden value="<?= json_decode($akun["akun_akses"])[0] ?>">
-                <td width="20%"><?= $collapse[0]?></td>
-                <td width="5%">:</td>
-                <td ><input class="isicek1" value="<?= json_decode($akun["akun_akses"])[0] ?>" 
-                <?php
-                    if(json_decode($akun["akun_akses"])[0]==1){
-                        echo 'checked';
-                    }
-                ?>
-                data-toggle="toggle" type="checkbox" data-size="medium" data-onstyle="success" data-offstyle="danger" onchange="togglenih('cek1','isicek1')"></td>
-            </tr>
-            <tr>
-                <input type="text" class="cek2" name="cek2" hidden value="<?= json_decode($akun["akun_akses"])[1] ?>">
-                <td width="20%"><?= $collapse[1]?></td>
-                <td width="5%">:</td>
-                <td ><input class="isicek2" value="<?= json_decode($akun["akun_akses"])[1] ?>" 
-                <?php
-                    if(json_decode($akun["akun_akses"])[1]==1){
-                        echo 'checked';
-                    }
-                ?>
-                data-toggle="toggle" type="checkbox" data-size="medium" data-onstyle="success" data-offstyle="danger" onchange="togglenih('cek2','isicek2')"></td>
-            </tr>
-            <tr>
-                <input type="text" class="cek3" name="cek3" hidden value="<?= json_decode($akun["akun_akses"])[2] ?>">
-                <td width="20%"><?= $collapse[2]?></td>
-                <td width="5%">:</td>
-                <td ><input class="isicek3" value="<?= json_decode($akun["akun_akses"])[2] ?>" 
-                <?php
-                    if(json_decode($akun["akun_akses"])[2]==1){
-                        echo 'checked';
-                    }
-                ?>
-                data-toggle="toggle" type="checkbox" data-size="medium" data-onstyle="success" data-offstyle="danger" onchange="togglenih('cek3','isicek3')"></td>
-            </tr>
-            <tr>
-                <input type="text" class="cek4" name="cek4" hidden value="<?= json_decode($akun["akun_akses"])[3] ?>">
-                <td width="20%"><?= $collapse[3]?></td>
-                <td width="5%">:</td>
-                <td ><input class="isicek4" value="<?= json_decode($akun["akun_akses"])[3] ?>" 
-                <?php
-                    if(json_decode($akun["akun_akses"])[3]==1){
-                        echo 'checked';
-                    }
-                ?>
-                data-toggle="toggle" type="checkbox" data-size="medium" data-onstyle="success" data-offstyle="danger" onchange="togglenih('cek4','isicek4')"></td>
-            </tr>
-            <tr>
-                <input type="text" class="cek5" name="cek5" hidden value="<?= json_decode($akun["akun_akses"])[4] ?>">
-                <td width="20%"><?= $collapse[4]?></td>
-                <td width="5%">:</td>
-                <td ><input class="isicek5" value="<?= json_decode($akun["akun_akses"])[4] ?>" 
-                <?php
-                    if(json_decode($akun["akun_akses"])[4]==1){
-                        echo 'checked';
-                    }
-                ?>
-                data-toggle="toggle" type="checkbox" data-size="medium" data-onstyle="success" data-offstyle="danger" onchange="togglenih('cek5','isicek5')"></td>
-            </tr> -->
-        </tbody>
-    </table>
-  
+    <?php
+     $page = ["Master Data","Data Job Order","Konfirmasi Job Order","Buat Invoice","Data Invoice",
+     "Data Nota Kasbon","Buat Slip Gaji","Laporan Job Order","Laporan Uang Jalan","Data Slip Supir",
+     "Mutasi Kasbon","Konfigurasi Akun","Saldo Kasbon","Buat Nota Kasbon","Buat Job Order","DB Izin","DB Operasional","DB Invoice"];?>
     <table width="100%" cellspacing="0">
         <tbody>
-            <?php for($i=0;$i<count($page);$i++){?>
+            <?php for($i=0;$i<count($page);$i++){
+                if($i==7 || $i==8){
+                    continue;
+                }else{?>
                 <tr>
                     <input type="text" class="cekpage<?= $i+1?>" name="cekpage<?= $i+1?>" hidden value="<?= json_decode($akun["akses"])[$i] ?>">
                     <td width="20%"><?= $page[$i]?></td>
@@ -111,7 +49,7 @@
                     ?>
                     data-toggle="toggle" type="checkbox" data-size="medium" data-onstyle="success" data-offstyle="danger" onchange="togglenih('cekpage<?= $i+1?>','isicekpage<?= $i+1?>')"></td>
                 </tr>
-            <?php }?>
+            <?php }}?>
             <tr >
                 <td class="py-3 " colspan=3><button type="submit" class="btn btn-primary mr-2">Simpan</button><button type="reset" class="btn btn-danger" onclick="reset_konfigurasi()">Batal</button></td>
             </tr>

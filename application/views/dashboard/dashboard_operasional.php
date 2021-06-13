@@ -1,61 +1,55 @@
-<?php
-    function change_tanggal($data){
-        $data_tanggal = explode('-', $data);
-        $tanggal = $data_tanggal[2].'-'.$data_tanggal[1].'-'.$data_tanggal[0];
-        return $tanggal;
-    }
-?>
-<!-- tampilan detail penggajian supir -->
-<div class="container small">
-    <div class="text-center mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Data Slip Gaji</h1>
-    </div> 
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Seluruh Data Slip Gaji</h6>
-        </div>
-        <!-- <div class="card-body">
-            <table class="w-50">
-                <tbody>
-                    <tr>
-                        <td width="25%">Id Supir</td>
-                        <td width="5%">:</td>
-                        <td><?= $supir["supir_id"]?></td>
-                    </tr>
-                    <tr>
-                        <td width="25%">Nama Supir</td>
-                        <td width="5%">:</td>
-                        <td><?= $supir["supir_name"]?></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div> -->
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered table-striped" id="Table-Penggajian" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th class="text-center" width="5%" scope="col">No Pembayaran</th>
-                            <th class="text-center" width="10%" scope="col">Tgl Slip Gaji</th>
-                            <th class="text-center" width="10%" scope="col">Supir</th>
-                            <th class="text-center" width="10%" scope="col">Bulan Kerja</th>
-                            <th class="text-center" width="10%" scope="col">Total Gaji</th>
-                            <th class="text-center" width="10%" scope="col">Sisa Gaji</th>
-                            <th class="text-center" width="10%" scope="col">Status</th>
-                            <th class="text-center" width="10%" scope="col">Payment</th>
-                            <th class="text-center" width="10%" scope="col">Detail</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+    <div class="info-supir">
+        <div class="card shadow mb-4 ml-2 mr-2">
+            <div class="card-header py-3 text-center">
+            <h6 class="m-0 font-weight-bold btn-facebook disabled h4 p-3 " style="border-radius:10px; ">Informasi Driver</h6>
+            </div>  
+            <div class="card-body row justify-content-md-center small">
+                <div class="table-responsive border border-info rounded p-1">
+                    <div class="card-header py-3 text-center">
+                        <h6 class="m-0 font-weight-bold text-gray-900">Supir Tidak Jalan</h6>
+                    </div>
+                    <table class="table table-bordered" id="Table-Supir-Tidak-Jalan" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th class="text-center" width="20%" scope="col">Nama</th>
+                                <th class="text-center" width="20%" scope="col">Nomor Telepon</th>
+                                <th class="text-center" width="20%" scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
-</div>  
-<!-- end tampilan detail penggajian supir -->
-
+    <div class="info-kendaraan"> 
+        <div class="card shadow mb-4 ml-2 mr-2">
+            <div class="card-header py-3 text-center">  
+                <h6 class="m-0 font-weight-bold btn-primary disabled h4 p-3 " style="border-radius:10px; background-color:#c19277;">Informasi Kendaraan</h6>
+            </div>  
+            <div class="card-body row justify-content-md-center small">
+                <div class="table-responsive border border-primary rounded p-1">
+                    <div class="card-header py-3 text-center">
+                        <h6 class="m-0 font-weight-bold  text-gray-900">Kendaraan Tidak Jalan</h6>
+                    </div>
+                    <table class="table table-bordered" id="Table-Truck-Tidak-Jalan" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th class="text-center" width="20%" scope="col">No Polisi</th>
+                                <th class="text-center" width="20%" scope="col">Merk</th>
+                                <th class="text-center" width="20%" scope="col">Type</th>
+                                <th class="text-center" width="20%" scope="col">Jenis</th>
+                                <th class="text-center" width="20%" scope="col">Dump</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
         <!-- Footer -->
         <footer class="sticky-footer bg-white">
             <div class="container my-auto">
@@ -97,7 +91,6 @@
             </div>
         </div>
     </div>
-
     <div class="modal fade" id="popup-ubah-password" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog mt-5 py-5" role="document">
@@ -131,21 +124,49 @@
             </div>
         </div>
     </div>
-    
+    <!-- pop up add detail rute paketan -->
+    <div class="modal fade" id="popup-detail-rute-paketan" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+        <div class="modal-dialog modal-md"  role="document"  >
+            <div class="modal-content">
+                <div class="modal-header bg-primary-dark">
+                    <h5 class="font-weight-bold">Detail Rute</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="font-size-sm m-3 text-justify">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="table-data-rute-paketan" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center" scope="col">Keterangan</th>
+                                                <th class="text-center" scope="col">Dari</th>
+                                                <th class="text-center" scope="col">Ke</th>
+                                                <th class="text-center" scope="col">Muatan</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end pop up add detail rute paketan -->
     <!-- Bootstrap core JavaScript-->
     <script src="<?=base_url("assets/vendor/jquery/jquery.min.js")?>"></script>
     <script src="<?=base_url("assets/vendor/jquery/jquery.mask.min.js")?>"></script>
     <script src="<?=base_url("assets/vendor/bootstrap/js/bootstrap.bundle.min.js")?>"></script>    
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     
-    
     <!-- Core plugin JavaScript-->
     <script src="<?=base_url("assets/vendor/jquery-easing/jquery.easing.min.js")?>"></script>
-    <!-- data toggle bawah -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap4-toggle/3.6.1/bootstrap4-toggle.min.js" integrity="sha512-bAjB1exAvX02w2izu+Oy4J96kEr1WOkG6nRRlCtOSQ0XujDtmAstq5ytbeIxZKuT9G+KzBmNq5d23D6bkGo8Kg==" crossorigin="anonymous"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
     <!-- Custom scripts for all pages-->
     <script src="<?=base_url("assets/js/sb-admin-2.min.js")?>"></script>
+
     <!-- Page level plugins -->
     <script src="<?=base_url("assets/vendor/chart.js/Chart.min.js")?>"></script>
     <script src="<?=base_url("assets/vendor/datatables/jquery.dataTables.min.js")?>"></script>
@@ -181,101 +202,88 @@
             }
         }
     </script>
-    <!-- end cek password -->
-
-    <script> //script datatables
+    <script> //script datatables kendaraan
         $(document).ready(function() {
             var table = null;
-            table = $('#Table-Penggajian').DataTable({
+            table = $('#Table-Truck-Tidak-Jalan').DataTable({
                 "processing": true,
                 "serverSide": true,
                 "ordering": true,
                 "order": [
-                    [0, 'desc']
+                    [0, 'asc']
                 ],
                 "ajax": {
-                    "url": "<?php echo base_url('index.php/detail/view_laporan_penggajian/')?>",
+                    "url": "<?php echo base_url('index.php/dashboard/view_truck/tidak_jalan') ?>",
                     "type": "POST",
                 },
                 "deferRender": true,
                 "aLengthMenu": [
-                    [50, 100],
-                    [50, 100]
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
                 ],
                 "columns": [
-                    {
-                        "data": "pembayaran_upah_id"
+                    {   
+                        "data": "mobil_no"
                     },
                     {
-                        "data": "pembayaran_upah_tanggal",
-                        className: 'text-center',
-                        render: function(data, type, row) {
-                           return change_tanggal(data);
-                        }
+                        "data": "mobil_merk"
                     },
                     {
-                        "data":"supir_name"
+                        "data": "mobil_type"
                     },
                     {
-                        "data":"bulan_kerja"
+                        "data": "mobil_jenis"
                     },
                     {
-                        "data": "pembayaran_upah_nominal",
-                        className: 'text-center',
-                        render: function(data, type, row) {
-                           return "Rp."+rupiah(data);
-                        }
-                    },
-                    {
-                        "data": "pembayaran_upah_nominal",
-                        className: 'text-center',
-                        render: function(data, type, row) {
-                           return "sisa gaji";
-                        }
-                    },
-                    {
-                        "data": "pembayaran_upah_status",
-                        className: 'text-center font-weight-bold',
-                        "orderable": false,
-                        render: function(data, type, row) {
-                            let html = "";
-                            if(data=="Lunas"){
-                                html+="<span class='text-success'>"+data+"</span>";
-                            }else{
-                                html+="<span class='text-danger'>"+data+"</span>";
-                            }
-                            return html;
-                        }
-                    },
-                    {
-                        "data": "pembayaran_upah_id",
-                        className: 'text-center',
-                        render: function(data, type, row) {
-                           return "payment";
-                        }
-                    },
-                    {
-                        "data": "pembayaran_upah_id",
-                        className: 'text-center',
-                        render: function(data, type, row) {
-                           return "<a class='btn btn-light' href='<?= base_url('index.php/detail/detail_penggajian_report_pembayaran/')?>"+row["supir_id"]+"/"+data+"'><i class='fas fa-eye'></i></a>";
-                        }
+                        "data": "mobil_dump"
                     },
                 ]
             });
         });
     </script>
-
-    <script>
-        function change_tanggal(data){
-            if(data==""){
-                return "";
-            }else{
-                var data_tanggal = data.split("-");
-                var tanggal = data_tanggal[2]+"-"+data_tanggal[1]+"-"+data_tanggal[0];
-                return tanggal;
-            }
-        }
+    <script> //script datatables kendaraan
+        $(document).ready(function() {
+            var table = null;
+            table = $('#Table-Supir-Tidak-Jalan').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ordering": true,
+                "order": [
+                    [0, 'asc']
+                ],
+                "ajax": {
+                    "url": "<?php echo base_url('index.php/dashboard/view_supir/tidak_jalan') ?>",
+                    "type": "POST",
+                },
+                "deferRender": true,
+                "aLengthMenu": [
+                    [10, 30, 50, 100],
+                    [10, 30, 50, 100]
+                ],
+                "columns": [
+                    {   
+                        "data": "supir_name"
+                    },
+                    {
+                        "data": "supir_telp"
+                    },
+                    {
+                        "data": "status_jalan",
+                        className: 'text-center',
+                        "orderable": false,
+                            render: function(data, type, row) {
+                                if (data == "Jalan") {
+                                    let html = "<span class='btn-sm btn-block btn-success'><i class='fa fa-fw fa-check mr-2'></i>" + data + "</span>";
+                                    return html;
+                                } else {
+                                    let html = "<span class='btn-sm btn-block btn-warning'><i class='fa fa-fw fa-exclamation-circle mr-2'></i>" + data + "</span>";
+                                    return html;
+                                }
+                            }
+                    },
+                ]
+            });
+        });
     </script>
     <!-- scrip angka rupiah -->
     <script>
@@ -295,3 +303,11 @@
         }
     </script>
     <!-- end script angka rupiah -->
+    <script>
+        function change_tanggal(data){
+            var data_tanggal = data.split("-");
+            var tanggal = data_tanggal[2]+"-"+data_tanggal[1]+"-"+data_tanggal[0];
+            return tanggal;
+        }
+    </script>
+    

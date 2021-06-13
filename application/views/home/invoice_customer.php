@@ -1,13 +1,41 @@
 <div class="container">
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Data Invoice Customer</h1>
+    <div class="text-center mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Data Invoice</h1>
     </div> 
     <div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Customer</h6>
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Seluruh Data Invoice</h6>
+        </div>
+        <div class="container small">
+            <div class="card shadow mb-4 mt-3">
+                <!-- tabel Seluruh invoice-->
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="Table-Seluruh-Invoice" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th class="text-center" scope="col">No Invoice</th>
+                                    <th class="text-center" scope="col">Tgl Invoice</th>
+                                    <th class="text-center" scope="col">Customer</th>
+                                    <th class="text-center" scope="col">Total Tagihan</th>
+                                    <th class="text-center" scope="col">Sisa Tagihan</th>
+                                    <th class="text-center" scope="col">Batas Pembayaran</th>
+                                    <th class="text-center" scope="col">Status Pembayaran</th>
+                                    <th class="text-center" scope="col">Payment</th>
+                                    <th class="text-center" scope="col">Detail</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>  
+        </div>
     </div>
+</div>
     <!-- tabel data cutomer -->
-    <div class="card-body">
+    <!-- <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="Table-Invoice-Customer" width="100%" cellspacing="0">
                 <thead>
@@ -24,8 +52,5 @@
                 </tbody>
             </table>
         </div>
-    </div>
+    </div> -->
     <!-- end tabel data cutomer -->
-</div>
-</div>
-</div>

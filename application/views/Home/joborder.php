@@ -2,12 +2,12 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4 ">
         <h1 class="h3 mb-0 text-gray-800 mt-3 mb-3">Seluruh Data Job Order</h1>
         <!-- <div class="dropdown"> -->
-            <a class="btn btn-primary" href="<?=base_url("index.php/form/joborder")?>">
+            <!-- <a class="btn btn-primary" href="<?=base_url("index.php/form/joborder")?>">
                 <span class="icon text-white-100">
                     <i class="fas fa-plus"></i> 
                 </span>
                 Buat Job Order
-            </a>
+            </a> -->
             <!-- <div class="dropdown-menu">
                 <a class="dropdown-item" href="<?=base_url("index.php/form/joborder")?>">Reguler</a>
                 <a class="dropdown-item" href="<?=base_url("index.php/form/joborderpaketan")?>">Paketan</a>

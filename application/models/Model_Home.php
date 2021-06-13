@@ -158,6 +158,65 @@ class Model_Home extends CI_model
         }
      //akhir function-fiunction datatable truck
 
+    //function-fiunction datatable truck
+        function getAllInvoiceData($postData){
+            $response = array();
+        
+            ## Read value
+            $draw = $postData['draw'];
+            $start = $postData['start']; // mulai display per page
+            $rowperpage = $postData['length']; // Rows display per page
+            $columnIndex = $postData['order'][0]['column']; // Column index untuk sorting
+            $columnName = $postData['columns'][$columnIndex]['data']; // Column name untuk sorting
+            $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
+            $searchValue = $postData['search']['value']; // Search value
+
+            ## Search 
+            $search_arr = array();
+            $searchQuery = "";
+            if($searchValue != ''){
+                $search_arr[] = " (invoice_kode like '%".$searchValue."%') ";
+            }
+            if(count($search_arr) > 0){ //gabung kondisi where
+                $searchQuery = implode(" and ",$search_arr);
+            }
+        
+            ## Total record without filtering
+            $this->db->select('count(*) as allcount');
+            $records = $this->db->get('skb_invoice')->result();
+            $totalRecords = $records[0]->allcount;
+        
+            ## Total record with filtering
+            $this->db->select('count(*) as allcount');
+            if($searchQuery != ''){
+                $this->db->where($searchQuery);
+            }
+            $records = $this->db->get('skb_invoice')->result();
+            $totalRecordwithFilter = $records[0]->allcount;
+        
+            ## data hasil record
+            $this->db->select('*');
+            if($searchQuery != ''){
+                $this->db->where($searchQuery);
+            }
+            $this->db->order_by($columnName, $columnSortOrder);
+            $this->db->limit($rowperpage, $start);
+            $this->db->join("skb_customer","skb_customer.customer_id=skb_invoice.customer_id",'left');
+            $records = $this->db->get('skb_invoice')->result();
+        
+            $data = $records;
+            ## Response
+            $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordwithFilter,
+            "aaData" => $data
+            );
+        
+            return $response; 
+        }
+    //akhir function-fiunction datatable truck
+
      //function-fiunction datatable JO
         function getJOData($postData,$status){
             $response = array();

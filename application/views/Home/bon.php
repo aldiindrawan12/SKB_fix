@@ -32,6 +32,46 @@
                     </span>
                 </a>
         </div>
+            <div class="conatiner w-50 m-auto">
+                <div class="mb-2 form-group row mt-3">
+                    <label for="Tanggal" class="form-label font-weight-bold col-md-3">Tanggal Bon</label>
+                    <input autocomplete="off" type="text" class="form-control col-md-4 mr-4" id="Tanggal1" name="Tanggal1" onclick="tanggal_berlaku(this)">
+                    <input autocomplete="off" type="text" class="form-control col-md-4" id="Tanggal2" name="Tanggal2" onclick="tanggal_berlaku(this)">
+                </div>
+                <div class="mb-2 form-group row">
+                    <label class="form-label font-weight-bold col-md-3" for="Supir">Supir</label>
+                    <select name="Supir" id="Supir" class="form-control selectpicker col-md-9" data-live-search="true">
+                        <option class="font-w700" selected value="">Semua Supir</option>
+                        <?php foreach($supir as $value){?>
+                            <option value="<?=$value["supir_id"]?>"><?=$value["supir_name"]?></option>
+                        <?php }?>
+                    </select>
+                </div>
+                <div class="mb-2 mt-3 form-group row">
+                    <label for="Status" class="form-label font-weight-bold col-md-3">Jenis Transaksi</label>
+                    <select name="Status" id="Status" class="form-control selectpicker col-md-9" data-live-search="true">
+                        <option value="">Semua</option>
+                        <option value="Pembayaran">Pembayaran</option>
+                        <option value="Pengajuan">Pengajuan</option>
+                    </select>
+                </div>
+                <div class="mb-2 form-group row">
+                    <label for="No_Bon" class="form-label font-weight-bold col-md-4">No Bon</label>
+                    <input autocomplete="off" type="text" class="form-control col-md-2" id="No_Bon1" name="No_Bon1" value="x">
+                    <input autocomplete="off" type="text" class="form-control col-md-2" id="No_Bon2" name="No_Bon2" value="BON" readonly>
+                    <input autocomplete="off" type="text" class="form-control col-md-2" id="No_Bon3" name="No_Bon3" value="x">
+                    <input autocomplete="off" type="text" class="form-control col-md-2" id="No_Bon4" name="No_Bon4" value="x">
+                </div>
+                <div class="mb-2 form-group text-center">
+                    <button class="btn btn-primary" id="btn-cari">Cari</button>
+                    <button class="btn btn-danger" onclick="reset_form()">Reset</button>
+                </div>
+            </div>
+            <hr>
+            <div class="container">
+                <span>Total Data JO Yang Ditemukan : </span><span id="ditemukan"><?= count($bon)?></span><br>
+            </div>
+            <hr>
         <div class="card-body" id="Table-Bon-Print">
             <div class="table-responsive">
                 <table border="1" class="table table-bordered" id="Table-Bon" width="100%" cellspacing="0">
@@ -132,4 +172,9 @@
     window.print();
     document.body.innerHTML = restorepage;
   }
+</script>
+<script>
+    function reset_form(){
+        location.reload();
+    }
 </script>

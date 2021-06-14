@@ -290,7 +290,7 @@ class Model_Detail extends CI_model
     }
     //end fungsi untuk update supir dan mobil JO
 
-    function getGajiData($postData){
+    function getGajiData($postData,$data){
         $response = array();
     
         ## Read value
@@ -300,14 +300,51 @@ class Model_Detail extends CI_model
         $columnIndex = $postData['order'][0]['column']; // Column index untuk sorting
         $columnName = $postData['columns'][$columnIndex]['data']; // Column name untuk sorting
         $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
-        $searchValue = $postData['search']['value']; // Search value
     
         ## Search 
         $search_arr = array();
         $searchQuery = "";
-        if($searchValue != ''){
-            $search_arr[] = " (pembayaran_upah_id like '%".$searchValue."%')";
+        if($data["Status"]!=""){
+            $search_arr[] = " pembayaran_upah_status='".$data["Status"]."' ";
         }
+        if($data["Supir"]!=""){
+            $search_arr[] = " skb_pembayaran_upah.supir_id = '".$data["Supir"]."'";
+        }
+        if($data["Bulan"]!="" && $data["Bulan"]!="x"){
+            if($data["Tahun"]!="" && $data["Tahun"]!="x"){
+                $search_arr[] = " bulan_kerja like'%".$data["Bulan"]."-".$data["Tahun"]."%' ";
+            }else{
+                $search_arr[] = " bulan_kerja like'%".$data["Bulan"]."-%' ";
+            }
+        }else{
+            if($data["Tahun"]!="" && $data["Tahun"]!="x"){
+                $search_arr[] = " bulan_kerja like'%-".$data["Tahun"]."%' ";
+            }else{
+                $search_arr[] = " bulan_kerja like'%-%' ";
+            }
+        }
+        if($data["Tanggal1"]!="" && $data["Tanggal2"]==""){
+            $search_arr[] = " pembayaran_upah_tanggal BETWEEN '".$this->change_tanggal($data["Tanggal1"])."' AND '2022-10-10'";
+        }
+        if($data["Tanggal1"]=="" && $data["Tanggal2"]!=""){
+            $search_arr[] = " pembayaran_upah_tanggal BETWEEN '2000-10-10' AND '".$this->change_tanggal($data["Tanggal2"])."'";
+        }
+        if($data["Tanggal1"]!="" && $data["Tanggal2"]!=""){
+            $search_arr[] = " pembayaran_upah_tanggal BETWEEN '".$this->change_tanggal($data["Tanggal1"])."' AND '".$this->change_tanggal($data["Tanggal2"])."' ";
+        }
+        $pembayaran_upah = explode("-",$data["No_Slip"]);
+        $pembayaran_upah_fix = "";
+        for($i=0;$i<count($pembayaran_upah);$i++){
+            if($pembayaran_upah[$i]!="x"){
+                if($i!=3){
+                    $pembayaran_upah_fix=$pembayaran_upah_fix.$pembayaran_upah[$i]."-";
+                }else{
+                    $pembayaran_upah_fix.=$pembayaran_upah[$i];
+                }
+            }
+        }
+        $search_arr[] = " pembayaran_upah_id like '%".$pembayaran_upah_fix."%'";
+
         if(count($search_arr) > 0){ //gabung kondisi where
             $searchQuery = implode(" and ",$search_arr);
         }
@@ -346,5 +383,61 @@ class Model_Detail extends CI_model
         );
     
         return $response; 
+    }
+    function getDitemukanSlip($data){
+        ## Search 
+        $search_arr = array();
+        $searchQuery = "";
+        if($data["Status"]!=""){
+            $search_arr[] = " pembayaran_upah_status='".$data["Status"]."' ";
+        }
+        if($data["Supir"]!=""){
+            $search_arr[] = " skb_pembayaran_upah.supir_id = '".$data["Supir"]."'";
+        }
+        if($data["Bulan"]!="" && $data["Bulan"]!="x"){
+            if($data["Tahun"]!="" && $data["Tahun"]!="x"){
+                $search_arr[] = " bulan_kerja like'%".$data["Bulan"]."-".$data["Tahun"]."%' ";
+            }else{
+                $search_arr[] = " bulan_kerja like'%".$data["Bulan"]."-%' ";
+            }
+        }else{
+            if($data["Tahun"]!="" && $data["Tahun"]!="x"){
+                $search_arr[] = " bulan_kerja like'%-".$data["Tahun"]."%' ";
+            }else{
+                $search_arr[] = " bulan_kerja like'%-%' ";
+            }
+        }
+        if($data["Tanggal1"]!="" && $data["Tanggal2"]==""){
+            $search_arr[] = " pembayaran_upah_tanggal BETWEEN '".$this->change_tanggal($data["Tanggal1"])."' AND '2022-10-10'";
+        }
+        if($data["Tanggal1"]=="" && $data["Tanggal2"]!=""){
+            $search_arr[] = " pembayaran_upah_tanggal BETWEEN '2000-10-10' AND '".$this->change_tanggal($data["Tanggal2"])."'";
+        }
+        if($data["Tanggal1"]!="" && $data["Tanggal2"]!=""){
+            $search_arr[] = " pembayaran_upah_tanggal BETWEEN '".$this->change_tanggal($data["Tanggal1"])."' AND '".$this->change_tanggal($data["Tanggal2"])."' ";
+        }
+        $pembayaran_upah = explode("-",$data["No_Slip"]);
+        $pembayaran_upah_fix = "";
+        for($i=0;$i<count($pembayaran_upah);$i++){
+            if($pembayaran_upah[$i]!="x"){
+                if($i!=3){
+                    $pembayaran_upah_fix=$pembayaran_upah_fix.$pembayaran_upah[$i]."-";
+                }else{
+                    $pembayaran_upah_fix.=$pembayaran_upah[$i];
+                }
+            }
+        }
+        $search_arr[] = " pembayaran_upah_id like '%".$pembayaran_upah_fix."%'";
+
+        if(count($search_arr) > 0){ //gabung kondisi where
+            $searchQuery = implode(" and ",$search_arr);
+        }
+    
+        ## Total record without filtering
+        if($searchQuery != ''){
+            $this->db->where($searchQuery);
+        }
+        $records = $this->db->get('skb_pembayaran_upah')->result_array();
+        return $records;
     }
 }

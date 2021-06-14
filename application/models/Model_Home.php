@@ -74,6 +74,16 @@ class Model_Home extends CI_model
             return $this->db->get("skb_job_order")->result_array();
         }
 
+        public function getbon() //all JO
+        {
+            return $this->db->get("skb_bon")->result_array();
+        }
+
+        public function getinvoice() //all JO
+        {
+            return $this->db->get("skb_invoice")->result_array();
+        }
+
         public function getjobyid($jo_id) //JO by ID
         {
             $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
@@ -179,7 +189,7 @@ class Model_Home extends CI_model
      //akhir function-fiunction datatable truck
 
     //function-fiunction datatable truck
-        function getAllInvoiceData($postData){
+        function getAllInvoiceData($postData,$data){
             $response = array();
         
             ## Read value
@@ -194,9 +204,43 @@ class Model_Home extends CI_model
             ## Search 
             $search_arr = array();
             $searchQuery = "";
-            if($searchValue != ''){
-                $search_arr[] = " (invoice_kode like '%".$searchValue."%') ";
+            if($data["Status"]!=""){
+                $search_arr[] = " status_bayar='".$data["Status"]."' ";
             }
+            if($data["Tanggal_Top"]!=""){
+                $search_arr[] = " tanggal_batas_pembayaran = '".$this->change_tanggal($data["Tanggal_Top"])."'";
+            }
+            if($data["Customer"]!=""){
+                $search_arr[] = " skb_invoice.customer_id='".$data["Customer"]."' ";
+            }
+            if($data["Ppn"]!=""){
+                if($data["Ppn"]=="Ya"){
+                    $search_arr[] = " ppn!=0 ";
+                }else{
+                    $search_arr[] = " ppn=0 ";
+                }
+            }
+            if($data["Tanggal1"]!="" && $data["Tanggal2"]==""){
+                $search_arr[] = " tanggal_invoice BETWEEN '".$this->change_tanggal($data["Tanggal1"])."' AND '2022-10-10'";
+            }
+            if($data["Tanggal1"]=="" && $data["Tanggal2"]!=""){
+                $search_arr[] = " tanggal_invoice BETWEEN '2000-10-10' AND '".$this->change_tanggal($data["Tanggal2"])."'";
+            }
+            if($data["Tanggal1"]!="" && $data["Tanggal2"]!=""){
+                $search_arr[] = " tanggal_invoice BETWEEN '".$this->change_tanggal($data["Tanggal1"])."' AND '".$this->change_tanggal($data["Tanggal2"])."' ";
+            }
+            $no_invoice = explode("-",$data["No_Invoice"]);
+            $no_invoice_fix = "";
+            for($i=0;$i<count($no_invoice);$i++){
+                if($no_invoice[$i]!="x"){
+                    if($i!=3){
+                        $no_invoice_fix=$no_invoice_fix.$no_invoice[$i]."-";
+                    }else{
+                        $no_invoice_fix.=$no_invoice[$i];
+                    }
+                }
+            }
+            $search_arr[] = " invoice_kode like '%".$no_invoice_fix."%'";
             if(count($search_arr) > 0){ //gabung kondisi where
                 $searchQuery = implode(" and ",$search_arr);
             }
@@ -234,6 +278,59 @@ class Model_Home extends CI_model
             );
         
             return $response; 
+        }
+        function getDitemukanInvoice($data){
+            ## Search 
+            $search_arr = array();
+            $searchQuery = "";
+            if($data["Status"]!=""){
+                $search_arr[] = " status_bayar='".$data["Status"]."' ";
+            }
+            if($data["Tanggal_Top"]!=""){
+                $search_arr[] = " tanggal_batas_pembayaran = '".$this->change_tanggal($data["Tanggal_Top"])."'";
+            }
+            if($data["Customer"]!=""){
+                $search_arr[] = " skb_invoice.customer_id='".$data["Customer"]."' ";
+            }
+            if($data["Ppn"]!=""){
+                if($data["Ppn"]=="Ya"){
+                    $search_arr[] = " ppn!=0 ";
+                }else{
+                    $search_arr[] = " ppn=0 ";
+                }
+            }
+            if($data["Tanggal1"]!="" && $data["Tanggal2"]==""){
+                $search_arr[] = " tanggal_invoice BETWEEN '".$this->change_tanggal($data["Tanggal1"])."' AND '2022-10-10'";
+            }
+            if($data["Tanggal1"]=="" && $data["Tanggal2"]!=""){
+                $search_arr[] = " tanggal_invoice BETWEEN '2000-10-10' AND '".$this->change_tanggal($data["Tanggal2"])."'";
+            }
+            if($data["Tanggal1"]!="" && $data["Tanggal2"]!=""){
+                $search_arr[] = " tanggal_invoice BETWEEN '".$this->change_tanggal($data["Tanggal1"])."' AND '".$this->change_tanggal($data["Tanggal2"])."' ";
+            }
+            $no_invoice = explode("-",$data["No_Invoice"]);
+            $no_invoice_fix = "";
+            for($i=0;$i<count($no_invoice);$i++){
+                if($no_invoice[$i]!="x"){
+                    if($i!=3){
+                        $no_invoice_fix=$no_invoice_fix.$no_invoice[$i]."-";
+                    }else{
+                        $no_invoice_fix.=$no_invoice[$i];
+                    }
+                }
+            }
+            $search_arr[] = " invoice_kode like '%".$no_invoice_fix."%'";
+            if(count($search_arr) > 0){ //gabung kondisi where
+                $searchQuery = implode(" and ",$search_arr);
+            }
+
+            ## Total record with filtering
+            if($searchQuery != ''){
+                $this->db->where($searchQuery);
+            }
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_invoice.customer_id", 'left');
+            $records = $this->db->get('skb_invoice')->result_array();
+            return $records;
         }
     //akhir function-fiunction datatable truck
 
@@ -493,20 +590,128 @@ class Model_Home extends CI_model
             return $this->db->count_all_results("skb_bon");
         }
 
-        public function filter_bon($search, $limit, $start, $order_field, $order_ascdesc)
+        public function filter_bon($limit, $start, $order_field, $order_ascdesc,$data)
         {
-            $this->db->like('bon_id', $search);
-            $this->db->or_like('supir_name', $search);
+            $search_arr = array();
+            $searchQuery = "";
+            if($data["Supir"]!=""){
+                $search_arr[] = " skb_bon.supir_id='".$data["Supir"]."' ";
+            }
+            if($data["Status"]!=""){
+                $search_arr[] = " bon_jenis='".$data["Status"]."' ";
+            }
+            if($data["Tanggal1"]!="" && $data["Tanggal2"]==""){
+                $search_arr[] = " bon_tanggal BETWEEN '".$this->change_tanggal($data["Tanggal1"])."' AND '2022-10-10'";
+            }
+            if($data["Tanggal1"]=="" && $data["Tanggal2"]!=""){
+                $search_arr[] = " bon_tanggal BETWEEN '2000-10-10' AND '".$this->change_tanggal($data["Tanggal2"])."'";
+            }
+            if($data["Tanggal1"]!="" && $data["Tanggal2"]!=""){
+                $search_arr[] = " bon_tanggal BETWEEN '".$this->change_tanggal($data["Tanggal1"])."' AND '".$this->change_tanggal($data["Tanggal2"])."' ";
+            }
+
+            $no_bon = explode("-",$data["No_Bon"]);
+            $no_bon_fix = "";
+            for($i=0;$i<count($no_bon);$i++){
+                if($no_bon[$i]!="x"){
+                    if($i!=3){
+                        $no_bon_fix=$no_bon_fix.$no_bon[$i]."-";
+                    }else{
+                        $no_bon_fix.=$no_bon[$i];
+                    }
+                }
+            }
+            $search_arr[] = " bon_id like '%".$no_bon_fix."%'";
+            if(count($search_arr) > 0){ //gabung kondisi where
+                $searchQuery = implode(" and ",$search_arr);
+            }
+            if($searchQuery != ''){
+                $this->db->where($searchQuery);
+            }
             $this->db->order_by($order_field, $order_ascdesc);
             $this->db->limit($limit, $start);
             $this->db->join("skb_supir", "skb_supir.supir_id = skb_bon.supir_id", 'left');
             return $this->db->get('skb_bon')->result_array();
         }
 
-        public function count_filter_bon($search)
+        public function count_filter_bon($data)
         {
-            $this->db->like('bon_id', $search);
-            $this->db->or_like('supir_name', $search);
+            $search_arr = array();
+            $searchQuery = "";
+            if($data["Supir"]!=""){
+                $search_arr[] = " skb_bon.supir_id='".$data["Supir"]."' ";
+            }
+            if($data["Status"]!=""){
+                $search_arr[] = " bon_jenis='".$data["Status"]."' ";
+            }
+            if($data["Tanggal1"]!="" && $data["Tanggal2"]==""){
+                $search_arr[] = " bon_tanggal BETWEEN '".$this->change_tanggal($data["Tanggal1"])."' AND '2022-10-10'";
+            }
+            if($data["Tanggal1"]=="" && $data["Tanggal2"]!=""){
+                $search_arr[] = " bon_tanggal BETWEEN '2000-10-10' AND '".$this->change_tanggal($data["Tanggal2"])."'";
+            }
+            if($data["Tanggal1"]!="" && $data["Tanggal2"]!=""){
+                $search_arr[] = " bon_tanggal BETWEEN '".$this->change_tanggal($data["Tanggal1"])."' AND '".$this->change_tanggal($data["Tanggal2"])."' ";
+            }
+
+            $no_bon = explode("-",$data["No_Bon"]);
+            $no_bon_fix = "";
+            for($i=0;$i<count($no_bon);$i++){
+                if($no_bon[$i]!="x"){
+                    if($i!=3){
+                        $no_bon_fix=$no_bon_fix.$no_bon[$i]."-";
+                    }else{
+                        $no_bon_fix.=$no_bon[$i];
+                    }
+                }
+            }
+            $search_arr[] = " bon_id like '%".$no_bon_fix."%'";
+            if(count($search_arr) > 0){ //gabung kondisi where
+                $searchQuery = implode(" and ",$search_arr);
+            }
+            if($searchQuery != ''){
+                $this->db->where($searchQuery);
+            }
+            $this->db->join("skb_supir", "skb_supir.supir_id = skb_bon.supir_id", 'left');
+            return $this->db->get('skb_bon')->num_rows();
+        }
+        function getDitemukanBon($data){
+            $search_arr = array();
+            $searchQuery = "";
+            if($data["Supir"]!=""){
+                $search_arr[] = " skb_bon.supir_id='".$data["Supir"]."' ";
+            }
+            if($data["Status"]!=""){
+                $search_arr[] = " bon_jenis='".$data["Status"]."' ";
+            }
+            if($data["Tanggal1"]!="" && $data["Tanggal2"]==""){
+                $search_arr[] = " bon_tanggal BETWEEN '".$this->change_tanggal($data["Tanggal1"])."' AND '2022-10-10'";
+            }
+            if($data["Tanggal1"]=="" && $data["Tanggal2"]!=""){
+                $search_arr[] = " bon_tanggal BETWEEN '2000-10-10' AND '".$this->change_tanggal($data["Tanggal2"])."'";
+            }
+            if($data["Tanggal1"]!="" && $data["Tanggal2"]!=""){
+                $search_arr[] = " bon_tanggal BETWEEN '".$this->change_tanggal($data["Tanggal1"])."' AND '".$this->change_tanggal($data["Tanggal2"])."' ";
+            }
+
+            $no_bon = explode("-",$data["No_Bon"]);
+            $no_bon_fix = "";
+            for($i=0;$i<count($no_bon);$i++){
+                if($no_bon[$i]!="x"){
+                    if($i!=3){
+                        $no_bon_fix=$no_bon_fix.$no_bon[$i]."-";
+                    }else{
+                        $no_bon_fix.=$no_bon[$i];
+                    }
+                }
+            }
+            $search_arr[] = " bon_id like '%".$no_bon_fix."%'";
+            if(count($search_arr) > 0){ //gabung kondisi where
+                $searchQuery = implode(" and ",$search_arr);
+            }
+            if($searchQuery != ''){
+                $this->db->where($searchQuery);
+            }
             $this->db->join("skb_supir", "skb_supir.supir_id = skb_bon.supir_id", 'left');
             return $this->db->get('skb_bon')->num_rows();
         }

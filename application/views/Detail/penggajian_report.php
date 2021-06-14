@@ -42,6 +42,52 @@
                 </tbody>
             </table>
         </div> -->
+          <div class="conatiner w-50 m-auto">
+                <div class="mb-2 mt-3 form-group row">
+                    <label for="Status" class="form-label font-weight-bold col-md-4">Status</label>
+                    <select name="Status" id="Status" class="form-control selectpicker col-md-8" data-live-search="true">
+                        <option class="font-w700" selected value="">Semua Status</option>
+                        <option value="Lunas">Lunas</option>
+                        <option value="Belum Lunas">Belum Lunas</option>
+                    </select>
+                </div>
+                <div class="mb-2 form-group row">
+                    <label for="Tanggal" class="form-label font-weight-bold col-md-4">Tanggal Invoice</label>
+                    <input autocomplete="off" type="text" class="form-control col-md-4" id="Tanggal1" name="Tanggal1" onclick="tanggal_berlaku(this)">
+                    <input autocomplete="off" type="text" class="form-control col-md-4" id="Tanggal2" name="Tanggal2" onclick="tanggal_berlaku(this)">
+                </div>
+                <div class="mb-2 form-group row">
+                    <label for="Bulan_kerja" class="form-label font-weight-bold col-md-4">No Invoice (mm-yyyy)</label>
+                    <input autocomplete="off" type="text" class="form-control col-md-4" id="Bulan" name="Bulan" value="x">
+                    <input autocomplete="off" type="text" class="form-control col-md-4" id="Tahun" name="Tahun" value="x">
+                </div>
+                <div class="mb-2 form-group row">
+                    <label class="form-label font-weight-bold col-md-4" for="Supir">Supir</label>
+                    <select name="Supir" id="Supir" class="form-control selectpicker col-md-8" data-live-search="true">
+                        <option class="font-w700" selected value="">Semua Supir</option>
+                        <?php foreach($supir as $value){?>
+                            <option value="<?=$value["supir_id"]?>"><?=$value["supir_name"]?></option>
+                        <?php }?>
+                    </select>
+                </div>
+                <div class="mb-2 form-group row">
+                    <label for="No_Slip" class="form-label font-weight-bold col-md-4">No Slip</label>
+                    <input autocomplete="off" type="text" class="form-control col-md-2" id="No_Slip1" name="No_Slip1" value="x">
+                    <input autocomplete="off" type="text" class="form-control col-md-2" id="No_Slip2" name="No_Slip2" value="Gaji" readonly>
+                    <input autocomplete="off" type="text" class="form-control col-md-2" id="No_Slip3" name="No_Slip3" value="x">
+                    <input autocomplete="off" type="text" class="form-control col-md-2" id="No_Slip4" name="No_Slip4" value="x">
+                </div>
+                <div class="mb-2 form-group text-center">
+                    <button class="btn btn-primary" id="btn-cari">Cari</button>
+                    <button class="btn btn-danger" onclick="reset_form()">Reset</button>
+                </div>
+            </div>
+            <hr>
+            <div class="container">
+                <span>Total Data JO Yang Ditemukan : </span><span id="ditemukan"><?= count($pembayaran_upah)?></span><br>
+                <span>Total Slip Gaji Belum Dibayar : </span>Rp.<span id="tagihan"><?= number_format($gaji,2,",",".")?></span>
+            </div>
+            <hr>
         <div class="card-body" id="Table-Penggajian-Print">
             <div class="table-responsive">
                 <table class="table table-bordered table-striped" id="Table-Penggajian" width="100%" cellspacing="0">
@@ -202,12 +248,25 @@
                 "processing": true,
                 "serverSide": true,
                 "ordering": true,
+                "searching":false,
                 "order": [
                     [0, 'desc']
                 ],
                 "ajax": {
                     "url": "<?php echo base_url('index.php/detail/view_laporan_penggajian/')?>",
                     "type": "POST",
+                    "data":function(data){
+                        data.Status = $('#Status').val();
+                        data.Supir = $('#Supir').val();
+                        data.Tanggal1 = $('#Tanggal1').val();
+                        data.Tanggal2 = $('#Tanggal2').val();
+                        data.No_Slip1 = $('#No_Slip1').val();
+                        data.No_Slip2 = $('#No_Slip2').val();
+                        data.No_Slip3 = $('#No_Slip3').val();
+                        data.No_Slip4 = $('#No_Slip4').val();
+                        data.Bulan = $('#Bulan').val();
+                        data.Tahun = $('#Tahun').val();
+                    }
                 },
                 "deferRender": true,
                 "aLengthMenu": [
@@ -232,7 +291,7 @@
                         "data":"bulan_kerja"
                     },
                     {
-                        "data": "pembayaran_upah_nominal",
+                        "data": "pembayaran_upah_total",
                         className: 'text-center',
                         render: function(data, type, row) {
                            return "Rp."+rupiah(data);
@@ -274,6 +333,31 @@
                         }
                     },
                 ]
+            });
+            $("#btn-cari").click(function() {
+                table.ajax.reload();
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo base_url('index.php/detail/getditemukanslip') ?>",
+                    dataType: "text",
+                    data: {
+                        Status : $('#Status').val(),
+                        Supir : $('#Supir').val(),
+                        Tanggal1 : $('#Tanggal1').val(),
+                        Tanggal2 : $('#Tanggal2').val(),
+                        No_Slip1 : $('#No_Slip1').val(),
+                        No_Slip2 : $('#No_Slip2').val(),
+                        No_Slip3 : $('#No_Slip3').val(),
+                        No_Slip4 : $('#No_Slip4').val(),
+                        Bulan : $('#Bulan').val(),
+                        Tahun : $('#Tahun').val(),
+                    },
+                    success: function(data) { //jika ambil data sukses
+                        hasil = data.split("=");
+                        $("#ditemukan").text(hasil[0]);
+                        $("#tagihan").text(hasil[1]);
+                    }
+                });
             });
         });
     </script>
@@ -324,5 +408,28 @@
             document.body.innerHTML = printcontent;
             window.print();
             document.body.innerHTML = restorepage;
+        }
+    </script>
+    <script>
+        function reset_form(){
+            location.reload();
+        }
+    </script>
+    
+    <script> //script input tanggal
+        function tanggal_berlaku(a){
+            // alert(a.id);
+            Swal.fire({
+                title: "Loading",
+                icon: "success",
+                text: "Mohon Tunggu Sebentar",
+                type: "success",
+                timer: 500
+            });
+            $("#"+a.id).datepicker({
+                format: 'dd-mm-yyyy',
+                autoclose: true,
+                todayHighlight: true,
+            });
         }
     </script>

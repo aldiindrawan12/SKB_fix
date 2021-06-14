@@ -151,9 +151,9 @@
             success: function(data) {
                 var date = new Date();
                 if(date.getMonth()<10){
-                    $("#invoice_id").val(data+"-"+nama_customer+"-0"+(date.getMonth()+1)+"-"+date.getFullYear());
+                    $("#invoice_id").val(data+"-"+"SKB"+"-0"+(date.getMonth()+1)+"-"+date.getFullYear());
                 }else{
-                    $("#invoice_id").val(data+"-"+nama_customer+"-"+(date.getMonth()+1)+"-"+date.getFullYear());
+                    $("#invoice_id").val(data+"-"+"SKB"+"-"+(date.getMonth()+1)+"-"+date.getFullYear());
                 }
             }
         })

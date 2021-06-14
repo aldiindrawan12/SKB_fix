@@ -1609,17 +1609,28 @@
                 "processing": true,
                 "serverSide": true,
                 "ordering": true,
+                "searching":false,
                 "order": [
                     [0, 'desc']
                 ],
                 "ajax": {
                     "url": "<?php echo base_url('index.php/home/view_bon/') ?>",
-                    "type": "POST"
+                    "type": "POST",
+                    "data":function(data){
+                        data.Status = $('#Status').val();
+                        data.Supir = $('#Supir').val();
+                        data.Tanggal1 = $('#Tanggal1').val();
+                        data.Tanggal2 = $('#Tanggal2').val();
+                        data.No_Bon1 = $('#No_Bon1').val();
+                        data.No_Bon2 = $('#No_Bon2').val();
+                        data.No_Bon3 = $('#No_Bon3').val();
+                        data.No_Bon4 = $('#No_Bon4').val();
+                    }
                 },
                 "deferRender": true,
                 "aLengthMenu": [
-                    [10, 30, 50, 100],
-                    [10, 30, 50, 100]
+                    [50, 100],
+                    [50, 100]
                 ],
                 "columns": [
                     {
@@ -1707,6 +1718,27 @@
                         });
                     });
                 }
+            });
+            $("#btn-cari").click(function() {
+                table.ajax.reload();
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo base_url('index.php/home/getditemukanbon') ?>",
+                    dataType: "text",
+                    data: {
+                        Status : $('#Status').val(),
+                        Supir : $('#Supir').val(),
+                        Tanggal1 : $('#Tanggal1').val(),
+                        Tanggal2 : $('#Tanggal2').val(),
+                        No_Bon1 : $('#No_Bon1').val(),
+                        No_Bon2 : $('#No_Bon2').val(),
+                        No_Bon3 : $('#No_Bon3').val(),
+                        No_Bon4 : $('#No_Bon4').val(),
+                    },
+                    success: function(data) { //jika ambil data sukses
+                        $("#ditemukan").text(data);
+                    }
+                });
             });
         });
     </script>
@@ -2046,12 +2078,11 @@
                 "ajax": {
                     "url": "<?php echo base_url('index.php/home/view_Customer/viewcustomerinvoice') ?>",
                     "type": "POST",
-                    
                 },
                 "deferRender": true,
                 "aLengthMenu": [
-                    [10, 30, 50, 100],
-                    [10, 30, 50, 100]
+                    [50, 100],
+                    [50, 100]
                 ],
                 "columns": [
                     {
@@ -2082,6 +2113,7 @@
                 ]
             });
         });
+       
     </script>
     <!-- end invoice Customer -->   
 
@@ -2877,7 +2909,19 @@
                 ],
                 "ajax": {
                     "url": "<?php echo base_url('index.php/home/view_seluruh_invoice') ?>",
-                    "type": "POST"
+                    "type": "POST",
+                    'data': function(data) {
+                        data.Status = $('#Status').val();
+                        data.Customer = $('#Customer').val();
+                        data.Ppn = $('#Ppn').val();
+                        data.Tanggal_Top = $('#Tanggal_Top').val();
+                        data.Tanggal1 = $('#Tanggal1').val();
+                        data.Tanggal2 = $('#Tanggal2').val();
+                        data.No_Invoice1 = $('#No_Invoice1').val();
+                        data.No_Invoice2 = $('#No_Invoice2').val();
+                        data.No_Invoice3 = $('#No_Invoice3').val();
+                        data.No_Invoice4 = $('#No_Invoice4').val();
+                    }
                 },
                 "deferRender": true,
                 "aLengthMenu": [
@@ -2952,6 +2996,31 @@
                         }
                     }
                 ]
+            });
+            $("#btn-cari").click(function() {
+                table.ajax.reload();
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo base_url('index.php/home/getditemukaninvoice') ?>",
+                    dataType: "text",
+                    data: {
+                        Status : $('#Status').val(),
+                        Customer : $('#Customer').val(),
+                        Ppn : $('#Ppn').val(),
+                        Tanggal_Top : $('#Tanggal_Top').val(),
+                        Tanggal1 : $('#Tanggal1').val(),
+                        Tanggal2 : $('#Tanggal2').val(),
+                        No_Invoice1 : $('#No_Invoice1').val(),
+                        No_Invoice2 : $('#No_Invoice2').val(),
+                        No_Invoice3 : $('#No_Invoice3').val(),
+                        No_Invoice4 : $('#No_Invoice4').val(),
+                    },
+                    success: function(data) { //jika ambil data sukses
+                        hasil = data.split("=");
+                        $("#ditemukan").text(hasil[0]);
+                        $("#tagihan").text(hasil[1]);
+                    }
+                });
             });
         });
     </script>

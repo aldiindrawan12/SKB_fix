@@ -405,9 +405,40 @@ class Detail extends CI_Controller {
         }
 
         public function view_laporan_penggajian(){
+            $No_Slip = $this->input->post('No_Slip1')."-".$this->input->post('No_Slip2')."-".$this->input->post('No_Slip3')."-".$this->input->post('No_Slip4');
+            $data = array(
+                "Status" => $this->input->post('Status'),
+                "Supir" => $this->input->post('Supir'),
+                "Tanggal1" => $this->input->post('Tanggal1'),
+                "Tanggal2" => $this->input->post('Tanggal2'),
+                "Bulan" => $this->input->post('Bulan'),
+                "Tahun" => $this->input->post('Tahun'),
+                "No_Slip" => $No_Slip,
+            );
             $postData = $this->input->post();
-            $data = $this->model_detail->getGajiData($postData);
+            $data = $this->model_detail->getGajiData($postData,$data);
             echo json_encode($data);
+        }
+
+        public function getditemukanslip(){
+            $No_Slip = $this->input->post('No_Slip1')."-".$this->input->post('No_Slip2')."-".$this->input->post('No_Slip3')."-".$this->input->post('No_Slip4');
+            $data = array(
+                "Status" => $this->input->post('Status'),
+                "Supir" => $this->input->post('Supir'),
+                "Tanggal1" => $this->input->post('Tanggal1'),
+                "Tanggal2" => $this->input->post('Tanggal2'),
+                "Bulan" => $this->input->post('Bulan'),
+                "Tahun" => $this->input->post('Tahun'),
+                "No_Slip" => $No_Slip,
+            );
+            $data_filter = $this->model_detail->getDitemukanSlip($data);
+            $gaji = 0;
+            for($i=0;$i<count($data_filter);$i++){
+                if($data_filter[$i]["pembayaran_upah_status"]=="Belum Lunas"){
+                    $gaji = $gaji + $data_filter[$i]["pembayaran_upah_total"];
+                }
+            }
+            echo count($data_filter)."=".number_format($gaji,2,",",".");
         }
 
         public function detail_penggajian_report_pembayaran($supir_id,$pembayaran_id)

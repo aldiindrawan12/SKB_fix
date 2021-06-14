@@ -47,16 +47,23 @@
                     <h6 class="m-0 font-weight-bold text-center">Invoice</h6>
                 </div>
                 <div class="card-body">
-                    <a class="btn btn-primary btn-sm" onclick="cetak_invoice()"><span class="small">Print/PDF</span></a>
-                    <form method="POST" action="<?= base_url("index.php/print_berkas/detail_invoice_excel/")?>" id="convert_form">
-                        <input type="hidden" name="file_content" id="file_content">
-                        <button type="submit" name="convert" id="convert" class="btn btn-primary btn-sm">
-                            <span class="text">Excel</span>
-                        </button>
-                    </form>
-                    <?php if($invoice[0]["status_bayar"] == "Belum Lunas" && ($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User")){?>
-                        <!-- <a class="btn btn-warning" data-toggle="modal" data-target="#popup-konfirmasi-status" href="" id="<?= $invoice[0]["invoice_kode"]?>" onclick="update_status(this)"><span class="small">Tandai Lunas</span></a> -->
-                    <?php }?>
+                    <div class="row">
+                        <a class="btn btn-primary btn-sm mr-3 btn-icon-split" onclick="cetak_invoice()">
+                            <span class="icon text-white-100">  
+                                <i class="fas fa-print"></i>
+                            </span>
+                            <span class="text">Print/PDF</span>
+                        </a>
+                        <form method="POST" action="<?= base_url("index.php/print_berkas/detail_invoice_excel/")?>" id="convert_form">
+                            <input type="hidden" name="file_content" id="file_content">
+                            <button type="submit" name="convert" id="convert" class="btn btn-primary btn-sm btn-icon-split">
+                                <span class="icon text-white-100">  
+                                    <i class="fas fa-print"></i>
+                                </span>
+                                <span class="text">Excel</span>
+                            </button>
+                        </form>
+                    </div>
                     <table class="w-50 mt-4" id="Table-Detail-Invoice">
                         <tbody>
                             <tr>

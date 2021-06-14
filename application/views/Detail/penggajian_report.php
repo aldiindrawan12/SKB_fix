@@ -11,18 +11,18 @@
         <h1 class="h3 mb-0 text-gray-800">Data Slip Gaji</h1>
     </div> 
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Seluruh Data Slip Gaji</h6>
-            <form method="POST" action="<?= base_url("index.php/print_berkas/gaji_excel/")?>" id="convert_form">
+        <div class="card-header py-3 row">
+            <h6 class="m-0 font-weight-bold text-primary col-md-8">Seluruh Data Slip Gaji</h6>
+            <form method="POST" action="<?= base_url("index.php/print_berkas/gaji_excel/")?>" id="convert_form" class="col-md-2">
                 <input type="hidden" name="file_content" id="file_content">
-                <button type="submit" name="convert" id="convert" class="btn btn-primary">
+                <button type="submit" name="convert" id="convert" class="btn btn-primary btn-sm btn-icon-split">
                     <span class="icon text-white-100">  
                         <i class="fas fa-print"></i>
                     </span>
                     <span class="text">Excel</span>
                 </button>
             </form>
-            <button type="submit" class="btn btn-primary" onclick="print_pdf()">
+            <button type="submit" class="btn btn-primary btn-sm btn-icon-split" onclick="print_pdf()">
                 <span class="icon text-white-100">  
                     <i class="fas fa-print"></i>
                 </span>

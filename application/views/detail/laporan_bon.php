@@ -5,26 +5,30 @@
         return $tanggal;
     }
 ?>
-<div class="card shadow mb-4 ml-5 mr-5 py-2 px-2">
-    <div class="card-header py-3 mb-4">
-        <h6 class="m-0 font-weight-bold text-primary ml-4">Detail Bon Supir</h6>
-        <a href="" class="btn btn-sm btn-primary btn-icon-split mr-3" onclick="print_bon()">
-                <span class="icon text-white-100">
-                    <i class="fas fa-print"></i> 
-                </span>
-                <span class="text">
-                    Print/PDF
-                </span>
-        </a>
-        <form method="POST" action="<?= base_url("index.php/print_berkas/mutasi_excel/")?>" id="convert_form">
-            <input type="hidden" name="file_content" id="file_content">
-            <button type="submit" name="convert" id="convert" class="btn btn-primary btn-sm btn-icon-split">
-                <span class="icon text-white-100">  
-                    <i class="fas fa-print"></i>
-                </span>
-                <span class="text">Excel</span>
-            </button>
-        </form>
+<div class="card shadow mb-4">
+    <div class="card-header py-3 mb-4 row">
+        <h6 class="m-0 col-md-8 font-weight-bold text-primary">Mutasi Kasbon Supir</h6>
+        <div class="col-md-2">
+            <a href="" class="btn btn-sm btn-primary btn-icon-split mr-3" onclick="print_bon()">
+                    <span class="icon text-white-100">
+                        <i class="fas fa-print"></i> 
+                    </span>
+                    <span class="text">
+                        Print/PDF
+                    </span>
+            </a>
+        </div>
+        <div class="col-md-2">
+            <form method="POST" action="<?= base_url("index.php/print_berkas/mutasi_excel/")?>" id="convert_form">
+                <input type="hidden" name="file_content" id="file_content">
+                <button type="submit" name="convert" id="convert" class="btn btn-primary btn-sm btn-icon-split">
+                    <span class="icon text-white-100">  
+                        <i class="fas fa-print"></i>
+                    </span>
+                    <span class="text">Excel</span>
+                </button>
+            </form>
+        </div>
     </div>
     <div class="card-body">
         <!-- tampilan detail transaksi bon -->

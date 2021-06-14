@@ -12,23 +12,25 @@
     </div> 
     <!-- tabel transaksi bon -->
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Transaksi Bon</h6>
-            <form method="POST" action="<?= base_url("index.php/print_berkas/bon_excel/")?>" id="convert_form">
+        <div class="card-header py-3 row">
+            <h6 class="m-0 col-md-8 font-weight-bold text-primary">Transaksi Bon</h6>
+            <form method="POST" action="<?= base_url("index.php/print_berkas/bon_excel/")?>" id="convert_form" class="col-md-2">
                 <input type="hidden" name="file_content" id="file_content">
-                <button type="submit" name="convert" id="convert" class="btn btn-primary">
+                <button type="submit" name="convert" id="convert" class="btn btn-primary btn-icon-split btn-sm">
                     <span class="icon text-white-100">  
                         <i class="fas fa-print"></i>
                     </span>
                     <span class="text">Excel</span>
                 </button>
             </form>
-            <button type="submit" class="btn btn-primary" onclick="print_pdf()">
-                <span class="icon text-white-100">  
-                    <i class="fas fa-print"></i>
-                </span>
-                <span class="text">Print/PDF</span>
-            </button>
+                <a href="" class="btn btn-sm btn-primary btn-icon-split" onclick="print_pdf()">
+                    <span class="icon text-white-100">
+                        <i class="fas fa-print"></i> 
+                    </span>
+                    <span class="text">
+                        Print/PDF
+                    </span>
+                </a>
         </div>
         <div class="card-body" id="Table-Bon-Print">
             <div class="table-responsive">

@@ -6,16 +6,25 @@
     }
 ?>
 <div class="card shadow mb-4 ml-5 mr-5 py-2 px-2">
-    <div class="card-header py-3 d-sm-flex align-items-center justify-content-between mb-4">
+    <div class="card-header py-3 mb-4">
         <h6 class="m-0 font-weight-bold text-primary ml-4">Detail Bon Supir</h6>
         <a href="" class="btn btn-sm btn-primary btn-icon-split mr-3" onclick="print_bon()">
                 <span class="icon text-white-100">
                     <i class="fas fa-print"></i> 
                 </span>
                 <span class="text">
-                    Cetak Bon
+                    Print/PDF
                 </span>
         </a>
+        <form method="POST" action="<?= base_url("index.php/print_berkas/mutasi_excel/")?>" id="convert_form">
+            <input type="hidden" name="file_content" id="file_content">
+            <button type="submit" name="convert" id="convert" class="btn btn-primary btn-sm btn-icon-split">
+                <span class="icon text-white-100">  
+                    <i class="fas fa-print"></i>
+                </span>
+                <span class="text">Excel</span>
+            </button>
+        </form>
     </div>
     <div class="card-body">
         <!-- tampilan detail transaksi bon -->
@@ -40,7 +49,7 @@
                         <input autocomplete="off" type="text" class="form-control col-md-4" id="tanggal2" name="tanggal2" value="<?= $tanggal2?>" readonly>
                     </div>
             </div>
-            <table class="table table-bordered">
+            <table class="table table-bordered" id="Table-Mutasi">
                 <thead>
                     <tr>
                         <th class="text-center">Tanggal Transaksi</th>
@@ -89,7 +98,7 @@
                 </tbody>
             </table>
             <div class="container m-auto w-50">
-                <table class="table table-bordered">
+                <table class="table table-bordered" id="Table-Detail-Mutasi">
                     <tr>
                         <td>Saldo Bon Awal</td>
                         <td>Rp.<?= number_format($saldo_awal,2,',','.')?></td>
@@ -117,6 +126,20 @@
     </div>
 </div>
 </div>
+
+<script src="<?=base_url("assets/vendor/jquery/jquery.min.js")?>"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+            $('#convert').click(function() {
+            var table_content = '<table>';
+            table_content += $("head").html()+$('#Table-Mutasi').html()+$('#Table-Detail-Mutasi').html();
+            table_content += '</table>';
+            $('#file_content').val(table_content);
+            $('#convert_form').html();
+        });
+    });
+</script>
 
 <script>
 function print_bon(){

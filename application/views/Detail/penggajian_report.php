@@ -13,6 +13,21 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Seluruh Data Slip Gaji</h6>
+            <form method="POST" action="<?= base_url("index.php/print_berkas/gaji_excel/")?>" id="convert_form">
+                <input type="hidden" name="file_content" id="file_content">
+                <button type="submit" name="convert" id="convert" class="btn btn-primary">
+                    <span class="icon text-white-100">  
+                        <i class="fas fa-print"></i>
+                    </span>
+                    <span class="text">Excel</span>
+                </button>
+            </form>
+            <button type="submit" class="btn btn-primary" onclick="print_pdf()">
+                <span class="icon text-white-100">  
+                    <i class="fas fa-print"></i>
+                </span>
+                <span class="text">Print/PDF</span>
+            </button>
         </div>
         <!-- <div class="card-body">
             <table class="w-50">
@@ -30,7 +45,7 @@
                 </tbody>
             </table>
         </div> -->
-        <div class="card-body">
+        <div class="card-body" id="Table-Penggajian-Print">
             <div class="table-responsive">
                 <table class="table table-bordered table-striped" id="Table-Penggajian" width="100%" cellspacing="0">
                     <thead>
@@ -295,3 +310,22 @@
         }
     </script>
     <!-- end script angka rupiah -->
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#convert').click(function() {
+                var table_content = '<table>';
+                table_content += $("head").html()+$('#Table-Penggajian').html();
+                table_content += '</table>';
+                $('#file_content').val(table_content);
+                $('#convert_form').html();
+            });
+        });
+        function print_pdf(){
+            var restorepage = document.body.innerHTML;
+            var printcontent = document.getElementById('Table-Penggajian-Print').innerHTML;
+            document.body.innerHTML = printcontent;
+            window.print();
+            document.body.innerHTML = restorepage;
+        }
+    </script>

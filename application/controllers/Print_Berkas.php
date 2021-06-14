@@ -152,6 +152,48 @@ class Print_Berkas extends CI_Controller {
 			$write->save('php://output');
 	}
 
+	public function bon_excel(){
+		$content = $this->input->post("file_content");
+		header("Content-type: application/vnd-ms-excel");
+		header("Content-Disposition: attachment; filename=Data_Kasbon.xls");
+		echo $content;
+	}
+	public function jo_excel(){
+		$content = $this->input->post("file_content");
+		header("Content-type: application/vnd-ms-excel");
+		header("Content-Disposition: attachment; filename=Detail_JO.xls");
+		echo $content;
+	}
+	public function invoice_excel(){
+		$content = $this->input->post("file_content");
+		header("Content-type: application/vnd-ms-excel");
+		header("Content-Disposition: attachment; filename=Data_Invoice.xls");
+		echo $content;
+	}
+	public function gaji_excel(){
+		$content = $this->input->post("file_content");
+		header("Content-type: application/vnd-ms-excel");
+		header("Content-Disposition: attachment; filename=Data_Slip_Gaji.xls");
+		echo $content;
+	}
+	public function detail_gaji_excel(){
+		$content = $this->input->post("file_content");
+		header("Content-type: application/vnd-ms-excel");
+		header("Content-Disposition: attachment; filename=Detail_Slip_Gaji.xls");
+		echo $content;
+	}
+	public function mutasi_excel(){
+		$content = $this->input->post("file_content");
+		header("Content-type: application/vnd-ms-excel");
+		header("Content-Disposition: attachment; filename=Data_Mutasi.xls");
+		echo $content;
+	}
+	public function detail_invoice_excel(){
+		$content = $this->input->post("file_content");
+		header("Content-type: application/vnd-ms-excel");
+		header("Content-Disposition: attachment; filename=Detail_Invoice.xls");
+		echo $content;
+	}
 	// fungsi cetak invoice,gaji,memo
 		public function invoice($invoice_id,$asal){
             if(!$_SESSION["user"]){

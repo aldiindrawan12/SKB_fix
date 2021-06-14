@@ -47,11 +47,17 @@
                     <h6 class="m-0 font-weight-bold text-center">Invoice</h6>
                 </div>
                 <div class="card-body">
-                    <a class="btn btn-primary" onclick="cetak_invoice()"><span class="small">Cetak Invoice</span></a>
+                    <a class="btn btn-primary btn-sm" onclick="cetak_invoice()"><span class="small">Print/PDF</span></a>
+                    <form method="POST" action="<?= base_url("index.php/print_berkas/detail_invoice_excel/")?>" id="convert_form">
+                        <input type="hidden" name="file_content" id="file_content">
+                        <button type="submit" name="convert" id="convert" class="btn btn-primary btn-sm">
+                            <span class="text">Excel</span>
+                        </button>
+                    </form>
                     <?php if($invoice[0]["status_bayar"] == "Belum Lunas" && ($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User")){?>
                         <!-- <a class="btn btn-warning" data-toggle="modal" data-target="#popup-konfirmasi-status" href="" id="<?= $invoice[0]["invoice_kode"]?>" onclick="update_status(this)"><span class="small">Tandai Lunas</span></a> -->
                     <?php }?>
-                    <table class="w-50 mt-4">
+                    <table class="w-50 mt-4" id="Table-Detail-Invoice">
                         <tbody>
                             <tr>
                                 <td width="35%">Customer</td>
@@ -99,7 +105,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="Table-Jo" width="100%" cellspacing="0">
+                        <table class="table table-bordered" width="100%" cellspacing="0" id="Table-Data-Invoice">
                             <thead>
                                 <tr>
                                     <th class="text-center" width="25%" scope="col">No</th>
@@ -189,6 +195,19 @@
                 </div>
                 <!-- end pop up update status invoice -->
 
+                <script src="<?=base_url("assets/vendor/jquery/jquery.min.js")?>"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+            $('#convert').click(function() {
+            var table_content = '';
+            table_content += '<table>'+$('#Table-Detail-Invoice').html()+'</table>';
+            table_content += '<table>'+$('#Table-Data-Invoice').html()+'</table>';
+            $('#file_content').val(table_content);
+            $('#convert_form').html();
+        });
+    });
+</script>
 <script>
     function cetak_invoice(){
         window.location.replace("<?= base_url("index.php/print_berkas/invoice/".$invoice[0]["invoice_kode"]."/invoice")?>");    

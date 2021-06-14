@@ -10,9 +10,16 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-center">Detail Slip Gaji</h6>
+            <button onclick="print_rincian()" class="btn btn-primary btn-sm">Cetak Rincian Gaji</button>
+            <form method="POST" action="<?= base_url("index.php/print_berkas/detail_gaji_excel/")?>" id="convert_form">
+                <input type="hidden" name="file_content" id="file_content">
+                <button type="submit" name="convert" id="convert" class="btn btn-primary btn-sm btn-icon-split">
+                    <span class="text">Excel</span>
+                </button>
+            </form>
         </div>
         <div class="card-body" id="identitas">
-            <table class="w-50">
+            <table class="w-50" id="Table-Identitas">
                 <tbody>
                     <tr>
                         <td width="25%">Status</td>
@@ -121,7 +128,6 @@
 
 
 <div class="container">
-    <button onclick="print_rincian()" class="btn btn-success">Cetak Rincian Gaji</button>
     <button onclick="isi_rekening()" class="btn btn-primary">Cetak Memo Transfer</button>
     <button onclick="print_memo_tunai()" class="btn btn-primary">Cetak Memo Tunai</button>
     <?php if($pembayaran_upah[0]["pembayaran_upah_status"]!="Lunas"){?>
@@ -389,5 +395,18 @@
                     });      
                 }
             })
-    }s
+    }
+</script>
+<script src="<?=base_url("assets/vendor/jquery/jquery.min.js")?>"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+            $('#convert').click(function() {
+            var table_content = '<table>';
+            table_content += $("head").html()+$('#Table-Identitas').html()+$('#Table-Penggajian').html();
+            table_content += '</table>';
+            $('#file_content').val(table_content);
+            $('#convert_form').html();
+        });
+    });
 </script>

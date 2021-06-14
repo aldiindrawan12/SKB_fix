@@ -16,15 +16,23 @@
     </div>
     <div class="card-body">
             <div class="container ">
-                <div class="float-right mb-3">
+                <div class="float-right mb-3 ml-3">
                         <a class='btn btn-primary btn-sm ' href='<?= base_url("index.php/print_berkas/uang_jalan/").$jo["Jo_id"]."/detail"?>' id="">
-                            <span>Cetak Bukti Uang Jalan</span>
+                            <span>Print/PDF</span>
                         </a>
+                </div>
+                <div class="float-right mb-3">
+                    <form method="POST" action="<?= base_url("index.php/print_berkas/jo_excel/")?>" id="convert_form">
+                        <input type="hidden" name="file_content" id="file_content">
+                        <button type="submit" name="convert" id="convert" class="btn btn-primary btn-sm">
+                            <span class="text">Excel</span>
+                        </button>
+                    </form>
                 </div>
             </div>
         <!-- tampilan detail jo -->
         <div class="container" id="detail-jo">
-            <table class="table table-bordered">
+            <table class="table table-bordered" id="Table-JO">
                 <tbody>     
                     <tr>
                         <td class="font-weight-bold" style="width: 25%;">ID JO</td>
@@ -301,6 +309,7 @@
     </div>
 </div>
 <!-- end pop up update mobil -->
+<script src="<?=base_url("assets/vendor/jquery/jquery.min.js")?>"></script>
 
 <script>
     function uang(a){
@@ -319,4 +328,23 @@
     function sisa_uj(sisa){
         $("#sisa_uj").text(rupiah(sisa));
     }
+</script>
+<script type="text/javascript">
+ $(document).ready(function() {
+  $('#convert').click(function() {
+   var table_content = '<table>';
+   table_content += $("head").html()+$('#Table-JO').html();
+   table_content += '</table>';
+   $('#file_content').val(table_content);
+   $('#convert_form').html();
+  });
+ });
+ function print_pdf(){
+     alert("ASdsa");
+    var restorepage = document.body.innerHTML;
+    var printcontent = document.getElementById('Table-Bon-Print').innerHTML;
+    document.body.innerHTML = printcontent;
+    window.print();
+    document.body.innerHTML = restorepage;
+  }
 </script>

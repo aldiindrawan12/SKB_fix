@@ -3424,6 +3424,7 @@
             var delete_satuan = '<?= $this->session->flashdata('status-delete-satuan'); ?>';
             var merk = '<?= $this->session->flashdata('status-add-merk'); ?>';
             var invoice = '<?= $this->session->flashdata('status-insert-invoice'); ?>';
+            var gaji = '<?= $this->session->flashdata('status-insert-slip-gaji'); ?>';
             var update_merk = '<?= $this->session->flashdata('status-update-merk'); ?>';
             var delete_merk = '<?= $this->session->flashdata('status-delete-merk'); ?>';
             var supir_jo = '<?= $this->session->flashdata('supir_jo'); ?>';
@@ -3451,6 +3452,15 @@
                         title: "Berhasil",
                         icon: "success",
                         text: "Menambahkan Invoice baru",
+                        type: "success",
+                        timer: 2000
+                    });
+            }
+            if(gaji == "Berhasil"){
+                Swal.fire({
+                        title: "Berhasil",
+                        icon: "success",
+                        text: "Menambahkan Slip Gaji Baru",
                         type: "success",
                         timer: 2000
                     });
@@ -3643,10 +3653,12 @@
                 $("#invoice_tgl").val(date.getDate()+"-0"+(date.getMonth()+1)+"-"+date.getFullYear());
                 $("#update_status_tanggal_nonaktif").val(date.getDate()+"-0"+(date.getMonth()+1)+"-"+date.getFullYear());
                 $("#tanggal_jo").val(date.getDate()+"-0"+(date.getMonth()+1)+"-"+date.getFullYear());
+                $("#tanggal_gaji").val(date.getDate()+"-0"+(date.getMonth()+1)+"-"+date.getFullYear());
             }else{
                 $("#invoice_tgl").val(date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear());
                 $("#update_status_tanggal_nonaktif").val(date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear());
                 $("#tanggal_jo").val(date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear());
+                $("#tanggal_gaji").val(date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear());
             }
         });
     </script>

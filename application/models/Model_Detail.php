@@ -145,6 +145,7 @@ class Model_Detail extends CI_model
         $kasbon = $data["kasbon"];
         $bonus = $data["bonus"];
         $pembayaran_upah_id = $data["pembayaran_upah_id"];
+        $tanggal = $data["tanggal"];
 
         //insert pembayaran upah 
         date_default_timezone_set('Asia/Jakarta');
@@ -155,7 +156,7 @@ class Model_Detail extends CI_model
             "pembayaran_upah_bonus"=>$bonus,
             "pembayaran_upah_bon"=>$kasbon,
             "pembayaran_upah_total"=>$gaji_grand_total,
-            "pembayaran_upah_tanggal"=>date("Y-m-d"),
+            "pembayaran_upah_tanggal"=>$tanggal,
             "pembayaran_upah_status"=>"Belum Lunas",
             "bulan_kerja"=>$data["bulan_kerja"],
             "user_upah"=>$_SESSION["user"]."(".date("d-m-Y H:i:s").")"

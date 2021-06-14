@@ -14,10 +14,25 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Transaksi Bon</h6>
+            <form method="POST" action="<?= base_url("index.php/print_berkas/bon_excel/")?>" id="convert_form">
+                <input type="hidden" name="file_content" id="file_content">
+                <button type="submit" name="convert" id="convert" class="btn btn-primary">
+                    <span class="icon text-white-100">  
+                        <i class="fas fa-print"></i>
+                    </span>
+                    <span class="text">Excel</span>
+                </button>
+            </form>
+            <button type="submit" class="btn btn-primary" onclick="print_pdf()">
+                <span class="icon text-white-100">  
+                    <i class="fas fa-print"></i>
+                </span>
+                <span class="text">Print/PDF</span>
+            </button>
         </div>
-        <div class="card-body">
+        <div class="card-body" id="Table-Bon-Print">
             <div class="table-responsive">
-                <table class="table table-bordered" id="Table-Bon" width="100%" cellspacing="0">
+                <table border="1" class="table table-bordered" id="Table-Bon" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th width="10%" class="text-center" scope="col">ID Transaksi</th>
@@ -36,7 +51,6 @@
     </div>
     <!-- end tabel transaksi bon -->
 </div>
-
 <!-- pop up detail bon -->
 <div class="modal fade mt-5 px-5 py-5 " id="popup-bon" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -96,3 +110,24 @@
     </div>
 </div>
 <!-- end pop up detail bon -->
+
+<script src="<?=base_url("assets/vendor/jquery/jquery.min.js")?>"></script>
+
+<script type="text/javascript">
+ $(document).ready(function() {
+  $('#convert').click(function() {
+   var table_content = '<table>';
+   table_content += $("head").html()+$('#Table-Bon').html();
+   table_content += '</table>';
+   $('#file_content').val(table_content);
+   $('#convert_form').html();
+  });
+ });
+ function print_pdf(){
+    var restorepage = document.body.innerHTML;
+    var printcontent = document.getElementById('Table-Bon-Print').innerHTML;
+    document.body.innerHTML = printcontent;
+    window.print();
+    document.body.innerHTML = restorepage;
+  }
+</script>

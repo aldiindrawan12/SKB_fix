@@ -13,6 +13,16 @@ class Detail extends CI_Controller {
         }
     // end contruck
 
+    
+    public function change_tanggal($tanggal){
+        if($tanggal==""){
+            return "";
+        }else{
+            $tanggal_array = explode("-",$tanggal);
+            return $tanggal_array[2]."-".$tanggal_array[1]."-".$tanggal_array[0];   
+        }
+    }
+
     //fungsi untuk Detail JO dan invoice
         public function updatesupirjo($jo_id,$supir_id_old){
             $this->model_detail->updatesupirjo($jo_id,$this->input->post("Supir"),$supir_id_old);
@@ -283,21 +293,6 @@ class Detail extends CI_Controller {
     //fungsi untuk Detail penggajian
         public function detail_penggajian($supir_id)
         {
-            $slip_id = $this->model_form->getpembayaranupahid();
-            $isi_slip_id = [];
-            for($i=0;$i<count($slip_id);$i++){
-                $explode_slip = explode("-",$slip_id[$i]["pembayaran_upah_id"]);
-                if(count($explode_slip)>1){
-                    if($explode_slip[2]==date("m") && $explode_slip[3]==date('Y')){
-                        $isi_slip_id[] = $explode_slip[0];
-                    }
-                }
-            }
-            if(count($isi_slip_id)==0){
-                $isi_slip_id[]=0;
-            }
-            $data["no_slip_gaji"]=(max($isi_slip_id)+1)."-GAJI-".date("m")."-".date('Y');
-
             if(!$_SESSION["user"]){
     			$this->session->set_flashdata('status-login', 'False');
                 redirect(base_url());
@@ -343,6 +338,21 @@ class Detail extends CI_Controller {
 
         public function pilih_gaji($supir_id,$asal,$tahun,$bulan)
         {
+            $slip_id = $this->model_form->getpembayaranupahid();
+            $isi_slip_id = [];
+            for($i=0;$i<count($slip_id);$i++){
+                $explode_slip = explode("-",$slip_id[$i]["pembayaran_upah_id"]);
+                if(count($explode_slip)>1){
+                    if($explode_slip[2]==date("m") && $explode_slip[3]==date('Y')){
+                        $isi_slip_id[] = $explode_slip[0];
+                    }
+                }
+            }
+            if(count($isi_slip_id)==0){
+                $isi_slip_id[]=0;
+            }
+            $data["no_slip_gaji"]=(max($isi_slip_id)+1)."-GAJI-".date("m")."-".date('Y');
+
             if($asal=="form"){
                 if($tahun=="x"){
                     $data["tahun"]="x";
@@ -435,19 +445,50 @@ class Detail extends CI_Controller {
             echo $data["pembayaran_upah_id"];
         }
 
-        public function insert_upah(){
+        public function insert_upah($supir_id){
+            $data_bulan = ["x","Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+
+            if($this->input->post("bonus")==""){
+                $bonus=0;
+            }else{
+                $bonus=str_replace(".","",$this->input->post("bonus"));
+            }
+            if($this->input->post("kasbon")==""){
+                $kasbon=0;
+            }else{
+                $kasbon = str_replace(".","",$this->input->post("kasbon"));
+            }
+
+            $bulan = $this->input->post("bulan_kerja");
+            $tahun = $this->input->post("tahun_kerja");
+            if($bulan=='x'){
+                $bulan=0;
+            }
+            if($tahun=="x"){
+                $tahun=date("Y");
+            }
+
+            $data_jo = [];
+            $data_jo_form = explode(",",$this->input->post("jo"));
+            for($i=0;$i<count($data_jo_form);$i++){
+                $data_jo[] = $data_jo_form[$i];
+            }
             $data = array(
-                "supir_id"=>$this->input->get("supir_id"),
-                "kasbon"=>str_replace(".","",$this->input->get("kasbon")),
-                "gaji_grand_total"=>str_replace(".","",$this->input->get("gaji_grand_total")),
-                "gaji_total"=>str_replace(".","",$this->input->get("gaji_total")),
-                "bonus"=>str_replace(".","",$this->input->get("bonus")),
-                "Jo_id"=>$this->input->get("jo_id"),
-                "bulan_kerja"=>$this->input->get("bulan_kerja"),
-                "pembayaran_upah_id"=>$this->input->get("pembayaran_upah_id")
+                "supir_id"=>$supir_id,
+                "kasbon"=>$kasbon,
+                "tanggal"=>$this->change_tanggal($this->input->post("tanggal_gaji")),
+                "gaji_grand_total"=>str_replace(".","",$this->input->post("gaji_grand_total")),
+                "gaji_total"=>str_replace(".","",$this->input->post("gaji_total")),
+                "bonus"=>$bonus,
+                "Jo_id"=>$data_jo,
+                "bulan_kerja"=>$data_bulan[$bulan]."-".$tahun,
+                "pembayaran_upah_id"=>$this->input->post("no_gaji"),
+                "keterangan"=>$this->input->post("Keterangan")
             );
+            $this->session->set_flashdata('status-insert-slip-gaji', 'Berhasil');
+            // echo print_r($data);
             $this->model_detail->insert_upah($data);
-            echo $data["Jo_id"];
+            redirect (base_url("index.php/home/gaji"));
         }
     //end fungsi untuk Detail penggajian
     

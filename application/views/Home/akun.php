@@ -1,8 +1,9 @@
 <div class="container">
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Seluruh Data Akun</h1>
+    <div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary float-left">Seluruh Data Akun</h6>
         <?php if($_SESSION["role"] == "Super User"){?>
-            <a class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#popup-tambah-akun">
+            <a class="btn btn-primary btn-icon-split float-right" data-toggle="modal" data-target="#popup-tambah-akun">
                 <span class="icon text-white-100">
                     <i class="fas fa-plus"></i> 
                 </span>
@@ -11,10 +12,6 @@
                 </span>
             </a>
         <?php }?>
-    </div> 
-    <div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Akun</h6>
     </div>
     <!-- tabel data cutomer -->
     <div class="card-body">

@@ -862,6 +862,7 @@
                 "processing": true,
                 "serverSide": true,
                 "ordering": true,
+                "searching": false,
                 "order": [
                     [0, 'desc']
                 ],
@@ -869,7 +870,14 @@
                     "url": "<?php echo base_url('index.php/home/view_JO/') ?>",
                     "type": "POST",
                     'data': function(data) {
-                        data.status_JO = $('#status-JO').val();
+                        data.Status = $('#Status').val();
+                        data.Supir = $('#Supir').val();
+                        data.Kendaraan = $('#Kendaraan').val();
+                        data.Jenis = $('#Jenis').val();
+                        data.Customer = $('#Customer').val();
+                        data.Jo_id = $('#Jo_id').val();
+                        data.Tanggal1 = $('#Tanggal1').val();
+                        data.Tanggal2 = $('#Tanggal2').val();
                     }
                 },
                 "deferRender": true,
@@ -1041,10 +1049,31 @@
                     });
                 },
             });
-            $("#status-JO").change(function() {
+            // $("#Status").change(function() {
+            //     table.ajax.reload();
+            //     $('#link_cetaklaporanpdf').attr('href','<?=base_url("index.php/print_berkas/cetaklaporanpdf/")?>'+$('#Tanggal').val()+'/'+$('#Bulan').val()+'/'+$('#Tahun').val()+'/'+$('#status-JO').val());
+            //     $('#link_cetaklaporanexcel').attr('href','<?=base_url("index.php/print_berkas/cetaklaporanexcel/")?>'+$('#Tanggal').val()+'/'+$('#Bulan').val()+'/'+$('#Tahun').val()+'/'+$('#status-JO').val());
+            // });
+            $("#btn-cari").click(function() {
                 table.ajax.reload();
-                $('#link_cetaklaporanpdf').attr('href','<?=base_url("index.php/print_berkas/cetaklaporanpdf/")?>'+$('#Tanggal').val()+'/'+$('#Bulan').val()+'/'+$('#Tahun').val()+'/'+$('#status-JO').val());
-                $('#link_cetaklaporanexcel').attr('href','<?=base_url("index.php/print_berkas/cetaklaporanexcel/")?>'+$('#Tanggal').val()+'/'+$('#Bulan').val()+'/'+$('#Tahun').val()+'/'+$('#status-JO').val());
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo base_url('index.php/home/getditemukanjo') ?>",
+                    dataType: "text",
+                    data: {
+                        Status : $('#Status').val(),
+                        Supir : $('#Supir').val(),
+                        Kendaraan : $('#Kendaraan').val(),
+                        Jenis : $('#Jenis').val(),
+                        Customer : $('#Customer').val(),
+                        Jo_id : $('#Jo_id').val(),
+                        Tanggal1 : $('#Tanggal1').val(),
+                        Tanggal2 : $('#Tanggal2').val(),
+                    },
+                    success: function(data) { //jika ambil data sukses
+                        $("#ditemukan").text(data);
+                    }
+                });
             });
         });
     </script>
@@ -1067,8 +1096,8 @@
                 },
                 "deferRender": true,
                 "aLengthMenu": [
-                    [10, 30, 50, 100],
-                    [10, 30, 50, 100]
+                    [50, 100],
+                    [50, 100]
                 ],
                 "columns": [
                     {

@@ -12,24 +12,22 @@
 <!-- Basic Card Example -->
 <div class="card shadow mb-4 ml-5 mr-5 py-2 px-2">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Detail Job Order</h6>
+        <h6 class="m-0 font-weight-bold text-primary float-left">Detail Job Order</h6>
+        <div class="float-right ml-3">
+                <a class='btn btn-primary btn-sm ' href='<?= base_url("index.php/print_berkas/uang_jalan/").$jo["Jo_id"]."/detail"?>' id="">
+                    <span>Print/PDF</span>
+                </a>
+        </div>
+        <div class="float-right">
+            <form method="POST" action="<?= base_url("index.php/print_berkas/jo_excel/")?>" id="convert_form">
+                <input type="hidden" name="file_content" id="file_content">
+                <button type="submit" name="convert" id="convert" class="btn btn-primary btn-sm">
+                    <span class="text">Excel</span>
+                </button>
+            </form>
+        </div>
     </div>
     <div class="card-body">
-            <div class="container ">
-                <div class="float-right mb-3 ml-3">
-                        <a class='btn btn-primary btn-sm ' href='<?= base_url("index.php/print_berkas/uang_jalan/").$jo["Jo_id"]."/detail"?>' id="">
-                            <span>Print/PDF</span>
-                        </a>
-                </div>
-                <div class="float-right mb-3">
-                    <form method="POST" action="<?= base_url("index.php/print_berkas/jo_excel/")?>" id="convert_form">
-                        <input type="hidden" name="file_content" id="file_content">
-                        <button type="submit" name="convert" id="convert" class="btn btn-primary btn-sm">
-                            <span class="text">Excel</span>
-                        </button>
-                    </form>
-                </div>
-            </div>
         <!-- tampilan detail jo -->
         <div class="container" id="detail-jo">
             <table class="table table-bordered" id="Table-JO">

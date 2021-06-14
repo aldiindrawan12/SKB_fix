@@ -1,9 +1,9 @@
 <div class="container">
-    <div class="d-sm-flex align-items-center justify-content-between mb-3">
-        <h1 class="h4 mb-0 text-gray-800  ">Buat Invoice</h1>
-    </div> 
     <!-- form invoice -->
     <div class="card shadow mb-2">
+        <div class="card-header ">
+            <h6 class="m-0 font-weight-bold text-primary">Buat Invoice</h6>
+        </div>
         <div class="card-body">
         <form action="<?=base_url("index.php/form/insert_invoice")?>" method="POST">
             <div class="row">

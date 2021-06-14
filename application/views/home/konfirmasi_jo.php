@@ -1,34 +1,30 @@
 <div class="container">
-    <div class="d-sm-flex align-items-center justify-content-between mb-4 ">
-        <h1 class="h3 mb-0 text-gray-800 mt-3 mb-3">Konfirmasi Job Order</h1>
-    </div> 
     <div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Dalam Perjalanan</h6>
-    </div>
-    <!-- tabel konfirmasi JO -->
-    <div class="card-body">
-        <div class="table-responsive thead-dark small">
-            <table class="table table-bordered  " id="Table-Konfirmasi-Job-Order" width="100%" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th width ="10%" class="text-center" scope="col">No JO</th>
-                        <th width ="17%" class="text-center" scope="col">Customer</th>
-                        <th width ="17%" class="text-center" scope="col">Muatan</th>
-                        <th width ="15%" class="text-center" scope="col">Asal</th>
-                        <th width ="15%" class="text-center" scope="col">Tujuan</th>
-                        <th width ="1%" class="text-center" scope="col">Tanggal</th>
-                        <th width ="25%" scope="col">Konfirmasi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Konfirmasi Job Order</h6>
         </div>
+        <!-- tabel konfirmasi JO -->
+        <div class="card-body">
+            <div class="table-responsive thead-dark small">
+                <table class="table table-bordered  " id="Table-Konfirmasi-Job-Order" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th width ="10%" class="text-center" scope="col">No JO</th>
+                            <th width ="17%" class="text-center" scope="col">Customer</th>
+                            <th width ="17%" class="text-center" scope="col">Muatan</th>
+                            <th width ="15%" class="text-center" scope="col">Asal</th>
+                            <th width ="15%" class="text-center" scope="col">Tujuan</th>
+                            <th width ="1%" class="text-center" scope="col">Tanggal</th>
+                            <th width ="25%" scope="col">Konfirmasi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- end tabel konfirmasi JO -->
     </div>
-    <!-- end tabel konfirmasi JO -->
-</div>
-
 </div>
 <div class="modal fade mt-4 py-5" id="update_jo" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">

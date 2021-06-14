@@ -1,7 +1,8 @@
 <div class="container">
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Seluruh Merk Kendaraan</h1>
-        <a class="btn btn-primary btn-icon-split" data-toggle='modal' data-target='#popup-merk'>
+    <div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary float-left">Seluruh Data Merk</h6>
+        <a class="btn btn-primary btn-icon-split float-right btn-sm" data-toggle='modal' data-target='#popup-merk'>
             <span class="icon text-white-100">
                 <i class="fas fa-plus"></i> 
             </span>
@@ -9,10 +10,6 @@
                  Tambah Merk
             </span>
         </a>
-    </div>
-    <div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Merk</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">

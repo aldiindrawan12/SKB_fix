@@ -7,9 +7,6 @@
 ?>
 <!-- tampilan detail penggajian supir -->
 <div class="container small">
-    <div class="text-center mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Data Slip Gaji</h1>
-    </div> 
     <div class="card shadow mb-4">
         <div class="card-header py-3 row">
             <h6 class="m-0 font-weight-bold text-primary col-md-8">Seluruh Data Slip Gaji</h6>

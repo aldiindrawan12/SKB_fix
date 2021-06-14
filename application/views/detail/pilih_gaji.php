@@ -2,7 +2,7 @@
 <div class="container small">
     <div class="card shadow mb-4">
         <div class="card-header py-3 mb-3">
-            <h6 class="m-0 font-weight-bold text-center">Slip Gaji</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Buat Slip Gaji</h6>
         </div>
         <div class="container m-auto" id="rincian">
             <form action="<?= base_url("index.php/detail/insert_upah/").$supir["supir_id"]?>" method="POST" id="form-pilih-jo">

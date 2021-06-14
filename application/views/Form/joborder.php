@@ -1,11 +1,8 @@
 <div class="container">
-    <div class="text-center mb-4">
-        <h1 class="h3 mb-0 text-gray-800 mt-3 ">Buat Job Order</h1>
-    </div> 
         <!-- Card Formulir JO -->
         <div class="card shadow mb-4">
             <div class="card-header ">
-                <h6 class="m-0 font-weight-bold text-primary">Form Buat Job Order</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Buat Job Order</h6>
             </div>
             <div class="card-body">
                 <!-- form Job Order Baru -->

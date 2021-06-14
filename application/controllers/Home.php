@@ -19,6 +19,10 @@ class Home extends CI_Controller {
     			$this->session->set_flashdata('status-login', 'False');
                 redirect(base_url());
             }
+            $data["supir"] = $this->model_home->getallsupir();
+            $data["mobil"] = $this->model_home->gettruck();
+            $data["customer"] = $this->model_home->getallcustomer();
+            $data["jo"] = $this->model_home->getjo();
             $data["page"] = "JO_page";
             $data["collapse_group"] = "Job_Order";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
@@ -51,17 +55,51 @@ class Home extends CI_Controller {
 
         public function view_konfirmasi_JO(){
             $status = "Dalam Perjalanan";
+            $data = array(
+                "Supir" => "",
+                "Kendaraan" => "",
+                "Jenis" => "",
+                "Customer" => "",
+                "Jo_id" => "",
+                "Tanggal1" => "",
+                "Tanggal2" => "",
+            );
             $postData = $this->input->post();
-            $data = $this->model_home->getJOData($postData,$status);
+            $data = $this->model_home->getJOData($postData,$status,$data);
             echo json_encode($data);
         }
 
         public function view_JO(){
-            $status = $this->input->post('status_JO');
+            $Status = $this->input->post('Status');
+            $data = array(
+                "Supir" => $this->input->post('Supir'),
+                "Kendaraan" => $this->input->post('Kendaraan'),
+                "Jenis" => $this->input->post('Jenis'),
+                "Customer" => $this->input->post('Customer'),
+                "Jo_id" => $this->input->post('Jo_id'),
+                "Tanggal1" => $this->input->post('Tanggal1'),
+                "Tanggal2" => $this->input->post('Tanggal2'),
+            );
             $postData = $this->input->post();
-            $data = $this->model_home->getJOData($postData,$status);
+            $data = $this->model_home->getJOData($postData,$Status,$data);
             echo json_encode($data);
         }
+
+        public function getditemukanjo(){
+            $data = array(
+                "Supir" => $this->input->post('Supir'),
+                "Kendaraan" => $this->input->post('Kendaraan'),
+                "Jenis" => $this->input->post('Jenis'),
+                "Customer" => $this->input->post('Customer'),
+                "Jo_id" => $this->input->post('Jo_id'),
+                "Tanggal1" => $this->input->post('Tanggal1'),
+                "Tanggal2" => $this->input->post('Tanggal2'),
+                "Status" => $this->input->post('Status')
+            );
+            $data_filter = $this->model_home->getDitemukanJo($data);
+            echo $data_filter;
+        }
+
         public function view_JO_report(){
             $tanggal = $this->input->post('tanggal');
             $bulan = $this->input->post('bulan');

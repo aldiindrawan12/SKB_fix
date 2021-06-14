@@ -1,8 +1,9 @@
 <!-- MENGGUNAKAN NAMA KOLOM YANG ENGKEL AJA -->
-<div class="container">    
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Data Rute dan Muatan</h1>
-        <a class="btn btn-primary btn-icon-split" data-toggle='modal' data-target='#popup-rute' onclick="mobil()">
+<div class="container">
+    <div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary float-left">Seluruh Data Rute dan Muatan</h6>
+        <a class="btn btn-primary btn-icon-split float-right btn-sm" data-toggle='modal' data-target='#popup-rute' onclick="mobil()">
             <span class="icon text-white-100">
                 <i class="fas fa-plus"></i> 
             </span>
@@ -10,10 +11,6 @@
                  Tambah Rute & Muatan
             </span>
         </a>
-    </div>
-    <div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Rute dan Muatan</h6>
     </div>
     <div class="card-body small">
         <div class="table-responsive">
@@ -81,9 +78,15 @@
                                 <label for="jenis_mobil" class="form-label font-weight-bold ">Jenis Mobil</label> 
                                 <select name="jenis_mobil" id="jenis_mobil" class="form-control mb-4 selectpicker" data-live-search="true" required>
                                     <option class="font-w700" disabled="disabled" selected value="">Jenis Mobil</option>
-                                    <?php foreach($mobil as $value){?>
-                                        <option value="<?=$value["mobil_jenis"]?>"><?=$value["mobil_jenis"]?></option>
-                                    <?php } ?>
+                                    <?php $isi_jenis = array();
+                                        foreach($mobil as $value){
+                                        if(!in_array($value["mobil_jenis"],$isi_jenis)){
+                                            array_push($isi_jenis[] = $value["mobil_jenis"]);
+                                        }
+                                    }?>
+                                    <?php for($i=0;$i<count($isi_jenis);$i++){?>
+                                        <option value="<?= $isi_jenis[$i]?>"><?= $isi_jenis[$i]?></option>
+                                    <?php }?>
                                 </select>
                             </div>
                             <small class="font-weight-bold">Detail Uang Jalan (Uj)</small>

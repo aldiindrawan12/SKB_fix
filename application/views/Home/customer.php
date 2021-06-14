@@ -1,7 +1,8 @@
 <div class="container">
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Seluruh Data Customer</h1>
-        <a class="btn btn-primary btn-icon-split" data-toggle='modal' data-target='#popup-customer'>
+    <div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary float-left">Seluruh Data Customer</h6>
+        <a class="btn btn-primary btn-icon-split float-right btn-sm" data-toggle='modal' data-target='#popup-customer'>
             <span class="icon text-white-100">
                 <i class="fas fa-plus"></i> 
             </span>
@@ -9,10 +10,6 @@
                  Tambah Customer
             </span>
         </a>
-    </div> 
-    <div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Customer</h6>
     </div>
     <!-- tabel data cutomer -->
     <div class="card-body">

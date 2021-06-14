@@ -1,6 +1,6 @@
 <div class="container">
     <div class="text-center mb-4">
-        <h1 class="h3 mb-0 text-gray-800 mt-3 mb-3">Data Nota Kasbon</h1>
+        <!-- <h1 class="h3 mb-0 text-gray-800 mt-3 mb-3">Data Nota Kasbon</h1> -->
             <!-- <a href="<?=base_url("index.php/form/bon")?>" class="btn btn-primary btn-icon-split">
             <span class="icon text-white-100">
                 <i class="fas fa-plus"></i> 
@@ -13,7 +13,7 @@
     <!-- tabel transaksi bon -->
     <div class="card shadow mb-4">
         <div class="card-header py-3 row">
-            <h6 class="m-0 col-md-8 font-weight-bold text-primary">Transaksi Bon</h6>
+            <h6 class="m-0 col-md-8 font-weight-bold text-primary">Seluruh Data Nota Kasbon</h6>
             <form method="POST" action="<?= base_url("index.php/print_berkas/bon_excel/")?>" id="convert_form" class="col-md-2">
                 <input type="hidden" name="file_content" id="file_content">
                 <button type="submit" name="convert" id="convert" class="btn btn-primary btn-icon-split btn-sm">

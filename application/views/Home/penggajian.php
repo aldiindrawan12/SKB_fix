@@ -1,7 +1,8 @@
 <div class="container">
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Seluruh Data Driver</h1>
-        <a class="btn btn-primary btn-icon-split" data-toggle='modal' data-target='#popup-supir'>
+    <div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary float-left">Seluruh Data Driver</h6>
+        <a class="btn btn-primary btn-icon-split float-right btn-sm" data-toggle='modal' data-target='#popup-supir'>
             <span class="icon text-white-100">
                 <i class="fas fa-plus"></i> 
             </span>
@@ -9,10 +10,6 @@
                  Tambah Driver
             </span>
         </a>
-    </div>  
-    <div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Driver</h6>
     </div>
     <!-- tabel supir -->
     <div class="card-body">

@@ -303,7 +303,6 @@ class Model_Dashboard extends CI_model
     
         return $response; 
     }
-    //function-fiunction datatable JO
         function getJoNoInvoice($postData){
             $tanggal_now = date("Y-m-d");
             $response = array();
@@ -386,7 +385,6 @@ class Model_Dashboard extends CI_model
         
             return $response; 
         }
-    //akhir function-fiunction datatable JO
     public function generate_selisih_tanggal($tanggal){
         $tanggal_now = date("Y-m-d");
         $tgl1 = new DateTime($tanggal_now);

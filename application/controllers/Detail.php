@@ -96,20 +96,6 @@ class Detail extends CI_Controller {
             $this->load->view('detail/invoice');
             $this->load->view('footer');
         }
-        public function updatestatusjo($supir,$mobil){
-            $data_jo = $this->model_home->getjobyid($this->input->post("jo_id"));
-            $keterangan = "<strong>Catatan JO : </strong>".$data_jo["keterangan"]."<br><strong>Catatan Konfirmasi : </strong>".$this->input->post("Keterangan");
-            $TOD = $this->input->post("TOD");
-            $data = array(
-                "tonase"=>$this->input->post("tonase"),
-                "bonus"=>str_replace(".","",$this->input->post("bonus")),
-                "keterangan"=>$keterangan,
-                "tanggal_bongkar"=>date('Y-m-d'),
-                "Jo_id"=>$this->input->post("jo_id")
-            );
-            $this->model_detail->updatestatusjo($data,$supir,$mobil);
-            redirect(base_url("index.php/detail/detail_jo/").$this->input->post("jo_id")."/JO");
-        }
 
         public function updateUJ($jo_id){
             $data_jo = $this->model_home->getjobyid($jo_id);
@@ -125,39 +111,6 @@ class Detail extends CI_Controller {
             redirect(base_url("index.php/detail/detail_invoice/").$invoice_kode."/Invoice");
         }
 
-        public function updatejobatal($Jo_id){
-            $data_jo = $this->model_home->getjobyid($Jo_id);
-            $data["data_jo"]=$data_jo;
-            $bon_id = $this->model_form->getbonid();
-            $isi_bon_id = [];
-            for($i=0;$i<count($bon_id);$i++){
-                $explode_bon = explode("-",$bon_id[$i]["bon_id"]);
-                if(count($explode_bon)>1){
-                    if($explode_bon[2]==date("m") && $explode_bon[3]==date('Y')){
-                        $isi_bon_id[] = $explode_bon[0];
-                    }
-                }
-            }
-            if(count($isi_bon_id)==0){
-                $isi_bon_id[]=0;
-            }
-            date_default_timezone_set('Asia/Jakarta');
-            $data["data"]=array(
-                "bon_id"=>(max($isi_bon_id)+1)."-BON-".date("m")."-".date("Y"),
-                "supir_id"=>$data_jo["supir_id"],
-                "bon_jenis"=>"Pembatalan JO",
-                "bon_nominal"=>$data_jo["uang_jalan"],
-                "bon_keterangan"=>"Pembatalan JO",
-                "bon_tanggal"=>date("Y-m-d H:i:s"),
-                "user"=>$_SESSION["user"]."(".date("d-m-Y H:i:s").")",
-            );
-            $data["bon_id"] = (max($isi_bon_id)+1)."-BON-".date("m")."-".date("Y");
-            $this->model_form->insert_bon($data["data"]);
-            $this->model_detail->update_jo_dibatalkan($data_jo["Jo_id"],$data_jo["supir_id"],$data_jo["mobil_no"],$data_jo["uang_jalan"]);
-            $data["supir"] = $this->model_home->getsupirbyid($data["data"]["supir_id"]);
-            $data["asal"] = "batal JO";
-            $this->load->view("print/bon_print",$data);
-        }
         public function getjo(){
             $jo_id = $this->input->get('id');
             $data = $this->model_home->getjobyid($jo_id);
@@ -256,16 +209,6 @@ class Detail extends CI_Controller {
             echo json_encode($data);
         }
     //end fungsi untuk Detail ttruckk
-
-    //fungsi untuk Detail kosongan
-        function getkosongan()
-        {
-            $kosongan_id = $this->input->get('id');
-            $jo_id = $this->input->get('jo');
-            $data = $this->model_detail->getkosonganbyid($kosongan_id,$jo_id);
-            echo json_encode($data);
-        }
-    //end fungsi untuk Detail kosongan
 
     //fungsi untuk Detail merk
         function getmerk()
@@ -522,19 +465,4 @@ class Detail extends CI_Controller {
             redirect (base_url("index.php/home/gaji"));
         }
     //end fungsi untuk Detail penggajian
-    
-    function getrute()
-    {
-        $rute_id = $this->input->get('id');
-        $data = $this->model_detail->getrutebyid($rute_id);
-        echo json_encode($data);
-    }
-
-    function getpaketan()
-    {
-        $paketan_id = $this->input->get('id');
-        $data = $this->model_form->getpaketanbyid($paketan_id);
-        echo json_encode($data);
-    }
-    
 }

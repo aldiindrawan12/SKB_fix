@@ -99,28 +99,6 @@ class Home extends CI_Controller {
             $data_filter = $this->model_home->getDitemukanJo($data);
             echo $data_filter;
         }
-
-        public function view_JO_report(){
-            $tanggal = $this->input->post('tanggal');
-            $bulan = $this->input->post('bulan');
-            $tahun = $this->input->post('tahun');
-            $status = $this->input->post('status_JO');
-            $order_index = $_POST['order'][0]['column'];
-            $order_field = $_POST['columns'][$order_index]['data'];
-            $order_ascdesc = $_POST['order'][0]['dir'];
-            $sql_total = $this->model_home->count_all_JO_report($tanggal,$bulan,$tahun,$status);
-            $sql_data = $this->model_home->filter_JO_report($order_field, $order_ascdesc,$tanggal,$bulan,$tahun,$status);
-            $sql_filter = $this->model_home->count_filter_JO_report($tanggal,$bulan,$tahun,$status);
-            $callback = array(
-                'draw' => $_POST['draw'],
-                'recordsTotal' => $sql_total,
-                'recordsFiltered' => $sql_filter,
-                'data' => $sql_data
-            );
-
-            header('Content-Type: application/json');
-            echo json_encode($callback);
-        }
     //end fungsi untuk JO
 
     // Customer
@@ -237,7 +215,7 @@ class Home extends CI_Controller {
         }      
     //end supir
 
-    //gaji supir
+    //buat slip gaji
         public function gaji()
         {
             if(!$_SESSION["user"]){
@@ -255,9 +233,9 @@ class Home extends CI_Controller {
             $this->load->view('home/gaji');
             $this->load->view('footer');
         }      
-    //end gaji supir
+    //end buat slip gaji
 
-    //gaji report supir
+    //data slip gaji
         public function report_gaji()
         {
             if(!$_SESSION["user"]){
@@ -283,9 +261,9 @@ class Home extends CI_Controller {
             $this->load->view('sidebar');
             $this->load->view('detail/penggajian_report',$data);
         }      
-    //end gaji report supir
+    //end data slip gaji
 
-    //report bon supir
+    //Mutasi bon supir
         public function report_bon()
         {
             if(!$_SESSION["user"]){
@@ -303,9 +281,9 @@ class Home extends CI_Controller {
             $this->load->view('home/report_bon');
             $this->load->view('footer');
         }
-    //report bon supir
+    //end Mutasi bon supir
 
-    //mutasi bon supir
+    //Saldo bon supir
         public function saldo_bon()
         {
             if(!$_SESSION["user"]){
@@ -324,7 +302,7 @@ class Home extends CI_Controller {
             $this->load->view('home/saldo_bon');
             $this->load->view('footer');
         }
-    //mutasi bon supir
+    //emd Saldo bon supir
 
     // bon
         public function bon()
@@ -346,6 +324,7 @@ class Home extends CI_Controller {
             $this->load->view('home/bon');
             $this->load->view('footer');
         }
+
         public function view_bon(){
             $No_Bon = $this->input->post('No_Bon1')."-".$this->input->post('No_Bon2')."-".$this->input->post('No_Bon3')."-".$this->input->post('No_Bon4');
             $data = array(
@@ -414,50 +393,10 @@ class Home extends CI_Controller {
             echo json_encode($data);
         }
     //end fungsi untuk truk
-    
-    // funngsi report 
-        public function report()
-        {
-            if(!$_SESSION["user"]){
-    			$this->session->set_flashdata('status-login', 'False');
-                redirect(base_url());
-            }
-            $data["page"] = "Laporan_page";
-            $data["collapse_group"] = "Laporan";
-            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
-            if(json_decode($data["akun_akses"]["akses"])[7]==0){
-                redirect(base_url());
-            }
-            $this->load->view('header',$data);
-            $this->load->view('sidebar');
-            $this->load->view('home/report');
-            $this->load->view('footer');
-        }
-    // end funngsi report 
-
-    // funngsi report uang jalan 
-        public function report_uang_jalan()
-        {
-            if(!$_SESSION["user"]){
-                $this->session->set_flashdata('status-login', 'False');
-                redirect(base_url());
-            }
-            $data["page"] = "Laporan_Uang_Jalan_page";
-            $data["collapse_group"] = "Laporan";
-            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
-            if(json_decode($data["akun_akses"]["akses"])[8]==0){
-                redirect(base_url());
-            }
-            $this->load->view('header',$data);
-            $this->load->view('sidebar');
-            $this->load->view('home/report_uang_jalan');
-            $this->load->view('footer');
-        }
-    // end funngsi report uang jalan 
 
     // Invoice
         public function view_seluruh_invoice(){
-            $No_Invoice = $this->input->post('No_Bon1')."-".$this->input->post('No_Bon2')."-".$this->input->post('No_Bon3')."-".$this->input->post('No_Bon4');
+            $No_Invoice = $this->input->post('No_Invoice1')."-".$this->input->post('No_Invoice2')."-".$this->input->post('No_Invoice3')."-".$this->input->post('No_Invoice4');
             $data = array(
                 "Status" => $this->input->post('Status'),
                 "Customer" => $this->input->post('Customer'),
@@ -471,6 +410,7 @@ class Home extends CI_Controller {
             $data = $this->model_home->getAllInvoiceData($postData,$data);
             echo json_encode($data);
         }
+
         public function getditemukaninvoice(){
             $No_Invoice = $this->input->post('No_Invoice1')."-".$this->input->post('No_Invoice2')."-".$this->input->post('No_Invoice3')."-".$this->input->post('No_Invoice4');
             $data = array(
@@ -488,72 +428,6 @@ class Home extends CI_Controller {
                 $tagihan = $tagihan + $data_filter[$i]["grand_total"];
             }
             echo count($data_filter)."=".number_format($tagihan,2,",",".");
-        }
-
-        public function view_invoice(){
-            $search = $_POST['search']['value'];
-            // $limit = $_POST['length'];
-            // $start = $_POST['start'];
-            $status = $this->input->post('status_bayar');
-            $order_index = $_POST['order'][0]['column'];
-            $order_field = $_POST['columns'][$order_index]['data'];
-            $order_ascdesc = $_POST['order'][0]['dir'];
-            $sql_total = $this->model_home->count_all_invoice($status);
-            $sql_data = $this->model_home->filter_invoice($search,$order_field, $order_ascdesc,$status);
-            $sql_filter = $this->model_home->count_filter_invoice($search,$status);
-            $callback = array(
-                'draw' => $_POST['draw'],
-                'recordsTotal' => $sql_total,
-                'recordsFiltered' => $sql_filter,
-                'data' => $sql_data
-            );
-
-            header('Content-Type: application/json');
-            echo json_encode($callback);
-        }
-
-        public function view_invoice_belum_lunas(){
-            $search = $_POST['search']['value'];
-            $limit = $_POST['length'];
-            $start = $_POST['start'];
-            $customer_id = $this->input->post('customer_id');
-            $order_index = $_POST['order'][0]['column'];
-            $order_field = $_POST['columns'][$order_index]['data'];
-            $order_ascdesc = $_POST['order'][0]['dir'];
-            $sql_total = $this->model_home->count_all_invoice_belum_lunas($customer_id);
-            $sql_data = $this->model_home->filter_invoice_belum_lunas($search, $limit, $start, $order_field, $order_ascdesc,$customer_id);
-            $sql_filter = $this->model_home->count_filter_invoice_belum_lunas($search,$customer_id);
-            $callback = array(
-                'draw' => $_POST['draw'],
-                'recordsTotal' => $sql_total,
-                'recordsFiltered' => $sql_filter,
-                'data' => $sql_data
-            );
-
-            header('Content-Type: application/json');
-            echo json_encode($callback);
-        }
-
-        public function view_invoice_lunas(){
-            $search = $_POST['search']['value'];
-            $limit = $_POST['length'];
-            $start = $_POST['start'];
-            $customer_id = $this->input->post('customer_id');
-            $order_index = $_POST['order'][0]['column'];
-            $order_field = $_POST['columns'][$order_index]['data'];
-            $order_ascdesc = $_POST['order'][0]['dir'];
-            $sql_total = $this->model_home->count_all_invoice_lunas($customer_id);
-            $sql_data = $this->model_home->filter_invoice_lunas($search, $limit, $start, $order_field, $order_ascdesc,$customer_id);
-            $sql_filter = $this->model_home->count_filter_invoice_lunas($search,$customer_id);
-            $callback = array(
-                'draw' => $_POST['draw'],
-                'recordsTotal' => $sql_total,
-                'recordsFiltered' => $sql_filter,
-                'data' => $sql_data
-            );
-
-            header('Content-Type: application/json');
-            echo json_encode($callback);
         }
         
         public function invoice()

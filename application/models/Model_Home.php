@@ -490,99 +490,6 @@ class Model_Home extends CI_model
         }
      //akhir function-fiunction datatable JO
 
-     //function-fiunction datatable JO laporan
-        public function count_all_JO_report($tanggal,$bulan,$tahun,$status)
-        {
-            $this->db->join("skb_supir", "skb_supir.supir_id = skb_job_order.supir_id", 'left');
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
-            return $this->db->count_all_results("skb_job_order");
-        }
-
-        public function filter_JO_report($order_field, $order_ascdesc,$tanggal,$bulan,$tahun,$status)
-        {
-            $like=$tahun."-".$bulan."-".$tanggal;
-            if($like != "--"){
-                if ($tanggal != "x" && $bulan=="x" && $tahun=="x") {
-                    $this->db->like("tanggal_surat", "-".$tanggal);
-                }
-                if ($tanggal == "x" && $bulan!="x" && $tahun=="x") {
-                    $this->db->like("tanggal_surat", "-".$bulan."-");
-                }
-                if ($tanggal == "x" && $bulan=="x" && $tahun!="x") {
-                    $this->db->like("tanggal_surat", $tahun."-");
-                }
-                if ($tanggal != "x" && $bulan=="x" && $tahun!="x") {
-                    $this->db->like("tanggal_surat", $tahun."-__-".$tanggal);
-                }
-                if ($tanggal == "x" && $bulan!="x" && $tahun!="x") {
-                    $this->db->like("tanggal_surat", $tahun."-".$bulan."-");
-                }
-                if ($tanggal != "x" && $bulan!="x" && $tahun=="x") {
-                    $this->db->like("tanggal_surat", "-".$bulan."-".$tanggal);
-                }
-                if ($tanggal != "x" && $bulan!="x" && $tahun!="x") {
-                    $this->db->like("tanggal_surat", $tahun."-".$bulan."-".$tanggal);
-                }
-            }
-            if($status!="x"){
-                $this->db->where("status",$status);
-            }
-            $this->db->order_by($order_field, $order_ascdesc);
-            $this->db->join("skb_supir", "skb_supir.supir_id = skb_job_order.supir_id", 'left');
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
-            $hasil = $this->db->get('skb_job_order')->result_array();
-            $hasil_fix = [];
-            for($i=0;$i<count($hasil);$i++){
-                if(($hasil[$i]["parent_Jo_id"]=="x" || $hasil[$i]["parent_Jo_id"]=="y") && $hasil[$i]["status"]!="Dibatalkan"){
-                    $hasil_fix[] = $hasil[$i];
-                }
-            }
-            return $hasil_fix;
-        }
-
-        public function count_filter_JO_report($tanggal,$bulan,$tahun,$status)
-        {   
-            $like=$tahun."-".$bulan."-".$tanggal;
-            if($like != "--"){
-                if ($tanggal != "x" && $bulan=="x" && $tahun=="x") {
-                    $this->db->like("tanggal_surat", "-".$tanggal);
-                }
-                if ($tanggal == "x" && $bulan!="x" && $tahun=="x") {
-                    $this->db->like("tanggal_surat", "-".$bulan."-");
-                }
-                if ($tanggal == "x" && $bulan=="x" && $tahun!="x") {
-                    $this->db->like("tanggal_surat", $tahun."-");
-                }
-                if ($tanggal != "x" && $bulan=="x" && $tahun!="x") {
-                    $this->db->like("tanggal_surat", $tahun."-__-".$tanggal);
-                }
-                if ($tanggal == "x" && $bulan!="x" && $tahun!="x") {
-                    $this->db->like("tanggal_surat", $tahun."-".$bulan."-");
-                }
-                if ($tanggal != "x" && $bulan!="x" && $tahun=="x") {
-                    $this->db->like("tanggal_surat", "-".$bulan."-".$tanggal);
-                }
-                if ($tanggal != "x" && $bulan!="x" && $tahun!="x") {
-                    $this->db->like("tanggal_surat", $tahun."-".$bulan."-".$tanggal);
-                }
-            }
-            if($status!="x"){
-                $this->db->where("status",$status);
-            }
-            $this->db->join("skb_supir", "skb_supir.supir_id = skb_job_order.supir_id", 'left');
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
-            $hasil_data = $this->db->get('skb_job_order')->result_array();
-            $hasil_fix = 0;
-            for($i=0;$i<count($hasil_data);$i++){
-                if(($hasil_data[$i]["parent_Jo_id"]=="x" || $hasil_data[$i]["parent_Jo_id"]=="y") && $hasil_data[$i]["status"]!="Dibatalkan"){
-                    $hasil_fix +=1;
-                }
-            }
-            return $hasil_fix;
-        }
-    //akhir function-fiunction datatable JO laporan
-
-
      //function-fiunction datatable bon
         public function count_all_bon()
         {
@@ -675,6 +582,7 @@ class Model_Home extends CI_model
             $this->db->join("skb_supir", "skb_supir.supir_id = skb_bon.supir_id", 'left');
             return $this->db->get('skb_bon')->num_rows();
         }
+
         function getDitemukanBon($data){
             $search_arr = array();
             $searchQuery = "";
@@ -716,7 +624,6 @@ class Model_Home extends CI_model
             return $this->db->get('skb_bon')->num_rows();
         }
      //akhir function-fiunction datatable bon
-
 
     //  Function Customer
         public function count_all_customer($asal)
@@ -858,74 +765,6 @@ class Model_Home extends CI_model
             }
         }
     // end Function Invoice
-    
-    // Function Invoice Belum Lunas
-        public function count_all_invoice_belum_lunas($customer_id)
-        {
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_invoice.customer_id", 'left');
-     
-            return $this->db->count_all_results("skb_invoice");
-        }
-    
-        public function filter_invoice_belum_lunas($search, $limit, $start, $order_field, $order_ascdesc,$customer_id)
-        {
-            if($customer_id!="x"){
-                $this->db->where("skb_invoice.customer_id",$customer_id);
-            }
-            $this->db->where("status_bayar","Belum Lunas");
-            $this->db->like('invoice_kode', $search);
-            $this->db->order_by($order_field, $order_ascdesc);
-            $this->db->limit($limit, $start);
-
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_invoice.customer_id", 'left');
-            return $this->db->get('skb_invoice')->result_array();
-        }
-    
-        public function count_filter_invoice_belum_lunas($search,$customer_id)
-        {
-            if($customer_id!="x"){
-                $this->db->where("skb_invoice.customer_id",$customer_id);
-            }
-            $this->db->where("status_bayar","Belum Lunas");
-            $this->db->like('invoice_kode', $search);
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_invoice.customer_id", 'left');
-            return $this->db->get('skb_invoice')->num_rows();
-        }
-    // end Function Invoice Belum Lunas
-
-    // Function InvoiceLunas
-        public function count_all_invoice_lunas($customer_id)
-        {
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_invoice.customer_id", 'left');
-     
-            return $this->db->count_all_results("skb_invoice");
-        }
-    
-        public function filter_invoice_lunas($search, $limit, $start, $order_field, $order_ascdesc,$customer_id)
-        {
-            if($customer_id!="x"){
-                $this->db->where("skb_invoice.customer_id",$customer_id);
-            }
-            $this->db->where("status_bayar","Lunas");
-            $this->db->like('invoice_kode', $search);
-            $this->db->order_by($order_field, $order_ascdesc);
-            $this->db->limit($limit, $start);
-
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_invoice.customer_id", 'left');
-            return $this->db->get('skb_invoice')->result_array();
-        }
-    
-        public function count_filter_invoice_lunas($search,$customer_id)
-        {
-            if($customer_id!="x"){
-                $this->db->where("skb_invoice.customer_id",$customer_id);
-            }
-            $this->db->where("status_bayar","Lunas");
-            $this->db->like('invoice_kode', $search);
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_invoice.customer_id", 'left');
-            return $this->db->get('skb_invoice')->num_rows();
-        }
-    // end Function InvoiceLunas
     
     //  Function Akun
         public function count_all_akun()

@@ -19,9 +19,9 @@
                     <tr>        
                         <th class="text-center" width="1%" scope="col">ID Driver</th>
                         <th class="text-center" width="13%" scope="col">Nama Driver</th>
-                        <!-- <th class="text-center" width="14%" scope="col">Kasbon</th>
-                        <th width="12%" scope="col">Berlaku SIM</th> -->
-                        <th width="13%" scope="col">Status Jalan</th>
+                        <th class="text-center" width="14%" scope="col">Kasbon</th>
+                        <!-- <th width="12%" scope="col">Berlaku SIM</th> -->
+                        <!-- <th width="13%" scope="col">Status Jalan</th> -->
                         <th width="13%" scope="col">Status Aktif</th>
                         <th class="text-center" width="15%" scope="col">Status Validasi</th>
                         <th width="20%" scope="col">Aksi</th>

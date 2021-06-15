@@ -69,7 +69,7 @@
             </div>
             <hr>
             <div class="container">
-                <span>Total Data JO Yang Ditemukan : </span><span id="ditemukan"><?= count($bon)?></span><br>
+                <span>Total Data Nota Kasbon Yang Ditemukan : </span><span id="ditemukan"><?= count($bon)?></span><br>
             </div>
             <hr>
         <div class="card-body" id="Table-Bon-Print">
@@ -83,6 +83,7 @@
                             <th width="16%" class="text-center" scope="col">Tanggal Transaksi</th>
                             <th width="16%" class="text-center"  scope="col">Jenis Transaksi</th>
                             <th width="5%" class="text-center" scope="col">Detail</th>
+                            <th width="20%" class="text-center" scope="col">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -153,6 +154,59 @@
 </div>
 <!-- end pop up detail bon -->
 
+<!-- pop up edit bon -->
+<div class="modal fade mt-5 px-5 py-5 " id="popup-update-bon" tabindex="-1" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary-dark">
+                <h5 class="block-title">Edit Data Nota Kasbon</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times</span>
+                </button>
+            </div>
+            <div class="font-size-sm m-3 text-justify">
+                <form action="<?=base_url("index.php/form/update_bon")?>" method="POST" class="row">
+                    <div class="col-md-4 col-md-offset-4 mb-4">
+                        <label for="bon_id_edit" class="form-label font-weight-bold">No Bon</label>
+                        <input autocomplete="off" type="text" class="form-control" id="bon_edit" name="bon_edit" required readonly>
+                    </div>
+                    <div class="col-md-4 col-md-offset-4 mb-4">
+                        <label class="form-label font-weight-bold" for="Supir_bon">Supir</label>
+                        <input autocomplete="off" type="text" class="form-control" id="Supir_edit" name="Supir_edit" required readonly>
+                    </div>
+                    <div class="col-md-4 col-md-offset-4 mb-4">
+                        <label for="Tanggal_edit" class="form-label font-weight-bold">Tanggal</label>
+                        <input autocomplete="off" type="text" class="form-control" id="Tanggal_edit" name="Tanggal_edit" required onclick="tanggal_berlaku(this)">
+                    </div>
+                    <div class="col-md-4 col-md-offset-4 mb-4">
+                        <label class="form-label font-weight-bold" for="Jenis_edit">Jenis Transaksi</label>
+                        <select name="Jenis_edit" id="Jenis_edit" class="form-control custom-select" required onchange="nominal()">
+                            <option class="font-w700" disabled="disabled" selected value="">Jenis Transaksi</option>
+                            <option value="Pengajuan">Pengajuan</option>
+                            <option value="Pembayaran">Pembayaran</option>
+                            <option value="Pembatalan JO">Pembatalan JO</option>
+                            <option value="Potong Gaji">Potong Gaji</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 col-md-offset-4 mb-4">
+                        <label for="Nominal_edit" class="form-label font-weight-bold">Nominal</label>
+                        <input autocomplete="off" type="text" class="form-control" id="Nominal_edit" name="Nominal_edit" required onkeyup="nominal(this)">
+                    </div>
+                    <div class="col-md-4 mb-4 ">
+                        <label for="Keterangan_edit" class="form-label font-weight-bold">Keterangan/Catatan</label>
+                        <textarea class="form-control" name="Keterangan_edit" id="Keterangan_edit" rows="3"></textarea>
+                    </div>
+                    <div class="col-md-12 col-md-offset-4 mt-5 ">
+                        <button type="submit" class="btn btn-success mb-3 ml-3 float-right">Simpan</button>    
+                        <button type="reset" class="btn btn-outline-danger mb-3 float-right">Reset</button> 
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end pop up edit bon -->
+
 <script src="<?=base_url("assets/vendor/jquery/jquery.min.js")?>"></script>
 
 <script type="text/javascript">
@@ -172,9 +226,10 @@
     window.print();
     document.body.innerHTML = restorepage;
   }
-</script>
-<script>
     function reset_form(){
         location.reload();
+    }
+    function nominal(a){
+        $( '#'+a.id ).mask('000.000.000', {reverse: true});
     }
 </script>

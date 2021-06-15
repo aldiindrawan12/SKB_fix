@@ -76,7 +76,7 @@ class Model_Home extends CI_model
 
         public function getbon() //all JO
         {
-            return $this->db->get("skb_bon")->result_array();
+            return $this->db->get_where("skb_bon",array("status_hapus"=>"NO"))->result_array();
         }
 
         public function getinvoice() //all JO
@@ -535,6 +535,7 @@ class Model_Home extends CI_model
             if($searchQuery != ''){
                 $this->db->where($searchQuery);
             }
+            $this->db->where("skb_bon.status_hapus","NO");
             $this->db->order_by($order_field, $order_ascdesc);
             $this->db->limit($limit, $start);
             $this->db->join("skb_supir", "skb_supir.supir_id = skb_bon.supir_id", 'left');
@@ -579,6 +580,7 @@ class Model_Home extends CI_model
             if($searchQuery != ''){
                 $this->db->where($searchQuery);
             }
+            $this->db->where("skb_bon.status_hapus","NO");
             $this->db->join("skb_supir", "skb_supir.supir_id = skb_bon.supir_id", 'left');
             return $this->db->get('skb_bon')->num_rows();
         }
@@ -620,6 +622,7 @@ class Model_Home extends CI_model
             if($searchQuery != ''){
                 $this->db->where($searchQuery);
             }
+            $this->db->where("skb_bon.status_hapus","NO");
             $this->db->join("skb_supir", "skb_supir.supir_id = skb_bon.supir_id", 'left');
             return $this->db->get('skb_bon')->num_rows();
         }

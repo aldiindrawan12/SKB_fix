@@ -130,7 +130,7 @@
     }else if(asal=="detail"){
         window.location.replace("<?= base_url("index.php/home/bon/")?>");
     }else{
-        window.location.replace("<?= base_url("index.php/detail/detail_jo/").$data_jo["Jo_id"]."/JO"?>");
+        window.location.replace("<?= base_url("index.php/home")?>");
     }
 </script>
 </html>

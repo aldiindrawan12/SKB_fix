@@ -67,7 +67,7 @@
             </div>
             <hr>
             <div class="container">
-                <span>Total Data JO Yang Ditemukan : </span><span id="ditemukan"><?= count($invoice)?></span><br>
+                <span>Total Data Invoice Yang Ditemukan : </span><span id="ditemukan"><?= count($invoice)?></span><br>
                 <span>Total Invoice Belum Dibayar : </span>Rp.<span id="tagihan"><?= number_format($tagihan,2,",",".")?></span>
             </div>
             <hr>

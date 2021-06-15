@@ -886,13 +886,6 @@
                     [50, 100]
                 ],
                 "columns": [
-                    // {
-                    //     "data": "Jo_id",
-                    //     render: function(data, type, row) {
-                    //         let html = row["no"];
-                    //         return html;
-                    //     }
-                    // },
                     {
                         "data": "Jo_id",
                         className: 'text-center'
@@ -966,86 +959,35 @@
                         "data": "Jo_id",
                         "orderable": false,
                         render: function(data, type, row) {
-                            let html = "<a class='btn btn-sm' href='<?= base_url('index.php/detail/detail_jo/"+data+"/JO')?>'><i class='fas fa-eye'></i></a>";
+                            var role_user = "<?=$_SESSION['role']?>";
+                            let html = "";
+                            html += "<a class='btn btn-sm' href='<?= base_url('index.php/detail/detail_jo/"+data+"/JO')?>'><i class='fas fa-eye'></i></a>";
                             html += "<a class='btn btn-sm ' href='<?= base_url('index.php/print_berkas/uang_jalan/')?>"+data+"/home'><i class='fas fa-print'></i></a>";
+                            if(role_user=="Supervisor"){
+                                html += "<a class='btn btn-light btn-update-jo' data-toggle='modal' data-target='#popup-update-jo' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a>"+
+                                "<a class='btn btn-light btn-delete-jo' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
+                            }
                             return html;
                         }
                     }
                 ],   
                 drawCallback: function() {
-                    $('.btn-detail-rute-paketan').click(function() {
+                    $('.btn-delete-jo').click(function() {
                         let pk = $(this).data('pk');
-                        $("#table-data-rute-paketan tbody").html("");
-                        $.ajax({
-                            type: "GET",
-                            url: "<?php echo base_url('index.php/form/getrutepaketanbyid') ?>",
-                            dataType: "JSON",
-                            data: {
-                                id: pk
-                            },
-                            success: function(data) { //jika ambil data sukses
-                                let html = "";
-                                for(i=0;i<data.length;i++){
-                                    html += "<tr>"+
-                                    "<td>"+data[i]["customer"]+"</td>"+
-                                    "<td>"+data[i]["dari"]+"</td>"+
-                                    "<td>"+data[i]["ke"]+"</td>"+
-                                    "<td>"+data[i]["muatan"]+"</td>"+
-                                    "</tr>"
-                                }
-                                $("#table-data-rute-paketan tbody").html(html);
+                        Swal.fire({
+                            title: 'Hapus Data Job Order',
+                            text:'Yakin Anda Ingin Menghapus Data Job Order Ini?',
+                            showDenyButton: true,
+                            denyButtonText: `Batal`,
+                            confirmButtonText: 'Hapus',
+                            denyButtonColor: '#808080',
+                            confirmButtonColor: '#FF0000',
+                            icon: "warning",
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.replace("<?= base_url('index.php/form/deletejo/')?>"+pk);
                             }
-                        });
-                    });
-                    $('.btn-detail-rute-paketan-kosong').click(function() {
-                        let pk = $(this).data('pk');
-                        $("#table-data-rute-paketan tbody").html("");
-                        $.ajax({
-                            type: "GET",
-                            url: "<?php echo base_url('index.php/detail/getkosongan') ?>",
-                            dataType: "JSON",
-                            data: {
-                                id: pk
-                            },
-                            success: function(data) { //jika ambil data sukses
-                                    let html = "";
-                                    html += "<tr>"+
-                                    "<td>Rute ke-1</td>"+
-                                    "<td>"+data["kosongan_dari"]+"</td>"+
-                                    "<td>"+data["kosongan_ke"]+"</td>"+
-                                    "<td>Kosongan</td>"+
-                                    "</tr>";
-                                    html += "<tr>"+
-                                    "<td>Rute ke-2</td>"+
-                                    "<td>"+data["asal"]+"</td>"+
-                                    "<td>"+data["tujuan"]+"</td>"+
-                                    "<td>"+data["muatan"]+"</td>"+
-                                    "</tr>";
-                                $("#table-data-rute-paketan tbody").html(html);
-                            }
-                        });
-                    });
-                    $('.btn-detail-rute-paketan-reguler').click(function() {
-                        let pk = $(this).data('pk');
-                        $("#table-data-rute-paketan tbody").html("");
-                        $.ajax({
-                            type: "GET",
-                            url: "<?php echo base_url('index.php/detail/getjo') ?>",
-                            dataType: "JSON",
-                            data: {
-                                id: pk
-                            },
-                            success: function(data) { //jika ambil data sukses
-                                    let html = "";
-                                    html += "<tr>"+
-                                    "<td>Rute ke-1</td>"+
-                                    "<td>"+data["asal"]+"</td>"+
-                                    "<td>"+data["tujuan"]+"</td>"+
-                                    "<td>"+data["muatan"]+"</td>"+
-                                    "</tr>";
-                                $("#table-data-rute-paketan tbody").html(html);
-                            }
-                        });
+                        })
                     });
                 },
             });
@@ -1247,7 +1189,21 @@
                         let html = "<a class='btn btn-light btn-detail-bon' href='javascript:void(0)' data-toggle='modal' data-target='#popup-bon' data-pk='"+data+"'><i class='fas fa-eye'></i></a>";
                             return html;
                         }
-                    }
+                    },
+                    {
+                        "data": "bon_id",
+                        className: 'text-center',
+                        "orderable": false,
+                        render: function(data, type, row) {
+                            var role_user = "<?=$_SESSION['role']?>";
+                            let html = "";
+                            if(role_user=="Supervisor"){
+                                html += "<a class='btn btn-light btn-update-bon' data-toggle='modal' data-target='#popup-update-bon' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-pen-square'></i></a>"+
+                                "<a class='btn btn-light btn-delete-bon' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
+                            }
+                            return html;
+                        }
+                    },
                 ],
                 drawCallback: function() {
                     $('.btn-detail-bon').click(function() {
@@ -1281,6 +1237,55 @@
                                 $('td[name="pembayaran_upah_id"]').text(data["pembayaran_upah_id"]); //set value
                                 $('td[name="operator"]').text(data["user"]); //set value
                                 $('#link_print_bon').attr('href','<?= base_url("index.php/print_berkas/print_bon/")?>'+data["bon_id"]);
+                            }
+                        });
+                    });
+                    $('.btn-delete-bon').click(function() {
+                        let pk = $(this).data('pk');
+                        Swal.fire({
+                            title: 'Hapus Data Bon',
+                            text:'Yakin Anda Ingin Menghapus Data Bon Ini?',
+                            showDenyButton: true,
+                            denyButtonText: `Batal`,
+                            confirmButtonText: 'Hapus',
+                            denyButtonColor: '#808080',
+                            confirmButtonColor: '#FF0000',
+                            icon: "warning",
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/form/deletebon') ?>",
+                                    dataType: "text",
+                                    data: {
+                                        id: pk
+                                    },
+                                    success: function(data) {
+                                        // alert(data);
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        })
+                    });
+                    $('.btn-update-bon').click(function() {
+                        let pk = $(this).data('pk');
+                        // alert(pk);
+                        $.ajax({ //ajax ambil data bon
+                            type: "GET",
+                            url: "<?php echo base_url('index.php/detail/getbon') ?>",
+                            dataType: "JSON",
+                            data: {
+                                id: pk
+                            },
+                            success: function(data) { //jika ambil data sukses
+                                $("#bon_edit").val(data["bon_id"]);
+                                $("#Supir_edit").val(data["supir_name"]);
+                                $("#Tanggal_edit").val(change_tanggal(data["bon_tanggal"]));
+                                $("#Jenis_edit").val(data["bon_jenis"]);
+                                $("#Nominal_edit").val(rupiah(data["bon_nominal"]));
+                                $("#Jenis_edit").val(data["bon_jenis"]);
+                                $("#Keterangan_edit").val(data["bon_keterangan"]);
                             }
                         });
                     });
@@ -2205,11 +2210,37 @@
                         className: 'text-center',
                         "orderable": false,
                         render: function(data, type, row) {
-                            let html = "<a class='btn btn-light' href='<?= base_url('index.php/detail/detail_invoice/"+data+"')?>'><i class='fas fa-eye'></i></a>";
+                            var role_user = "<?=$_SESSION['role']?>";
+                            let html = "";
+                            html += "<a class='btn btn-light' href='<?= base_url('index.php/detail/detail_invoice/"+data+"')?>'><i class='fas fa-eye'></i></a>";
+                            if(role_user=="Supervisor"){
+                                html += "<a class='btn btn-light btn-update-invoice' href='<?= base_url("index.php/form/edit_invoice/")?>"+data+"'><i class='fas fa-pen-square'></i></a>"+
+                                "<a class='btn btn-light btn-delete-invoice' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
+                            }
                             return html;
                         }
                     }
-                ]
+                ],
+                drawCallback: function() {
+                    $('.btn-delete-invoice').click(function() {
+                        let pk = $(this).data('pk');
+                        Swal.fire({
+                            title: 'Hapus Data Invoice',
+                            text:'Yakin Anda Ingin Menghapus Data Invoice Ini?',
+                            showDenyButton: true,
+                            denyButtonText: `Batal`,
+                            confirmButtonText: 'Hapus',
+                            denyButtonColor: '#808080',
+                            confirmButtonColor: '#FF0000',
+                            icon: "warning",
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.replace("<?= base_url('index.php/form/deleteinvoice/')?>"+pk);
+                            }
+                        })
+                    });
+                },
+                
             });
             $("#btn-cari").click(function() {
                 table.ajax.reload();
@@ -2740,6 +2771,12 @@
             var gaji = '<?= $this->session->flashdata('status-insert-slip-gaji'); ?>';
             var update_merk = '<?= $this->session->flashdata('status-update-merk'); ?>';
             var delete_merk = '<?= $this->session->flashdata('status-delete-merk'); ?>';
+            var delete_bon = '<?= $this->session->flashdata('status-delete-bon'); ?>';
+            var update_bon = '<?= $this->session->flashdata('status-update-bon'); ?>';
+            var delete_invoice = '<?= $this->session->flashdata('status-delete-invoice'); ?>';
+            var delete_jo = '<?= $this->session->flashdata('status-delete-jo'); ?>';
+            var update_invoice = '<?= $this->session->flashdata('status-update-invoice'); ?>';
+            var edit_invoice = '<?= $this->session->flashdata('status-edit-invoice'); ?>';
             var supir_jo = '<?= $this->session->flashdata('supir_jo'); ?>';
             var mobil_jo = '<?= $this->session->flashdata('mobil_jo'); ?>';
             if(login == "Berhasil"){
@@ -2814,6 +2851,24 @@
                         timer: 2000
                     });
             }
+            if(edit_invoice == "Berhasil"){
+                Swal.fire({
+                        title: "Berhasil",
+                        icon: "success",
+                        text: "Mengubah Data Invoice",
+                        type: "success",
+                        timer: 2000
+                    });
+            }
+            if(update_bon == "Berhasil"){
+                Swal.fire({
+                        title: "Berhasil",
+                        icon: "success",
+                        text: "Mengubah Data Nota Kasbon",
+                        type: "success",
+                        timer: 2000
+                    });
+            }
             if(update_truck == "Berhasil"){
                 Swal.fire({
                         title: "Berhasil",
@@ -2841,6 +2896,15 @@
                         timer: 2000
                     });
             }
+            if(delete_bon == "Berhasil"){
+                Swal.fire({
+                        title: "Berhasil",
+                        icon: "success",
+                        text: "Menghapus Bon",
+                        type: "error",
+                        timer: 2000
+                    });
+            }
             if(supir == "Berhasil"){
                 Swal.fire({
                         title: "Berhasil",
@@ -2864,6 +2928,15 @@
                         title: "Berhasil Request Hapus",
                         icon: "success",
                         text: "Silakan Menunggu Validasi Supervisor",
+                        type: "error",
+                        timer: 2000
+                    });
+            }
+            if(delete_invoice == "Berhasil"){
+                Swal.fire({
+                        title: "Hapus Data Invoice",
+                        icon: "success",
+                        text: "Berhasil Hapus Data Invoice",
                         type: "error",
                         timer: 2000
                     });
@@ -3017,24 +3090,6 @@
                     {
                         "data": "Jo_id"
                     },
-                    // {
-                    //     "data": "paketan_id",
-                    //     className: 'text-center',
-                    //     "orderable": false,
-                    //     render: function(data, type, row) {
-                    //         if(data!=0){
-                    //             let html = "<a class='btn btn-light btn-detail-rute-paketan' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-pk='"+data+"'><i class='fas fa-eye'></i></a>";
-                    //             return html;
-                    //         }
-                    //         if(row["kosongan_id"]!=0){
-                    //             let html = "<a class='btn btn-light btn-detail-rute-paketan-kosong' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-jo='"+row["Jo_id"]+"' data-pk='"+row["kosongan_id"]+"'><i class='fas fa-eye'></i></a>";
-                    //             return html;
-                    //         }else{
-                    //             let html = "<a class='btn btn-light btn-detail-rute-paketan-reguler' href='javascript:void(0)' data-toggle='modal' data-target='#popup-detail-rute-paketan' data-pk='"+row["Jo_id"]+"'><i class='fas fa-eye'></i></a>";
-                    //             return html;
-                    //         }
-                    //     } 
-                    // },
                     {
                         "data": "tanggal_muat",
                         render: function(data, type, row) {
@@ -3099,7 +3154,11 @@
                     }
                 ],   
                 drawCallback: function() {
+                    data_jo_saat_ini = $("#data_jo").val().split(",");
                     var data_jo = [];
+                    for(i=0;i<data_jo_saat_ini.length;i++){
+                        data_jo.push(data_jo_saat_ini[i]);
+                    }
                     $(".btn-check-invoice").click(function() {
                         let pk = $(this).data('pk');
                         if(data_jo.includes(pk)!=true){
@@ -3152,82 +3211,6 @@
                             }
                         });
                     });
-                    $('.btn-detail-rute-paketan').click(function() {
-                        let pk = $(this).data('pk');
-                        $("#table-data-rute-paketan tbody").html("");
-                        $.ajax({
-                            type: "GET",
-                            url: "<?php echo base_url('index.php/form/getrutepaketanbyid') ?>",
-                            dataType: "JSON",
-                            data: {
-                                id: pk
-                            },
-                            success: function(data) { //jika ambil data sukses
-                                let html = "";
-                                for(i=0;i<data.length;i++){
-                                    html += "<tr>"+
-                                    "<td>Rute ke-"+(i+1)+"</td>"+
-                                    "<td>"+data[i]["dari"]+"</td>"+
-                                    "<td>"+data[i]["ke"]+"</td>"+
-                                    "<td>"+data[i]["muatan"]+"</td>"+
-                                    "</tr>"
-                                }
-                                $("#table-data-rute-paketan tbody").html(html);
-                            }
-                        });
-                    });
-                    $('.btn-detail-rute-paketan-kosong').click(function() {
-                        let pk = $(this).data('pk');
-                        let jo = $(this).data('jo');
-                        $("#table-data-rute-paketan tbody").html("");
-                        $.ajax({
-                            type: "GET",
-                            url: "<?php echo base_url('index.php/detail/getkosongan') ?>",
-                            dataType: "JSON",
-                            data: {
-                                id: pk,
-                                jo:jo
-                            },
-                            success: function(data) { //jika ambil data sukses
-                                    let html = "";
-                                    html += "<tr>"+
-                                    "<td>Rute ke-1</td>"+
-                                    "<td>"+data["kosongan_dari"]+"</td>"+
-                                    "<td>"+data["kosongan_ke"]+"</td>"+
-                                    "<td>Kosongan</td>"+
-                                    "</tr>";
-                                    html += "<tr>"+
-                                    "<td>Rute ke-2</td>"+
-                                    "<td>"+data["asal"]+"</td>"+
-                                    "<td>"+data["tujuan"]+"</td>"+
-                                    "<td>"+data["muatan"]+"</td>"+
-                                    "</tr>";
-                                $("#table-data-rute-paketan tbody").html(html);
-                            }
-                        });
-                    });
-                    $('.btn-detail-rute-paketan-reguler').click(function() {
-                        let pk = $(this).data('pk');
-                        $("#table-data-rute-paketan tbody").html("");
-                        $.ajax({
-                            type: "GET",
-                            url: "<?php echo base_url('index.php/detail/getjo') ?>",
-                            dataType: "JSON",
-                            data: {
-                                id: pk
-                            },
-                            success: function(data) { //jika ambil data sukses
-                                    let html = "";
-                                    html += "<tr>"+
-                                    "<td>Rute ke-1</td>"+
-                                    "<td>"+data["asal"]+"</td>"+
-                                    "<td>"+data["tujuan"]+"</td>"+
-                                    "<td>"+data["muatan"]+"</td>"+
-                                    "</tr>";
-                                $("#table-data-rute-paketan tbody").html(html);
-                            }
-                        });
-                    });
                 }
             });
             $("#customer_id").change(function() {
@@ -3235,6 +3218,7 @@
             });
             $("#invoice_ppn").change(function() {
                 var total = $("#invoice_total").val().replaceAll(".","");
+                total = total.replaceAll(",00","");
                 if(total!=""){
                     if($("#invoice_ppn").val()=="Ya"){
                         var ppn=total*0.1;

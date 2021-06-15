@@ -108,6 +108,25 @@ class Form extends CI_Controller {
             header('Content-Type: application/json');
             echo json_encode($callback);
         }
+        public function edit_invoice($invoice_id)
+        {
+            if(!$_SESSION["user"]){
+    			$this->session->set_flashdata('status-login', 'False');
+                redirect(base_url());
+            }
+            $data["invoice"] = $this->model_detail->getinvoicebyid($invoice_id);
+            $data["customer"] =  $this->model_home->getcustomerbyid($data["invoice"][0]["customer_id"]);
+            $data["page"] = "Invoice_Customer_page";
+            $data["collapse_group"] = "Invoice";
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            if(json_decode($data["akun_akses"]["akses"])[3]==0){
+                redirect(base_url());
+            }
+            $this->load->view('header',$data);
+            $this->load->view('sidebar');
+            $this->load->view('form/edit_invoice');
+            $this->load->view('footer');
+        }
     // end fungsi view form
 
     // fungsi insert
@@ -603,6 +622,36 @@ class Form extends CI_Controller {
             $this->model_form->update_konfigurasi($akun_id,$konfigurasi);
             redirect(base_url("index.php/home/akun"));
         }
+        public function update_bon(){
+            $bon_id=$this->input->post("bon_edit");
+            $data=array(
+                "bon_jenis"=>$this->input->post("Jenis_edit"),
+                "bon_nominal"=>str_replace(".","",$this->input->post("Nominal_edit")),
+                "bon_keterangan"=>$this->input->post("Keterangan_edit"),
+                "bon_tanggal"=>$this->change_tanggal($this->input->post("Tanggal_edit"))
+            );
+            $this->model_form->update_bon($data,$bon_id);
+            $this->session->set_flashdata('status-update-bon', 'Berhasil');
+            redirect(base_url("index.php/home/bon"));
+        }
+        public function update_invoice(){
+            $data=array(
+                "customer_id"=>$this->input->post("customer_id"),
+                "invoice_kode"=>$this->input->post("invoice_id"),
+                "tanggal_invoice"=>$this->change_tanggal($this->input->post("invoice_tgl_edit")),
+                "total_tonase"=>str_replace(".","",$this->input->post("invoice_tonase")),
+                "total"=>str_replace(".","",$this->input->post("invoice_total")),
+                "ppn"=>str_replace(".","",$this->input->post("invoice_ppn_nilai")),
+                "grand_total"=>str_replace(".","",$this->input->post("invoice_grand_total")),
+                "batas_pembayaran"=>$this->input->post("invoice_payment"),
+                "tanggal_batas_pembayaran"=>date('Y-m-d', strtotime('+'.$this->input->post("invoice_payment").' days', strtotime($this->change_tanggal($this->input->post("invoice_tgl_edit"))))),
+                "invoice_keterangan"=>$this->input->post("invoice_keterangan"),
+            );
+            $this->session->set_flashdata('status-edit-invoice', 'Berhasil');
+            $data_jo = explode(",",$this->input->post("data_jo"));
+            echo $this->model_form->update_invoice($data,$data_jo);
+            redirect(base_url("index.php/home/invoice_customer"));
+        }
     //end fungsi update
 
     //fungsi delete
@@ -624,6 +673,12 @@ class Form extends CI_Controller {
             $this->session->set_flashdata('status-delete-customer', 'Berhasil');
             echo $customer_id;
         }
+        public function deletebon(){
+            $bon_id = $this->input->get("id");
+            $this->model_form->deletebon($bon_id);
+            $this->session->set_flashdata('status-delete-bon', 'Berhasil');
+            echo $bon_id;
+        }
         public function deleterute(){
             $rute_id = $this->input->get("id");
             $this->model_form->deleterute($rute_id);
@@ -641,6 +696,45 @@ class Form extends CI_Controller {
             $this->model_form->deletetruck($mobil_no);
             $this->session->set_flashdata('status-delete-kendaraan', 'Berhasil');
             echo $mobil_no;
+        }
+        public function deletejo($jo_id){
+            $data_jo = $this->model_home->getjobyid($jo_id);
+            $data["data_jo"]=$data_jo;
+            $bon_id = $this->model_form->getbonid();
+            $isi_bon_id = [];
+            for($i=0;$i<count($bon_id);$i++){
+                $explode_bon = explode("-",$bon_id[$i]["bon_id"]);
+                if(count($explode_bon)>1){
+                    if($explode_bon[2]==date("m") && $explode_bon[3]==date('Y')){
+                        $isi_bon_id[] = $explode_bon[0];
+                    }
+                }
+            }
+            if(count($isi_bon_id)==0){
+                $isi_bon_id[]=0;
+            }
+            date_default_timezone_set('Asia/Jakarta');
+            $data["data"]=array(
+                "bon_id"=>(max($isi_bon_id)+1)."-BON-".date("m")."-".date("Y"),
+                "supir_id"=>$data_jo["supir_id"],
+                "bon_jenis"=>"Pembatalan JO",
+                "bon_nominal"=>$data_jo["uang_jalan_bayar"],
+                "bon_keterangan"=>"Pembatalan JO",
+                "bon_tanggal"=>date("Y-m-d"),
+                "user"=>$_SESSION["user"]."(".date("d-m-Y H:i:s").")",
+                "pembayaran_upah_id"=>"-"
+            );
+            $data["bon_id"] = (max($isi_bon_id)+1)."-BON-".date("m")."-".date("Y");
+            $this->model_form->insert_bon($data["data"]);
+            $data["supir"] = $this->model_home->getsupirbyid($data["data"]["supir_id"]);
+            $data["asal"] = "Hapus JO";
+            $this->load->view("print/bon_print",$data);
+            $this->model_form->deletejo($jo_id);
+        }
+        public function deleteinvoice($invoice_id){
+            $this->model_form->deleteinvoice($invoice_id);
+            $this->session->set_flashdata('status-delete-invoice', 'Berhasil');
+            redirect(base_url('index.php/home/invoice_customer'));
         }
     //end fungsi delete
 

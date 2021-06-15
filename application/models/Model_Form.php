@@ -76,9 +76,9 @@ class Model_Form extends CI_model
         }
         public function insert_bon($data){
             $supir=$this->db->get_where("skb_supir",array("supir_id"=>$data["supir_id"]))->row_array();
-            if($data["bon_jenis"]=="Pengajuan"){
+            if($data["bon_jenis"]=="Pengajuan" || $data["bon_jenis"]=="Pembatalan JO"){
                 $bon_now = $supir["supir_kasbon"]+$data["bon_nominal"];
-            }else if($data["bon_jenis"]=="Pembayaran"){
+            }else if($data["bon_jenis"]=="Pembayaran" || $data["bon_jenis"]=="Potong Gaji"){
                 $bon_now = $supir["supir_kasbon"]-$data["bon_nominal"];
             }else{
                 $bon_now = $supir["supir_kasbon"]+$data["bon_nominal"];
@@ -453,6 +453,54 @@ class Model_Form extends CI_model
             $this->db->where("akun_id",$akun_id);
             $this->db->update("skb_akun");
         }
+        public function update_bon($data,$bon_id){
+            $data_bon = $this->db->get_where("skb_bon",array("bon_id"=>$bon_id))->row_array();
+            $supir=$this->db->get_where("skb_supir",array("supir_id"=>$data_bon["supir_id"]))->row_array();
+            $selisih_bon = $data_bon["bon_nominal"]-$data["bon_nominal"];
+
+            if($data["bon_jenis"]=="Pengajuan" || $data["bon_jenis"]=="Pembatalan JO"){
+                $bon_now = $supir["supir_kasbon"]-$selisih_bon;
+            }else if($data["bon_jenis"]=="Pembayaran" || $data["bon_jenis"]=="Potong Gaji"){
+                $bon_now = $supir["supir_kasbon"]+$selisih_bon;
+            }
+            if($bon_now<0){
+                $bon_now=0;
+            }
+            $this->db->set("supir_kasbon",$bon_now);
+            $this->db->where("supir_id",$data_bon["supir_id"]);
+            $this->db->update("skb_supir");
+
+            $this->db->where("bon_id",$bon_id);
+            return $this->db->update("skb_bon",$data);
+        }
+        public function update_invoice($data,$data_jo){
+            $this->db->join("skb_invoice","skb_invoice.invoice_kode=skb_job_order.invoice_id","left");
+            $data_invoice = $this->db->get_where("skb_job_order",array("invoice_id"=>$data["invoice_kode"]))->result_array();
+            $jo_id = [];
+            for($i=0;$i<count($data_invoice);$i++){
+                $jo_id[] = $data_invoice[$i]["Jo_id"];
+            }
+
+            for($i=0;$i<count($data_jo);$i++){
+                if(!in_array($data_jo[$i],$jo_id)){
+                    $this->db->set("invoice_id",$data["invoice_kode"]);
+                    $this->db->where("Jo_id",$data_jo[$i]);
+                    $this->db->update("skb_job_order");
+                }
+            }
+
+            for($i=0;$i<count($jo_id);$i++){
+                if(!in_array($jo_id[$i],$data_jo)){
+                    $this->db->set("invoice_id","");
+                    $this->db->where("Jo_id",$jo_id[$i]);
+                    $this->db->update("skb_job_order");
+                }
+            }
+
+            $this->db->where("invoice_kode",$data["invoice_kode"]);
+            $this->db->update("skb_invoice",$data);
+            return var_dump($data_jo);
+        }
     //end fungsi update
     //fungsi delete
         public function deletesupir($supir_id){
@@ -475,6 +523,21 @@ class Model_Form extends CI_model
             $this->db->where("customer_id",$customer_id);
             return $this->db->update("skb_customer");
         }
+        public function deletebon($bon_id){
+            $data_bon = $this->db->get_where("skb_bon",array("bon_id"=>$bon_id))->row_array();
+            $data_supir = $this->db->get_where("skb_supir",array("supir_id"=>$data_bon["supir_id"]))->row_array();
+            if($data_bon["bon_jenis"]=="Pengajuan" || $data_bon["bon_jenis"]=="Pembatalan JO"){
+                $this->db->set("supir_kasbon",$data_supir["supir_kasbon"]-$data_bon["bon_nominal"]);
+            }else if($data_bon["bon_jenis"]=="Potong Gaji" || $data_bon["bon_jenis"]=="Pembayaran"){
+                $this->db->set("supir_kasbon",$data_supir["supir_kasbon"]+$data_bon["bon_nominal"]);
+            }
+            $this->db->where("supir_id",$data_bon["supir_id"]);
+            $this->db->update("skb_supir");
+
+            $this->db->set("status_hapus","YES");
+            $this->db->where("bon_id",$bon_id);
+            return $this->db->update("skb_bon");
+        }
         public function deleterute($rute_id){
             $this->db->set("validasi_rute_delete","Pending");
             $this->db->where("rute_id",$rute_id);
@@ -483,6 +546,34 @@ class Model_Form extends CI_model
         public function deleteakun($akun_id){
             $this->db->where("akun_id",$akun_id);
             return $this->db->delete("skb_akun");
+        }
+        public function deletejo($jo_id){
+            $data_jo = $this->db->get_where("skb_job_order",array("Jo_id"=>$jo_id))->row_array();
+            $this->db->where("Jo_id",$data_jo["Jo_id"]);
+            $this->db->delete("skb_job_order");
+    
+            //reset supir
+            $this->db->set("status_jalan","Tidak Jalan");
+            $this->db->where("supir_id",$data_jo["supir_id"]);
+            $this->db->update("skb_supir");
+    
+            //reset truck
+            $this->db->set("status_jalan","Tidak Jalan");
+            $this->db->where("mobil_no",$data_jo["mobil_no"]);
+            $this->db->update("skb_mobil");
+        }
+        public function deleteinvoice($invoice_id){
+            $data_jo = $this->db->get_where("skb_job_order",array("invoice_id"=>$invoice_id))->result_array();
+            for($i=0;$i<count($data_jo);$i++){
+                $this->db->set("invoice_id","");
+                $this->db->where("Jo_id",$data_jo[$i]["Jo_id"]);
+                $this->db->update("skb_job_order");
+            }
+    
+            $this->db->where("invoice_kode",$invoice_id);
+            $this->db->delete("skb_invoice");
+    
+            return $invoice_id;
         }
     //end fungsi delete
     // fungsi untuk form joborder

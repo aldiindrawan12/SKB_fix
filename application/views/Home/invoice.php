@@ -107,36 +107,6 @@
     </div>
 </div>
 <!-- end table invoice -->
-<!-- pop up add detail rute paketan -->
-<div class="modal fade" id="popup-detail-rute-paketan" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
-    <div class="modal-dialog modal-md"  role="document"  >
-        <div class="modal-content">
-            <div class="modal-header bg-primary-dark">
-                <h5 class="font-weight-bold">Detail Rute</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="font-size-sm m-3 text-justify">
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="table-data-rute-paketan" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th class="text-center" scope="col">No Rute</th>
-                                <th class="text-center" scope="col">Dari</th>
-                                <th class="text-center" scope="col">Ke</th>
-                                <th class="text-center" scope="col">Muatan</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- end pop up add detail rute paketan -->
 
 <script>
     function customer(){

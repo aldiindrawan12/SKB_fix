@@ -43,7 +43,7 @@
                     id: id
                 },
                 success: function(data) {
-                    saldo="";
+                    saldo=0;
                     if(data.length==0){
                         alert("Tidak Ada Data Kasbon");
                         $("#nama").text("");
@@ -54,9 +54,9 @@
                         $("#time").text(change_tanggal(data[0]["bon_tanggal"]));
                         for(i=0;i<data.length;i++){
                             if(data[i]["bon_jenis"]=="Pembayaran" || data[i]["bon_jenis"]=="Potong Gaji"){
-                                saldo-=data[i]["bon_nominal"];
+                                saldo-=parseInt(data[i]["bon_nominal"]);
                             }else{
-                                saldo+=data[i]["bon_nominal"];
+                                saldo+=parseInt(data[i]["bon_nominal"]);
                             }
                         }
                         $("#saldo").text("Rp."+rupiah(saldo));

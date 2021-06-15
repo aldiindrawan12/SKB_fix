@@ -2504,6 +2504,7 @@
                                 $("#jenis_mobil_update").val(data["jenis_mobil"]);
                                 $("#rute_uj_engkel_update").val(rupiah(data["rute_uj_engkel"]));
                                 // $("#rute_uj_tronton_update").val(rupiah(data["rute_uj_tronton"]));
+                                $("#Ritase_update").val(data["ritase"]);
                                 $("#rute_tagihan_update").val(rupiah(data["rute_tagihan"]));
                                 $("#rute_gaji_engkel_update").val(rupiah(data["rute_gaji_engkel"]));
                                 // $("#rute_gaji_tronton_update").val(rupiah(data["rute_gaji_tronton"]));

@@ -237,9 +237,9 @@ class Model_Form extends CI_model
             if($validasi=="Ditolak"){
                 $this->db->set("status_hapus","NO");
             }else{
+                $this->db->set("mobil_no",$new_mobil_no);
                 $this->db->set("status_hapus","YES");
             }
-            $this->db->set("mobil_no",$new_mobil_no);
             $this->db->set("validasi_delete","ACC");
             $this->db->where("mobil_no",$mobil_no);
             $this->db->update("skb_mobil");

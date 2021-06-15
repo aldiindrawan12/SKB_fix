@@ -97,48 +97,28 @@
                             </div>
                             <small class="font-weight-bold">Detail Keuangan</small>
                             <hr>
-                            <!-- <div class="form-group">
+                            <div class="form-group">
                                 <label class="form-label font-weight-bold" for="Ritase">Ritase/Tonase</label>
                                 <select name="Ritase" id="Ritase" class="form-control" required>
                                     <option class="font-w700" disabled="disabled" selected value="">Ritase/Tonase</option>
                                     <option class="font-w700" value="Ritase">Ritase</option>
                                     <option class="font-w700" value="Tonase">Tonase</option>
                                 </select>
-                            </div> -->
+                            </div>
                             <div class="form-group">
-                                <label for="rute_tagihan" class="form-label font-weight-bold">Inv./Tagihan</label>
+                                <label for="rute_tagihan" class="form-label font-weight-bold">Harga / Satuan</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_tagihan" name="rute_tagihan" required onkeyup="uang(this)">
                             </div>
                         </div>
                         <div class="col border rounded mr-3 ml-3 mb-3 mt-3">
                             <small class="font-weight-bold">Detail Gaji</small>
                             <hr>
-                            <!-- <div class="form-group">
-                                <label class="form-label font-weight-bold" for="Gaji">Gaji</label>
-                                <select name="Gaji" id="Gaji" class="form-control" required onchange="gaji()">
-                                    <option class="font-w700" disabled="disabled" selected value="">Tipe Gaji</option>
-                                    <option class="font-w700" value="Fix">Fix</option>
-                                    <option class="font-w700" value="Non-Fix">Non-Fix</option>
-                                </select>
-                            </div>
-                            <div class="Tonase" style="display:none">
-                                <div class="form-group">
-                                    <label for="Tonase" class="form-label font-weight-bold">Tonase</label>  
-                                    <input autocomplete="off" type="text" class="form-control" id="Tonase" name="Tonase">
-                                </div>
-                            </div> -->
                             <div class="Fix">
                                 <div class="form-group">
                                     <label for="rute_gaji_engkel" class="form-label font-weight-bold">Gaji</label>
                                     <input autocomplete="off" type="text" class="form-control" id="rute_gaji_engkel" name="rute_gaji_engkel" onkeyup="uang(this)">
                                 </div>
                             </div>
-                            <!-- <div class="Non-Fix" style="display:none">
-                                <div class="form-group">
-                                    <label for="rute_gaji_engkel_rumusan" class="form-label font-weight-bold">Gaji Rumusan(Non-FIX)</label>
-                                    <input autocomplete="off" type="text" class="form-control" id="rute_gaji_engkel_rumusan" name="rute_gaji_engkel_rumusan" onkeyup="uang(this)">
-                                </div>
-                            </div> -->
                             <div class="form-group">
                                 <label for="rute_keterangan" class="form-label font-weight-bold">Keterangan</label>
                                 <textarea name="rute_keterangan" id="rute_keterangan" rows="5" class="form-control"></textarea>
@@ -209,12 +189,12 @@
                             </div>
                             <small class="font-weight-bold">Detail Keuangan</small>
                             <hr>
-                            <!-- <div class="form-group">
+                            <div class="form-group">
                                 <label class="form-label font-weight-bold" for="Ritase_update">Ritase/Tonase</label>
                                 <input autocomplete="off" type="text" class="form-control" name="Ritase_update" id="Ritase_update" required readonly>
-                            </div> -->
+                            </div>
                             <div class="form-group">
-                                <label for="rute_tagihan_update" class="form-label font-weight-bold">Inv./Tagihan</label>
+                                <label for="rute_tagihan_update" class="form-label font-weight-bold">Harga / Satuan</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_tagihan_update" name="rute_tagihan_update" required onkeyup="uang(this)">
                             </div>
                         </div>
@@ -295,12 +275,12 @@
                             </div>
                             <small class="font-weight-bold">Detail Keuangan</small>
                             <hr>
-                            <!-- <div class="form-group">
+                            <div class="form-group">
                                 <label class="form-label font-weight-bold" for="Ritase_detail">Ritase/Tonase</label>
                                 <input autocomplete="off" type="text" class="form-control" id="Ritase_detail" name="Ritase_detail" readonly>
-                            </div> -->
+                            </div>
                             <div class="form-group">
-                                <label for="rute_tagihan_detail" class="form-label font-weight-bold">Inv./Tagihan</label>
+                                <label for="rute_tagihan_detail" class="form-label font-weight-bold">Harga / Satuan</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_tagihan_detail" name="rute_tagihan_detail" readonly>
                             </div>
                         </div>
@@ -374,7 +354,11 @@
                             <small class="font-weight-bold">Detail Keuangan</small>
                             <hr>
                             <div class="form-group">
-                                <label for="rute_tagihan_edit" class="form-label font-weight-bold">Inv./Tagihan</label>
+                                <label class="form-label font-weight-bold" for="ritase_edit">Ritase/Tonase</label>
+                                <input autocomplete="off" type="text" class="form-control" id="ritase_edit" name="ritase_edit" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="rute_tagihan_edit" class="form-label font-weight-bold">Harga / Satuan</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_tagihan_edit" name="rute_tagihan_edit" readonly>
                             </div>
                         </div>

@@ -46,9 +46,9 @@
                                 <td colspan=3>
                                     <div class="row ">
                                         <p class="col"><?= $supir["supir_name"] ?></p>
-                                        <a class='btn btn-primary btn-sm col-md-4' data-toggle="modal" data-target="#supir_update">
+                                        <!-- <a class='btn btn-primary btn-sm col-md-4' data-toggle="modal" data-target="#supir_update">
                                             <span>Ganti Supir</span>
-                                        </a>
+                                        </a> -->
                                     </div>                                    
                                 </td>
                             <?php }else{?>
@@ -61,9 +61,9 @@
                                 <td colspan=3>
                                     <div class="row ">
                                         <p class="col"><?= $mobil["mobil_no"]." == ".$mobil["mobil_jenis"] ?></p>
-                                        <a class='btn btn-primary btn-sm col-md-4' data-toggle="modal" data-target="#mobil_update">
+                                        <!-- <a class='btn btn-primary btn-sm col-md-4' data-toggle="modal" data-target="#mobil_update">
                                             <span>Ganti mobil</span>
-                                        </a>
+                                        </a> -->
                                     </div>                                    
                                 </td>
                             <?php }else{?>

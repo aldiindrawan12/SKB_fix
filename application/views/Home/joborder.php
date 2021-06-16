@@ -105,39 +105,193 @@
     </div>
 </div>
 <!-- pop up add detail rute paketan -->
-<div class="modal fade" id="popup-detail-rute-paketan" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
-    <div class="modal-dialog modal-md"  role="document"  >
+<div class="modal fade" id="popup-update-jo" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+    <div class="modal-dialog modal-xl"  role="document"  >
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
-                <h5 class="font-weight-bold">Detail Rute</h5>
+                <h5 class="font-weight-bold">Update Data Job Order</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="font-size-sm m-3 text-justify">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="table-data-rute-paketan" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-center" scope="col">Ketrangan</th>
-                                            <th class="text-center" scope="col">Dari</th>
-                                            <th class="text-center" scope="col">Ke</th>
-                                            <th class="text-center" scope="col">Muatan</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
+                <form action="<?=base_url("index.php/form/update_JO")?>" method="POST">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-4">
+                                <label for="Jo_id_update" class="form-label font-weight-bold">ID Job Order(JO)</label>
+                                <input autocomplete="off" type="text" class="form-control" id="Jo_id_update" name="Jo_id_update" required value="<?= "Asd"?>" readonly>
                             </div>
+                            <div class="mb-4">
+                                <label for="tanggal_jo_update" class="form-label font-weight-bold">Tanggal</label>
+                                <input autocomplete="off" type="text" class="form-control" id="tanggal_jo_update" name="tanggal_jo_update" required onclick="tanggal_berlaku(this)">
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label font-weight-bold " for="Customer_update">Customer</label>
+                                <input type="text" name="Customer_update" id="Customer_update" class="form-control" required readonly>
+                            </div>
+                            <div class="mb-4">
+                                <label for="Muatan" class="form-label font-weight-bold ">Muatan</label> 
+                                <input type="text" name="Muatan" id="Muatan" class="form-control" required readonly>
+                            </div>
+                            <div class="mb-4 mb-4">
+                                <label class="form-label font-weight-bold" for="Asal ">Asal</label>
+                                <input type="text" name="Asal" id="Asal" class="form-control" required readonly>
+                            </div>
+                            <div class="mb-4 mb-4">
+                                <label class="form-label font-weight-bold" for="Tujuan">Tujuan</label>
+                                <input type="text" name="Tujuan" id="Tujuan" class="form-control" required readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-4">
+                                <label class="form-label font-weight-bold" for="Supir_update">Supir <small>(Supir Saat Ini : <span id="Supir_now"></span>)</small></label>
+                                <select name="Supir_update" id="Supir_update" class="form-control selectpicker" data-live-search="true">
+                                    <option class="font-w700 font-weight-bold" disabled="disabled" selected value="">Supir Pengiriman</option>
+                                    <?php foreach($supir as $value){
+                                        if($value["status_jalan"]!="Jalan"){?>
+                                            <option value="<?=$value["supir_id"]?>"><?=$value["supir_name"]?></option>
+                                    <?php }
+                                    } ?>
+                                </select>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label font-weight-bold " for="Kendaraan_update">Kendaraan <small>(Kendaraan Saat Ini : <span id="Kendaraan_now"></span>)</small></label>
+                                <select name="Kendaraan_update" id="Kendaraan_update" class="form-control  selectpicker" data-live-search="true" onchange="set_jenis_mobil(this)">
+                                    <option class="font-w700 font-weight-bold" disabled="disabled" selected value="">Kendaraan Pengiriman</option>
+                                    <?php foreach($mobil as $value){
+                                        if($value["status_jalan"]!="Jalan"){?>
+                                            <option value="<?=$value["mobil_no"]?>"><?=$value["mobil_no"]?></option>
+                                    <?php }
+                                    } ?>
+                                </select>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label font-weight-bold" for="Jenis_update">Jenis Mobil</label>
+                                <input autocomplete="off" type="text" class="form-control" name="Jenis_update" id="Jenis_update" required readonly>
+                            </div>
+                            <div class="mb-4">
+                                <label for="Uang_update" class="form-label font-weight-bold">Uang Jalan</label>
+                                <input autocomplete="off" type="text" class="form-control" id="Uang_update" name="Uang_update" value=0 required readonly>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label font-weight-bold" for="jenis_tambahan_update">Tambahan/Potongan UJ</label>
+                                <select name="jenis_tambahan_update" id="jenis_tambahan_update" class="form-control" onchange="tambahan(this)">
+                                    <option class="font-w700" disabled="disabled" selected value="">Tambahan/Potongan UJ</option>
+                                    <option class="font-w700" value="Tidak Ada">Tidak Ada</option>
+                                    <option class="font-w700" value="Tambahan">Tambahan</option>
+                                    <option class="font-w700" value="Potongan">Potongan</option>
+                                </select>
+                            </div>
+                            <div class="mb-4">
+                                <div id="nominal_tambahan_id">
+                                    <label for="nominal_tambahan_update" class="form-label font-weight-bold">Nominal Tambahan/Potongan UJ</label>
+                                    <input autocomplete="off" type="text" class="form-control" id="nominal_tambahan_update" name="nominal_tambahan_update" onkeyup="set_uj_tambahan(this),uang_format(this)">
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label for="uang_jalan_total_update" class="form-label font-weight-bold">Total Uang Jalan</label>
+                                <input autocomplete="off" type="text" class="form-control" id="uang_jalan_total_update" name="uang_jalan_total_update" value=0 readonly>
+                            </div>
+                            <input autocomplete="off" type="text" class="form-control" id="Upah_update" name="Upah_update" readonly hidden>
+                            <input autocomplete="off" type="text" class="form-control" id="Tagihan_update" name="Tagihan_update" readonly hidden>
+                        </div>
+                        <div class="col-md-4">
+                           <div class="form-group">
+                               <label for="status_update" class="form-label">Status Saat Ini</label>
+                                <select name="status_update" id="status_update" class="form-control custom-select " required>
+                                    <option class="font-w700" disabled="disabled" selected value="">Status JO</option>
+                                    <option value="Sampai Tujuan">Sampai Tujuan</option>
+                                    <option value="Dibatalkan">Dibatalkan</option>
+                                    <option value="Dalam Perjalanan">Dalam Perjalanan</option>
+                                </select>
+                            </div>
+                                <div class="form-group">
+                                    <label for="tgl_muat_update" class="form-label">Tanggal Muat</label>
+                                    <input autocomplete="off" class="form-control" type="text" name="tgl_muat_update" id="tgl_muat_update" onclick="tanggal_berlaku(this)">    
+                                </div>
+                                <div class="form-group">
+                                    <label for="tgl_bongkar_update" class="form-label">Tanggal Bongkar</label>
+                                    <input autocomplete="off" class="form-control" type="text" name="tgl_bongkar_update" id="tgl_bongkar_update" onclick="tanggal_berlaku(this)">    
+                                </div>
+                                <div class="form-group">
+                                    <label for="tonase_update" class="form-label">Muatan akhir (Tonase)</label>
+                                    <input autocomplete="off" class="form-control" type="text" name="tonase_update" id="tonase_update" onkeyup="uang()">    
+                                </div>
+                                <div class="form-group">
+                                    <label for="biaya_lain_update" class="form-label">Biaya Lain</label>
+                                    <input autocomplete="off" class="form-control" type="text" name="biaya_lain_update" id="biaya_lain_update" onkeyup="uang()">    
+                                </div>
+                            <div class="mb-4">
+                                <label for="Keterangan_update" class="form-label font-weight-bold">Keterangan/Catatan</label>
+                                <textarea class="form-control" name="Keterangan_update" id="Keterangan_update" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="">
+                        <button type="submit" class="btn btn-success ml-3 mt-5 float-md-right">Simpan dan Cetak</button>
+                        <button type="reset" class="btn btn-outline-danger mb-3 mt-5  float-md-right" onclick="reset_form()">Reset</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
 <!-- end pop up add detail rute paketan -->
-</div>
 
 <script>
     function reset_form(){
         location.reload();
     }
+    function set_jenis_mobil(a){
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('index.php/form/getmobilbyno') ?>",
+            dataType: "JSON",
+            data: {
+                mobil_no: $("#"+a.id).val(),
+            },
+            success: function(data) {
+                $("#Jenis_update").val(data["mobil_jenis"]);
+            }
+        });
+    }
+    function uang_format(a){
+        $( '#'+a.id ).mask('000.000.000', {reverse: true});
+    }
+    function set_uj_tambahan(){
+        var uj = $("#Uang_update").val().replaceAll(".","");
+        var uj_tambahan = $("#nominal_tambahan_update").val().replaceAll(".","");
+        if(uj_tambahan==""){
+            uj_tambahan = 0;
+        }
+        if($("#jenis_tambahan_update").val()=="Potongan"){
+            if(parseInt(uj)<parseInt(uj_tambahan)){
+                alert("Potongan Tidak boleh Lebih Dari Rp."+rupiah(uj));
+                $("#nominal_tambahan_update").val("");
+                $( '#uang_jalan_total_update' ).val(rupiah(uj));
+            }else{
+                $( '#uang_jalan_total_update' ).val(rupiah(parseInt(uj)-parseInt(uj_tambahan)));
+            }
+        }else if($("#jenis_tambahan_update").val()=="Tambahan"){
+            $( '#uang_jalan_total_update' ).val(rupiah(parseInt(uj)+parseInt(uj_tambahan)));
+        }else{
+            $("#nominal_tambahan_update").val(0);
+            $( '#uang_jalan_total_update' ).val(rupiah(parseInt(uj)));
+        }
+    }
+    function tambahan(a){
+        var uj = $("#Uang_update").val().replaceAll(".","");
+        var uj_tambahan = $("#nominal_tambahan_update").val().replaceAll(".","");
+        if(uj_tambahan==""){
+            uj_tambahan = 0;
+        }
+
+        if($("#"+a.id).val()=="Potongan"){
+            $( '#uang_jalan_total_update' ).val(rupiah(parseInt(uj)-parseInt(uj_tambahan)));
+        }else{
+            $( '#uang_jalan_total_update' ).val(rupiah(parseInt(uj)+parseInt(uj_tambahan)));
+        }
+    }
 </script>
+

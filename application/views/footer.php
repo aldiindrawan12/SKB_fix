@@ -989,6 +989,43 @@
                             }
                         })
                     });
+                    $('.btn-update-jo').click(function() {
+                        let pk = $(this).data('pk');
+                        $.ajax({ //ajax ambil data bon
+                            type: "GET",
+                            url: "<?php echo base_url('index.php/detail/getjokonfirmasi') ?>",
+                            dataType: "JSON",
+                            data: {
+                                id: pk
+                            },
+                            success: function(data) { //jika ambil data sukses
+                                    $("#Jo_id_update").val(data["Jo_id"]);
+                                    $("#Kendaraan_now").text(data["mobil_no"]);
+                                    $("#Jenis_update").val(data["mobil_jenis"]);
+                                    $("#Supir_now").text(data["supir_name"]);
+                                    $("#tanggal_jo_update").val(change_tanggal(data["tanggal_surat"]));
+                                    $("#Keterangan_update").text(data["keterangan"].replaceAll("<br>",""));
+                                    $("#jenis_tambahan_update").val(data["jenis_tambahan"]);
+                                    $("#nominal_tambahan_update").val(data["nominal_tambahan"]);
+                                    $("#uang_jalan_total_update").val(rupiah(data["uang_total"]));
+                                    $("#status_update").val(data["status"]);
+                                    if(data["status"]!="Dalam Perjalanan"){
+                                        $(".konfirmasi").show();
+                                    }else{
+                                        $(".konfirmasi").hide();
+                                    }
+                                    $("#tgl_muat_update").val(change_tanggal(data["tanggal_muat"]));
+                                    $("#tgl_bongkar_update").val(change_tanggal(data["tanggal_bongkar"]));
+                                    $("#tonase_update").val(data["tonase"]);
+                                    $("#Muatan").val(data["muatan"]);
+                                    $("#Asal").val(data["asal"]);
+                                    $("#Tujuan").val(data["tujuan"]);
+                                    $("#Uang_update").val(rupiah(data["uang_jalan"]));
+                                    $("#Customer_update").val(data["customer_name"]);
+                                    $("#biaya_lain_update").val(rupiah(data["biaya_lain"]));
+                            }
+                        });
+                    });
                 },
             });
             // $("#Status").change(function() {
@@ -1097,6 +1134,10 @@
                                 $('td[name="asal"]').text(data["asal"]); //set value
                                 $('td[name="tujuan"]').text(data["tujuan"]); //set value
                                 $('td[name="uang"]').text("Rp."+rupiah(data["uang_total"])); //set value
+                                $("#tgl_muat").val(change_tanggal(data["tanggal_muat"]));
+                                $("#tgl_bongkar").val(change_tanggal(data["tanggal_bongkar"]));
+                                $("#tonase").val(data["tonase"]);
+                                $("#biaya_lain").val(rupiah(data["biaya_lain"]));
                                 $("#form_update_jo").attr('action','<?php echo base_url("index.php/form/update_jo_status/")?>'+data['supir_id']+'/'+data['mobil_no'])
                             }
                         });
@@ -2775,6 +2816,7 @@
             var update_bon = '<?= $this->session->flashdata('status-update-bon'); ?>';
             var delete_invoice = '<?= $this->session->flashdata('status-delete-invoice'); ?>';
             var delete_jo = '<?= $this->session->flashdata('status-delete-jo'); ?>';
+            var edit_jo = '<?= $this->session->flashdata('status-edit-jo'); ?>';
             var update_invoice = '<?= $this->session->flashdata('status-update-invoice'); ?>';
             var edit_invoice = '<?= $this->session->flashdata('status-edit-invoice'); ?>';
             var supir_jo = '<?= $this->session->flashdata('supir_jo'); ?>';
@@ -2856,6 +2898,15 @@
                         title: "Berhasil",
                         icon: "success",
                         text: "Mengubah Data Invoice",
+                        type: "success",
+                        timer: 2000
+                    });
+            }
+            if(edit_jo == "Berhasil"){
+                Swal.fire({
+                        title: "Berhasil",
+                        icon: "success",
+                        text: "Mengubah Data Job Order",
                         type: "success",
                         timer: 2000
                     });
@@ -3263,7 +3314,7 @@
 
     <script>
         function change_tanggal(data){
-            if(data==""){
+            if(data=="" || data==null){
                 return "";
             }else if(data=="0000-00-00"){
                 return "";

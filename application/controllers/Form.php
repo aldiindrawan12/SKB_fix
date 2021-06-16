@@ -652,6 +652,42 @@ class Form extends CI_Controller {
             echo $this->model_form->update_invoice($data,$data_jo);
             redirect(base_url("index.php/home/invoice_customer"));
         }
+        public function update_JO(){
+            if($this->input->post("nominal_tambahan_update")==""){
+                $nominal_tambahan = 0;
+            }else{
+                $nominal_tambahan = str_replace(".","",$this->input->post("nominal_tambahan_update"));
+            }
+            $Jo_id=$this->input->post("Jo_id_update");
+            $data_jo = $this->model_home->getjobyid($Jo_id);
+            if($this->input->post("Kendaraan_update")==""){
+                $mobil_no = $data_jo["mobil_no"];
+            }else{
+                $mobil_no = $this->input->post("Kendaraan_update");
+            }
+            if($this->input->post("Supir_update")==""){
+                $supir_id=$data_jo["supir_id"];
+            }else{
+                $supir_id=$this->input->post("Supir_update");
+            }
+            $data=array(
+                "mobil_no"=>$mobil_no,
+                "supir_id"=>$supir_id,
+                "tanggal_surat"=>$this->change_tanggal($this->input->post("tanggal_jo_update")),
+                "keterangan"=>$this->input->post("Keterangan_update"),
+                "jenis_tambahan"=>$this->input->post("jenis_tambahan_update"),
+                "nominal_tambahan"=>$nominal_tambahan,
+                "uang_total"=>str_replace(".","",$this->input->post("uang_jalan_total_update")),
+                "status"=>$this->input->post("status_update"),
+                "tanggal_muat"=>$this->change_tanggal($this->input->post("tgl_muat_update")),
+                "tanggal_bongkar"=>$this->change_tanggal($this->input->post("tgl_bongkar_update")),
+                "tonase"=>str_replace(".","",$this->input->post("tonase_update")),
+                "biaya_lain"=>str_replace(".","",$this->input->post("biaya_lain_update")),
+            );
+            $this->session->set_flashdata('status-edit-jo', 'Berhasil');
+            $this->model_form->update_JO($data,$Jo_id);
+            redirect(base_url("index.php/home"));
+        }
     //end fungsi update
 
     //fungsi delete

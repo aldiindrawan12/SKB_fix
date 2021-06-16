@@ -501,6 +501,30 @@ class Model_Form extends CI_model
             $this->db->update("skb_invoice",$data);
             return var_dump($data_jo);
         }
+        public function update_JO($data,$jo_id){
+            $data_jo = $this->db->get_where("skb_job_order",array("Jo_id"=>$jo_id))->row_array();
+            if($data["status"]=="Dalam Perjalanan"){
+                if($data_jo["supir_id"]!=$data["supir_id"]){
+                    $this->db->set("status_jalan","Tidak Jalan");
+                    $this->db->where("supir_id",$data_jo["supir_id"]);
+                    $this->db->update("skb_supir");
+                }
+                $this->db->set("status_jalan","Jalan");
+                $this->db->where("supir_id",$data["supir_id"]);
+                $this->db->update("skb_supir");
+                if($data_jo["mobil_no"]!=$data["mobil_no"]){
+                    $this->db->set("status_jalan","Tidak Jalan");
+                    $this->db->where("mobil_no",$data_jo["mobil_no"]);
+                    $this->db->update("skb_mobil");
+                }
+                $this->db->set("status_jalan","Jalan");
+                $this->db->where("mobil_no",$data["mobil_no"]);
+                $this->db->update("skb_mobil");
+            }
+
+            $this->db->where("Jo_id",$jo_id);
+            return $this->db->update("skb_job_order", $data);
+        }
     //end fungsi update
     //fungsi delete
         public function deletesupir($supir_id){

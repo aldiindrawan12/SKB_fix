@@ -84,7 +84,7 @@
             </div>
             <hr>
             <div class="container">
-                <span>Total Data JO Yang Ditemukan : </span><span id="ditemukan"><?= count($pembayaran_upah)?></span><br>
+                <span>Total Data Slip Gaji Yang Ditemukan : </span><span id="ditemukan"><?= count($pembayaran_upah)?></span><br>
                 <span>Total Slip Gaji Belum Dibayar : </span>Rp.<span id="tagihan"><?= number_format($gaji,2,",",".")?></span>
             </div>
             <hr>
@@ -329,10 +329,36 @@
                         "data": "pembayaran_upah_id",
                         className: 'text-center',
                         render: function(data, type, row) {
-                           return "<a class='btn btn-light' href='<?= base_url('index.php/detail/detail_penggajian_report_pembayaran/')?>"+row["supir_id"]+"/"+data+"'><i class='fas fa-eye'></i></a>";
+                            var role_user = "<?=$_SESSION['role']?>";
+                            let html = "";
+                            html += "<a class='btn btn-light' href='<?= base_url('index.php/detail/detail_penggajian_report_pembayaran/')?>"+row["supir_id"]+"/"+data+"'><i class='fas fa-eye'></i></a>";
+                            if(role_user=="Supervisor"){
+                                html += "<a class='btn btn-light btn-update-slip' href='<?= base_url("index.php/form/edit_slip/")?>"+data+"'><i class='fas fa-pen-square'></i></a>"+
+                                "<a class='btn btn-light btn-delete-slip' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
+                            }
+                            return html;
                         }
                     },
-                ]
+                ],
+                drawCallback: function() {
+                    $('.btn-delete-slip').click(function() {
+                        let pk = $(this).data('pk');
+                        Swal.fire({
+                            title: 'Hapus Data Slip Gaji',
+                            text:'Yakin Anda Ingin Menghapus Data Slip Gaji Ini?',
+                            showDenyButton: true,
+                            denyButtonText: `Batal`,
+                            confirmButtonText: 'Hapus',
+                            denyButtonColor: '#808080',
+                            confirmButtonColor: '#FF0000',
+                            icon: "warning",
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.replace("<?= base_url('index.php/form/deleteslip/')?>"+pk);
+                            }
+                        })
+                    });
+                },
             });
             $("#btn-cari").click(function() {
                 table.ajax.reload();
@@ -361,37 +387,6 @@
             });
         });
     </script>
-
-    <script>
-        function change_tanggal(data){
-            if(data==""){
-                return "";
-            }else{
-                var data_tanggal = data.split("-");
-                var tanggal = data_tanggal[2]+"-"+data_tanggal[1]+"-"+data_tanggal[0];
-                return tanggal;
-            }
-        }
-    </script>
-    <!-- scrip angka rupiah -->
-    <script>
-            function rupiah(uang){
-            var bilangan = uang;
-            var	number_string = bilangan.toString(),
-                sisa 	= number_string.length % 3,
-                rupiah 	= number_string.substr(0, sisa),
-                ribuan 	= number_string.substr(sisa).match(/\d{3}/g);
-                    
-            if (ribuan) {
-                separator = sisa ? '.' : '';
-                rupiah += separator + ribuan.join('.');
-            }
-            // alert(rupiah);
-            return rupiah;
-        }
-    </script>
-    <!-- end script angka rupiah -->
-
     <script type="text/javascript">
         $(document).ready(function() {
             $('#convert').click(function() {
@@ -411,12 +406,32 @@
         }
     </script>
     <script>
+        function change_tanggal(data){
+            if(data==""){
+                return "";
+            }else{
+                var data_tanggal = data.split("-");
+                var tanggal = data_tanggal[2]+"-"+data_tanggal[1]+"-"+data_tanggal[0];
+                return tanggal;
+            }
+        }
+            function rupiah(uang){
+            var bilangan = uang;
+            var	number_string = bilangan.toString(),
+                sisa 	= number_string.length % 3,
+                rupiah 	= number_string.substr(0, sisa),
+                ribuan 	= number_string.substr(sisa).match(/\d{3}/g);
+                    
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+            // alert(rupiah);
+            return rupiah;
+        }
         function reset_form(){
             location.reload();
         }
-    </script>
-    
-    <script> //script input tanggal
         function tanggal_berlaku(a){
             // alert(a.id);
             Swal.fire({
@@ -432,4 +447,27 @@
                 todayHighlight: true,
             });
         }
+    </script>
+
+    <script>
+        var edit_slip_gaji = '<?= $this->session->flashdata('status-edit-slip-gaji'); ?>';
+        var delete_slip_gaji = '<?= $this->session->flashdata('status-delete-slip'); ?>';
+            if(edit_slip_gaji == "Berhasil"){
+                Swal.fire({
+                        title: "Berhasil",
+                        icon: "success",
+                        text: "Mengubah Data Slip Gaji",
+                        type: "success",
+                        timer: 2000
+                    });
+            }
+            if(delete_slip_gaji == "Berhasil"){
+                Swal.fire({
+                        title: "Berhasil",
+                        icon: "success",
+                        text: "Hapus Data Slip Gaji",
+                        type: "error",
+                        timer: 2000
+                    });
+            }
     </script>

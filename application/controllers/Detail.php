@@ -464,5 +464,50 @@ class Detail extends CI_Controller {
             $this->model_detail->insert_upah($data);
             redirect (base_url("index.php/home/gaji"));
         }
+
+        public function update_slip($pembayaran_upah_id){
+            $data_bulan = ["x","Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+
+            if($this->input->post("bonus")==""){
+                $bonus=0;
+            }else{
+                $bonus=str_replace(".","",$this->input->post("bonus"));
+            }
+            if($this->input->post("kasbon")==""){
+                $kasbon=0;
+            }else{
+                $kasbon = str_replace(".","",$this->input->post("kasbon"));
+            }
+
+            // $bulan = $this->input->post("bulan_kerja");
+            // $tahun = $this->input->post("tahun_kerja");
+            // if($bulan=='x'){
+            //     $bulan=0;
+            // }
+            // if($tahun=="x"){
+            //     $tahun=date("Y");
+            // }
+
+            $data_jo = [];
+            $data_jo_form = explode(",",$this->input->post("jo"));
+            for($i=0;$i<count($data_jo_form);$i++){
+                $data_jo[] = $data_jo_form[$i];
+            }
+            $data = array(
+                // "supir_id"=>$supir_id,
+                "pembayaran_upah_bon"=>$kasbon,
+                "pembayaran_upah_tanggal"=>$this->change_tanggal($this->input->post("tanggal_gaji")),
+                "pembayaran_upah_total"=>str_replace(".","",$this->input->post("gaji_grand_total")),
+                "pembayaran_upah_nominal"=>str_replace(".","",$this->input->post("gaji_total")),
+                "pembayaran_upah_bonus"=>$bonus,
+                // "bulan_kerja"=>$data_bulan[$bulan]."-".$tahun,
+                // "pembayaran_upah_id"=>$this->input->post("no_gaji"),
+                "keterangan"=>$this->input->post("Keterangan")
+            );
+            $this->session->set_flashdata('status-edit-slip-gaji', 'Berhasil');
+            // echo print_r($data);
+            $this->model_detail->update_slip($data,$pembayaran_upah_id,$data_jo);
+            redirect (base_url("index.php/home/report_gaji"));
+        }
     //end fungsi untuk Detail penggajian
 }

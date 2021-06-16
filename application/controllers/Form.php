@@ -127,6 +127,33 @@ class Form extends CI_Controller {
             $this->load->view('form/edit_invoice');
             $this->load->view('footer');
         }
+        public function edit_slip($slip_id)
+        {
+            $data["no_slip_gaji"]=$slip_id;
+            $data["slip"] = $this->model_detail->getpembayaranupahbyid($slip_id);
+            $data["isi_jo"] = "";
+            for($i=0;$i<count($data["slip"]);$i++){
+                $data["isi_jo"] .= $data["slip"][$i]["Jo_id"].",";
+            }
+            $data["tahun"]="x";
+            $data["bulan_index"]="x";
+            $data["jo"] = $this->model_detail->getjobbysupirbulan($data["slip"][0]["supir_id"],$data["tahun"],$data["bulan_index"]);
+            $data["supir"] = $this->model_home->getsupirbyid($data["slip"][0]["supir_id"]);
+            if(!$_SESSION["user"]){
+    			$this->session->set_flashdata('status-login', 'False');
+                redirect(base_url());
+            }
+            $data["page"] = "Laporan_Gaji_page";
+            $data["collapse_group"] = "Penggajian";
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            if(json_decode($data["akun_akses"]["akses"])[3]==0){
+                redirect(base_url());
+            }
+            $this->load->view('header',$data);
+            $this->load->view('sidebar');
+            $this->load->view('form/edit_slip');
+            $this->load->view('footer');
+        }
     // end fungsi view form
 
     // fungsi insert
@@ -771,6 +798,11 @@ class Form extends CI_Controller {
             $this->model_form->deleteinvoice($invoice_id);
             $this->session->set_flashdata('status-delete-invoice', 'Berhasil');
             redirect(base_url('index.php/home/invoice_customer'));
+        }
+        public function deleteslip($slip_id){
+            $this->model_form->deleteslip($slip_id);
+            $this->session->set_flashdata('status-delete-slip', 'Berhasil');
+            redirect(base_url('index.php/home/report_gaji'));
         }
     //end fungsi delete
 

@@ -1,3 +1,14 @@
+<?php
+function change_tanggal($tanggal){
+    if($tanggal==""){
+        return "";
+    }else{
+        $tanggal_array = explode("-",$tanggal);
+        return $tanggal_array[2]."-".$tanggal_array[1]."-".$tanggal_array[0];   
+    }
+}
+
+?>
 <!-- tampilan detail penggajian supir -->
 <div class="container small">
     <div class="card shadow mb-4">
@@ -5,13 +16,13 @@
             <h6 class="m-0 font-weight-bold text-primary">Buat Slip Gaji</h6>
         </div>
         <div class="container m-auto" id="rincian">
-            <form action="<?= base_url("index.php/detail/insert_upah/").$supir["supir_id"]?>" method="POST" id="form-pilih-jo">
-                <input type="text" name="jo" id="jo" required hidden>
+            <form action="<?= base_url("index.php/detail/update_slip/").$slip[0]["pembayaran_upah_id"]?>" method="POST" id="form-pilih-jo">
+                <input type="text" name="jo" id="jo" required value="<?= $isi_jo?>">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group row">
                             <label for="tanggal_gaji" class="col-form-label col-sm-7 font-weight-bold">Tanggal</label>
-                            <input autocomplete="off" type="text" class="form-control col-md-5" id="tanggal_gaji" name="tanggal_gaji" onclick="tanggal_berlaku(this)" required>
+                            <input autocomplete="off" type="text" class="form-control col-md-5" id="tanggal_gajii" name="tanggal_gaji" value="<?= change_tanggal($slip[0]["pembayaran_upah_tanggal"])?>" onclick="tanggal_berlaku(this)" required>
                         </div>
                         <div class="form-group row">
                             <label for="no_gaji" class="col-form-label col-sm-7 font-weight-bold">No Gaji</label>
@@ -21,7 +32,7 @@
                             <label for="nama_supir" class="col-form-label col-sm-7 font-weight-bold">Supir</label>
                             <input autocomplete="off" type="text" class="form-control col-md-5" id="nama_supir" name="nama_supir" value="<?= $supir["supir_name"]?>" readonly>
                         </div>
-                        <div class="form-group row">
+                        <!-- <div class="form-group row">
                             <label for="bulan_kerja" class="col-form-label col-sm-6 font-weight-bold">Bulan Kerja</label>
                             <div class="col-sm-3">
                                 <select name="bulan_kerja" value="DESC" id="bulan_kerja" class="form-control selectpicker mb-4" data-live-search="true" required onchange="set_pilih_jo(this)">
@@ -62,7 +73,7 @@
                                     <option value="2024">2024</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="form-group row">
                             <label for="bon_supir" class="col-form-label col-sm-7 font-weight-bold">Bon Terhutang</label>
                             <input autocomplete="off" type="text" class="form-control col-md-5" id="bon_supir" name="bon_supir" value="Rp.<?= number_format($supir["supir_kasbon"],2,",",".")?>" readonly>
@@ -72,25 +83,25 @@
                         <div class="form-group row">
                             <label for="gaji_total" class="col-form-label col-sm-7 font-weight-bold">Total</label>
                             <div class="col-sm-5">
-                                <input autocomplete="off" type="text" class="form-control" id="gaji_total" name="gaji_total" required readonly>
+                                <input autocomplete="off" type="text" class="form-control" id="gaji_total" name="gaji_total" required value="<?= number_format($slip[0]["pembayaran_upah_nominal"],0,",",".")?>" readonly>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="kasbon" class="col-form-label col-sm-7 font-weight-bold">Bayar Kasbon</label>
                             <div class="col-sm-5">
-                                <input autocomplete="off" type="text" class="form-control" id="kasbon" name="kasbon" onkeyup="batas_kasbon(this)">
+                                <input autocomplete="off" type="text" class="form-control" id="kasbon" name="kasbon" onkeyup="batas_kasbon(this)" value="<?= number_format($slip[0]["pembayaran_upah_bon"],0,",",".")?>">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="bonus" class="col-form-label col-sm-7 font-weight-bold">Bonus</label>
                             <div class="col-sm-5">
-                                <input autocomplete="off" type="text" class="form-control" id="bonus" name="bonus" onkeyup="bonus_nilai(this)">
+                                <input autocomplete="off" type="text" class="form-control" id="bonus" name="bonus" onkeyup="bonus_nilai(this)" value="<?= number_format($slip[0]["pembayaran_upah_bonus"],0,",",".")?>">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="gaji_grand_total" class="col-form-label col-sm-7 font-weight-bold">Grand Total</label>
                             <div class="col-sm-5">
-                                <input autocomplete="off" type="text" class="form-control" id="gaji_grand_total" name="gaji_grand_total" required readonly>
+                                <input autocomplete="off" type="text" class="form-control" id="gaji_grand_total" name="gaji_grand_total" required readonly value="<?= number_format($slip[0]["pembayaran_upah_total"],0,",",".")?>">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -105,6 +116,46 @@
                 </div>
             </form>
         </div>
+        <div class="container">
+            <strong>Data JO Dalam Slip Gaji Saat Ini</strong>
+        </div>
+        <div class="table-responsive">
+                <table class="table table-bordered table-striped" id="Table-Penggajian-Now" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th class="text-center" width="10%" scope="col">JO ID</th>
+                            <th class="text-center" width="10%" scope="col">Tgl Muat</th>
+                            <th class="text-center" width="13%" scope="col">Tgl Bongkar</th>
+                            <th class="text-center" width="13%" scope="col">Customer</th>
+                            <th class="text-center" width="10%" scope="col">Muatan</th>
+                            <th class="text-center" width="10%" scope="col">Dari</th>
+                            <th class="text-center" width="10%" scope="col">Ke</th>
+                            <th class="text-center" width="10%" scope="col">Tonase</th>
+                            <th class="text-center" width="10%" scope="col">Upah</th>
+                            <th class="text-center" width="10%" scope="col">Detail</th>
+                            <th class="text-center" width="10%" scope="col">Pilih</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach($slip as $value){?>
+                        <tr>
+                            <td><?= $value["Jo_id"]?></td>
+                            <td><?= $value["tanggal_muat"]?></td>
+                            <td><?= $value["tanggal_bongkar"]?></td>
+                            <td><?= $value["customer_name"]?></td>
+                            <td><?= $value["muatan"]?></td>
+                            <td><?= $value["asal"]?></td>
+                            <td><?= $value["tujuan"]?></td>
+                            <td><?= $value["tonase"]?></td>
+                            <td>Rp.<?= number_format($value["upah"],2,',','.')?></td>
+                            <td><a class='btn btn-light' target="_blank" href='<?= base_url('index.php/detail/detail_jo/'.$value["Jo_id"].'/JO')?>'><i class='fas fa-eye'></i></a></td>
+                            <td><input class='' id="<?= $value["Jo_id"]?>" type='checkbox' checked onchange="pilih_gaji(this)"></td>
+                        </tr>
+                    <?php } ?>
+                    </tbody>
+                </table>
+        </div>
+        <hr class="mt-3 mb-3">
         <div class="table-responsive">
                 <table class="table table-bordered table-striped" id="Table-Penggajian" width="100%" cellspacing="0">
                     <thead>
@@ -208,9 +259,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
     <script src="<?php echo base_url('assets/datepicker/js/bootstrap-datepicker.js')?>"></script>
     <script>
-        var data_jo = [];
-        $("#gaji_total").val(0);
-        $("#gaji_grand_total").val(0);
+        isi_jo = $("#jo").val().split(",");
+        var data_jo = [];     
+        for(i=0;i<isi_jo.length;i++){
+            data_jo.push(isi_jo[i]);
+        }
         function pilih_gaji(a){
             var jo_id = a.id;
             if(data_jo.includes(jo_id)!=true){
@@ -235,19 +288,44 @@
 
                     if(data_jo.includes(jo_id)==true){
                         var gaji_total = parseInt(gaji_total) + parseInt(gaji);
-                        var gaji_grand_total = parseInt(gaji_grand_total) + parseInt(gaji);
+                        if(gaji_grand_total==0){
+                            if(gaji_total==0){
+                                var gaji_grand_total = parseInt(bonus) + parseInt(gaji) - parseInt(kasbon);
+                            }else{
+                                var gaji_grand_total = parseInt(gaji_total) + parseInt(bonus) - parseInt(kasbon);
+                            }
+                        }else{
+                            var gaji_grand_total = parseInt(gaji_grand_total) + parseInt(gaji);
+                        }
                         $("#gaji_total").val(rupiah(gaji_total));
-                        $("#gaji_grand_total").val(rupiah(gaji_grand_total));
+                        if(gaji_grand_total<0){
+                            $("#gaji_grand_total").val(0);
+                        }else{
+                            $("#gaji_grand_total").val(rupiah(gaji_grand_total));
+                        }
                     }else{
                         var gaji_total = parseInt(gaji_total) - parseInt(gaji);
-                        var gaji_grand_total = parseInt(gaji_grand_total) - parseInt(gaji);
+                        if(gaji_grand_total==0){
+                            if(gaji_total==0){
+                                var gaji_grand_total =  parseInt(bonus) - parseInt(gaji) - parseInt(kasbon);
+                            }else{
+                                var gaji_grand_total = parseInt(gaji_total) +  parseInt(bonus) - parseInt(kasbon);
+                            }
+                        }else{
+                            var gaji_grand_total = parseInt(gaji_grand_total) - parseInt(gaji);
+                        }
                         $("#gaji_total").val(rupiah(gaji_total));
-                        $("#gaji_grand_total").val(rupiah(gaji_grand_total));
+                        if(gaji_grand_total<0){
+                            $("#gaji_grand_total").val(0);
+                        }else{
+                            $("#gaji_grand_total").val(rupiah(gaji_grand_total));
+                        }
                     }
                 }
             });
         }
         function batas_kasbon(a){
+            kasbon_slip = '<?= $slip[0]["pembayaran_upah_bon"]?>';
             var bonus = 0;
             if($("#bonus").val().replaceAll(".","") == ""){
                 bonus = 0;
@@ -261,13 +339,34 @@
             if(kasbon_bayar == ""){
                 kasbon_bayar = 0;
             }
-            if(parseInt(kasbon)<parseInt(kasbon_bayar)){
-                alert('Jumlah Potong Kasbon Harus Lebih Kecil Dari Rp.'+ rupiah(kasbon));
-                $( '#kasbon' ).val("");
-                $("#gaji_grand_total").val(rupiah(total));
+            if(parseInt(kasbon)!=0 ){
+                if(parseInt(kasbon)>parseInt(kasbon_slip)){
+                    if(parseInt(kasbon)<parseInt(kasbon_bayar)){
+                        alert('Jumlah Potong Kasbon Harus Lebih Kecil Dari Rp.'+ rupiah(kasbon));
+                        $( '#kasbon' ).val(rupiah(kasbon_slip));
+                        $("#gaji_grand_total").val(rupiah(total));
+                    }else{
+                        var gaji_grand_total = parseInt(total)-parseInt(kasbon_bayar);
+                        if(gaji_grand_total<0){
+                            $("#gaji_grand_total").val(0);
+                        }else{
+                            $("#gaji_grand_total").val(rupiah(gaji_grand_total));
+                        }
+                    }
+                }
             }else{
-                var gaji_grand_total = parseInt(total)-parseInt(kasbon_bayar);
-                $("#gaji_grand_total").val(rupiah(gaji_grand_total));
+                if(parseInt(kasbon_slip)<parseInt(kasbon_bayar)){
+                    alert('Jumlah Potong Kasbon Harus Lebih Kecil Dari Rp.'+ rupiah(kasbon_slip));
+                    $( '#kasbon' ).val(rupiah(kasbon_slip));
+                    $("#gaji_grand_total").val(rupiah(total));
+                }else{
+                    var gaji_grand_total = parseInt(total)-parseInt(kasbon_bayar);
+                    if(gaji_grand_total<0){
+                        $("#gaji_grand_total").val(0);
+                    }else{
+                        $("#gaji_grand_total").val(rupiah(gaji_grand_total));
+                    }
+                }
             }
         }
         function bonus_nilai(a){
@@ -284,7 +383,11 @@
                 bonus = 0;
             }
             var gaji_grand_total = parseInt(total)+parseInt(bonus);
-            $("#gaji_grand_total").val(rupiah(gaji_grand_total));
+            if(gaji_grand_total<0){
+                $("#gaji_grand_total").val(0);
+            }else{
+                $("#gaji_grand_total").val(rupiah(gaji_grand_total));
+            }
         }
         function rupiah(uang){
             var bilangan = uang;
@@ -304,8 +407,6 @@
                 alert("silakan pilih perjalanan supir");
             }
         }
-    </script>
-    <script>
         function set_pilih_jo(a){
             // alert($("#tahun_kerja").val());
             // alert($("#bulan_kerja").val());
@@ -314,24 +415,9 @@
             bulan = $("#bulan_kerja").val();
             location.replace('<?= base_url("index.php/detail/pilih_gaji/").$supir["supir_id"]."/form/"?>'+tahun+"/"+bulan);
         }
-    </script>
-    <script>
         function reset_form(){
             location.reload();
         }
-    </script>
-    <script> //script set tanggal saat ini
-        $(function(){
-            var date = new Date();
-            if((date.getMonth()+1)<10){
-                $("#tanggal_gaji").val(date.getDate()+"-0"+(date.getMonth()+1)+"-"+date.getFullYear());
-            }else{
-                $("#tanggal_gaji").val(date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear());
-            }
-        });
-    </script>
-
-    <script> //script input tanggal
         function tanggal_berlaku(a){
             // alert(a.id);
             Swal.fire({

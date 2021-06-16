@@ -100,6 +100,7 @@ class Model_Detail extends CI_model
 
         public function getpembayaranupahbyid($pembayaran_id){
             $this->db->join("skb_job_order","skb_job_order.pembayaran_upah_id=skb_pembayaran_upah.pembayaran_upah_id","left");
+            $this->db->join("skb_customer","skb_customer.customer_id=skb_job_order.customer_id","left");
             return $this->db->get_where("skb_pembayaran_upah",array("skb_pembayaran_upah.pembayaran_upah_id"=>$pembayaran_id))->result_array();
         }
 
@@ -141,7 +142,9 @@ class Model_Detail extends CI_model
                 "pembayaran_upah_tanggal"=>$tanggal,
                 "pembayaran_upah_status"=>"Belum Lunas",
                 "bulan_kerja"=>$data["bulan_kerja"],
-                "user_upah"=>$_SESSION["user"]."(".date("d-m-Y H:i:s").")"
+                "user_upah"=>$_SESSION["user"]."(".date("d-m-Y H:i:s").")",
+                "keteranan"=>$data["keterangan"]
+
             );
             $this->db->insert("skb_pembayaran_upah",$data);
             //end insert pembayaran upah 
@@ -234,6 +237,29 @@ class Model_Detail extends CI_model
             $this->db->set("status_jalan","Tidak Jalan");
             $this->db->where("mobil_no",str_replace("%20"," ",$mobil_no));
             $this->db->update("skb_mobil");
+        }
+        public function update_slip($data,$pembayaran_upah_id,$data_jo){ //update slip gaji
+            $jo_lama = $this->db->get_where("skb_job_order",array("pembayaran_upah_id"=>$pembayaran_upah_id))->result_array();
+
+            $this->db->where("pembayaran_upah_id",$pembayaran_upah_id);
+            $this->db->update("skb_pembayaran_upah",$data);
+
+            //update status upah pada jo id
+                if($data_jo != null){
+                    for($i=0;$i<count($data_jo);$i++){
+                        $this->db->set("pembayaran_upah_id",$pembayaran_upah_id);
+                        $this->db->where("Jo_id",$data_jo[$i]);
+                        $this->db->update("skb_job_order");
+                    }
+                }
+                for($i=0;$i<count($jo_lama);$i++){
+                    if(!in_array($jo_lama[$i]["Jo_id"],$data_jo)){
+                        $this->db->set("pembayaran_upah_id","");
+                        $this->db->where("Jo_id",$jo_lama[$i]["Jo_id"]);
+                        $this->db->update("skb_job_order");
+                    }
+                }
+            //end update status upah pada jo id
         }
     //end fungsi update insert
 

@@ -599,6 +599,19 @@ class Model_Form extends CI_model
     
             return $invoice_id;
         }
+        public function deleteslip($slip_id){
+            $data_jo = $this->db->get_where("skb_job_order",array("pembayaran_upah_id"=>$slip_id))->result_array();
+            for($i=0;$i<count($data_jo);$i++){
+                $this->db->set("pembayaran_upah_id","");
+                $this->db->where("Jo_id",$data_jo[$i]["Jo_id"]);
+                $this->db->update("skb_job_order");
+            }
+    
+            $this->db->where("pembayaran_upah_id",$slip_id);
+            $this->db->delete("skb_pembayaran_upah");
+    
+            return $slip_id;
+        }
     //end fungsi delete
     // fungsi untuk form joborder
         public function getrutebycustomer($customer_id){

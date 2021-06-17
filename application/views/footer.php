@@ -2211,9 +2211,9 @@
                         }
                     },
                     {
-                        "data": "grand_total",
+                        "data": "sisa",
                         render: function(data, type, row) {
-                            let html = 'Sisa Tagihan';
+                            let html = 'Rp.'+rupiah(data);
                             return html;
                         }
                     },
@@ -2242,7 +2242,7 @@
                         className: 'text-center',
                         "orderable": false,
                         render: function(data, type, row) {
-                            let html = "btn payment";
+                            let html = "<a class='btn btn-light' href='<?= base_url('index.php/payment/payment_invoice/"+data+"')?>'><i class='fas fa-file-invoice-dollar'></i></a>";
                             return html;
                         }
                     },
@@ -2819,6 +2819,7 @@
             var edit_jo = '<?= $this->session->flashdata('status-edit-jo'); ?>';
             var update_invoice = '<?= $this->session->flashdata('status-update-invoice'); ?>';
             var edit_invoice = '<?= $this->session->flashdata('status-edit-invoice'); ?>';
+            var insert_payment_invoice = '<?= $this->session->flashdata('status-insert-payment-invoice'); ?>';
             var supir_jo = '<?= $this->session->flashdata('supir_jo'); ?>';
             var mobil_jo = '<?= $this->session->flashdata('mobil_jo'); ?>';
             if(login == "Berhasil"){
@@ -2835,6 +2836,15 @@
                         title: "Berhasil",
                         icon: "success",
                         text: "Menambahkan akun baru",
+                        type: "success",
+                        timer: 2000
+                    });
+            }
+            if(insert_payment_invoice == "Berhasil"){
+                Swal.fire({
+                        title: "Berhasil",
+                        icon: "success",
+                        text: "Menambahkan Data Payment Invoice",
                         type: "success",
                         timer: 2000
                     });

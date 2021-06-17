@@ -510,4 +510,11 @@ class Detail extends CI_Controller {
             redirect (base_url("index.php/home/report_gaji"));
         }
     //end fungsi untuk Detail penggajian
+
+    function getpaymentinvoice()
+    {
+        $payment_id = $this->input->get('id');
+        $data = $this->model_detail->getpaymentinvoicebyid($payment_id);
+        echo json_encode($data);
+    }
 }

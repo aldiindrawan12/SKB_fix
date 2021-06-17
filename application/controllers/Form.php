@@ -177,6 +177,18 @@ class Form extends CI_Controller {
             $this->model_form->insert_invoice($data,$data_jo);
             redirect(base_url("index.php/home/invoice"));
         }
+        public function insert_payment_invoice(){
+            $data=array(
+                "invoice_id"=>$this->input->post("invoice_kode"),
+                "payment_invoice_tgl"=>$this->change_tanggal($this->input->post("payment_invoice_tgl")),
+                "payment_invoice_nominal"=>str_replace(".","",$this->input->post("payment_invoice_nominal")),
+                "payment_invoice_jenis"=>$this->input->post("payment_invoice_jenis"),
+                "payment_invoice_keterangan"=>$this->input->post("payment_invoice_keterangan"),
+            );
+            $this->session->set_flashdata('status-insert-payment-invoice', 'Berhasil');
+            $this->model_form->insert_payment_invoice($data);
+            redirect(base_url("index.php/home/invoice_customer"));
+        }
         public function insert_JO(){
             if($this->input->post("nominal_tambahan")==""){
                 $nominal_tambahan = 0;
@@ -715,6 +727,19 @@ class Form extends CI_Controller {
             $this->model_form->update_JO($data,$Jo_id);
             redirect(base_url("index.php/home"));
         }
+        public function update_payment_invoice(){
+            $payment_id=$this->input->post("payment_invoice_id_update");
+            $data=array(
+                "invoice_id"=>$this->input->post("invoice_kode_update"),
+                "payment_invoice_tgl"=>$this->change_tanggal($this->input->post("payment_invoice_tgl_update")),
+                "payment_invoice_nominal"=>str_replace(".","",$this->input->post("payment_invoice_nominal_update")),
+                "payment_invoice_jenis"=>$this->input->post("payment_invoice_jenis_update"),
+                "payment_invoice_keterangan"=>$this->input->post("payment_invoice_keterangan_update"),
+            );
+            $this->session->set_flashdata('status-edit-payment-invoice', 'Berhasil');
+            $invoice_id = $this->model_form->update_payment_invoice($data,$payment_id);
+            redirect(base_url("index.php/payment/payment_invoice/").$invoice_id);
+        }
     //end fungsi update
 
     //fungsi delete
@@ -798,6 +823,11 @@ class Form extends CI_Controller {
             $this->model_form->deleteinvoice($invoice_id);
             $this->session->set_flashdata('status-delete-invoice', 'Berhasil');
             redirect(base_url('index.php/home/invoice_customer'));
+        }
+        public function deletepaymentinvoice($payment_id){
+            $invoice_id = $this->model_form->deletepaymentinvoice($payment_id);
+            $this->session->set_flashdata('status-delete-payment-invoice', 'Berhasil');
+            redirect(base_url('index.php/payment/payment_invoice/').$invoice_id);
         }
         public function deleteslip($slip_id){
             $this->model_form->deleteslip($slip_id);

@@ -107,6 +107,19 @@ class Model_Form extends CI_model
         public function insert_truck($data){
             return $this->db->insert("skb_mobil", $data);
         }
+        public function insert_payment_invoice($data){
+            $invoice = $this->db->get_where("skb_invoice",array("invoice_kode"=>$data["invoice_id"]))->row_array();
+            $sisa = $invoice["sisa"] - $data["payment_invoice_nominal"];
+            
+            if($sisa==0){
+                $this->db->set("status_bayar","Lunas");
+            }
+            $this->db->set("sisa",$sisa);
+            $this->db->where("invoice_kode",$data["invoice_id"]);
+            $this->db->update("skb_invoice");
+
+            return $this->db->insert("payment_invoice", $data);
+        }
     //end fungsi insert
     //fungsi acc
         public function accsupir($supir_id,$validasi){
@@ -376,6 +389,27 @@ class Model_Form extends CI_model
             $this->db->where("mobil_no",str_replace("%20"," ",$mobil));
             $this->db->update("skb_mobil");
         }
+        public function update_payment_invoice($data,$payment_id){
+            $payment_invoice = $this->db->get_where("payment_invoice",array("payment_invoice_id"=>$payment_id))->row_array();
+            $invoice = $this->db->get_where("skb_invoice",array("invoice_kode"=>$payment_invoice["invoice_id"]))->row_array();
+
+            $selisih = $payment_invoice["payment_invoice_nominal"]-$data["payment_invoice_nominal"];
+            $sisa=$invoice["sisa"]+$selisih;
+
+            $this->db->set("sisa",$sisa);
+            if($sisa==0){
+                $this->db->set("status_bayar","Lunas");
+            }else{
+                $this->db->set("status_bayar","Belum Lunas");
+            }
+            $this->db->where("invoice_kode",$payment_invoice["invoice_id"]);
+            $this->db->update("skb_invoice");
+    
+            $this->db->where("payment_invoice_id",$payment_id);
+            $this->db->update("payment_invoice",$data);
+    
+            return $invoice["invoice_kode"];
+        }
         public function update_status_aktif_supir($data){
             $this->db->set("status_aktif",$data["status_aktif"]);
             if($data["status_aktif"]=="Aktif"){
@@ -598,6 +632,20 @@ class Model_Form extends CI_model
             $this->db->delete("skb_invoice");
     
             return $invoice_id;
+        }
+        public function deletepaymentinvoice($payment_id){
+            $payment_invoice = $this->db->get_where("payment_invoice",array("payment_invoice_id"=>$payment_id))->row_array();
+            $invoice = $this->db->get_where("skb_invoice",array("invoice_kode"=>$payment_invoice["invoice_id"]))->row_array();
+            $sisa = $invoice["sisa"]+$payment_invoice["payment_invoice_nominal"];
+            $this->db->set("sisa",$sisa);
+            $this->db->set("status_bayar","Belum Lunas");
+            $this->db->where("invoice_kode",$payment_invoice["invoice_id"]);
+            $this->db->update("skb_invoice");
+    
+            $this->db->where("payment_invoice_id",$payment_id);
+            $this->db->delete("payment_invoice");
+    
+            return $invoice["invoice_kode"];
         }
         public function deleteslip($slip_id){
             $data_jo = $this->db->get_where("skb_job_order",array("pembayaran_upah_id"=>$slip_id))->result_array();

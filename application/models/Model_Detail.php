@@ -38,6 +38,10 @@ class Model_Detail extends CI_model
         public function getmerkbyid($merk_id){ //merk by ID
             return $this->db->get_where("skb_merk_kendaraan",array("merk_id"=>$merk_id))->row_array();
         }
+
+        public function getpaymentinvoicebyid($payment_id){ //payment by ID
+            return $this->db->get_where("payment_invoice",array("payment_invoice_id"=>$payment_id))->row_array();
+        }
         
         public function getrutebyid($rute_id){ //rute by ID
             $this->db->join("skb_customer","skb_customer.customer_id=skb_rute.customer_id","left");
@@ -59,6 +63,15 @@ class Model_Detail extends CI_model
         public function getinvoicebyid($invoice_id){ //invoice by ID
             $this->db->join("skb_invoice","skb_invoice.invoice_kode=skb_job_order.invoice_id","left");
             return $this->db->get_where("skb_job_order",array("invoice_id"=>$invoice_id))->result_array();
+        }
+
+        public function getinvoicepayment($invoice_id){ //invoice by ID
+            $this->db->join("skb_customer","skb_customer.customer_id=skb_invoice.customer_id","left");
+            return $this->db->get_where("skb_invoice",array("invoice_kode"=>$invoice_id))->row_array();
+        }
+
+        public function getpaymentinvoice($invoice_id){ //invoice by ID
+            return $this->db->get_where("payment_invoice",array("invoice_id"=>$invoice_id))->result_array();
         }
         
         public function getjobbysupir($supir_id){ //JO by supir

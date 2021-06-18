@@ -17,7 +17,7 @@ function change_tanggal($tanggal){
         </div>
         <div class="container m-auto" id="rincian">
             <form action="<?= base_url("index.php/detail/update_slip/").$slip[0]["pembayaran_upah_id"]?>" method="POST" id="form-pilih-jo">
-                <input type="text" name="jo" id="jo" required value="<?= $isi_jo?>">
+                <input type="text" name="jo" id="jo" required value="<?= $isi_jo?>" hidden>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group row">
@@ -32,48 +32,10 @@ function change_tanggal($tanggal){
                             <label for="nama_supir" class="col-form-label col-sm-7 font-weight-bold">Supir</label>
                             <input autocomplete="off" type="text" class="form-control col-md-5" id="nama_supir" name="nama_supir" value="<?= $supir["supir_name"]?>" readonly>
                         </div>
-                        <!-- <div class="form-group row">
-                            <label for="bulan_kerja" class="col-form-label col-sm-6 font-weight-bold">Bulan Kerja</label>
-                            <div class="col-sm-3">
-                                <select name="bulan_kerja" value="DESC" id="bulan_kerja" class="form-control selectpicker mb-4" data-live-search="true" required onchange="set_pilih_jo(this)">
-                                    <?php $bulan = ["Sadasd","Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
-                                    if($bulan_index!=10){
-                                        $bulan_index=str_replace("0","",$bulan_index);
-                                    }
-                                    if($bulan_index=='x'){?>
-                                        <option class="font-w700" selected value="x">Bulan</option>
-                                    <?php }else{ ?>
-                                        <option class="font-w700" selected value="<?= $bulan_index?>"><?= $bulan[$bulan_index]?></option>
-                                    <?php } ?>
-                                    <option value="01"><?=$bulan[1]?></option>
-                                    <option value="02"><?=$bulan[2]?></option>
-                                    <option value="03"><?=$bulan[3]?></option>
-                                    <option value="04"><?=$bulan[4]?></option>
-                                    <option value="05"><?=$bulan[5]?></option>
-                                    <option value="06"><?=$bulan[6]?></option>
-                                    <option value="07"><?=$bulan[7]?></option>
-                                    <option value="08"><?=$bulan[8]?></option>
-                                    <option value="09"><?=$bulan[9]?></option>
-                                    <option value="10"><?=$bulan[10]?></option>
-                                    <option value="11"><?=$bulan[11]?></option>
-                                    <option value="12"><?=$bulan[12]?></option>
-                                </select>
-                            </div>
-                            <div class="col-sm-3">
-                                <select name="tahun_kerja" value="DESC" id="tahun_kerja" class="form-control selectpicker mb-4" data-live-search="true" required onchange="set_pilih_jo(this)">
-                                    <option class="font-w700" selected value="x">Semua Tahun</option>
-                                    <?php if($tahun=='x'){?>
-                                        <option class="font-w700" selected value="x">Tahun</option>
-                                    <?php }else{ ?>
-                                        <option class="font-w700" selected value="<?= $tahun?>"><?= $tahun?></option>
-                                    <?php } ?>
-                                    <option value="2021">2021</option>
-                                    <option value="2022">2022</option>
-                                    <option value="2023">2023</option>
-                                    <option value="2024">2024</option>
-                                </select>
-                            </div>
-                        </div> -->
+                        <div class="form-group row">
+                            <label for="bulan_kerja" class="col-form-label col-sm-7 font-weight-bold">Bulan Kerja</label>
+                            <input autocomplete="off" type="text" class="form-control col-md-5" id="bulan_kerja" name="bulan_kerja" value="<?= $slip[0]["bulan_kerja"]?>" readonly>
+                        </div>
                         <div class="form-group row">
                             <label for="bon_supir" class="col-form-label col-sm-7 font-weight-bold">Bon Terhutang</label>
                             <input autocomplete="off" type="text" class="form-control col-md-5" id="bon_supir" name="bon_supir" value="Rp.<?= number_format($supir["supir_kasbon"],2,",",".")?>" readonly>

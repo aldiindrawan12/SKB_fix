@@ -28,4 +28,21 @@ class Payment extends CI_Controller {
         $this->load->view('sidebar');
         $this->load->view("payment/payment_invoice");
     }
+
+    public function payment_gaji($gaji_id)
+    {
+        if(!$_SESSION["user"]){
+    		$this->session->set_flashdata('status-login', 'False');
+            redirect(base_url());
+        }
+        $data["pembayaran_upah_id"] = $gaji_id;
+        $data["pembayaran_upah"] = $this->model_detail->getupahpayment($gaji_id);
+        $data["payment_pembayaran_upah"] = $this->model_detail->getpaymentupah($gaji_id);
+        $data["page"] = "Laporan_Gaji_page";
+        $data["collapse_group"] = "Penggajian";
+        $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+        $this->load->view('header',$data);
+        $this->load->view('sidebar');
+        $this->load->view("payment/payment_gaji");
+    }
 }

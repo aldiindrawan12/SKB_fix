@@ -517,4 +517,11 @@ class Detail extends CI_Controller {
         $data = $this->model_detail->getpaymentinvoicebyid($payment_id);
         echo json_encode($data);
     }
+
+    function getpaymentupah()
+    {
+        $payment_id = $this->input->get('id');
+        $data = $this->model_detail->getpaymentupahbyid($payment_id);
+        echo json_encode($data);
+    }
 }

@@ -135,9 +135,7 @@ class Form extends CI_Controller {
             for($i=0;$i<count($data["slip"]);$i++){
                 $data["isi_jo"] .= $data["slip"][$i]["Jo_id"].",";
             }
-            $data["tahun"]="x";
-            $data["bulan_index"]="x";
-            $data["jo"] = $this->model_detail->getjobbysupirbulan($data["slip"][0]["supir_id"],$data["tahun"],$data["bulan_index"]);
+            $data["jo"] = $this->model_detail->getjobbysupirbulan($data["slip"][0]["supir_id"],"x","x");
             $data["supir"] = $this->model_home->getsupirbyid($data["slip"][0]["supir_id"]);
             if(!$_SESSION["user"]){
     			$this->session->set_flashdata('status-login', 'False');
@@ -189,6 +187,20 @@ class Form extends CI_Controller {
             $this->model_form->insert_payment_invoice($data);
             redirect(base_url("index.php/home/invoice_customer"));
         }
+
+        public function insert_payment_gaji(){
+            $data=array(
+                "pembayaran_upah_id"=>$this->input->post("pembayaran_upah_id"),
+                "payment_upah_tgl"=>$this->change_tanggal($this->input->post("payment_upah_tgl")),
+                "payment_upah_nominal"=>str_replace(".","",$this->input->post("payment_upah_nominal")),
+                "payment_upah_jenis"=>$this->input->post("payment_upah_jenis"),
+                "payment_upah_keterangan"=>$this->input->post("payment_upah_keterangan"),
+            );
+            $this->session->set_flashdata('status-insert-payment-upah', 'Berhasil');
+            $this->model_form->insert_payment_upah($data);
+            redirect(base_url("index.php/home/report_gaji"));
+        }
+
         public function insert_JO(){
             if($this->input->post("nominal_tambahan")==""){
                 $nominal_tambahan = 0;
@@ -740,6 +752,20 @@ class Form extends CI_Controller {
             $invoice_id = $this->model_form->update_payment_invoice($data,$payment_id);
             redirect(base_url("index.php/payment/payment_invoice/").$invoice_id);
         }
+
+        public function update_payment_upah(){
+            $payment_id=$this->input->post("payment_upah_id_update");
+            $data=array(
+                "pembayaran_upah_id"=>$this->input->post("pembayaran_upah_id_update"),
+                "payment_upah_tgl"=>$this->change_tanggal($this->input->post("payment_upah_tgl_update")),
+                "payment_upah_nominal"=>str_replace(".","",$this->input->post("payment_upah_nominal_update")),
+                "payment_upah_jenis"=>$this->input->post("payment_upah_jenis_update"),
+                "payment_upah_keterangan"=>$this->input->post("payment_upah_keterangan_update"),
+            );
+            $this->session->set_flashdata('status-edit-payment-upah', 'Berhasil');
+            $upah_id = $this->model_form->update_payment_upah($data,$payment_id);
+            redirect(base_url("index.php/payment/payment_gaji/").$upah_id);
+        }
     //end fungsi update
 
     //fungsi delete
@@ -828,6 +854,11 @@ class Form extends CI_Controller {
             $invoice_id = $this->model_form->deletepaymentinvoice($payment_id);
             $this->session->set_flashdata('status-delete-payment-invoice', 'Berhasil');
             redirect(base_url('index.php/payment/payment_invoice/').$invoice_id);
+        }
+        public function deletepaymentupah($payment_id){
+            $pembayaran_upah_id = $this->model_form->deletepaymentupah($payment_id);
+            $this->session->set_flashdata('status-delete-payment-upah', 'Berhasil');
+            redirect(base_url('index.php/payment/payment_gaji/').$pembayaran_upah_id);
         }
         public function deleteslip($slip_id){
             $this->model_form->deleteslip($slip_id);

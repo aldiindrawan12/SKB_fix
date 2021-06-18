@@ -136,11 +136,11 @@
 
 
 <div class="container">
-    <button onclick="isi_rekening()" class="btn btn-primary">Cetak Memo Transfer</button>
+    <!-- <button onclick="isi_rekening()" class="btn btn-primary">Cetak Memo Transfer</button>
     <button onclick="print_memo_tunai()" class="btn btn-primary">Cetak Memo Tunai</button>
     <?php if($pembayaran_upah[0]["pembayaran_upah_status"]!="Lunas"){?>
         <button onclick="selesai()" class="btn btn-primary">Lunas</button>
-    <?php }?>
+    <?php }?> -->
 </div>
 <hr>
 <!-- form rekening supir -->

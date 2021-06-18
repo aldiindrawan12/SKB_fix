@@ -298,10 +298,10 @@
                         }
                     },
                     {
-                        "data": "pembayaran_upah_nominal",
-                        className: 'text-center',
+                        "data": "sisa",
                         render: function(data, type, row) {
-                           return "sisa gaji";
+                            let html = 'Rp.'+rupiah(data);
+                            return html;
                         }
                     },
                     {
@@ -321,8 +321,10 @@
                     {
                         "data": "pembayaran_upah_id",
                         className: 'text-center',
+                        "orderable": false,
                         render: function(data, type, row) {
-                           return "payment";
+                            let html = "<a class='btn btn-light' href='<?= base_url('index.php/payment/payment_gaji/"+data+"')?>'><i class='fas fa-file-invoice-dollar'></i></a>";
+                            return html;
                         }
                     },
                     {
@@ -452,6 +454,16 @@
     <script>
         var edit_slip_gaji = '<?= $this->session->flashdata('status-edit-slip-gaji'); ?>';
         var delete_slip_gaji = '<?= $this->session->flashdata('status-delete-slip'); ?>';
+        var insert_payment_upah = '<?= $this->session->flashdata('status-insert-payment-upah'); ?>';
+            if(insert_payment_upah == "Berhasil"){
+                Swal.fire({
+                        title: "Berhasil",
+                        icon: "success",
+                        text: "Menambahkan Data Payment Slip Gaji",
+                        type: "success",
+                        timer: 2000
+                    });
+            }
             if(edit_slip_gaji == "Berhasil"){
                 Swal.fire({
                         title: "Berhasil",

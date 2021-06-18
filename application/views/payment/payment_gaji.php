@@ -11,73 +11,74 @@
 <div class="container">
     <div class="card shadow mb-2">
         <div class="card-header ">
-            <h6 class="m-0 font-weight-bold text-primary">Payment Invoice</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Payment Slip Gaji</h6>
         </div>
         <div class="card-body small">
-        <form action="<?=base_url("index.php/form/insert_payment_invoice/").$invoice_kode?>" method="POST">
+        <form action="<?=base_url("index.php/form/insert_payment_gaji/").$pembayaran_upah_id?>" method="POST">
             <div class="row">
                 <div class="col-md-6 border rounded">
                     <div class="form-group row mt-3">
-                        <label for="invoice_kode" class="form-label col-sm-5 font-weight-bold">NO Invoice</label>
+                        <label for="pembayaran_upah_id" class="form-label col-sm-5 font-weight-bold">NO Slip Gaji</label>
                         <div class="col-sm-7">
-                            <input autocomplete="off" type="text" class="form-control col-md-10" id="invoice_kode" name="invoice_kode" readonly value="<?= $invoice["invoice_kode"]?>">
+                            <input autocomplete="off" type="text" class="form-control col-md-10" id="pembayaran_upah_id" name="pembayaran_upah_id" readonly value="<?= $pembayaran_upah["pembayaran_upah_id"]?>">
                         </div>
                     </div>          
                     <div class="form-group row">
-                        <label for="invoice_tanggal" class="form-label col-sm-5 font-weight-bold">Tgl.Invoice</label>
+                        <label for="pembayaran_upah_tanggal" class="form-label col-sm-5 font-weight-bold">Tgl.Slip Gaji</label>
                         <div class="col-sm-7">
-                            <input autocomplete="off" type="text" class="form-control col-md-10" id="invoice_tanggal" name="invoice_tanggal" readonly value="<?= change_tanggal($invoice["tanggal_invoice"])?>">
+                            <input autocomplete="off" type="text" class="form-control col-md-10" id="pembayaran_upah_tanggal" name="pembayaran_upah_tanggal" readonly value="<?= change_tanggal($pembayaran_upah["pembayaran_upah_tanggal"])?>">
                         </div>
                     </div>          
                     <div class="form-group row">
-                        <label for="customer_name" class="form-label col-sm-5 font-weight-bold">Customer</label>
+                        <label for="supir_name" class="form-label col-sm-5 font-weight-bold">Driver</label>
                         <div class="col-sm-7">
-                            <input autocomplete="off" type="text" class="form-control col-md-10" id="customer_name" name="customer_name" readonly value="<?= $invoice["customer_name"]?>">
+                            <input autocomplete="off" type="text" class="form-control col-md-10" id="supir_name" name="supir_name" readonly value="<?= $pembayaran_upah["supir_name"]?>">
                         </div>
                     </div>          
                     <div class="form-group row">
-                        <label for="invoice_tagihan" class="form-label col-sm-5 font-weight-bold">Total Tagihan</label>
+                        <label for="bulan_kerja" class="form-label col-sm-5 font-weight-bold">Bulan Kerja</label>
                         <div class="col-sm-7">
-                            <input autocomplete="off" type="text" class="form-control col-md-10" id="invoice_tagihan" name="invoice_tagihan" readonly value="<?= number_format($invoice["grand_total"],0,',','.')?>">
+                            <input autocomplete="off" type="text" class="form-control col-md-10" id="bulan_kerja" name="bulan_kerja" readonly value="<?= $pembayaran_upah["bulan_kerja"]?>">
+                        </div>
+                    </div>          
+
+                    <div class="form-group row">
+                        <label for="pembayaran_uaph_total" class="form-label col-sm-5 font-weight-bold">Total Gaji</label>
+                        <div class="col-sm-7">
+                            <input autocomplete="off" type="text" class="form-control col-md-10" id="pembayaran_uaph_total" name="pembayaran_uaph_total" readonly value="<?= number_format($pembayaran_upah["pembayaran_upah_total"],0,',','.')?>">
                         </div>
                     </div>          
                     <div class="form-group row">
-                        <label for="invoice_sisa_tagihan" class="form-label col-sm-5 font-weight-bold">Sisa Tagihan</label>
+                        <label for="pembayaran_upah_sisa" class="form-label col-sm-5 font-weight-bold">Sisa Gaji</label>
                         <div class="col-sm-7">
-                            <input autocomplete="off" type="text" class="form-control col-md-10" id="invoice_sisa_tagihan" name="invoice_sisa_tagihan" readonly value="<?= number_format($invoice["sisa"],0,',','.')?>">
+                            <input autocomplete="off" type="text" class="form-control col-md-10" id="pembayaran_upah_sisa" name="pembayaran_upah_sisa" readonly value="<?= number_format($pembayaran_upah["sisa"],0,',','.')?>">
                         </div>
-                    </div>          
+                    </div>   
                     <div class="form-group row">
-                        <label for="invoice_top" class="form-label col-sm-5 font-weight-bold">TOP</label>
+                        <label for="pembayaran_upah_status" class="form-label font-weight-bold col-sm-5">Status</label>
                         <div class="col-sm-7">
-                            <input autocomplete="off" type="text" class="form-control col-md-10" id="invoice_top" name="invoice_top" readonly value="<?= $invoice["batas_pembayaran"]?>">
-                        </div>
-                    </div>          
-                    <div class="form-group row">
-                        <label for="invoice_status" class="form-label font-weight-bold col-sm-5">Status</label>
-                        <div class="col-sm-7">
-                            <input autocomplete="off" type="text" class="form-control col-md-10" id="invoice_status" name="invoice_status" readonly value="<?= $invoice["status_bayar"]?>">
+                            <input autocomplete="off" type="text" class="form-control col-md-10" id="pembayaran_upah_status" name="pembayaran_upah_status" readonly value="<?= $pembayaran_upah["pembayaran_upah_status"]?>">
                         </div>
                     </div>          
                     
-                </div>
+                </div>                
                 <div class="col-md-6 border rounded">
                     <div class="form-group row mt-3">
-                        <label for="payment_invoice_nominal" class="col-form-label col-sm-5 font-weight-bold">Nominal Pembayaran</label>
+                        <label for="payment_upah_nominal" class="col-form-label col-sm-5 font-weight-bold">Nominal Pembayaran</label>
                         <div class="col-sm-7">
-                            <input autocomplete="off" type="text" class="form-control" id="payment_invoice_nominal" name="payment_invoice_nominal" required onkeyup="cek_bayar(this)">
+                            <input autocomplete="off" type="text" class="form-control" id="payment_upah_nominal" name="payment_upah_nominal" required onkeyup="cek_bayar(this)">
                         </div>
                     </div>
                     <div class="form-group row mt-3">
-                        <label for="payment_invoice_tgl" class="form-label font-weight-bold col-sm-5">Tgl.Pembayaran</label>
+                        <label for="payment_upah_tgl" class="form-label font-weight-bold col-sm-5">Tgl.Pembayaran</label>
                         <div class="col-sm-7">
-                            <input autocomplete="off" type="text" class="form-control" id="payment_invoice_tgl" name="payment_invoice_tgl" required onclick="tanggal_berlaku(this)">
+                            <input autocomplete="off" type="text" class="form-control" id="payment_upah_tgl" name="payment_upah_tgl" required onclick="tanggal_berlaku(this)">
                         </div>
                     </div>    
                     <div class="form-group row mt-3">
-                        <label class="form-label font-weight-bold col-sm-5" for="payment_invoice_jenis">Jenis Pembayaran</label>
+                        <label class="form-label font-weight-bold col-sm-5" for="payment_upah_jenis">Jenis Pembayaran</label>
                         <div class="col-sm-7">
-                            <select name="payment_invoice_jenis" id="payment_invoice_jenis" class="form-control custom-select" required>
+                            <select name="payment_upah_jenis" id="payment_upah_jenis" class="form-control custom-select" required>
                                 <option class="font-w700" disabled="disabled" selected value="">Jenis Pembayaran</option>
                                 <option value="Tunai">Tunai</option>
                                 <option value="Transfer">Transfer</option>
@@ -85,14 +86,14 @@
                         </div>
                     </div> 
                     <div class="form-group row mt-3">
-                        <label for="payment_invoice_keterangan" class="form-label font-weight-bold col-sm-5">Keterangan</label>
+                        <label for="payment_upah_keterangan" class="form-label font-weight-bold col-sm-5">Keterangan</label>
                         <div class="col-sm-7">
-                            <textarea class="form-control" name="payment_invoice_keterangan" id="payment_invoice_keterangan" rows="3"></textarea>
+                            <textarea class="form-control" name="payment_upah_keterangan" id="payment_upah_keterangan" rows="3"></textarea>
                         </div>
                     </div>
                 </div>
             </div>
-            <?php if($invoice["status_bayar"]!="Lunas"){?>
+            <?php if($pembayaran_upah["pembayaran_upah_status"]!="Lunas"){?>
                 <div class="col text-center">
                     <button type="submit" class="btn btn-success mt-3">Simpan</button>
                     <button type="reset" class="btn btn-danger mt-3" onclick="reset_form()">Batal</button>
@@ -108,7 +109,7 @@
 <div class="container">
     <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary float-left">Data Pembayaran Invoice <?= $invoice["invoice_kode"]?></h6>
+        <h6 class="m-0 font-weight-bold text-primary float-left">Data Pembayaran Slip Gaji <?= $pembayaran_upah_id?></h6>
     </div>
     <!-- tabel data cutomer -->
     <div class="card-body">
@@ -124,16 +125,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($payment_invoice as $value){?>
+                    <?php foreach($payment_pembayaran_upah as $value){?>
                         <tr>
-                            <td><?= change_tanggal($value["payment_invoice_tgl"])?></td>
-                            <td>Rp.<?= number_format($value["payment_invoice_nominal"],0,',','.')?></td>
-                            <td><?= $value["payment_invoice_jenis"]?></td>
-                            <td><?= $value["payment_invoice_keterangan"]?></td>
+                            <td><?= change_tanggal($value["payment_upah_tgl"])?></td>
+                            <td>Rp.<?= number_format($value["payment_upah_nominal"],0,',','.')?></td>
+                            <td><?= $value["payment_upah_jenis"]?></td>
+                            <td><?= $value["payment_upah_keterangan"]?></td>
                             <td>
                             <?php if($_SESSION['role']=="Supervisor"){?>
-                                <a class='btn btn-light' id="<?= $value["payment_invoice_id"]?>" onclick="edit_payment_invoice(this)" data-toggle="modal" data-target="#popup-edit-payment-invoice"><i class='fas fa-pen-square'></i></a>
-                                <a class='btn btn-light' id="<?= $value["payment_invoice_id"]?>" onclick="delete_payment_invoice(this)"><i class='fas fa-trash-alt'></i></a>
+                                <a class='btn btn-light' id="<?= $value["payment_upah_id"]?>" onclick="edit_payment_upah(this)" data-toggle="modal" data-target="#popup-edit-payment-upah"><i class='fas fa-pen-square'></i></a>
+                                <a class='btn btn-light' id="<?= $value["payment_upah_id"]?>" onclick="delete_payment_upah(this)"><i class='fas fa-trash-alt'></i></a>
                             <?php }?>
                             </td>
                         </tr>
@@ -144,40 +145,40 @@
     </div>
     <!-- end tabel data cutomer -->
 </div>
-<div class="modal fade mt-3" id="popup-edit-payment-invoice" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+<div class="modal fade mt-3" id="popup-edit-payment-upah" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary-dark">
-                <h5 class="font-weight-bold">Edit Data Payment Invoice</h5>
+                <h5 class="font-weight-bold">Edit Data Payment Slip Gaji</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="font-size-sm m-3 text-justify">
-                <form action="<?= base_url("index.php/form/update_payment_invoice")?>" method="POST">
-                    <input type="text" name=payment_invoice_id_update id=payment_invoice_id_update hidden>
+                <form action="<?= base_url("index.php/form/update_payment_upah")?>" method="POST">
+                    <input type="text" name=payment_upah_id_update id=payment_upah_id_update hidden>
                     <div class="form-group row mt-3">
-                        <label for="invoice_kode_update" class="form-label col-sm-5 font-weight-bold">NO Invoice</label>
+                        <label for="pembayaran_upah_id_update" class="form-label col-sm-5 font-weight-bold">NO Slip Gaji</label>
                         <div class="col-sm-7">
-                            <input autocomplete="off" type="text" class="form-control col-md-10" id="invoice_kode_update" name="invoice_kode_update" readonly value="<?= $invoice["invoice_kode"]?>">
+                            <input autocomplete="off" type="text" class="form-control" id="pembayaran_upah_id_update" name="pembayaran_upah_id_update" readonly value="<?= $pembayaran_upah["pembayaran_upah_id"]?>">
                         </div>
                     </div>   
                     <div class="form-group row mt-3">
-                        <label for="payment_invoice_nominal_update" class="col-form-label col-sm-5 font-weight-bold">Nominal Pembayaran</label>
+                        <label for="payment_upah_nominal_update" class="col-form-label col-sm-5 font-weight-bold">Nominal Pembayaran</label>
                         <div class="col-sm-7">
-                            <input autocomplete="off" type="text" class="form-control" id="payment_invoice_nominal_update" name="payment_invoice_nominal_update" required onkeyup="cek_bayar_edit(this)">
+                            <input autocomplete="off" type="text" class="form-control" id="payment_upah_nominal_update" name="payment_upah_nominal_update" required onkeyup="cek_bayar_edit(this)">
                         </div>
                     </div>
                     <div class="form-group row mt-3">
-                        <label for="payment_invoice_tgl_update" class="form-label font-weight-bold col-sm-5">Tgl.Pembayaran</label>
+                        <label for="payment_upah_tgl_update" class="form-label font-weight-bold col-sm-5">Tgl.Pembayaran</label>
                         <div class="col-sm-7">
-                            <input autocomplete="off" type="text" class="form-control" id="payment_invoice_tgl_update" name="payment_invoice_tgl_update" required onclick="tanggal_berlaku(this)">
+                            <input autocomplete="off" type="text" class="form-control" id="payment_upah_tgl_update" name="payment_upah_tgl_update" required onclick="tanggal_berlaku(this)">
                         </div>
                     </div>    
                     <div class="form-group row mt-3">
-                        <label class="form-label font-weight-bold col-sm-5" for="payment_invoice_jenis_update">Jenis Pembayaran</label>
+                        <label class="form-label font-weight-bold col-sm-5" for="payment_upah_jenis_update">Jenis Pembayaran</label>
                         <div class="col-sm-7">
-                            <select name="payment_invoice_jenis_update" id="payment_invoice_jenis_update" class="form-control custom-select" required>
+                            <select name="payment_upah_jenis_update" id="payment_upah_jenis_update" class="form-control custom-select" required>
                                 <option class="font-w700" disabled="disabled" selected value="">Jenis Pembayaran</option>
                                 <option value="Tunai">Tunai</option>
                                 <option value="Transfer">Transfer</option>
@@ -185,9 +186,9 @@
                         </div>
                     </div> 
                     <div class="form-group row mt-3">
-                        <label for="payment_invoice_keterangan_update" class="form-label font-weight-bold col-sm-5">Keterangan</label>
+                        <label for="payment_upah_keterangan_update" class="form-label font-weight-bold col-sm-5">Keterangan</label>
                         <div class="col-sm-7">
-                            <textarea class="form-control" name="payment_invoice_keterangan_update" id="payment_invoice_keterangan_update" rows="3"></textarea>
+                            <textarea class="form-control" name="payment_upah_keterangan_update" id="payment_upah_keterangan_update" rows="3"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
@@ -322,14 +323,25 @@
         }
     </script>
     <!-- end cek password -->
-    <!-- scrip angka rupiah -->
     <script>    
         $(function(){     
+            $("#payment_upah_tgl").datepicker({
+                format: 'dd-mm-yyyy',
+                autoclose: true,
+                todayHighlight: true
+            });
+            $("#payment_upah_tgl_update").datepicker({
+                format: 'dd-mm-yyyy',
+                autoclose: true,
+                todayHighlight: true
+            });
             var date = new Date();
                 if((date.getMonth()+1)<10){
-                    $("#payment_invoice_tgl").val(date.getDate()+"-0"+(date.getMonth()+1)+"-"+date.getFullYear());
+                    $("#payment_upah_tgl").val(date.getDate()+"-0"+(date.getMonth()+1)+"-"+date.getFullYear());
+                    $("#payment_upah_tgl_update").val(date.getDate()+"-0"+(date.getMonth()+1)+"-"+date.getFullYear());
                 }else{
-                    $("#payment_invoice_tgl").val(date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear());
+                    $("#payment_upah_tgl").val(date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear());
+                    $("#payment_upah_tgl_update").val(date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear());
                 }
         });
         function rupiah(uang){
@@ -346,40 +358,20 @@
             // alert(rupiah);
             return rupiah;
         }
-        function tanggal_berlaku(a){
-            // alert(a.id);
-            Swal.fire({
-                title: "Loading",
-                icon: "success",
-                text: "Mohon Tunggu Sebentar",
-                type: "success",
-                timer: 500
-            });
-            $("#"+a.id).datepicker({
-                format: 'dd-mm-yyyy',
-                autoclose: true,
-                todayHighlight: true,
-            });
-        }
-    </script>
-    <!-- end script angka rupiah -->
-    <script>
         function change_tanggal(data){
             var data_tanggal = data.split("-");
             var tanggal = data_tanggal[2]+"-"+data_tanggal[1]+"-"+data_tanggal[0];
             return tanggal;
         }
         function reset_form(){
-            location.replace("<?= base_url("index.php/home/invoice_customer")?>");
+            location.replace("<?= base_url("index.php/home/report_gaji")?>");
         }
-    </script>
-    <script>
         function cek_bayar(a){
             var sisa = 0;
-            if($("#invoice_sisa_tagihan").val().replaceAll(".","") == ""){
+            if($("#pembayaran_upah_sisa").val().replaceAll(".","") == ""){
                 sisa = 0;
             }else{
-                sisa = $("#invoice_sisa_tagihan").val().replaceAll(".","");
+                sisa = $("#pembayaran_upah_sisa").val().replaceAll(".","");
             }
             $( '#'+a.id ).mask('000.000.000', {reverse: true});
             var bayar = $("#"+a.id).val().replaceAll(".","");   
@@ -403,13 +395,11 @@
             //     $( '#'+a.id ).val(bayar_saat_ini);
             // }
         }
-    </script>
-    <script>
-        function delete_payment_invoice(a){
+        function delete_payment_upah(a){
                         let pk = a.id;
                         Swal.fire({
-                            title: 'Hapus Data Payment Invoice',
-                            text:'Yakin Anda Ingin Menghapus Data Payment Invoice Ini?',
+                            title: 'Hapus Data Payment Slip Gaji',
+                            text:'Yakin Anda Ingin Menghapus Data Payment Slip Gaji Ini?',
                             showDenyButton: true,
                             denyButtonText: `Batal`,
                             confirmButtonText: 'Hapus',
@@ -418,48 +408,48 @@
                             icon: "warning",
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                window.location.replace("<?= base_url('index.php/form/deletepaymentinvoice/')?>"+pk);
+                                window.location.replace("<?= base_url('index.php/form/deletepaymentupah/')?>"+pk);
                             }
                         })
         };
         
-        function edit_payment_invoice(a) {
+                    function edit_payment_upah(a) {
                         let pk = a.id;
                         $.ajax({ //ajax ambil data bon
                             type: "GET",
-                            url: "<?php echo base_url('index.php/detail/getpaymentinvoice') ?>",
+                            url: "<?php echo base_url('index.php/detail/getpaymentupah') ?>",
                             dataType: "JSON",
                             data: {
                                 id: pk
                             },
                             success: function(data) { //jika ambil data sukses
-                                $('#invoice_kode_update').val(data["invoice_id"]); //set value
-                                $('#payment_invoice_id_update').val(data["payment_invoice_id"]); //set value
-                                $('#payment_invoice_tgl_update').val(change_tanggal(data["payment_invoice_tgl"])); //set value
-                                $('#payment_invoice_nominal_update').val(rupiah(data["payment_invoice_nominal"])); //set value
-                                $('#payment_invoice_keterangan_update').val(data["payment_invoice_keterangan"]); //set value
-                                $('#payment_invoice_jenis_update').val(data["payment_invoice_jenis"]); //set value
+                                $('#pembayaran_upah_id_update').val(data["pembayaran_upah_id"]); //set value
+                                $('#payment_upah_id_update').val(data["payment_upah_id"]); //set value
+                                $('#payment_upah_tgl_update').val(change_tanggal(data["payment_upah_tgl"])); //set value
+                                $('#payment_upah_nominal_update').val(rupiah(data["payment_upah_nominal"])); //set value
+                                $('#payment_upah_keterangan_update').val(data["payment_upah_keterangan"]); //set value
+                                $('#payment_upah_jenis_update').val(data["payment_upah_jenis"]); //set value
                             }
                         });
                     };
     </script>
     <script>
-    var delete_payment = '<?= $this->session->flashdata('status-delete-payment-invoice'); ?>';
-    var update_payment = '<?= $this->session->flashdata('status-edit-payment-invoice'); ?>';
+    var delete_payment = '<?= $this->session->flashdata('status-delete-payment-upah'); ?>';
+    var update_payment = '<?= $this->session->flashdata('status-edit-payment-upah'); ?>';
         if(delete_payment == "Berhasil"){
             Swal.fire({
-                     title: "Hapus Data Payment Invoice",
+                     title: "Hapus Data Payment Slip Gaji",
                      icon: "success",
-                     text: "Berhasil Hapus Data Payment Invoice",
+                     text: "Berhasil Hapus Data Payment Slip Gaji",
                      type: "error",
                      timer: 2000
                  });
         }
         if(update_payment == "Berhasil"){
             Swal.fire({
-                     title: "Update Data Payment Invoice",
+                     title: "Update Data Payment Slip Gaji",
                      icon: "success",
-                     text: "Berhasil Update Data Payment Invoice",
+                     text: "Berhasil Update Data Payment Slip Gaji",
                      type: "success",
                      timer: 2000
                  });

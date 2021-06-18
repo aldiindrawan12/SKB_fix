@@ -120,6 +120,19 @@ class Model_Form extends CI_model
 
             return $this->db->insert("payment_invoice", $data);
         }
+        public function insert_payment_upah($data){
+            $slip = $this->db->get_where("skb_pembayaran_upah",array("pembayaran_upah_id"=>$data["pembayaran_upah_id"]))->row_array();
+            $sisa = $slip["sisa"] - $data["payment_upah_nominal"];
+            
+            if($sisa==0){
+                $this->db->set("pembayaran_upah_status","Lunas");
+            }
+            $this->db->set("sisa",$sisa);
+            $this->db->where("pembayaran_upah_id",$data["pembayaran_upah_id"]);
+            $this->db->update("skb_pembayaran_upah");
+
+            return $this->db->insert("payment_upah", $data);
+        }
     //end fungsi insert
     //fungsi acc
         public function accsupir($supir_id,$validasi){
@@ -410,6 +423,27 @@ class Model_Form extends CI_model
     
             return $invoice["invoice_kode"];
         }
+        public function update_payment_upah($data,$payment_id){
+            $payment_upah = $this->db->get_where("payment_upah",array("payment_upah_id"=>$payment_id))->row_array();
+            $upah = $this->db->get_where("skb_pembayaran_upah",array("pembayaran_upah_id"=>$payment_upah["pembayaran_upah_id"]))->row_array();
+
+            $selisih = $payment_upah["payment_upah_nominal"]-$data["payment_upah_nominal"];
+            $sisa=$upah["sisa"]+$selisih;
+
+            $this->db->set("sisa",$sisa);
+            if($sisa==0){
+                $this->db->set("pembayaran_upah_status","Lunas");
+            }else{
+                $this->db->set("pembayaran_upah_status","Belum Lunas");
+            }
+            $this->db->where("pembayaran_upah_id",$upah["pembayaran_upah_id"]);
+            $this->db->update("skb_pembayaran_upah");
+    
+            $this->db->where("payment_upah_id",$payment_id);
+            $this->db->update("payment_upah",$data);
+    
+            return $upah["pembayaran_upah_id"];
+        }
         public function update_status_aktif_supir($data){
             $this->db->set("status_aktif",$data["status_aktif"]);
             if($data["status_aktif"]=="Aktif"){
@@ -647,6 +681,22 @@ class Model_Form extends CI_model
     
             return $invoice["invoice_kode"];
         }
+
+        public function deletepaymentupah($payment_id){
+            $payment_upah = $this->db->get_where("payment_upah",array("payment_upah_id"=>$payment_id))->row_array();
+            $upah = $this->db->get_where("skb_pembayaran_upah",array("pembayaran_upah_id"=>$payment_upah["pembayaran_upah_id"]))->row_array();
+            $sisa = $upah["sisa"]+$payment_upah["payment_upah_nominal"];
+            $this->db->set("sisa",$sisa);
+            $this->db->set("pembayaran_upah_status","Belum Lunas");
+            $this->db->where("pembayaran_upah_id",$payment_upah["pembayaran_upah_id"]);
+            $this->db->update("skb_pembayaran_upah");
+    
+            $this->db->where("payment_upah_id",$payment_id);
+            $this->db->delete("payment_upah");
+    
+            return $upah["pembayaran_upah_id"];
+        }
+
         public function deleteslip($slip_id){
             $data_jo = $this->db->get_where("skb_job_order",array("pembayaran_upah_id"=>$slip_id))->result_array();
             for($i=0;$i<count($data_jo);$i++){

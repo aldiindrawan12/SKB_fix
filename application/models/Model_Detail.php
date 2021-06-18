@@ -43,6 +43,10 @@ class Model_Detail extends CI_model
             return $this->db->get_where("payment_invoice",array("payment_invoice_id"=>$payment_id))->row_array();
         }
         
+        public function getpaymentupahbyid($payment_id){ //payment by ID
+            return $this->db->get_where("payment_upah",array("payment_upah_id"=>$payment_id))->row_array();
+        }
+        
         public function getrutebyid($rute_id){ //rute by ID
             $this->db->join("skb_customer","skb_customer.customer_id=skb_rute.customer_id","left");
             return $this->db->get_where("skb_rute",array("rute_id"=>$rute_id))->row_array();
@@ -72,6 +76,15 @@ class Model_Detail extends CI_model
 
         public function getpaymentinvoice($invoice_id){ //invoice by ID
             return $this->db->get_where("payment_invoice",array("invoice_id"=>$invoice_id))->result_array();
+        }
+
+        public function getupahpayment($upah_id){ //invoice by ID
+            $this->db->join("skb_supir","skb_supir.supir_id=skb_pembayaran_upah.supir_id","left");
+            return $this->db->get_where("skb_pembayaran_upah",array("pembayaran_upah_id"=>$upah_id))->row_array();
+        }
+
+        public function getpaymentupah($upah_id){ //invoice by ID
+            return $this->db->get_where("payment_upah",array("pembayaran_upah_id"=>$upah_id))->result_array();
         }
         
         public function getjobbysupir($supir_id){ //JO by supir

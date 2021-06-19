@@ -3477,6 +3477,30 @@
         }
     </script>
     
+    <!-- cek aktifitas pengguna -->
+    <script>
+        $(document).ready(function() {
+            const idleDurationSecs = 900;
+            const redirectUrl = '<?= base_url("index.php/login/logout")?>';
+            let idleTimeout;
+
+            const resetIdleTimeout = function() {
+                if(idleTimeout){
+                    clearTimeout(idleTimeout);
+                }
+                idleTimeout = setTimeout(() => location.href = redirectUrl, idleDurationSecs * 1000);
+            };
+            
+            // Key events for reset time
+            resetIdleTimeout();
+            window.onkeypress = resetIdleTimeout;
+            window.click = resetIdleTimeout;
+            window.onclick = resetIdleTimeout;
+            window.onmousemove = resetIdleTimeout;
+            window.onscroll = resetIdleTimeout;
+
+        });
+    </script>
 </body>
 
 </html>

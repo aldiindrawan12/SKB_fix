@@ -957,6 +957,15 @@
                     },
                     {
                         "data": "Jo_id",
+                        className: 'text-center',
+                        "orderable": false,
+                        render: function(data, type, row) {
+                            let html = "<a class='btn btn-light' href='<?= base_url('index.php/payment/payment_jo/"+data+"')?>'><i class='fas fa-file-invoice-dollar'></i></a>";
+                            return html;
+                        }
+                    },
+                    {
+                        "data": "Jo_id",
                         "orderable": false,
                         render: function(data, type, row) {
                             var role_user = "<?=$_SESSION['role']?>";
@@ -2820,6 +2829,7 @@
             var update_invoice = '<?= $this->session->flashdata('status-update-invoice'); ?>';
             var edit_invoice = '<?= $this->session->flashdata('status-edit-invoice'); ?>';
             var insert_payment_invoice = '<?= $this->session->flashdata('status-insert-payment-invoice'); ?>';
+            var insert_payment_jo = '<?= $this->session->flashdata('status-insert-payment-jo'); ?>';
             var supir_jo = '<?= $this->session->flashdata('supir_jo'); ?>';
             var mobil_jo = '<?= $this->session->flashdata('mobil_jo'); ?>';
             if(login == "Berhasil"){
@@ -2845,6 +2855,15 @@
                         title: "Berhasil",
                         icon: "success",
                         text: "Menambahkan Data Payment Invoice",
+                        type: "success",
+                        timer: 2000
+                    });
+            }
+            if(insert_payment_jo == "Berhasil"){
+                Swal.fire({
+                        title: "Berhasil",
+                        icon: "success",
+                        text: "Menambahkan Data Payment Job Order",
                         type: "success",
                         timer: 2000
                     });

@@ -133,6 +133,16 @@ class Model_Form extends CI_model
 
             return $this->db->insert("payment_upah", $data);
         }
+        public function insert_payment_jo($data){
+            $jo = $this->db->get_where("skb_job_order",array("Jo_id"=>$data["jo_id"]))->row_array();
+            $sisa = $jo["sisa"] - $data["payment_jo_nominal"];
+            
+            $this->db->set("sisa",$sisa);
+            $this->db->where("Jo_id",$data["jo_id"]);
+            $this->db->update("skb_job_order");
+
+            return $this->db->insert("payment_jo", $data);
+        }
     //end fungsi insert
     //fungsi acc
         public function accsupir($supir_id,$validasi){
@@ -444,6 +454,22 @@ class Model_Form extends CI_model
     
             return $upah["pembayaran_upah_id"];
         }
+        public function update_payment_jo($data,$payment_id){
+            $payment_jo = $this->db->get_where("payment_jo",array("payment_jo_id"=>$payment_id))->row_array();
+            $jo = $this->db->get_where("skb_job_order",array("Jo_id"=>$payment_jo["jo_id"]))->row_array();
+
+            $selisih = $payment_jo["payment_jo_nominal"]-$data["payment_jo_nominal"];
+            $sisa=$jo["sisa"]+$selisih;
+
+            $this->db->set("sisa",$sisa);
+            $this->db->where("Jo_id",$jo["Jo_id"]);
+            $this->db->update("skb_job_order");
+    
+            $this->db->where("payment_jo_id",$payment_id);
+            $this->db->update("payment_jo",$data);
+    
+            return $jo["Jo_id"];
+        }
         public function update_status_aktif_supir($data){
             $this->db->set("status_aktif",$data["status_aktif"]);
             if($data["status_aktif"]=="Aktif"){
@@ -695,6 +721,20 @@ class Model_Form extends CI_model
             $this->db->delete("payment_upah");
     
             return $upah["pembayaran_upah_id"];
+        }
+
+        public function deletepaymentjo($payment_id){
+            $payment_jo = $this->db->get_where("payment_jo",array("payment_jo_id"=>$payment_id))->row_array();
+            $jo = $this->db->get_where("skb_job_order",array("Jo_id"=>$payment_jo["jo_id"]))->row_array();
+            $sisa = $jo["sisa"]+$payment_jo["payment_jo_nominal"];
+            $this->db->set("sisa",$sisa);
+            $this->db->where("Jo_id",$payment_jo["jo_id"]);
+            $this->db->update("skb_job_order");
+    
+            $this->db->where("payment_jo_id",$payment_id);
+            $this->db->delete("payment_jo");
+    
+            return $jo["Jo_id"];
         }
 
         public function deleteslip($slip_id){

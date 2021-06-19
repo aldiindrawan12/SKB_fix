@@ -45,4 +45,21 @@ class Payment extends CI_Controller {
         $this->load->view('sidebar');
         $this->load->view("payment/payment_gaji");
     }
+
+    public function payment_jo($jo_id)
+    {
+        if(!$_SESSION["user"]){
+    		$this->session->set_flashdata('status-login', 'False');
+            redirect(base_url());
+        }
+        $data["jo_id"] = $jo_id;
+        $data["jo"] = $this->model_detail->getjopayment($jo_id);
+        $data["payment_jo"] = $this->model_detail->getpaymentjo($jo_id);
+        $data["page"] = "Jo_page";
+        $data["collapse_group"] = "Job_Order";
+        $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+        $this->load->view('header',$data);
+        $this->load->view('sidebar');
+        $this->load->view("payment/payment_jo");
+    }
 }

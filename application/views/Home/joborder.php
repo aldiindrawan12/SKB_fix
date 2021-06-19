@@ -93,6 +93,7 @@
                             <th class="text-center" scope="col">Total UJ</th>
                             <th class="text-center" scope="col">Sisa UJ</th>
                             <th class="text-center" scope="col">Biaya Lain</th>
+                            <th class="text-center" scope="col">Payment</th>
                             <th scope="col">Aksi</th>
                         </tr>
                     </thead>

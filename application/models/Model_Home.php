@@ -428,7 +428,7 @@ class Model_Home extends CI_model
                     "status"=>$record->status,
                     "uang_total"=>$record->uang_total,
                     "biaya_lain"=>$record->biaya_lain,
-                    "sisa_uj"=>$record->uang_total-$record->uang_jalan_bayar
+                    "sisa_uj"=>$record->sisa
                 ); 
                 $n++;
             }

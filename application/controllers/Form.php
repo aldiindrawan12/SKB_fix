@@ -201,6 +201,19 @@ class Form extends CI_Controller {
             redirect(base_url("index.php/home/report_gaji"));
         }
 
+        public function insert_payment_jo(){
+            $data=array(
+                "jo_id"=>$this->input->post("jo_id"),
+                "payment_jo_tgl"=>$this->change_tanggal($this->input->post("payment_jo_tgl")),
+                "payment_jo_nominal"=>str_replace(".","",$this->input->post("payment_jo_nominal")),
+                "payment_jo_jenis"=>$this->input->post("payment_jo_jenis"),
+                "payment_jo_keterangan"=>$this->input->post("payment_jo_keterangan"),
+            );
+            $this->session->set_flashdata('status-insert-payment-jo', 'Berhasil');
+            $this->model_form->insert_payment_jo($data);
+            redirect(base_url("index.php/home"));
+        }
+
         public function insert_JO(){
             if($this->input->post("nominal_tambahan")==""){
                 $nominal_tambahan = 0;
@@ -766,6 +779,20 @@ class Form extends CI_Controller {
             $upah_id = $this->model_form->update_payment_upah($data,$payment_id);
             redirect(base_url("index.php/payment/payment_gaji/").$upah_id);
         }
+
+        public function update_payment_jo(){
+            $payment_id=$this->input->post("payment_jo_id_update");
+            $data=array(
+                "jo_id"=>$this->input->post("jo_id_update"),
+                "payment_jo_tgl"=>$this->change_tanggal($this->input->post("payment_jo_tgl_update")),
+                "payment_jo_nominal"=>str_replace(".","",$this->input->post("payment_jo_nominal_update")),
+                "payment_jo_jenis"=>$this->input->post("payment_jo_jenis_update"),
+                "payment_jo_keterangan"=>$this->input->post("payment_jo_keterangan_update"),
+            );
+            $this->session->set_flashdata('status-edit-payment-jo', 'Berhasil');
+            $jo_id = $this->model_form->update_payment_jo($data,$payment_id);
+            redirect(base_url("index.php/payment/payment_jo/").$jo_id);
+        }
     //end fungsi update
 
     //fungsi delete
@@ -859,6 +886,11 @@ class Form extends CI_Controller {
             $pembayaran_upah_id = $this->model_form->deletepaymentupah($payment_id);
             $this->session->set_flashdata('status-delete-payment-upah', 'Berhasil');
             redirect(base_url('index.php/payment/payment_gaji/').$pembayaran_upah_id);
+        }
+        public function deletepaymentjo($payment_id){
+            $jo_id = $this->model_form->deletepaymentjo($payment_id);
+            $this->session->set_flashdata('status-delete-payment-jo', 'Berhasil');
+            redirect(base_url('index.php/payment/payment_jo/').$jo_id);
         }
         public function deleteslip($slip_id){
             $this->model_form->deleteslip($slip_id);

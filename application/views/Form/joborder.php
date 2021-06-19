@@ -2,7 +2,7 @@
         <!-- Card Formulir JO -->
         <div class="card shadow mb-4">
             <div class="card-header ">
-                <h6 class="m-0 font-weight-bold text-primary">Buat Job Order</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Form Buat Job Order</h6>
             </div>
             <div class="card-body">
                 <!-- form Job Order Baru -->

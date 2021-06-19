@@ -246,7 +246,7 @@ class Home extends CI_Controller {
             $gaji = 0;
             for($i=0;$i<count($data["pembayaran_upah"]);$i++){
                 if($data["pembayaran_upah"][$i]["pembayaran_upah_status"]=="Belum Lunas"){
-                    $gaji = $gaji + $data["pembayaran_upah"][$i]["pembayaran_upah_total"];
+                    $gaji = $gaji + $data["pembayaran_upah"][$i]["sisa"];
                 }
             }
             $data["gaji"]=$gaji;

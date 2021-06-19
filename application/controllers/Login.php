@@ -6,6 +6,7 @@ class Login extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('model_login');//load model
+		$this->load->model('model_form');//load model
     }
 
     public function index(){
@@ -32,6 +33,11 @@ class Login extends CI_Controller {
                 $_SESSION["user_id"] = $user["akun_id"];
                 $_SESSION["user"] = $user["akun_name"];
                 $_SESSION["role"] = $user["akun_role"];
+                $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+                $_SESSION["payment_jo"] = json_decode($data["akun_akses"]["akses"])[20];
+                $_SESSION["payment_invoice"] = json_decode($data["akun_akses"]["akses"])[18];
+                $_SESSION["payment_slip"] = json_decode($data["akun_akses"]["akses"])[19];
+                
                 redirect(base_url("index.php/dashboard/"));
             }else{
                 $this->session->set_flashdata('status-login', 'Password');

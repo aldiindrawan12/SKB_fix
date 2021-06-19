@@ -108,29 +108,8 @@
                         <td colspan=3><p>Rp.<?= number_format($jo["uang_total"],2,',','.')?></p></td>
                     </tr>
                     <tr>
-                        <td class="font-weight-bold " style="width: 25%;">Uang Jalan Terbayar</td>
-                        <?php if($jo["uang_jalan_bayar"]>=$jo["uang_total"] || $jo["status"]=="Dibatalkan"){?>
-                            <td colspan=3>
-                                <div class="row ">
-                                    <p class="col">Rp.<?= number_format($jo["uang_jalan_bayar"],2,',','.')?></p>
-                                    <div class="col ">
-                                        <a class='btn btn-sm btn-success col-md-12  active float-right'>
-                                            Pembayaran UJ Lunas atau Dibatalkan
-                                        </a>
-                                    </div>
-                                </div>
-                                
-                            </td>
-                        <?php }else{?>
-                            <td colspan=3>
-                                <div class="row ">
-                                    <p class="col">Rp.<?= number_format($jo["uang_jalan_bayar"],2,',','.')?></p>
-                                    <a class='btn btn-primary btn-sm col-md-4' data-toggle="modal" data-target="#update_ju" onclick="sisa_uj(<?= $jo['uang_total']-$jo['uang_jalan_bayar']?>)">
-                                        <span>Konfirmasi Bayar UJ</span>
-                                    </a>
-                                </div>
-                            </td>
-                        <?php }?>
+                        <td class="font-weight-bold " style="width: 25%;">Sisa Uang Jalan</td>
+                        <td colspan=3>Rp.<?=number_format($jo["sisa"],2,',','.')?></td>
                     </tr>
                     <tr>
                         <td class="font-weight-bold" style="width: 20%;">Catatan/Keterangan</td>

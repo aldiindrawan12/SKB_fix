@@ -172,6 +172,7 @@
             </div>
             <div class="font-size-sm m-3 text-justify">
                 <form action="<?= base_url("index.php/form/update_payment_jo")?>" method="POST">
+                    <input type="text" name=payment_now id=payment_now hidden>
                     <input type="text" name=payment_jo_id_update id=payment_jo_id_update hidden>
                     <div class="form-group row mt-3">
                         <label for="jo_id_update" class="form-label col-sm-5 font-weight-bold">NO Job Order</label>
@@ -399,15 +400,15 @@
         }
         function cek_bayar_edit(a){
             $( '#'+a.id ).mask('000.000.000', {reverse: true});
-            // var bayar = $("#"+a.id).val().replaceAll(".","");   
-            // if(bayar == ""){
-            //     bayar = 0;
-            // }
-            // alert(bayar_saat_ini);
-            // if(parseInt(bayar_saat_ini)<parseInt(bayar)){
-            //     alert('Jumlah Pembayaran Harus Lebih Kecil Dari Rp.'+ rupiah(bayar_saat_ini));
-            //     $( '#'+a.id ).val(bayar_saat_ini);
-            // }
+            bayar_saat_ini = parseInt($("#payment_now").val().replaceAll(".",""))+parseInt($("#uang_sisa").val().replaceAll(".",""));
+            var bayar = $("#"+a.id).val().replaceAll(".","");   
+            if(bayar == ""){
+                bayar = 0;
+            }
+            if(parseInt(bayar_saat_ini)<parseInt(bayar)){
+                alert('Jumlah Pembayaran Harus Lebih Kecil Dari Rp.'+ rupiah(bayar_saat_ini));
+                $( '#'+a.id ).val("");
+            }
         }
         function delete_payment_jo(a){
                         let pk = a.id;
@@ -437,6 +438,7 @@
                                 id: pk
                             },
                             success: function(data) { //jika ambil data sukses
+                                $('#payment_now').val(data["payment_jo_nominal"]); //set value
                                 $('#payment_jo_id_update').val(data["payment_jo_id"]); //set value
                                 $('#payment_jo_tgl_update').val(change_tanggal(data["payment_jo_tgl"])); //set value
                                 $('#payment_jo_nominal_update').val(rupiah(data["payment_jo_nominal"])); //set value

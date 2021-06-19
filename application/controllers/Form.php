@@ -240,6 +240,7 @@ class Form extends CI_Controller {
                 "jenis_tambahan"=>$this->input->post("jenis_tambahan"),
                 "nominal_tambahan"=>$nominal_tambahan,
                 "uang_total"=>str_replace(".","",$this->input->post("uang_jalan_total")),
+                "sisa"=>str_replace(".","",$this->input->post("uang_jalan_total")),
             );
             $this->model_form->insert_JO($data["data"]);
             $data["jo_id"] = $data["data"]["Jo_id"];
@@ -679,10 +680,16 @@ class Form extends CI_Controller {
             $this->input->post("cekpage7"),"1","1",
             $this->input->post("cekpage10"),$this->input->post("cekpage11"),$this->input->post("cekpage12"),
             $this->input->post("cekpage13"),$this->input->post("cekpage14"),$this->input->post("cekpage15"),
-            $this->input->post("cekpage16"),$this->input->post("cekpage17"),$this->input->post("cekpage18")];
+            $this->input->post("cekpage16"),$this->input->post("cekpage17"),$this->input->post("cekpage18"),
+            $this->input->post("cekpage19"),$this->input->post("cekpage20"),$this->input->post("cekpage21")];
             // for($i=0;$i<count($konfigurasi);$i++){
             //     echo $konfigurasi[$i]."<br>";
             // }
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            $_SESSION["payment_jo"] = json_decode($data["akun_akses"]["akses"])[20];
+            $_SESSION["payment_invoice"] = json_decode($data["akun_akses"]["akses"])[18];
+            $_SESSION["payment_slip"] = json_decode($data["akun_akses"]["akses"])[19];
+            
             $this->model_form->update_konfigurasi($akun_id,$konfigurasi);
             redirect(base_url("index.php/home/akun"));
         }

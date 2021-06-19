@@ -323,7 +323,12 @@
                         className: 'text-center',
                         "orderable": false,
                         render: function(data, type, row) {
-                            let html = "<a class='btn btn-light' href='<?= base_url('index.php/payment/payment_gaji/"+data+"')?>'><i class='fas fa-file-invoice-dollar'></i></a>";
+                            let html = "";
+                                    if(<?= $_SESSION["payment_slip"]?>==0){
+                                        html += "<a class='btn btn-light btn-alert-payment-slip'><i class='fas fa-file-invoice-dollar'></i></a>";
+                                    }else{
+                                        html += "<a class='btn btn-light' href='<?= base_url('index.php/payment/payment_gaji/"+data+"')?>'><i class='fas fa-file-invoice-dollar'></i></a>";
+                                    }
                             return html;
                         }
                     },
@@ -335,8 +340,23 @@
                             let html = "";
                             html += "<a class='btn btn-light' href='<?= base_url('index.php/detail/detail_penggajian_report_pembayaran/')?>"+row["supir_id"]+"/"+data+"'><i class='fas fa-eye'></i></a>";
                             if(role_user=="Supervisor"){
-                                html += "<a class='btn btn-light btn-update-slip' href='<?= base_url("index.php/form/edit_slip/")?>"+data+"'><i class='fas fa-pen-square'></i></a>"+
-                                "<a class='btn btn-light btn-delete-slip' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/detail/getnumpaymentupah') ?>",
+                                    dataType: "text",
+                                    async:false,
+                                    data: {
+                                        id : data,
+                                    },
+                                    success: function(hasil) { //jika ambil hasil sukses
+                                        if(hasil>0){
+                                            html += "<a class='btn btn-light btn-alert-edit-slip'><i class='fas fa-pen-square'></i></a>";
+                                        }else{
+                                            html += "<a class='btn btn-light btn-update-slip' href='<?= base_url("index.php/form/edit_slip/")?>"+data+"'><i class='fas fa-pen-square'></i></a>";
+                                        }
+                                    }
+                                });
+                                html += "<a class='btn btn-light btn-delete-slip' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
                             }
                             return html;
                         }
@@ -345,19 +365,54 @@
                 drawCallback: function() {
                     $('.btn-delete-slip').click(function() {
                         let pk = $(this).data('pk');
-                        Swal.fire({
-                            title: 'Hapus Data Slip Gaji',
-                            text:'Yakin Anda Ingin Menghapus Data Slip Gaji Ini?',
-                            showDenyButton: true,
-                            denyButtonText: `Batal`,
-                            confirmButtonText: 'Hapus',
-                            denyButtonColor: '#808080',
-                            confirmButtonColor: '#FF0000',
-                            icon: "warning",
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                window.location.replace("<?= base_url('index.php/form/deleteslip/')?>"+pk);
+                        $.ajax({
+                            type: "GET",
+                            url: "<?php echo base_url('index.php/detail/getnumpaymentupah') ?>",
+                            dataType: "text",
+                            data: {
+                                id : pk,
+                            },
+                            success: function(data) { //jika ambil data sukses
+                                if(data>0){
+                                    Swal.fire({
+                                        title: 'Hapus Data Slip Gaji',
+                                        text:'Maaf Slip Gaji Ini Sudah Melakukan Pembayaran',
+                                        icon: "warning",
+                                        time: 2000
+                                    })
+                                }else{
+                                    Swal.fire({
+                                        title: 'Hapus Data Slip Gaji',
+                                        text:'Yakin Anda Ingin Menghapus Data Slip Gaji Ini?',
+                                        showDenyButton: true,
+                                        denyButtonText: `Batal`,
+                                        confirmButtonText: 'Hapus',
+                                        denyButtonColor: '#808080',
+                                        confirmButtonColor: '#FF0000',
+                                        icon: "warning",
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            window.location.replace("<?= base_url('index.php/form/deleteslip/')?>"+pk);
+                                        }
+                                    })
+                                }
                             }
+                        });
+                    });
+                    $('.btn-alert-edit-slip').click(function() {
+                        Swal.fire({
+                            title: 'Edit Data Slip Gaji',
+                            text:'Maaf Slip Gaji Ini Sudah Melakukan Pembayaran',
+                            icon: "warning",
+                            time: 2000
+                        })
+                    });
+                    $('.btn-alert-payment-slip').click(function() {
+                        Swal.fire({
+                            title: 'Pembayaran Slip Gaji',
+                            text:'Maaf Anda Tidak Memiliki Akses Untuk Melakukan Pembayaran',
+                            icon: "warning",
+                            time: 2000
                         })
                     });
                 },

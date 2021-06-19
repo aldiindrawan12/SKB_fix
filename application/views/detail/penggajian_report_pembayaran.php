@@ -74,11 +74,12 @@
                             <th class="text-center" width="10%" scope="col">JO ID</th>
                             <th class="text-center" width="10%" scope="col">Tgl Keluar</th>
                             <th class="text-center" width="13%" scope="col">Tgl Bongkar</th>
+                            <th class="text-center" width="10%" scope="col">Customer</th>
                             <th class="text-center" width="10%" scope="col">Muatan</th>
                             <th class="text-center" width="10%" scope="col">Dari</th>
                             <th class="text-center" width="10%" scope="col">Ke</th>
                             <th class="text-center" width="10%" scope="col">Uang Jalan</th>
-                            <th class="text-center" width="8%" scope="col">Total Muatan</th>
+                            <th class="text-center" width="8%" scope="col">Tonase Bongkar</th>
                             <th class="text-center" width="8%" scope="col">Biaya Lain</th>
                             <th class="text-center" width="10%" scope="col">Upah</th>
                         </tr>
@@ -92,6 +93,7 @@
                             <td><?= $value["Jo_id"]?></td>
                             <td><?= change_tanggal($value["tanggal_surat"])?></td>
                             <td><?= change_tanggal($value["tanggal_bongkar"])?></td>
+                            <td><?= $value["customer_name"]?></td>
                             <?php if($value["muatan"]==""){?>
                                 <td colspan=3 class="text-center">Paketan</td>
                             <?php }else{?>
@@ -108,22 +110,22 @@
                         </tr>
                     <?php } ?>
                         <tr>
-                            <td colspan=6>Total</td>
+                            <td colspan=7>Total</td>
                             <td>Rp.<?= number_format($uang_jalan,2,',','.')?></td>
                             <td></td>
                             <td></td>
                             <td>Rp.<?= number_format($pembayaran_upah[0]["pembayaran_upah_nominal"],2,",",".")?></td>
                         </tr>
                         <tr>
-                            <td colspan=9>Potong Kasbon</td>
+                            <td colspan=10>Potong Kasbon</td>
                             <td>Rp.<?= number_format($pembayaran_upah[0]["pembayaran_upah_bon"],2,",",".")?></td>
                         </tr>
                         <tr>
-                            <td colspan=9>Bonus</td>
+                            <td colspan=10>Bonus</td>
                             <td>Rp.<?= number_format($pembayaran_upah[0]["pembayaran_upah_bonus"],2,",",".")?></td>
                         </tr>
                         <tr>
-                            <td colspan=9>Grand Total Upah</td>
+                            <td colspan=10>Grand Total Upah</td>
                             <td id="grand_total">Rp.<?= number_format($pembayaran_upah[0]["pembayaran_upah_total"],2,",",".")?></td>
                         </tr>
                     </tbody>

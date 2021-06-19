@@ -960,7 +960,12 @@
                         className: 'text-center',
                         "orderable": false,
                         render: function(data, type, row) {
-                            let html = "<a class='btn btn-light' href='<?= base_url('index.php/payment/payment_jo/"+data+"')?>'><i class='fas fa-file-invoice-dollar'></i></a>";
+                            let html = "";
+                                    if(<?= $_SESSION["payment_jo"]?>==0){
+                                        html += "<a class='btn btn-light btn-alert-payment-jo'><i class='fas fa-file-invoice-dollar'></i></a>";
+                                    }else{
+                                        html += "<a class='btn btn-light' href='<?= base_url('index.php/payment/payment_jo/"+data+"')?>'><i class='fas fa-file-invoice-dollar'></i></a>";
+                                    }
                             return html;
                         }
                     },
@@ -1034,6 +1039,14 @@
                                     $("#biaya_lain_update").val(rupiah(data["biaya_lain"]));
                             }
                         });
+                    });
+                    $('.btn-alert-payment-jo').click(function() {
+                        Swal.fire({
+                            title: 'Pembayaran Job Order',
+                            text:'Maaf Anda Tidak Memiliki Akses Untuk Melakukan Pembayaran',
+                            icon: "warning",
+                            time: 2000
+                        })
                     });
                 },
             });
@@ -2251,7 +2264,12 @@
                         className: 'text-center',
                         "orderable": false,
                         render: function(data, type, row) {
-                            let html = "<a class='btn btn-light' href='<?= base_url('index.php/payment/payment_invoice/"+data+"')?>'><i class='fas fa-file-invoice-dollar'></i></a>";
+                            let html = "";
+                                    if(<?= $_SESSION["payment_invoice"]?>==0){
+                                        html += "<a class='btn btn-light btn-alert-payment-invoice'><i class='fas fa-file-invoice-dollar'></i></a>";
+                                    }else{
+                                        html += "<a class='btn btn-light' href='<?= base_url('index.php/payment/payment_invoice/"+data+"')?>'><i class='fas fa-file-invoice-dollar'></i></a>";
+                                    }
                             return html;
                         }
                     },
@@ -2264,8 +2282,23 @@
                             let html = "";
                             html += "<a class='btn btn-light' href='<?= base_url('index.php/detail/detail_invoice/"+data+"')?>'><i class='fas fa-eye'></i></a>";
                             if(role_user=="Supervisor"){
-                                html += "<a class='btn btn-light btn-update-invoice' href='<?= base_url("index.php/form/edit_invoice/")?>"+data+"'><i class='fas fa-pen-square'></i></a>"+
-                                "<a class='btn btn-light btn-delete-invoice' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?php echo base_url('index.php/detail/getnumpaymentinvoice') ?>",
+                                    dataType: "text",
+                                    async:false,
+                                    data: {
+                                        id : data,
+                                    },
+                                    success: function(hasil) { //jika ambil hasil sukses
+                                        if(hasil>0){
+                                            html += "<a class='btn btn-light btn-alert-edit-invoice'><i class='fas fa-pen-square'></i></a>";
+                                        }else{
+                                            html += "<a class='btn btn-light btn-update-invoice' href='<?= base_url("index.php/form/edit_invoice/")?>"+data+"'><i class='fas fa-pen-square'></i></a>";
+                                        }
+                                    }
+                                });
+                                html += "<a class='btn btn-light btn-delete-invoice' href='javascript:void(0)' data-pk="+data+"><i class='fas fa-trash-alt'></i></a>";
                             }
                             return html;
                         }
@@ -2274,23 +2307,57 @@
                 drawCallback: function() {
                     $('.btn-delete-invoice').click(function() {
                         let pk = $(this).data('pk');
-                        Swal.fire({
-                            title: 'Hapus Data Invoice',
-                            text:'Yakin Anda Ingin Menghapus Data Invoice Ini?',
-                            showDenyButton: true,
-                            denyButtonText: `Batal`,
-                            confirmButtonText: 'Hapus',
-                            denyButtonColor: '#808080',
-                            confirmButtonColor: '#FF0000',
-                            icon: "warning",
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                window.location.replace("<?= base_url('index.php/form/deleteinvoice/')?>"+pk);
+                        $.ajax({
+                            type: "GET",
+                            url: "<?php echo base_url('index.php/detail/getnumpaymentinvoice') ?>",
+                            dataType: "text",
+                            data: {
+                                id : pk,
+                            },
+                            success: function(data) { //jika ambil data sukses
+                                if(data>0){
+                                    Swal.fire({
+                                        title: 'Hapus Data Invoice',
+                                        text:'Maaf Invoice Ini Sudah Melakukan Pembayaran',
+                                        icon: "warning",
+                                        time: 2000
+                                    })
+                                }else{
+                                    Swal.fire({
+                                        title: 'Hapus Data Invoice',
+                                        text:'Yakin Anda Ingin Menghapus Data Invoice Ini?',
+                                        showDenyButton: true,
+                                        denyButtonText: `Batal`,
+                                        confirmButtonText: 'Hapus',
+                                        denyButtonColor: '#808080',
+                                        confirmButtonColor: '#FF0000',
+                                        icon: "warning",
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            window.location.replace("<?= base_url('index.php/form/deleteinvoice/')?>"+pk);
+                                        }
+                                    })
+                                }
                             }
+                        });
+                    });
+                    $('.btn-alert-edit-invoice').click(function() {
+                        Swal.fire({
+                            title: 'Edit Data Invoice',
+                            text:'Maaf Invoice Ini Sudah Melakukan Pembayaran',
+                            icon: "warning",
+                            time: 2000
+                        })
+                    });
+                    $('.btn-alert-payment-invoice').click(function() {
+                        Swal.fire({
+                            title: 'Pembayaran Invoice',
+                            text:'Maaf Anda Tidak Memiliki Akses Untuk Melakukan Pembayaran',
+                            icon: "warning",
+                            time: 2000
                         })
                     });
                 },
-                
             });
             $("#btn-cari").click(function() {
                 table.ajax.reload();

@@ -155,6 +155,7 @@
             </div>
             <div class="font-size-sm m-3 text-justify">
                 <form action="<?= base_url("index.php/form/update_payment_invoice")?>" method="POST">
+                    <input type="text" name=payment_now id=payment_now hidden>
                     <input type="text" name=payment_invoice_id_update id=payment_invoice_id_update hidden>
                     <div class="form-group row mt-3">
                         <label for="invoice_kode_update" class="form-label col-sm-5 font-weight-bold">NO Invoice</label>
@@ -393,15 +394,15 @@
         }
         function cek_bayar_edit(a){
             $( '#'+a.id ).mask('000.000.000', {reverse: true});
-            // var bayar = $("#"+a.id).val().replaceAll(".","");   
-            // if(bayar == ""){
-            //     bayar = 0;
-            // }
-            // alert(bayar_saat_ini);
-            // if(parseInt(bayar_saat_ini)<parseInt(bayar)){
-            //     alert('Jumlah Pembayaran Harus Lebih Kecil Dari Rp.'+ rupiah(bayar_saat_ini));
-            //     $( '#'+a.id ).val(bayar_saat_ini);
-            // }
+            bayar_saat_ini = parseInt($("#payment_now").val().replaceAll(".",""))+parseInt($("#invoice_sisa_tagihan").val().replaceAll(".",""));
+            var bayar = $("#"+a.id).val().replaceAll(".","");   
+            if(bayar == ""){
+                bayar = 0;
+            }
+            if(parseInt(bayar_saat_ini)<parseInt(bayar)){
+                alert('Jumlah Pembayaran Harus Lebih Kecil Dari Rp.'+ rupiah(bayar_saat_ini));
+                $( '#'+a.id ).val("");
+            }
         }
     </script>
     <script>
@@ -433,6 +434,7 @@
                                 id: pk
                             },
                             success: function(data) { //jika ambil data sukses
+                                $('#payment_now').val(data["payment_invoice_nominal"]); //set value
                                 $('#invoice_kode_update').val(data["invoice_id"]); //set value
                                 $('#payment_invoice_id_update').val(data["payment_invoice_id"]); //set value
                                 $('#payment_invoice_tgl_update').val(change_tanggal(data["payment_invoice_tgl"])); //set value

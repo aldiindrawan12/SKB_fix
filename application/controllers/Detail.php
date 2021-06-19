@@ -531,4 +531,18 @@ class Detail extends CI_Controller {
         $data = $this->model_detail->getpaymentjobyid($payment_id);
         echo json_encode($data);
     }
+
+    function getnumpaymentinvoice()
+    {
+        $invoice_id = $this->input->get('id');
+        $data = $this->model_detail->getpaymentinvoice($invoice_id);
+        echo count($data);
+    }
+
+    function getnumpaymentupah()
+    {
+        $upah_id = $this->input->get('id');
+        $data = $this->model_detail->getpaymentupah($upah_id);
+        echo count($data);
+    }
 }

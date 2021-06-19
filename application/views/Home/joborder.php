@@ -76,7 +76,19 @@
                 <span>Total Data JO Yang Ditemukan : </span><span id="ditemukan"><?= count($jo)?></span>
             </div>
             <hr>
-            <div class="table-responsive thead-dark small">
+            <div class="container">
+                    <form method="POST" action="<?= base_url("index.php/print_berkas/jo_excel_data/")?>" id="convert_form" class="col-md-2 float-right">
+                        <input type="hidden" name="file_content" id="file_content">
+                        <button type="submit" name="convert" id="convert" class="btn btn-primary btn-sm btn-icon-split">
+                            <span class="icon text-white-100">  
+                                <i class="fas fa-print"></i>
+                            </span>
+                            <span class="text">Excel</span>
+                        </button>
+                    </form>
+                    <button class="btn btn-primary btn-sm float-right mr-3" onclick="pdf()">Print/Export PDF</button>
+                </div>
+            <div class="table-responsive thead-dark small" id="print_jo">
                 <table class="table table-bordered  small" id="Table-Job-Order" width="100%" cellspacing="0">
                     <thead>
                         <tr>
@@ -105,7 +117,6 @@
         <!-- end tabel JO -->
     </div>
 </div>
-<!-- pop up add detail rute paketan -->
 <div class="modal fade" id="popup-update-jo" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
     <div class="modal-dialog modal-xl"  role="document"  >
         <div class="modal-content">
@@ -238,8 +249,32 @@
         </div>
     </div>
 </div>
-<!-- end pop up add detail rute paketan -->
+<script src="<?=base_url("assets/vendor/jquery/jquery.min.js")?>"></script>
 
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#convert').click(function() {
+            var table_content = '<table>';
+            table_content += $("head").html()+$('#Table-Job-Order').html();
+            table_content += '</table>';
+            $('#file_content').val(table_content);
+            $('#convert_form').html();
+        });
+    });
+    function pdf(){
+        var tabel = document.getElementById("Table-Job-Order").rows;
+        var bacabaris = tabel.length;
+        for(var i=0;i<bacabaris;i++){
+            tabel[i].deleteCell(-1);
+            tabel[i].deleteCell(-1);
+        }
+        var restorepage = document.body.innerHTML;
+        var printcontent = document.getElementById('print_jo').innerHTML;
+        document.body.innerHTML = printcontent;
+        window.print();
+        document.body.innerHTML = restorepage;
+    }
+</script>
 <script>
     function reset_form(){
         location.reload();

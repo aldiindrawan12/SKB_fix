@@ -447,6 +447,12 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('#convert').click(function() {
+                var tabel = document.getElementById("Table-Penggajian").rows;
+                var bacabaris = tabel.length;
+                for(var i=0;i<bacabaris;i++){
+                    tabel[i].deleteCell(-1);
+                    tabel[i].deleteCell(-1);
+                }
                 var table_content = '<table>';
                 table_content += $("head").html()+$('#Table-Penggajian').html();
                 table_content += '</table>';
@@ -455,6 +461,12 @@
             });
         });
         function print_pdf(){
+            var tabel = document.getElementById("Table-Penggajian").rows;
+            var bacabaris = tabel.length;
+            for(var i=0;i<bacabaris;i++){
+                tabel[i].deleteCell(-1);
+                tabel[i].deleteCell(-1);
+            }
             var restorepage = document.body.innerHTML;
             var printcontent = document.getElementById('Table-Penggajian-Print').innerHTML;
             document.body.innerHTML = printcontent;

@@ -164,6 +164,12 @@ class Print_Berkas extends CI_Controller {
 		header("Content-Disposition: attachment; filename=Detail_JO.xls");
 		echo $content;
 	}
+	public function jo_excel_data(){
+		$content = $this->input->post("file_content");
+		header("Content-type: application/vnd-ms-excel");
+		header("Content-Disposition: attachment; filename=Data_JO.xls");
+		echo $content;
+	}
 	public function invoice_excel(){
 		$content = $this->input->post("file_content");
 		header("Content-type: application/vnd-ms-excel");

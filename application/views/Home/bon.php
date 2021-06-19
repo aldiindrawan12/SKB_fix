@@ -220,6 +220,12 @@
   });
  });
  function print_pdf(){
+    var tabel = document.getElementById("Table-Bon").rows;
+        var bacabaris = tabel.length;
+        for(var i=0;i<bacabaris;i++){
+            tabel[i].deleteCell(-1);
+            tabel[i].deleteCell(-1);
+        }
     var restorepage = document.body.innerHTML;
     var printcontent = document.getElementById('Table-Bon-Print').innerHTML;
     document.body.innerHTML = printcontent;

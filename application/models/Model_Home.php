@@ -31,7 +31,7 @@ class Model_Home extends CI_model
 
         public function getcustomer() //all customer
         {
-            return $this->db->get_where("skb_customer",array("validasi"=>"ACC","status_hapus"=>"NO","validasi"=>"ACC","validasi_edit"=>"ACC","validasi_delete"=>"ACC"))->result_array();
+            return $this->db->get_where("skb_customer",array("validasi"=>"ACC","status_hapus"=>"NO"))->result_array();
         }
 
         public function getallcustomer() //all customer
@@ -151,6 +151,7 @@ class Model_Home extends CI_model
             if($searchQuery != ''){
                 $this->db->where($searchQuery);
             }
+            $this->db->order_by("validasi DESC,validasi_edit DESC,validasi_delete DESC");
             $this->db->order_by($columnName, $columnSortOrder);
             $this->db->limit($rowperpage, $start);
             $records = $this->db->get('skb_mobil')->result();
@@ -646,6 +647,7 @@ class Model_Home extends CI_model
             if($asal=="viewcustomerinvoice"){
                 $this->db->where("validasi","ACC");
             }
+            $this->db->order_by("validasi DESC,validasi_edit DESC,validasi_delete DESC");
             $this->db->order_by($order_field, $order_ascdesc);
             $this->db->limit($limit, $start);
             return $this->db->get('skb_customer')->result_array();
@@ -680,6 +682,7 @@ class Model_Home extends CI_model
             if($asal!="viewsupir"){
                 $this->db->where("validasi","ACC");
             }
+            $this->db->order_by("validasi DESC,validasi_edit DESC,validasi_delete DESC");
             $this->db->order_by($order_field, $order_ascdesc);
             $this->db->limit($limit, $start);
             return $this->db->get('skb_supir')->result_array();
@@ -850,6 +853,7 @@ class Model_Home extends CI_model
             if($searchQuery != ''){
                 $this->db->where($searchQuery);
             }
+            $this->db->order_by("validasi_rute DESC,validasi_rute_edit DESC,validasi_rute_delete DESC");
             $this->db->order_by($columnName, $columnSortOrder);
             $this->db->limit($rowperpage, $start);
             $this->db->join("skb_customer", "skb_customer.customer_id = skb_rute.customer_id", 'left');
@@ -996,6 +1000,7 @@ class Model_Home extends CI_model
             if($searchQuery != ''){
                 $this->db->where($searchQuery);
             }
+            $this->db->order_by("validasi DESC,validasi_edit DESC,validasi_delete DESC");
             $this->db->order_by($columnName, $columnSortOrder);
             $this->db->limit($rowperpage, $start);
             $records = $this->db->get('skb_merk_kendaraan')->result();

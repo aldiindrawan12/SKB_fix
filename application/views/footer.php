@@ -221,7 +221,8 @@
                             let html = "";
                             if(role_user=="Supervisor" || role_user=="Super User"){
                                 if(row["validasi"]=="Pending"){
-                                    html +="<a class='btn btn-success btn-sm btn-acc-truck' href='javascript:void(0)' data-pk='"+data+"'>ACC Tambah<i class='fas fa-check-circle'></i></a><br>";
+                                    html +="<a class='btn btn-success btn-sm btn-acc-truck mr-1' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-check-circle'></i></a>";
+                                    html +="<a class='btn btn-danger btn-sm btn-tolak-truck' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-times'></i></a><br>";
                                 }
                                 if(row["validasi_edit"]=="Pending"){
                                     html += "<a class='btn btn-primary btn-sm btn-acc-edit-truck' href='javascript:void(0)' data-pk='"+data+"' data-toggle='modal' data-target='#popup-acc-edit-truck'>ACC Edit<i class='fas fa-check-circle'></i></a><br>";
@@ -343,11 +344,8 @@
                             title: 'ACC Tambah Kendaraan',
                             icon: "question",
                             text: 'Yakin anda ingin ACC Data Kendaraan ini?',
-                            showDenyButton: true,
                             showCancelButton:true,
-                            denyButtonText: `Tolak`,
                             confirmButtonText: 'ACC',
-                            denyButtonColor: '#808080',
                             confirmButtonColor: '#4BB543',
                         }).then((result) => {
                             if (result.isConfirmed) {
@@ -362,7 +360,20 @@
                                         location.reload();
                                     }
                                 });
-                            }else if(result.isDenied){
+                            }
+                        })
+                    });
+                    $('.btn-tolak-truck').click(function() {
+                        let pk = $(this).data('pk');
+                        Swal.fire({
+                            title: 'Tolak Tambah Kendaraan',
+                            icon: "question",
+                            text: 'Yakin anda ingin Tolak Data Kendaraan ini?',
+                            showCancelButton:true,
+                            confirmButtonText: 'Tolak',
+                            confirmButtonColor: 'red',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
                                 $.ajax({
                                     type: "GET",
                                     url: "<?php echo base_url('index.php/form/acctruck/Ditolak') ?>",
@@ -582,7 +593,8 @@
                             let html = "";
                             if(role_user=="Supervisor" || role_user=="Super User"){
                                 if(row["validasi"]=="Pending"){
-                                    html +="<a class='btn btn-success btn-sm btn-acc-merk' href='javascript:void(0)' data-pk='"+data+"'>ACC Tambah<i class='fas fa-check-circle'></i></a><br>";
+                                    html +="<a class='btn btn-success btn-sm btn-acc-merk mr-1' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-check-circle'></i></a>";
+                                    html +="<a class='btn btn-danger btn-sm btn-tolak-merk' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-times'></i></a><br>";
                                 }
                                 if(row["validasi_edit"]=="Pending"){
                                     html += "<a class='btn btn-primary btn-sm btn-acc-edit-merk' href='javascript:void(0)' data-pk='"+data+"' data-toggle='modal' data-target='#popup-acc-edit-merk'>ACC Edit<i class='fas fa-check-circle'></i></a><br>";
@@ -649,11 +661,8 @@
                             title: 'ACC Tambah Merk',
                             icon: "question",
                             text: 'Yakin anda ingin ACC Data Merk ini?',
-                            showDenyButton: true,
                             showCancelButton:true,
-                            denyButtonText: `Tolak`,
                             confirmButtonText: 'ACC',
-                            denyButtonColor: '#808080',
                             confirmButtonColor: '#4BB543',
                         }).then((result) => {
                             if (result.isConfirmed) {
@@ -668,7 +677,20 @@
                                         location.reload();
                                     }
                                 });
-                            }else if(result.isDenied){
+                            }
+                        })
+                    });
+                    $('.btn-tolak-merk').click(function() {
+                        let pk = $(this).data('pk');
+                        Swal.fire({
+                            title: 'Tolak Tambah Merk',
+                            icon: "question",
+                            text: 'Yakin anda ingin Tolak Data Merk ini?',
+                            showCancelButton:true,
+                            confirmButtonText: 'Tolak',
+                            confirmButtonColor: 'red',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
                                 $.ajax({
                                     type: "GET",
                                     url: "<?php echo base_url('index.php/form/accmerk/Ditolak') ?>",
@@ -1479,7 +1501,8 @@
                             let html = "";
                             if(role_user=="Supervisor" || role_user=="Super User"){
                                 if(row["validasi"]=="Pending"){
-                                    html +="<a class='btn btn-success btn-sm btn-acc-customer' href='javascript:void(0)' data-pk='"+data+"'>ACC Tambah<i class='fas fa-check-circle'></i></a><br>";
+                                    html +="<a class='btn btn-success btn-sm btn-acc-customer mr-1' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-check-circle'></i></a>";
+                                    html +="<a class='btn btn-danger btn-sm btn-tolak-customer' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-times'></i></a><br>";
                                 }
                                 if(row["validasi_edit"]=="Pending"){
                                     html += "<a class='btn btn-primary btn-sm btn-acc-edit-customer' href='javascript:void(0)' data-pk='"+data+"' data-toggle='modal' data-target='#popup-acc-edit-customer'>ACC Edit<i class='fas fa-check-circle'></i></a><br>";
@@ -1569,11 +1592,8 @@
                             title: 'ACC Tambah Customer',
                             icon: "question",
                             text: 'Yakin anda ingin ACC Data Customer ini?',
-                            showDenyButton: true,
                             showCancelButton:true,
-                            denyButtonText: `Tolak`,
                             confirmButtonText: 'ACC',
-                            denyButtonColor: '#808080',
                             confirmButtonColor: '#4BB543',
                         }).then((result) => {
                             if (result.isConfirmed) {
@@ -1588,7 +1608,20 @@
                                         location.reload();
                                     }
                                 });
-                            }else if(result.isDenied){
+                            }
+                        })
+                    });
+                    $('.btn-tolak-customer').click(function() {
+                        let pk = $(this).data('pk');
+                        Swal.fire({
+                            title: 'Tolak Tambah Customer',
+                            icon: "question",
+                            text: 'Yakin anda ingin Tolak Data Customer ini?',
+                            showCancelButton:true,
+                            confirmButtonText: 'Tolak',
+                            confirmButtonColor: 'red',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
                                 $.ajax({
                                     type: "GET",
                                     url: "<?php echo base_url('index.php/form/acccustomer/Ditolak') ?>",
@@ -1806,7 +1839,8 @@
                             let html = "";
                             if(role_user=="Supervisor" || role_user=="Super User"){
                                 if(row["validasi"]=="Pending"){
-                                    html +="<a class='btn btn-success btn-sm btn-acc-supir' href='javascript:void(0)' data-pk='"+data+"'>ACC Tambah<i class='fas fa-check-circle'></i></a><br>";
+                                    html +="<a class='btn btn-success btn-sm btn-acc-supir mr-1' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-check-circle'></i></a>";
+                                    html +="<a class='btn btn-danger btn-sm btn-tolak-supir' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-times'></i></a><br>";
                                 }
                                 if(row["validasi_edit"]=="Pending"){
                                     html += "<a class='btn btn-primary btn-sm btn-acc-edit-supir' href='javascript:void(0)' data-pk='"+data+"' data-toggle='modal' data-target='#popup-acc-edit-supir'>ACC Edit<i class='fas fa-check-circle'></i></a><br>";
@@ -1933,11 +1967,8 @@
                             title: 'ACC Tambah Driver',
                             icon: "question",
                             text: 'Yakin anda ingin ACC Data Driver ini?',
-                            showDenyButton: true,
                             showCancelButton:true,
-                            denyButtonText: `Tolak`,
                             confirmButtonText: 'ACC',
-                            denyButtonColor: '#808080',
                             confirmButtonColor: '#4BB543',
                         }).then((result) => {
                             if (result.isConfirmed) {
@@ -1952,7 +1983,20 @@
                                         location.reload();
                                     }
                                 });
-                            }else if(result.isDenied){
+                            }
+                        })
+                    });
+                    $('.btn-tolak-supir').click(function() {
+                        let pk = $(this).data('pk');
+                        Swal.fire({
+                            title: 'Tolak Tambah Supir',
+                            icon: "question",
+                            text: 'Yakin anda ingin Tolak Data Supir ini?',
+                            showCancelButton:true,
+                            confirmButtonText: 'Tolak',
+                            confirmButtonColor: 'red',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
                                 $.ajax({
                                     type: "GET",
                                     url: "<?php echo base_url('index.php/form/accsupir/Ditolak') ?>",
@@ -2615,7 +2659,8 @@
                             let html = "";
                             if(role_user=="Supervisor" || role_user=="Super User"){
                                 if(row["validasi_rute"]=="Pending"){
-                                    html +="<a class='btn btn-success btn-sm btn-acc-rute' href='javascript:void(0)' data-pk='"+data+"'>ACC Tambah<i class='fas fa-check-circle'></i></a><br>";
+                                    html +="<a class='btn btn-success btn-sm btn-acc-rute mr-1' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-check-circle'></i></a>";
+                                    html +="<a class='btn btn-danger btn-sm btn-tolak-rute' href='javascript:void(0)' data-pk='"+data+"'><i class='fas fa-times'></i></a><br>";
                                 }
                                 if(row["validasi_rute_edit"]=="Pending"){
                                     html += "<a class='btn btn-primary btn-sm btn-acc-edit-rute' href='javascript:void(0)' data-pk='"+data+"' data-toggle='modal' data-target='#popup-acc-edit-rute'>ACC Edit<i class='fas fa-check-circle'></i></a><br>";
@@ -2730,11 +2775,8 @@
                             title: 'ACC Tambah Rute dan Muatan',
                             icon: "question",
                             text: 'Yakin anda ingin ACC Data Rute dan Muatan ini?',
-                            showDenyButton: true,
                             showCancelButton:true,
-                            denyButtonText: `Tolak`,
                             confirmButtonText: 'ACC',
-                            denyButtonColor: '#808080',
                             confirmButtonColor: '#4BB543',
                         }).then((result) => {
                             if (result.isConfirmed) {
@@ -2749,7 +2791,20 @@
                                         location.reload();
                                     }
                                 });
-                            }else if(result.isDenied){
+                            }
+                        })
+                    });
+                    $('.btn-tolak-rute').click(function() {
+                        let pk = $(this).data('pk');
+                        Swal.fire({
+                            title: 'Tolak Tambah Rute dan Muatan',
+                            icon: "question",
+                            text: 'Yakin anda ingin Tolak Data Rute dan Muatan ini?',
+                            showCancelButton:true,
+                            confirmButtonText: 'Tolak',
+                            confirmButtonColor: '#4BB543',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
                                 $.ajax({
                                     type: "GET",
                                     url: "<?php echo base_url('index.php/form/accrute/Ditolak') ?>",

@@ -30,7 +30,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" id="DB_Izin_page" href="<?=base_url("index.php/dashboard")?>">
                             <i class="fas fa-clipboard"></i>
-                            <span>DB Izin dan Dokument</span>
+                            <span>DB Izin dan Dokumen</span>
                         </a>
                         <a class="collapse-item" id="DB_Operasional_page" href="<?=base_url("index.php/dashboard/dashboard_operasional")?>">
                             <i class="fas fa-truck"></i>

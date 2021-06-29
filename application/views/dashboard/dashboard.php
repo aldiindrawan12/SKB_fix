@@ -1,10 +1,11 @@
     <div class="info-supir">
         <div class="card shadow mb-4 ml-2 mr-2">
-            <div class="card-header py-3 text-center">
-            <h6 class="m-0 font-weight-bold btn-facebook disabled h4 p-3 " style="border-radius:10px; ">Informasi Driver</h6>
-            </div>  
+             
             <div class="card-body row justify-content-md-center small">
                 <div class="table-responsive border border-info rounded p-1">
+                        <div class="card-header py-3 text-center">
+                        <h6 class="m-0 font-weight-bold btn-facebook disabled h4 p-3 " style="border-radius:10px; ">Informasi Driver</h6>
+                        </div> 
                     <div class="card-header py-3 text-center">
                         <h6 class="m-0 font-weight-bold text-gray-900">Berlaku SIM</h6>
                     </div>

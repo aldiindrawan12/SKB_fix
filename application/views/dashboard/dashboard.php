@@ -1,5 +1,5 @@
     <div class="info-supir">
-        <div class="card shadow mb-4 ml-2 mr-2">
+        <div class="card shadow mb-5 ml-2 mr-2">
              
             <div class="card-body row justify-content-md-center small">
                 <div class="table-responsive border border-info rounded p-1">
@@ -86,14 +86,14 @@
                 </div>
                 <div class="table-responsive col-md-6 border border-primary rounded p-1 mb-3">
                     <div class="card-header py-3 text-center">
-                        <h6 class="m-0 font-weight-bold  text-gray-900">Ijin Bongkar Muat (BM) Kendaraan</h6>
+                        <h6 class="m-0 font-weight-bold  text-gray-900">Izin Bongkar Muat (BM) Kendaraan</h6>
                     </div>
                     <table class="table table-bordered" id="Table-Truck-Ijin-Bongkar" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th class="text-center" width="20%" scope="col">No Polisi</th>
-                                <th class="text-center" width="20%" scope="col">No Ijin BM</th>
-                                <th class="text-center" width="20%" scope="col">Berlaku Ijin BM</th>
+                                <th class="text-center" width="20%" scope="col">No Izin BM</th>
+                                <th class="text-center" width="20%" scope="col">Berlaku Izin BM</th>
                                 <th class="text-center" width="30%" scope="col">Sisa Berlaku</th>
                             </tr>
                         </thead>
@@ -103,14 +103,14 @@
                 </div>
                 <div class="table-responsive col-md-6 border border-primary rounded p-1 mb-3">
                     <div class="card-header py-3 text-center">
-                        <h6 class="m-0 font-weight-bold  text-gray-900">Ijin Usaha</h6>
+                        <h6 class="m-0 font-weight-bold  text-gray-900">Izin Usaha</h6>
                     </div>
                     <table class="table table-bordered" id="Table-Truck-Ijin-Usaha" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th class="text-center" width="20%" scope="col">No Polisi</th>
-                                <th class="text-center" width="20%" scope="col">No Ijin Usaha</th>
-                                <th class="text-center" width="20%" scope="col">Berlaku Ijin Usaha</th>
+                                <th class="text-center" width="20%" scope="col">No Izin Usaha</th>
+                                <th class="text-center" width="20%" scope="col">Berlaku Izin Usaha</th>
                                 <th class="text-center" width="30%" scope="col">Sisa Berlaku</th>
                             </tr>
                         </thead>

@@ -2,14 +2,6 @@
 // error_reporting(0);
 class Model_Dashboard extends CI_model
 {
-    public function generate_selisih_tanggal($tanggal){
-        $tanggal_now = date("Y-m-d");
-        $tgl1 = new DateTime($tanggal_now);
-        $tgl2 = new DateTime($tanggal);
-        $d = $tgl2->diff($tgl1)->days + 1;
-        echo $d;
-    }
-
     function getTruck($postData,$fungsi){
         $tanggal_now = date("Y-m-d");
         $response = array();
@@ -43,6 +35,8 @@ class Model_Dashboard extends CI_model
             $search_arr[] = "datediff('".$tanggal_now."',mobil_pajak)>-31 ";
         }else if($fungsi=="ijin"){
             $search_arr[] = "datediff('".$tanggal_now."',mobil_berlaku_ijin_bongkar)>-31 ";
+        }else if($fungsi=="usaha"){
+            $search_arr[] = "datediff('".$tanggal_now."',mobil_berlaku_usaha)>-31 ";
         }else{
             $search_arr[] = " status_jalan='Tidak Jalan' ";
         }
@@ -87,6 +81,8 @@ class Model_Dashboard extends CI_model
                 $tanggal = $record->mobil_pajak;
             }else if($fungsi=="ijin"){
                 $tanggal = $record->mobil_berlaku_ijin_bongkar;
+            }else if($fungsi=="usaha"){
+                $tanggal = $record->mobil_berlaku_usaha;
             }else{
                 $tanggal = "0000-00-00";
             }
@@ -113,6 +109,8 @@ class Model_Dashboard extends CI_model
                 "mobil_berlaku"=>$record->mobil_berlaku,
                 "mobil_pajak"=>$record->mobil_pajak,
                 "mobil_berlaku_kir"=>$record->mobil_berlaku_kir,
+                "mobil_berlaku_usaha"=>$record->mobil_berlaku_usaha,
+                "mobil_usaha"=>$record->mobil_usaha,
                 "mobil_berlaku_ijin_bongkar"=>$record->mobil_berlaku_ijin_bongkar,
             ); 
             $n++;
@@ -147,6 +145,7 @@ class Model_Dashboard extends CI_model
         if($searchValue != ''){
             $search_arr[] = " (supir_name like '%".$searchValue."%' or 
                 supir_telp like '%".$searchValue."%' or 
+                supir_panggilan like '%".$searchValue."%' or 
                 supir_sim like'%".$searchValue."%' ) ";
         }
         $search_arr[] = " status_hapus='NO' ";
@@ -224,86 +223,7 @@ class Model_Dashboard extends CI_model
     
         return $response; 
     }
-
-    function getJoNoInvoice($postData){
-        $tanggal_now = date("Y-m-d");
-        $response = array();
     
-        ## Read value
-        $draw = $postData['draw'];
-        $start = $postData['start']; // mulai display per page
-        $rowperpage = $postData['length']; // Rows display per page
-        $columnIndex = $postData['order'][0]['column']; // Column index untuk sorting
-        $columnName = $postData['columns'][$columnIndex]['data']; // Column name untuk sorting
-        $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
-        $searchValue = $postData['search']['value']; // Search value
-    
-        ## Search 
-        $search_arr = array();
-        $searchQuery = "";
-        if($searchValue != ''){
-            $search_arr[] = " (Jo_id like '%".$searchValue."%') ";
-                // customer_name like '%".$searchValue."%'
-                // muatan like '%".$searchValue."%' or 
-                // asal like '%".$searchValue."%' or 
-                // tujuan like'%".$searchValue."%'
-        }
-        $search_arr[] = " status='Sampai Tujuan' ";
-        $search_arr[] = " invoice_id='' ";
-        $search_arr[] = " parent_Jo_id!='x' ";
-
-        if(count($search_arr) > 0){ //gabung kondisi where
-            $searchQuery = implode(" and ",$search_arr);
-        }
-    
-        ## Total record without filtering
-        $this->db->select('count(*) as allcount');
-        $records = $this->db->get('skb_job_order')->result();
-        $totalRecords = $records[0]->allcount;
-    
-        ## Total record with filtering
-        $this->db->select('count(*) as allcount');
-        if($searchQuery != ''){
-            $this->db->where($searchQuery);
-        }
-        $records = $this->db->get('skb_job_order')->result();
-        $totalRecordwithFilter = $records[0]->allcount;
-    
-        ## data hasil record
-        $this->db->select('*');
-        $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
-        if($searchQuery != ''){
-            $this->db->where($searchQuery);
-        }
-        $this->db->order_by($columnName, $columnSortOrder);
-        $this->db->limit($rowperpage, $start);
-        $records = $this->db->get('skb_job_order')->result();
-    
-        $data = array();
-        $n = 1;
-        foreach($records as $record ){
-            $data[] = array(
-                "no"=>$n,
-                "Jo_id"=>$record->Jo_id,
-                "customer_name"=>$record->customer_name,
-                "paketan_id"=>$record->paketan_id,
-                "kosongan_id"=>$record->kosongan_id,
-                "tanggal_surat"=>$record->tanggal_surat,
-                "status"=>$record->status
-            ); 
-            $n++;
-        }
-        ## Response
-        $response = array(
-        "draw" => intval($draw),
-        "iTotalRecords" => $totalRecords,
-        "iTotalDisplayRecords" => $totalRecordwithFilter,
-        "aaData" => $data
-        );
-    
-        return $response; 
-    }
-
     function getInvoiceTempo($postData){
         $tanggal_now = date("Y-m-d");
         $response = array();
@@ -324,7 +244,7 @@ class Model_Dashboard extends CI_model
             $search_arr[] = " (invoice_kode like '%".$searchValue."%') ";
         }
         $search_arr[] = " status_bayar='Belum Lunas' ";
-
+        $search_arr[] = " CURDATE()>tanggal_batas_pembayaran ";
         if(count($search_arr) > 0){ //gabung kondisi where
             $searchQuery = implode(" and ",$search_arr);
         }
@@ -366,7 +286,7 @@ class Model_Dashboard extends CI_model
                 "invoice_kode"=>$record->invoice_kode,
                 "customer_name"=>$record->customer_name,
                 "tanggal_invoice"=>$record->tanggal_invoice,
-                "tgl_batas_pembayaran"=>$tanggal_batas_bayar,
+                "tgl_batas_pembayaran"=>$record->tanggal_batas_pembayaran,
                 "batas_pembayaran"=>$batas_bayar,
                 "status_bayar"=>$record->status_bayar,
                 "grand_total"=>$record->grand_total
@@ -382,5 +302,94 @@ class Model_Dashboard extends CI_model
         );
     
         return $response; 
+    }
+        function getJoNoInvoice($postData){
+            $tanggal_now = date("Y-m-d");
+            $response = array();
+        
+            ## Read value
+            $draw = $postData['draw'];
+            $start = $postData['start']; // mulai display per page
+            $rowperpage = $postData['length']; // Rows display per page
+            $columnIndex = $postData['order'][0]['column']; // Column index untuk sorting
+            $columnName = $postData['columns'][$columnIndex]['data']; // Column name untuk sorting
+            $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
+            $searchValue = $postData['search']['value']; // Search value
+        
+            ## Search 
+            $search_arr = array();
+            $searchQuery = "";
+            if($searchValue != ''){
+                $search_arr[] = " (Jo_id like '%".$searchValue."%' or 
+                    muatan like '%".$searchValue."%' or 
+                    asal like '%".$searchValue."%' or 
+                    tujuan like'%".$searchValue."%') ";
+            }
+            $search_arr[] = " status='Sampai Tujuan' ";
+            $search_arr[] = " invoice_id='' ";
+
+            if(count($search_arr) > 0){ //gabung kondisi where
+                $searchQuery = implode(" and ",$search_arr);
+            }
+        
+            ## Total record without filtering
+            $this->db->select('count(*) as allcount');
+            $records = $this->db->get('skb_job_order')->result();
+            $totalRecords = $records[0]->allcount;
+        
+            ## Total record with filtering
+            $this->db->select('count(*) as allcount');
+            if($searchQuery != ''){
+                $this->db->where($searchQuery);
+            }
+            $records = $this->db->get('skb_job_order')->result();
+            $totalRecordwithFilter = $records[0]->allcount;
+        
+            ## data hasil record
+            $this->db->select('*');
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
+            $this->db->join("skb_supir", "skb_supir.supir_id = skb_job_order.supir_id", 'left');
+            $this->db->join("skb_mobil", "skb_mobil.mobil_no = skb_job_order.mobil_no", 'left');
+            if($searchQuery != ''){
+                $this->db->where($searchQuery);
+            }
+            $this->db->order_by($columnName, $columnSortOrder);
+            $this->db->limit($rowperpage, $start);
+            $records = $this->db->get('skb_job_order')->result();
+        
+            $data = array();
+            $n = 1;
+            foreach($records as $record ){
+                $data[] = array(
+                    "no"=>$n,
+                    "Jo_id"=>$record->Jo_id,
+                    "supir_name"=>$record->supir_name,
+                    "mobil_no"=>$record->mobil_no,
+                    "mobil_jenis"=>$record->mobil_jenis,
+                    "customer_name"=>$record->customer_name,
+                    "muatan"=>$record->muatan,
+                    "asal"=>$record->asal,
+                    "tujuan"=>$record->tujuan,
+                    "tanggal_surat"=>$record->tanggal_surat,
+                    "status"=>$record->status
+                ); 
+                $n++;
+            }
+            ## Response
+            $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordwithFilter,
+            "aaData" => $data
+            );
+        
+            return $response; 
+        }
+    public function generate_selisih_tanggal($tanggal){
+        $tanggal_now = date("Y-m-d");
+        $tgl1 = new DateTime($tanggal_now);
+        $tgl2 = new DateTime($tanggal);
+        $d = $tgl2->diff($tgl1)->days + 1;
+        echo $d;
     }
 }

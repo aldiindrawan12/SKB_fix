@@ -18,6 +18,13 @@ class Print_Berkas extends CI_Controller {
 		$this->load->model('model_detail');//load model
 		$this->load->model('model_form');//load model
     }
+	
+    function change_tanggal($data){
+        $data_tanggal = explode('-', $data);
+        $tanggal = $data_tanggal[2].'-'.$data_tanggal[1].'-'.$data_tanggal[0];
+        return $tanggal;
+    }
+
     public function cetaklaporanpdf($tanggal,$bulan,$tahun,$status_jo,$asal){
         $data["jo"] = $this->model_print->getjobyperiode($tanggal,$bulan,$tahun,$status_jo);
         $data["tanggal"] = $tanggal."-".$bulan."-".$tahun;
@@ -32,7 +39,7 @@ class Print_Berkas extends CI_Controller {
 			$pdf_name = 'JO_'.$data["tanggal"].'.pdf';
 		}
 	    $html = ob_get_clean();
-		$pdf = new Html2Pdf('L','A4','fr');   
+		$pdf = new Html2Pdf('P','A4','fr');   
 		$pdf->WriteHTML($html);   
 		$pdf->Output($pdf_name, 'D');
     }
@@ -106,10 +113,6 @@ class Print_Berkas extends CI_Controller {
 			$excel->setActiveSheetIndex(0)->setCellValue('D3', "TGL MUAT");
 			$excel->setActiveSheetIndex(0)->setCellValue('E3', "TGL BONGKAR");
 			$excel->setActiveSheetIndex(0)->setCellValue('F3', "UANG JALAN");
-			$excel->setActiveSheetIndex(0)->setCellValue('G3', "NO POL");
-			$excel->setActiveSheetIndex(0)->setCellValue('H3', "SUPIR");
-			$excel->setActiveSheetIndex(0)->setCellValue('I3', "TONASE");
-			$excel->setActiveSheetIndex(0)->setCellValue('J3', "NO INV");
 
 			//isi tabel
 			$numrow = 4;
@@ -117,13 +120,9 @@ class Print_Berkas extends CI_Controller {
 				$excel->setActiveSheetIndex(0)->setCellValue('A'.$numrow, strval($jo[$i]["Jo_id"]));
 				$excel->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $isi_customer[$i]);
 				$excel->setActiveSheetIndex(0)->setCellValue('C'.$numrow, $isi_rute[$i]);
-				$excel->setActiveSheetIndex(0)->setCellValue('D'.$numrow, $jo[$i]["tanggal_surat"]);
-				$excel->setActiveSheetIndex(0)->setCellValue('E'.$numrow, $jo[$i]["tanggal_bongkar"]);
+				$excel->setActiveSheetIndex(0)->setCellValue('D'.$numrow, $this->change_tanggal($jo[$i]["tanggal_surat"]));
+				$excel->setActiveSheetIndex(0)->setCellValue('E'.$numrow, $this->change_tanggal($jo[$i]["tanggal_bongkar"]));
 				$excel->setActiveSheetIndex(0)->setCellValue('F'.$numrow, "Rp".number_format($jo[$i]["uang_jalan"],2,",","."));
-				$excel->setActiveSheetIndex(0)->setCellValue('G'.$numrow, $jo[$i]["mobil_no"]);
-				$excel->setActiveSheetIndex(0)->setCellValue('H'.$numrow, $jo[$i]["supir_name"]);
-				$excel->setActiveSheetIndex(0)->setCellValue('I'.$numrow, $jo[$i]["tonase"]);
-				$excel->setActiveSheetIndex(0)->setCellValue('J'.$numrow, $jo[$i]["invoice_id"]);
 			
 				$numrow++; // Tambah BARIS
 			}
@@ -135,10 +134,7 @@ class Print_Berkas extends CI_Controller {
 			$excel->getActiveSheet()->getColumnDimension('D')->setWidth(15); // Set width kolom D
 			$excel->getActiveSheet()->getColumnDimension('E')->setWidth(15); // Set width kolom E
 			$excel->getActiveSheet()->getColumnDimension('F')->setWidth(15); // Set width kolom E
-			$excel->getActiveSheet()->getColumnDimension('G')->setWidth(15); // Set width kolom E
-			$excel->getActiveSheet()->getColumnDimension('H')->setWidth(15); // Set width kolom E
-			$excel->getActiveSheet()->getColumnDimension('I')->setWidth(15); // Set width kolom E
-			$excel->getActiveSheet()->getColumnDimension('J')->setWidth(15); // Set width kolom E			
+			
 			// tinggi otomatis
 			$excel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);
 
@@ -156,6 +152,54 @@ class Print_Berkas extends CI_Controller {
 			$write->save('php://output');
 	}
 
+	public function bon_excel(){
+		$content = $this->input->post("file_content");
+		header("Content-type: application/vnd-ms-excel");
+		header("Content-Disposition: attachment; filename=Data_Kasbon.xls");
+		echo $content;
+	}
+	public function jo_excel(){
+		$content = $this->input->post("file_content");
+		header("Content-type: application/vnd-ms-excel");
+		header("Content-Disposition: attachment; filename=Detail_JO.xls");
+		echo $content;
+	}
+	public function jo_excel_data(){
+		$content = $this->input->post("file_content");
+		header("Content-type: application/vnd-ms-excel");
+		header("Content-Disposition: attachment; filename=Data_JO.xls");
+		echo $content;
+	}
+	public function invoice_excel(){
+		$content = $this->input->post("file_content");
+		header("Content-type: application/vnd-ms-excel");
+		header("Content-Disposition: attachment; filename=Data_Invoice.xls");
+		echo $content;
+	}
+	public function gaji_excel(){
+		$content = $this->input->post("file_content");
+		header("Content-type: application/vnd-ms-excel");
+		header("Content-Disposition: attachment; filename=Data_Slip_Gaji.xls");
+		echo $content;
+	}
+	public function detail_gaji_excel(){
+		$content = $this->input->post("file_content");
+		header("Content-type: application/vnd-ms-excel");
+		header("Content-Disposition: attachment; filename=Detail_Slip_Gaji.xls");
+		echo $content;
+	}
+	public function mutasi_excel(){
+		$content = $this->input->post("file_content");
+		header("Content-type: application/vnd-ms-excel");
+		header("Content-Disposition: attachment; filename=Data_Mutasi.xls");
+		echo $content;
+	}
+	public function detail_invoice_excel(){
+		$content = $this->input->post("file_content");
+		header("Content-type: application/vnd-ms-excel");
+		header("Content-Disposition: attachment; filename=Detail_Invoice.xls");
+		echo $content;
+	}
 	// fungsi cetak invoice,gaji,memo
 		public function invoice($invoice_id,$asal){
             if(!$_SESSION["user"]){
@@ -163,39 +207,35 @@ class Print_Berkas extends CI_Controller {
                 redirect(base_url());
             }
 			$data["invoice"] = $this->model_detail->getinvoicebyid(str_replace("%20"," ",$invoice_id));
-            $paketan_id = [];
-            $kosongan_id = [];
-            for($i=0;$i<count($data["invoice"]);$i++){
-                $data_paketan = $this->model_form->getpaketanbyid($data["invoice"][$i]["paketan_id"]);
-                $paketan_id[] = $data_paketan;
-                $data_kosongan = $this->model_print->getkosonganbyid($data["invoice"][$i]["kosongan_id"]);
-                $kosongan_id[] = $data_kosongan;
-            }
-            $data["paketan"] = $paketan_id;
-            $data["kosongan"] = $kosongan_id;
 			$data["customer"] = $this->model_home->getcustomerbyid($data["invoice"][0]["customer_id"]);
 			$data["invoice_kode"] = $data["invoice"][0]["invoice_kode"];
 			$data["asal"] = $asal;
 			$this->load->view("print/invoice_print",$data);
 		}
-		public function uang_jalan($jo_id){
+		public function uang_jalan($jo_id,$asal){
             if(!$_SESSION["user"]){
     			$this->session->set_flashdata('status-login', 'False');
                 redirect(base_url());
             }
 			$data["data"] = $this->model_home->getjobyid($jo_id);
-			if($data["data"]["paketan_id"]==0){
-				$data["tipe_jo"] = "reguler";
-				$data["kosongan"] = $this->model_detail->getkosonganbyid($data["data"]["kosongan_id"],0);
-			}else{
-				$data["paketan"] = $this->model_form->getpaketanbyid($data["data"]["paketan_id"]);
-				$data["tipe_jo"] = "paketan";
-			}
+			$data["customer"] = $this->model_home->getcustomerbyid($data["data"]["customer_id"]);
+			$data["tipe_jo"] = "reguler";
 			$data["jo_id"] = $data["data"]["Jo_id"];
-			$data["asal"] = "detail";
+			$data["asal"] = $asal;
             $data["supir"] = $this->model_home->getsupirbyid($data["data"]["supir_id"]);
             $data["mobil"] = $this->model_home->getmobilbyid($data["data"]["mobil_no"]);
 			$this->load->view("print/jo_print",$data);
+		}
+		public function print_bon($bon_id){
+            if(!$_SESSION["user"]){
+    			$this->session->set_flashdata('status-login', 'False');
+                redirect(base_url());
+            }
+			$data["data"] = $this->model_detail->getbonbyid($bon_id);
+            $data["supir"] = $this->model_home->getsupirbyid($data["data"]["supir_id"]);
+			$data["asal"]="detail";
+            $data["data_jo"] = array("Jo_id"=>"0");
+			$this->load->view("print/bon_print",$data);
 		}
 	// end fungsi cetak invoice,gaji,memo
 

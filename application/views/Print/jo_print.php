@@ -4,6 +4,30 @@
         $tanggal = $data_tanggal[2].'-'.$data_tanggal[1].'-'.$data_tanggal[0];
         return $tanggal;
     }
+    function generate_terbilang($uang){
+        $uang = abs($uang);
+        $huruf = array("", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "sebelas");
+        $temp = "";
+
+        if ($uang < 12) {
+            $temp = " ". $huruf[$uang];
+        } else if ($uang <20) {
+            $temp = generate_terbilang($uang - 10). " Belas";
+        } else if ($uang < 100) {
+            $temp = generate_terbilang($uang/10)." Puluh". generate_terbilang($uang % 10);
+        } else if ($uang < 200) {
+            $temp = " Seratus" . generate_terbilang($uang - 100);
+        } else if ($uang < 1000) {
+            $temp = generate_terbilang($uang/100) . " Ratus" . generate_terbilang($uang % 100);
+        } else if ($uang < 2000) {
+            $temp = " Seribu" . generate_terbilang($uang - 1000);
+        } else if ($uang < 1000000) {
+            $temp = generate_terbilang($uang/1000) . " Ribu" . generate_terbilang($uang % 1000);
+        } else if ($uang < 1000000000) {
+            $temp = generate_terbilang($uang/1000000) . " Juta" . generate_terbilang($uang % 1000000);
+        }     
+        return $temp;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,16 +48,14 @@
 </head>
 <body class="text-dark">
     <div class="container w-50">
+        <div class="container mr-0 w-50 mb-5">
+            <p><?= $data["user"]?></p>
+        </div>
         <div class="body-card text-center">
             <span class="h3">Bukti Titipan Uang Jalan</span><br>
-            <?php if($tipe_jo=="paketan"){?>
-                <span class="h3">Tipe Paketan</span>
-            <?php }else{?>
-                <span class="h3">Tipe Reguler</span>
-            <?php }?>
             <hr>
         </div>
-        <div class="card-body">
+        <div class="card-body"> 
                 <div class="table-responsive">
                     <table class="" id="" width="100%" cellspacing="0">
                         <tbody>
@@ -43,9 +65,9 @@
                                 <td ><strong>#<?= $jo_id?></strong></td>
                             </tr>
                             <tr>
-                                <td width="30%">No Pol</td>
+                                <td width="30%">Tanggal</td>
                                 <td width="5%">:</td>
-                                <td><?= $mobil["mobil_no"]." || ".$mobil["mobil_jenis"]?></td>
+                                <td ><?= change_tanggal($data["tanggal_surat"])?></td>
                             </tr>
                             <tr>
                                 <td width="30%">Supir</td>
@@ -53,40 +75,28 @@
                                 <td><?= $supir["supir_name"]?></td>
                             </tr>
                             <tr>
+                                <td width="30%">No Pol</td>
+                                <td width="5%">:</td>
+                                <td><?= $mobil["mobil_no"]." || ".$mobil["mobil_jenis"]?></td>
+                            </tr>
+                            <tr>
+                                <td width="30%">Customer</td>
+                                <td width="5%">:</td>
+                                <td><?= $customer["customer_name"]?></td>
+                            </tr>
+                            <tr>
                                 <td width="30%">Rute</td>
                                 <td width="5%">:</td>
                                 <td>
                                     <table class="small">
                                         <tbody>
-                                            <?php if($tipe_jo=="paketan"){?>
-                                                <?php $data_rute = json_decode($paketan["paketan_data_rute"],true);?>
-                                                <?php for($i=0;$i<count($data_rute);$i++){?>
-                                                    <tr>
-                                                        <td><?= $data_rute[$i]["dari"]?></td>
-                                                        <td>-<?= $data_rute[$i]["ke"]?></td>
-                                                        <td> (<?= $data_rute[$i]["muatan"]?>)</td>
-                                                    </tr>
-                                                <?php }?>
-                                            <?php }else{?>
-                                                <?php if($kosongan != 0){?>
-                                                    <tr>
-                                                        <td><?= $kosongan["kosongan_dari"]?></td>
-                                                        <td>-<?= $kosongan["kosongan_ke"]?></td>
-                                                        <td> (Kosongan)</td>
-                                                    </tr>
+                                            
                                                     <tr>
                                                         <td><?= $data["asal"]?></td>
                                                         <td>-<?= $data["tujuan"]?></td>
                                                         <td> (<?= $data["muatan"]?>)</td>
                                                     </tr>
-                                                <?php }else{?>
-                                                    <tr>
-                                                        <td><?= $data["asal"]?></td>
-                                                        <td>-<?= $data["tujuan"]?></td>
-                                                        <td> (<?= $data["muatan"]?>)</td>
-                                                    </tr>
-                                                <?php }?>
-                                            <?php }?>
+                                            
                                         </tbody>
                                     </table>
                                 </td>
@@ -96,35 +106,20 @@
                                 <td width="5%">:</td>
                                 <td>Rp.<?= number_format($data["uang_jalan"],2,',','.')?></td>
                             </tr>
-                            <tr>
-                                <td width="30%">Terbilang</td>
-                                <td width="5%">:</td>
-                                <td><?= $data["terbilang"]?></td>
-                            </tr>
-                            <?php if($tipe_jo=="reguler"){?>
                                 <tr>
-                                    <td width="30%">Uang Jalan Kosongan</td>
+                                    <td width="30%">Tambahan/Potongan UJ</td>
                                     <td width="5%">:</td>
-                                    <?php if($tipe_jo!="paketan" && $kosongan!=null){?>
-                                        <td>Rp.<?= number_format($kosongan["kosongan_uang"],2,",",".")?></td>
-                                    <?php }else{?>
-                                        <td>Rp.0 (Tidak Ada)</td>
-                                    <?php }?>
+                                        <td>Rp.<?= number_format($data["nominal_tambahan"],2,",",".")?> (<?= $data["jenis_tambahan"]?>)</td>
                                 </tr>
-                            <?php }?>
                             <tr>
                                 <td width="30%">Total Uang Jalan</td>
                                 <td width="5%">:</td>
-                                <?php if($tipe_jo!="paketan"){?>
-                                    <td>Rp.<?= number_format($data["uang_jalan"]+$data["uang_kosongan"],2,',','.')?></td>
-                                <?php }else{?>
-                                    <td>Rp.<?= number_format($data["uang_jalan"],2,',','.')?></td>
-                                <?php }?>
+                                <td>Rp.<?= number_format($data["uang_total"],2,',','.')?></td>
                             </tr>
                             <tr>
-                                <td width="30%">Total Uang Jalan Dibayar</td>
+                                <td width="30%">Terbilang</td>
                                 <td width="5%">:</td>
-                                <td>Rp.<?= number_format($data["uang_jalan_bayar"],2,',','.')?></td>
+                                <td><?= generate_terbilang($data["uang_total"])?> Rupiah</td>
                             </tr>
                             <tr>
                                 <td width="30%">Keterangan</td>
@@ -143,13 +138,13 @@
                         <tbody>
                             <tr class="text-center">
                                 <td width="30%">Yang Menyerahkan,</td>
-                                <td width="30%">Mengetahui,</td>
+                                <td width="30%">Yang Membuat</td>
                                 <td width="30%" >Yang Menerima</td>
                             </tr>
                             <tr class="text-center" style="height:200px">
-                                <td width="30%">('''kasir''')</td>
-                                <td width="30%">(bag.operasional)</td>
-                                <td width="30%" >('''supir''')</td>
+                                <td width="30%">(---------------)</td>
+                                <td width="30%">(---------------)</td>
+                                <td width="30%" >(---------------)</td>
                             </tr>
                         </tbody>
                     </table>

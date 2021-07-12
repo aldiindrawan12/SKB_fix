@@ -18,12 +18,38 @@ class Dashboard extends CI_Controller {
     		$this->session->set_flashdata('status-login', 'False');
             redirect(base_url());
         }
-        $data["page"] = "Dashboard_page";
+        $data["page"] = "DB_Izin_page";
         $data["collapse_group"] = "Dashboard";
         $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
         $this->load->view('header',$data);
         $this->load->view('sidebar');
         $this->load->view('dashboard/dashboard');
+    }    
+    public function dashboard_operasional()
+    {
+        if(!$_SESSION["user"]){
+    		$this->session->set_flashdata('status-login', 'False');
+            redirect(base_url());
+        }
+        $data["page"] = "DB_Operasional_page";
+        $data["collapse_group"] = "Dashboard";
+        $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+        $this->load->view('header',$data);
+        $this->load->view('sidebar');
+        $this->load->view('dashboard/dashboard_operasional');
+    }    
+    public function dashboard_invoice()
+    {
+        if(!$_SESSION["user"]){
+    		$this->session->set_flashdata('status-login', 'False');
+            redirect(base_url());
+        }
+        $data["page"] = "DB_Invoice_page";
+        $data["collapse_group"] = "Dashboard";
+        $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+        $this->load->view('header',$data);
+        $this->load->view('sidebar');
+        $this->load->view('dashboard/dashboard_invoice');
     }    
     public function view_truck($fungsi){
         $postData = $this->input->post();

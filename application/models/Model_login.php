@@ -10,5 +10,10 @@ class Model_Login extends CI_model
     public function getakunbyid($akun_id){
         return $this->db->get_where("skb_akun",array("akun_id"=>$akun_id))->row_array();
     }
-
+    
+    public function ubah_password($password_new){
+        $this->db->set("password",$password_new);
+        $this->db->where("akun_id",$_SESSION["user_id"]);
+        $this->db->update("user");
+    }
 }

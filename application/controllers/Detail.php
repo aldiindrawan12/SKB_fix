@@ -13,6 +13,16 @@ class Detail extends CI_Controller {
         }
     // end contruck
 
+    
+    public function change_tanggal($tanggal){
+        if($tanggal==""){
+            return "";
+        }else{
+            $tanggal_array = explode("-",$tanggal);
+            return $tanggal_array[2]."-".$tanggal_array[1]."-".$tanggal_array[0];   
+        }
+    }
+
     //fungsi untuk Detail JO dan invoice
         public function updatesupirjo($jo_id,$supir_id_old){
             $this->model_detail->updatesupirjo($jo_id,$this->input->post("Supir"),$supir_id_old);
@@ -31,14 +41,25 @@ class Detail extends CI_Controller {
                 redirect(base_url());
             }
             $data["jo"] = $this->model_home->getjobyid($Jo_id);
+            $data["slip_gaji"] = $this->model_detail->getpembayaranupahbyid($data["jo"]["pembayaran_upah_id"]);
+            if(count($data["slip_gaji"])==0){
+                $data["slip_gaji"] = array(
+                    array(
+                        "user_upah"=>"",
+                        "pembayaran_upah_id"=>"",
+                        "pembayaran_upah_tanggal"=>"",
+                    )
+                );
+            }
+            $data["invoice"] = $this->model_detail->getinvoicebyid($data["jo"]["invoice_id"]); 
             $data["customer"] = $this->model_home->getcustomerbyid($data["jo"]["customer_id"]);
             $data["mobil"] = $this->model_home->getmobilbyid($data["jo"]["mobil_no"]);
             $data["supir"] = $this->model_home->getsupirbyid($data["jo"]["supir_id"]);
-            $data["all_supir"] = $this->model_detail->getsupir();
-            $data["all_mobil"] = $this->model_detail->getmobil($data["mobil"]["mobil_jenis"]);
+            // $data["all_supir"] = $this->model_detail->getsupir();
+            // $data["all_mobil"] = $this->model_detail->getmobil($data["mobil"]["mobil_jenis"]);
             if($asal=="JO"){
                 $data["page"] = "JO_page";
-                $data["collapse_group"] = "Perintah_Kerja";
+                $data["collapse_group"] = "Job_Order";
             }else if($asal=="uang_jalan"){
                 $data["page"] = "Laporan_Uang_Jalan_page";
                 $data["collapse_group"] = "Laporan";
@@ -46,15 +67,7 @@ class Detail extends CI_Controller {
                 $data["page"] = "Laporan_page";
                 $data["collapse_group"] = "Laporan";
             }
-
-            if($data["jo"]["paketan_id"]!=0){
-                $data["tipe_jo"]="paketan";
-                $data["paketan"] = $this->model_form->getpaketanbyid($data["jo"]["paketan_id"]);
-                $data["kosongan"] = $this->model_detail->getkosonganbyid(0,$Jo_id);
-            }else{     
-                $data["tipe_jo"]="reguler";
-                $data["kosongan"] = $this->model_detail->getkosonganbyid($data["jo"]["kosongan_id"],$Jo_id);
-            }
+            $data["tipe_jo"]="reguler";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             if(json_decode($data["akun_akses"]["akses"])[1]==0 && json_decode($data["akun_akses"]["akses"])[8]==0 && json_decode($data["akun_akses"]["akses"])[7]==0){
                 redirect(base_url());
@@ -71,21 +84,9 @@ class Detail extends CI_Controller {
                 redirect(base_url());
             }
             $data["invoice"] = $this->model_detail->getinvoicebyid(str_replace("%20"," ",$invoice_id));
-            $paketan_id = [];
-            $kosongan_id = [];
-            for($i=0;$i<count($data["invoice"]);$i++){
-                $data_paketan = $this->model_form->getpaketanbyid($data["invoice"][$i]["paketan_id"]);
-                $paketan_id[] = $data_paketan;
-                $data_kosongan = $this->model_print->getkosonganbyid($data["invoice"][$i]["kosongan_id"]);
-                if($data_kosongan){
-                    $kosongan_id[] = $data_kosongan;    
-                }
-            }
-            $data["paketan"] = $paketan_id;
-            $data["kosongan"] = $kosongan_id;
             $data["customer"] = $this->model_home->getcustomerbyid($data["invoice"][0]["customer_id"]);
             $data["page"] = "Invoice_Customer_page";
-            $data["collapse_group"] = "Perintah_Kerja";
+            $data["collapse_group"] = "Invoice";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             if(json_decode($data["akun_akses"]["akses"])[4]==0){
                 redirect(base_url());
@@ -94,24 +95,6 @@ class Detail extends CI_Controller {
             $this->load->view('sidebar');
             $this->load->view('detail/invoice');
             $this->load->view('footer');
-        }
-        public function hapus_invoice($invoice_id){
-            $customer = $this->model_detail->hapus_invoice($invoice_id);
-            redirect(base_url('index.php/detail/detail_customer/').$customer);
-        }
-        public function updatestatusjo($supir,$mobil){
-            $data_jo = $this->model_home->getjobyid($this->input->post("jo_id"));
-            $keterangan = "<strong>Catatan JO : </strong>".$data_jo["keterangan"]."<br><strong>Catatan Konfirmasi : </strong>".$this->input->post("Keterangan");
-            $TOD = $this->input->post("TOD");
-            $data = array(
-                "tonase"=>$this->input->post("tonase"),
-                "bonus"=>str_replace(".","",$this->input->post("bonus")),
-                "keterangan"=>$keterangan,
-                "tanggal_bongkar"=>date('Y-m-d'),
-                "Jo_id"=>$this->input->post("jo_id")
-            );
-            $this->model_detail->updatestatusjo($data,$supir,$mobil);
-            redirect(base_url("index.php/detail/detail_jo/").$this->input->post("jo_id")."/JO");
         }
 
         public function updateUJ($jo_id){
@@ -128,59 +111,15 @@ class Detail extends CI_Controller {
             redirect(base_url("index.php/detail/detail_invoice/").$invoice_kode."/Invoice");
         }
 
-        public function updatejobatal($Jo_id){
-            $data_jo = $this->model_home->getjobyid($Jo_id);
-            $data["data_jo"]=$data_jo;
-            $bon_id = $this->model_form->getbonid();
-            $isi_bon_id = [];
-            for($i=0;$i<count($bon_id);$i++){
-                $isi_bon_id[] = $bon_id[$i]["bon_id"];
-            }
-            date_default_timezone_set('Asia/Jakarta');
-            $data["data"]=array(
-                "bon_id"=>max($isi_bon_id)+1,
-                "supir_id"=>$data_jo["supir_id"],
-                "bon_jenis"=>"Pembatalan JO",
-                "bon_nominal"=>$data_jo["uang_jalan"],
-                "bon_keterangan"=>"Pembatalan JO",
-                "bon_tanggal"=>date("Y-m-d H:i:s")
-            );
-            $data["bon_id"] = max($isi_bon_id)+1;
-            $this->model_form->insert_bon($data["data"]);
-            $this->model_detail->update_jo_dibatalkan($data_jo["Jo_id"],$data_jo["supir_id"],$data_jo["mobil_no"],$data_jo["uang_jalan"]);
-            $data["supir"] = $this->model_home->getsupirbyid($data["data"]["supir_id"]);
-            $data["asal"] = "batal JO";
-            $this->load->view("print/bon_print",$data);
-        }
         public function getjo(){
             $jo_id = $this->input->get('id');
             $data = $this->model_home->getjobyid($jo_id);
             echo json_encode($data);       
         }
-        public function hapus_jo($jo_id){
-            $data_jo = $this->model_home->getjobyid($jo_id);
-            $data["data_jo"]=$data_jo;
-            $bon_id = $this->model_form->getbonid();
-            $isi_bon_id = [];
-            for($i=0;$i<count($bon_id);$i++){
-                $isi_bon_id[] = $bon_id[$i]["bon_id"];
-            }
-            date_default_timezone_set('Asia/Jakarta');
-            $data["data"]=array(
-                "bon_id"=>max($isi_bon_id)+1,
-                "supir_id"=>$data_jo["supir_id"],
-                "bon_jenis"=>"Pembatalan JO",
-                "bon_nominal"=>$data_jo["uang_jalan_bayar"],
-                "bon_keterangan"=>"Pembatalan JO",
-                "bon_tanggal"=>date("Y-m-d H:i:s")
-            );
-            $data["bon_id"] = max($isi_bon_id)+1;
-            $this->model_form->insert_bon($data["data"]);
-            $data["supir"] = $this->model_home->getsupirbyid($data["data"]["supir_id"]);
-            $data["asal"] = "Hapus JO";
-            $this->load->view("print/bon_print",$data);
-            
-            $this->model_detail->hapus_jo($jo_id);
+        public function getjokonfirmasi(){
+            $jo_id = $this->input->get('id');
+            $data = $this->model_home->getjobyidkonfirmasi($jo_id);
+            echo json_encode($data);       
         }
     //end fungsi untuk Detail jo dan invoice
 
@@ -194,7 +133,7 @@ class Detail extends CI_Controller {
             }
             $data["customer"] = $this->model_home->getcustomerbyid($customer_id);
             $data["page"] = "Invoice_Customer_page";
-            $data["collapse_group"] = "Perintah_Kerja";
+            $data["collapse_group"] = "Invoice";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             if(json_decode($data["akun_akses"]["akses"])[4]==0){
                 redirect(base_url());
@@ -219,19 +158,38 @@ class Detail extends CI_Controller {
             $data = $this->model_detail->getbonbyid($bon_id);
             echo json_encode($data);
         }
+        function getbonsupir()
+        {
+            $supir_id = $this->input->get('id');
+            $data = $this->model_detail->getbonbysupir($supir_id);
+            echo json_encode($data);
+        }
     //end fungsi untuk Detail bon
     
     //fungsi untuk Detail report bon
-        function detail_report_bon($supir_id)
+        function detail_report_bon($supir_id,$asal)
         {
             if(!$_SESSION["user"]){
     			$this->session->set_flashdata('status-login', 'False');
                 redirect(base_url());
             }
-            $data["transaksi_bon"] = $this->model_detail->getbonbysupir($supir_id);
+            if($asal=="periode"){
+                $data["tanggal1"] = $this->input->post("tanggal1");
+                $data["tanggal2"] = $this->input->post("tanggal2");
+                if($data["tanggal1"]==""){
+                    $data["transaksi_bon"] = $this->model_detail->getbonbysupir($supir_id);                
+                }else{
+                    $data["transaksi_bon"] = $this->model_detail->getbonbysupirperiode($supir_id,$data["tanggal1"],$data["tanggal2"]);
+                }
+            }else{
+                $data["tanggal1"] = "";
+                $data["tanggal2"] = "";
+                $data["transaksi_bon"] = $this->model_detail->getbonbysupir($supir_id);                
+            }
             $data["supir"] = $this->model_home->getsupirbyid($supir_id)["supir_name"];
+            $data["supir_id"] = $this->model_home->getsupirbyid($supir_id)["supir_id"];
             $data["page"] = "Laporan_Bon_page";
-            $data["collapse_group"] = "Laporan";
+            $data["collapse_group"] = "Kasbon";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             if(json_decode($data["akun_akses"]["akses"])[10]==0){
                 redirect(base_url());
@@ -251,16 +209,6 @@ class Detail extends CI_Controller {
             echo json_encode($data);
         }
     //end fungsi untuk Detail ttruckk
-
-    //fungsi untuk Detail kosongan
-        function getkosongan()
-        {
-            $kosongan_id = $this->input->get('id');
-            $jo_id = $this->input->get('jo');
-            $data = $this->model_detail->getkosonganbyid($kosongan_id,$jo_id);
-            echo json_encode($data);
-        }
-    //end fungsi untuk Detail kosongan
 
     //fungsi untuk Detail merk
         function getmerk()
@@ -302,6 +250,8 @@ class Detail extends CI_Controller {
             }else{
                 $kasbon = $this->input->post("kasbon");
             }
+            $data["bulan"] = $this->input->post("bulan_kerja");
+            $data["tahun"] = $this->input->post("tahun_kerja");
             $data["pilih_jo"] = array(
                 "jo_id" => $this->input->post("jo"),
                 "gaji_total" => $this->input->post("gaji_total"),
@@ -329,13 +279,43 @@ class Detail extends CI_Controller {
             $this->load->view('footer');
         }
 
-        public function pilih_gaji($supir_id)
+        public function pilih_gaji($supir_id,$asal,$tahun,$bulan)
         {
+            $slip_id = $this->model_form->getpembayaranupahid();
+            $isi_slip_id = [];
+            for($i=0;$i<count($slip_id);$i++){
+                $explode_slip = explode("-",$slip_id[$i]["pembayaran_upah_id"]);
+                if(count($explode_slip)>1){
+                    if($explode_slip[2]==date("m") && $explode_slip[3]==date('Y')){
+                        $isi_slip_id[] = $explode_slip[0];
+                    }
+                }
+            }
+            if(count($isi_slip_id)==0){
+                $isi_slip_id[]=0;
+            }
+            $data["no_slip_gaji"]=(max($isi_slip_id)+1)."-GAJI-".date("m")."-".date('Y');
+
+            if($asal=="form"){
+                if($tahun=="x"){
+                    $data["tahun"]="x";
+                }else{
+                    $data["tahun"]=$tahun;
+                }
+                if($bulan=="x"){
+                    $data["bulan_index"]='x';
+                }else{
+                    $data["bulan_index"]=$bulan;
+                }
+            }else{
+                $data["tahun"]="x";
+                $data["bulan_index"]="x";
+            }
             if(!$_SESSION["user"]){
     			$this->session->set_flashdata('status-login', 'False');
                 redirect(base_url());
             }
-            $data["jo"] = $this->model_detail->getjobbysupir($supir_id);
+            $data["jo"] = $this->model_detail->getjobbysupirbulan($supir_id,$data["tahun"],$data["bulan_index"]);
             $data["supir"] = $this->model_home->getsupirbyid($supir_id);
             $data["page"] = "Gaji_page";
             $data["collapse_group"] = "Penggajian";
@@ -357,7 +337,7 @@ class Detail extends CI_Controller {
             $data["pembayaran_upah"] = $this->model_detail->getpembayaranupah($supir_id);
             $data["supir"] = $this->model_home->getsupirbyid($supir_id);
             $data["page"] = "Laporan_Gaji_page";
-            $data["collapse_group"] = "Laporan";
+            $data["collapse_group"] = "Penggajian";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             if(json_decode($data["akun_akses"]["akses"])[9]==0){
                 redirect(base_url());
@@ -365,7 +345,43 @@ class Detail extends CI_Controller {
             $this->load->view('header',$data);
             $this->load->view('sidebar');
             $this->load->view('detail/penggajian_report',$data);
-            $this->load->view('footer');
+        }
+
+        public function view_laporan_penggajian(){
+            $No_Slip = $this->input->post('No_Slip1')."-".$this->input->post('No_Slip2')."-".$this->input->post('No_Slip3')."-".$this->input->post('No_Slip4');
+            $data = array(
+                "Status" => $this->input->post('Status'),
+                "Supir" => $this->input->post('Supir'),
+                "Tanggal1" => $this->input->post('Tanggal1'),
+                "Tanggal2" => $this->input->post('Tanggal2'),
+                "Bulan" => $this->input->post('Bulan'),
+                "Tahun" => $this->input->post('Tahun'),
+                "No_Slip" => $No_Slip,
+            );
+            $postData = $this->input->post();
+            $data = $this->model_detail->getGajiData($postData,$data);
+            echo json_encode($data);
+        }
+
+        public function getditemukanslip(){
+            $No_Slip = $this->input->post('No_Slip1')."-".$this->input->post('No_Slip2')."-".$this->input->post('No_Slip3')."-".$this->input->post('No_Slip4');
+            $data = array(
+                "Status" => $this->input->post('Status'),
+                "Supir" => $this->input->post('Supir'),
+                "Tanggal1" => $this->input->post('Tanggal1'),
+                "Tanggal2" => $this->input->post('Tanggal2'),
+                "Bulan" => $this->input->post('Bulan'),
+                "Tahun" => $this->input->post('Tahun'),
+                "No_Slip" => $No_Slip,
+            );
+            $data_filter = $this->model_detail->getDitemukanSlip($data);
+            $gaji = 0;
+            for($i=0;$i<count($data_filter);$i++){
+                if($data_filter[$i]["pembayaran_upah_status"]=="Belum Lunas"){
+                    $gaji = $gaji + $data_filter[$i]["pembayaran_upah_total"];
+                }
+            }
+            echo count($data_filter)."=".number_format($gaji,2,",",".");
         }
 
         public function detail_penggajian_report_pembayaran($supir_id,$pembayaran_id)
@@ -375,9 +391,10 @@ class Detail extends CI_Controller {
                 redirect(base_url());
             }
             $data["pembayaran_upah"] = $this->model_detail->getpembayaranupahbyid($pembayaran_id);
+            $data["jo_pembayaran_upah"] = $this->model_detail->getjobypembayaranupah($data["pembayaran_upah"][0]["pembayaran_upah_id"]);
             $data["supir"] = $this->model_home->getsupirbyid($supir_id);
             $data["page"] = "Laporan_Gaji_page";
-            $data["collapse_group"] = "Laporan";
+            $data["collapse_group"] = "Penggajian";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             if(json_decode($data["akun_akses"]["akses"])[9]==0){
                 redirect(base_url());
@@ -395,25 +412,137 @@ class Detail extends CI_Controller {
                 "gaji_grand_total"=>str_replace(".","",$this->input->get("gaji_grand_total")),
                 "gaji_total"=>str_replace(".","",$this->input->get("gaji_total")),
                 "bonus"=>str_replace(".","",$this->input->get("bonus")),
-                "Jo_id"=>$this->input->get("jo_id")
+                "Jo_id"=>$this->input->get("jo_id"),
+                "pembayaran_upah_id"=>$this->input->get("pembayaran_upah_id")
             );
             $this->model_detail->update_upah($data);
-            echo $data["supir_id"]."=".$data["kasbon"]."=".$data["gaji_grand_total"]."=".$data["gaji_total"]."=".$data["bonus"];
+            echo $data["pembayaran_upah_id"];
+        }
+
+        public function insert_upah($supir_id){
+            $data_bulan = ["x","Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+
+            if($this->input->post("bonus")==""){
+                $bonus=0;
+            }else{
+                $bonus=str_replace(".","",$this->input->post("bonus"));
+            }
+            if($this->input->post("kasbon")==""){
+                $kasbon=0;
+            }else{
+                $kasbon = str_replace(".","",$this->input->post("kasbon"));
+            }
+
+            $bulan = $this->input->post("bulan_kerja");
+            $tahun = $this->input->post("tahun_kerja");
+            if($bulan=='x'){
+                $bulan=0;
+            }
+            if($tahun=="x"){
+                $tahun=date("Y");
+            }
+
+            $data_jo = [];
+            $data_jo_form = explode(",",$this->input->post("jo"));
+            for($i=0;$i<count($data_jo_form);$i++){
+                $data_jo[] = $data_jo_form[$i];
+            }
+            $data = array(
+                "supir_id"=>$supir_id,
+                "kasbon"=>$kasbon,
+                "tanggal"=>$this->change_tanggal($this->input->post("tanggal_gaji")),
+                "gaji_grand_total"=>str_replace(".","",$this->input->post("gaji_grand_total")),
+                "gaji_total"=>str_replace(".","",$this->input->post("gaji_total")),
+                "bonus"=>$bonus,
+                "Jo_id"=>$data_jo,
+                "bulan_kerja"=>$data_bulan[$bulan]."-".$tahun,
+                "pembayaran_upah_id"=>$this->input->post("no_gaji"),
+                "keterangan"=>$this->input->post("Keterangan"),
+                "sisa"=>str_replace(".","",$this->input->post("gaji_grand_total"))
+            );
+            $this->session->set_flashdata('status-insert-slip-gaji', 'Berhasil');
+            $this->model_detail->insert_upah($data);
+            redirect (base_url("index.php/home/gaji"));
+        }
+
+        public function update_slip($pembayaran_upah_id){
+            $data_bulan = ["x","Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+
+            if($this->input->post("bonus")==""){
+                $bonus=0;
+            }else{
+                $bonus=str_replace(".","",$this->input->post("bonus"));
+            }
+            if($this->input->post("kasbon")==""){
+                $kasbon=0;
+            }else{
+                $kasbon = str_replace(".","",$this->input->post("kasbon"));
+            }
+
+            // $bulan = $this->input->post("bulan_kerja");
+            // $tahun = $this->input->post("tahun_kerja");
+            // if($bulan=='x'){
+            //     $bulan=0;
+            // }
+            // if($tahun=="x"){
+            //     $tahun=date("Y");
+            // }
+
+            $data_jo = [];
+            $data_jo_form = explode(",",$this->input->post("jo"));
+            for($i=0;$i<count($data_jo_form);$i++){
+                $data_jo[] = $data_jo_form[$i];
+            }
+            $data = array(
+                // "supir_id"=>$supir_id,
+                "pembayaran_upah_bon"=>$kasbon,
+                "pembayaran_upah_tanggal"=>$this->change_tanggal($this->input->post("tanggal_gaji")),
+                "pembayaran_upah_total"=>str_replace(".","",$this->input->post("gaji_grand_total")),
+                "pembayaran_upah_nominal"=>str_replace(".","",$this->input->post("gaji_total")),
+                "pembayaran_upah_bonus"=>$bonus,
+                // "bulan_kerja"=>$data_bulan[$bulan]."-".$tahun,
+                // "pembayaran_upah_id"=>$this->input->post("no_gaji"),
+                "keterangan"=>$this->input->post("Keterangan")
+            );
+            $this->session->set_flashdata('status-edit-slip-gaji', 'Berhasil');
+            // echo print_r($data);
+            $this->model_detail->update_slip($data,$pembayaran_upah_id,$data_jo);
+            redirect (base_url("index.php/home/report_gaji"));
         }
     //end fungsi untuk Detail penggajian
-    
-    function getrute()
+
+    function getpaymentinvoice()
     {
-        $rute_id = $this->input->get('id');
-        $data = $this->model_detail->getrutebyid($rute_id);
+        $payment_id = $this->input->get('id');
+        $data = $this->model_detail->getpaymentinvoicebyid($payment_id);
         echo json_encode($data);
     }
 
-    function getpaketan()
+    function getpaymentupah()
     {
-        $paketan_id = $this->input->get('id');
-        $data = $this->model_form->getpaketanbyid($paketan_id);
+        $payment_id = $this->input->get('id');
+        $data = $this->model_detail->getpaymentupahbyid($payment_id);
         echo json_encode($data);
     }
     
+    function getpaymentjo()
+    {
+        $payment_id = $this->input->get('id');
+        $data = $this->model_detail->getpaymentjobyid($payment_id);
+        echo json_encode($data);
+    }
+
+    function getnumpaymentinvoice()
+    {
+        $invoice_id = $this->input->get('id');
+        $data = $this->model_detail->getpaymentinvoice($invoice_id);
+        echo count($data);
+    }
+
+    function getnumpaymentupah()
+    {
+        $upah_id = $this->input->get('id');
+        $data = $this->model_detail->getpaymentupah($upah_id);
+        echo count($data);
+    }
 }

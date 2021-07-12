@@ -1,7 +1,8 @@
 <div class="container">
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Seluruh Merk Kendaraan</h1>
-        <a class="btn btn-primary btn-icon-split" data-toggle='modal' data-target='#popup-merk'>
+    <div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary float-left">Seluruh Data Merk</h6>
+        <a class="btn btn-primary btn-icon-split float-right btn-sm" data-toggle='modal' data-target='#popup-merk'>
             <span class="icon text-white-100">
                 <i class="fas fa-plus"></i> 
             </span>
@@ -9,10 +10,6 @@
                  Tambah Merk
             </span>
         </a>
-    </div>
-    <div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Merk</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -125,3 +122,36 @@
     </div>
 </div>
 <!-- end pop up update merk -->
+
+<div class="modal fade mt-3 py-3 " id="popup-acc-edit-merk" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary-dark">
+                <h5 class="font-weight-bold">Data Edit Merk</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="container mb-3">
+                        <div class="form-group ">
+                            <label for="merk_nama_edit" class="form-label font-weight-bold">Merk</label>
+                            <input autocomplete="off" type="text" class="form-control" id="merk_nama_edit" name="merk_nama_edit" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="merk_type_edit" class="form-label font-weight-bold">Type</label>
+                            <input autocomplete="off" type="text" class="form-control" id="merk_type_edit" name="merk_type_edit" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label font-weight-bold" for="merk_jenis_edit">Jenis Mobil</label>
+                            <input autocomplete="off" type="text" class="form-control" name="merk_jenis_edit" id="merk_jenis_edit" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label font-weight-bold" for="merk_dump_edit">Dump</label>
+                            <input autocomplete="off" type="text" class="form-control" name="merk_dump_edit" id="merk_dump_edit" readonly>
+                        </div>
+                        <a class="btn btn-success" id="ACC">ACC</a>
+                        <a class="btn btn-danger" id="Tolak">Tolak</a>
+            </div>
+        </div>
+    </div>
+</div>

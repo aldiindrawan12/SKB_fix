@@ -2,6 +2,16 @@
 // error_reporting(0);
 class Model_Home extends CI_model
 {
+
+    public function change_tanggal($tanggal){
+        if($tanggal==""){
+            return "";
+        }else{
+            $tanggal_array = explode("-",$tanggal);
+            return $tanggal_array[2]."-".$tanggal_array[1]."-".$tanggal_array[0];   
+        }
+    }
+    
     //function get
         public function gettruck() //all truck
         {
@@ -21,7 +31,12 @@ class Model_Home extends CI_model
 
         public function getcustomer() //all customer
         {
-            return $this->db->get_where("skb_customer",array("validasi"=>"ACC","status_hapus"=>"NO","validasi"=>"ACC","validasi_edit"=>"ACC","validasi_delete"=>"ACC"))->result_array();
+            return $this->db->get_where("skb_customer",array("validasi"=>"ACC","status_hapus"=>"NO"))->result_array();
+        }
+
+        public function getallcustomer() //all customer
+        {
+            return $this->db->get_where("skb_customer",array("validasi"=>"ACC","status_hapus"=>"NO"))->result_array();
         }
 
         public function getcustomerbyid($customer_id) //customer by ID
@@ -34,19 +49,9 @@ class Model_Home extends CI_model
             return $this->db->get_where("skb_supir",array("status_hapus"=>"NO","status_aktif"=>"Aktif","validasi"=>"ACC","validasi_edit"=>"ACC","validasi_delete"=>"ACC"))->result_array();
         }
 
-        public function getsupirBON() //all supir
+        public function getallsupir() //all supir
         {
-            return $this->db->get_where("skb_supir",array("status_hapus"=>"NO","status_aktif"=>"Aktif","validasi"=>"ACC"))->result_array();
-        }
-
-        public function getkosongan() //all kosongan
-        {
-            return $this->db->get_where("skb_kosongan",array("status_hapus"=>"NO","validasi"=>"ACC","validasi_edit"=>"ACC","validasi_delete"=>"ACC"))->result_array();
-        }
-
-        public function getkosonganbyid($kosongan_id) //kosongan by id
-        {
-            return $this->db->get_where("skb_kosongan",array("status_hapus"=>"NO","kosongan_id"=>$kosongan_id))->row_array();
+            return $this->db->get_where("skb_supir",array("status_hapus"=>"NO","validasi"=>"ACC"))->result_array();
         }
 
         public function getsupirbyid($supir_id) //supir by id
@@ -59,14 +64,31 @@ class Model_Home extends CI_model
             return $this->db->get("skb_job_order")->result_array();
         }
 
+        public function getbon() //all JO
+        {
+            return $this->db->get_where("skb_bon",array("status_hapus"=>"NO"))->result_array();
+        }
+
+        public function getinvoice() //all JO
+        {
+            return $this->db->get("skb_invoice")->result_array();
+        }
+
         public function getjobyid($jo_id) //JO by ID
         {
             $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
             return $this->db->get_where("skb_job_order",array("Jo_id"=>$jo_id))->row_array();
         }
+        public function getjobyidkonfirmasi($jo_id) //JO by ID
+        {
+            $this->db->join("skb_mobil", "skb_mobil.mobil_no = skb_job_order.mobil_no", 'left');
+            $this->db->join("skb_supir", "skb_supir.supir_id = skb_job_order.supir_id", 'left');
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
+            return $this->db->get_where("skb_job_order",array("Jo_id"=>$jo_id))->row_array();
+        }
     //end funcction get
 
-    //function-fiunction datatable truck
+     //function-fiunction datatable truck
         function getTruckData($postData){
             $tanggal_now = date("Y-m-d");
             $response = array();
@@ -88,6 +110,10 @@ class Model_Home extends CI_model
                     mobil_merk like '%".$searchValue."%' or 
                     mobil_type like '%".$searchValue."%' or 
                     mobil_tahun like '%".$searchValue."%' or 
+                    mobil_stnk like '%".$searchValue."%' or 
+                    mobil_bpkb like '%".$searchValue."%' or 
+                    mobil_no_rangka like '%".$searchValue."%' or 
+                    mobil_no_mesin like '%".$searchValue."%' or 
                     mobil_jenis like '%".$searchValue."%') ";
             }
             $search_arr[] = " status_hapus='NO' ";
@@ -115,6 +141,7 @@ class Model_Home extends CI_model
             if($searchQuery != ''){
                 $this->db->where($searchQuery);
             }
+            $this->db->order_by("validasi DESC,validasi_edit DESC,validasi_delete DESC");
             $this->db->order_by($columnName, $columnSortOrder);
             $this->db->limit($rowperpage, $start);
             $records = $this->db->get('skb_mobil')->result();
@@ -128,6 +155,11 @@ class Model_Home extends CI_model
                     "mobil_merk"=>$record->mobil_merk,
                     "mobil_type"=>$record->mobil_type,
                     "mobil_dump"=>$record->mobil_dump,
+                    "mobil_tahun"=>$record->mobil_tahun,
+                    "mobil_no_rangka"=>$record->mobil_no_rangka,
+                    "mobil_no_mesin"=>$record->mobil_no_mesin,
+                    "mobil_bpkb"=>$record->mobil_bpkb,
+                    "mobil_stnk"=>$record->mobil_stnk,
                     "mobil_jenis"=>$record->mobil_jenis,
                     "validasi"=>$record->validasi,
                     "validasi_edit"=>$record->validasi_edit,
@@ -145,10 +177,10 @@ class Model_Home extends CI_model
         
             return $response; 
         }
-    //akhir function-fiunction datatable truck
+     //akhir function-fiunction datatable truck
 
-    //function-fiunction datatable JO
-        function getJOData($postData,$status){
+    //function-fiunction datatable truck
+        function getAllInvoiceData($postData,$data){
             $response = array();
         
             ## Read value
@@ -159,28 +191,54 @@ class Model_Home extends CI_model
             $columnName = $postData['columns'][$columnIndex]['data']; // Column name untuk sorting
             $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
             $searchValue = $postData['search']['value']; // Search value
-        
+
             ## Search 
             $search_arr = array();
             $searchQuery = "";
-            if($searchValue != ''){
-                $search_arr[] = " (Jo_id like '%".$searchValue."%' or 
-                    asal like '%".$searchValue."%' or 
-                    tujuan like '%".$searchValue."%' or 
-                    muatan like '%".$searchValue."%') ";
+            if($data["Status"]!=""){
+                $search_arr[] = " status_bayar='".$data["Status"]."' ";
             }
-            $search_arr[] = " (parent_Jo_id='x' or parent_Jo_id='y')";
-            if($status!="x"){
-                $search_arr[] = " status='".$status."' ";
+            if($data["Tanggal_Top"]!=""){
+                $search_arr[] = " tanggal_batas_pembayaran = '".$this->change_tanggal($data["Tanggal_Top"])."'";
             }
+            if($data["Customer"]!=""){
+                $search_arr[] = " skb_invoice.customer_id='".$data["Customer"]."' ";
+            }
+            if($data["Ppn"]!=""){
+                if($data["Ppn"]=="Ya"){
+                    $search_arr[] = " ppn!=0 ";
+                }else{
+                    $search_arr[] = " ppn=0 ";
+                }
+            }
+            if($data["Tanggal1"]!="" && $data["Tanggal2"]==""){
+                $search_arr[] = " tanggal_invoice BETWEEN '".$this->change_tanggal($data["Tanggal1"])."' AND '2022-10-10'";
+            }
+            if($data["Tanggal1"]=="" && $data["Tanggal2"]!=""){
+                $search_arr[] = " tanggal_invoice BETWEEN '2000-10-10' AND '".$this->change_tanggal($data["Tanggal2"])."'";
+            }
+            if($data["Tanggal1"]!="" && $data["Tanggal2"]!=""){
+                $search_arr[] = " tanggal_invoice BETWEEN '".$this->change_tanggal($data["Tanggal1"])."' AND '".$this->change_tanggal($data["Tanggal2"])."' ";
+            }
+            $no_invoice = explode("-",$data["No_Invoice"]);
+            $no_invoice_fix = "";
+            for($i=0;$i<count($no_invoice);$i++){
+                if($no_invoice[$i]!="x"){
+                    if($i!=3){
+                        $no_invoice_fix=$no_invoice_fix.$no_invoice[$i]."-";
+                    }else{
+                        $no_invoice_fix.=$no_invoice[$i];
+                    }
+                }
+            }
+            $search_arr[] = " invoice_kode like '%".$no_invoice_fix."%'";
             if(count($search_arr) > 0){ //gabung kondisi where
                 $searchQuery = implode(" and ",$search_arr);
             }
         
             ## Total record without filtering
             $this->db->select('count(*) as allcount');
-            $this->db->where("(parent_Jo_id='x' or parent_Jo_id='y')");
-            $records = $this->db->get('skb_job_order')->result();
+            $records = $this->db->get('skb_invoice')->result();
             $totalRecords = $records[0]->allcount;
         
             ## Total record with filtering
@@ -188,8 +246,7 @@ class Model_Home extends CI_model
             if($searchQuery != ''){
                 $this->db->where($searchQuery);
             }
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
-            $records = $this->db->get('skb_job_order')->result();
+            $records = $this->db->get('skb_invoice')->result();
             $totalRecordwithFilter = $records[0]->allcount;
         
             ## data hasil record
@@ -199,23 +256,10 @@ class Model_Home extends CI_model
             }
             $this->db->order_by($columnName, $columnSortOrder);
             $this->db->limit($rowperpage, $start);
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
-            $records = $this->db->get('skb_job_order')->result();
+            $this->db->join("skb_customer","skb_customer.customer_id=skb_invoice.customer_id",'left');
+            $records = $this->db->get('skb_invoice')->result();
         
-            $data = array();
-            $n = 1;
-            foreach($records as $record ){
-                $data[] = array( 
-                    "no"=>$n,
-                    "Jo_id"=>$record->Jo_id,
-                    "customer_name"=>$record->customer_name,
-                    "paketan_id"=>$record->paketan_id,
-                    "kosongan_id"=>$record->kosongan_id,
-                    "tanggal_surat"=>$record->tanggal_surat,
-                    "status"=>$record->status
-                ); 
-                $n++;
-            }
+            $data = $records;
             ## Response
             $response = array(
             "draw" => intval($draw),
@@ -226,10 +270,63 @@ class Model_Home extends CI_model
         
             return $response; 
         }
-    //akhir function-fiunction datatable JO
+        function getDitemukanInvoice($data){
+            ## Search 
+            $search_arr = array();
+            $searchQuery = "";
+            if($data["Status"]!=""){
+                $search_arr[] = " status_bayar='".$data["Status"]."' ";
+            }
+            if($data["Tanggal_Top"]!=""){
+                $search_arr[] = " tanggal_batas_pembayaran = '".$this->change_tanggal($data["Tanggal_Top"])."'";
+            }
+            if($data["Customer"]!=""){
+                $search_arr[] = " skb_invoice.customer_id='".$data["Customer"]."' ";
+            }
+            if($data["Ppn"]!=""){
+                if($data["Ppn"]=="Ya"){
+                    $search_arr[] = " ppn!=0 ";
+                }else{
+                    $search_arr[] = " ppn=0 ";
+                }
+            }
+            if($data["Tanggal1"]!="" && $data["Tanggal2"]==""){
+                $search_arr[] = " tanggal_invoice BETWEEN '".$this->change_tanggal($data["Tanggal1"])."' AND '2022-10-10'";
+            }
+            if($data["Tanggal1"]=="" && $data["Tanggal2"]!=""){
+                $search_arr[] = " tanggal_invoice BETWEEN '2000-10-10' AND '".$this->change_tanggal($data["Tanggal2"])."'";
+            }
+            if($data["Tanggal1"]!="" && $data["Tanggal2"]!=""){
+                $search_arr[] = " tanggal_invoice BETWEEN '".$this->change_tanggal($data["Tanggal1"])."' AND '".$this->change_tanggal($data["Tanggal2"])."' ";
+            }
+            $no_invoice = explode("-",$data["No_Invoice"]);
+            $no_invoice_fix = "";
+            for($i=0;$i<count($no_invoice);$i++){
+                if($no_invoice[$i]!="x"){
+                    if($i!=3){
+                        $no_invoice_fix=$no_invoice_fix.$no_invoice[$i]."-";
+                    }else{
+                        $no_invoice_fix.=$no_invoice[$i];
+                    }
+                }
+            }
+            $search_arr[] = " invoice_kode like '%".$no_invoice_fix."%'";
+            if(count($search_arr) > 0){ //gabung kondisi where
+                $searchQuery = implode(" and ",$search_arr);
+            }
 
-    //function-fiunction datatable JO laporan
-        function getJOReportData($postData,$status,$tanggal,$bulan,$tahun){
+            ## Total record with filtering
+            if($searchQuery != ''){
+                $this->db->where($searchQuery);
+            }
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_invoice.customer_id", 'left');
+            $records = $this->db->get('skb_invoice')->result_array();
+            return $records;
+        }
+    //akhir function-fiunction datatable truck
+
+     //function-fiunction datatable JO
+        function getJOData($postData,$status,$data){
             $response = array();
         
             ## Read value
@@ -243,34 +340,29 @@ class Model_Home extends CI_model
             ## Search 
             $search_arr = array();
             $searchQuery = "";
-            $like=$tahun."-".$bulan."-".$tanggal;
-            if($like != "--"){
-                if ($tanggal != "x" && $bulan=="x" && $tahun=="x") {
-                    $search_arr[] = " tanggal_surat like '%-".$tanggal."'";
-                }
-                if ($tanggal == "x" && $bulan!="x" && $tahun=="x") {
-                    $search_arr[] = " tanggal_surat like '%-".$bulan."-%'";
-                }
-                if ($tanggal == "x" && $bulan=="x" && $tahun!="x") {
-                    $search_arr[] = " tanggal_surat like '".$tahun."-%'";
-                }
-                if ($tanggal != "x" && $bulan=="x" && $tahun!="x") {
-                    $search_arr[] = " tanggal_surat like '".$tahun."-%-".$tanggal."'";
-                }
-                if ($tanggal == "x" && $bulan!="x" && $tahun!="x") {
-                    $search_arr[] = " tanggal_surat like '".$tahun."-".$bulan."-%'";
-                }
-                if ($tanggal != "x" && $bulan!="x" && $tahun=="x") {
-                    $search_arr[] = " tanggal_surat like '%-".$bulan."-".$tanggal."'";
-                }
-                if ($tanggal != "x" && $bulan!="x" && $tahun!="x") {
-                    $search_arr[] = " tanggal_surat like '".$tahun."-".$bulan."-".$tanggal."'";
-                }
+            if($data["Jo_id"]!=""){
+                $search_arr[] = " skb_job_order.Jo_id like '%".$data["Jo_id"]."%' ";
             }
-            $search_arr[] = " (parent_Jo_id='x' or parent_Jo_id='y')";
-            $search_arr[] = " status!='Dibatalkan' ";
-            if($status!="x"){
-                $search_arr[] = " status='".$status."' ";
+            if($data["Supir"]!=""){
+                $search_arr[] = " skb_job_order.supir_id='".$data["Supir"]."' ";
+            }
+            if($data["Kendaraan"]!=""){
+                $search_arr[] = " skb_job_order.mobil_no='".$data["Kendaraan"]."' ";
+            }
+            if($status!=""){
+                $search_arr[] = " skb_job_order.status='".$status."' ";
+            }
+            if($data["Customer"]!=""){
+                $search_arr[] = " skb_job_order.customer_id='".$data["Customer"]."' ";
+            }
+            if($data["Tanggal1"]!="" && $data["Tanggal2"]==""){
+                $search_arr[] = " tanggal_surat BETWEEN '".$this->change_tanggal($data["Tanggal1"])."' AND '2022-10-10'";
+            }
+            if($data["Tanggal1"]=="" && $data["Tanggal2"]!=""){
+                $search_arr[] = " tanggal_surat BETWEEN '2000-10-10' AND '".$this->change_tanggal($data["Tanggal2"])."'";
+            }
+            if($data["Tanggal1"]!="" && $data["Tanggal2"]!=""){
+                $search_arr[] = " tanggal_surat BETWEEN '".$this->change_tanggal($data["Tanggal1"])."' AND '".$this->change_tanggal($data["Tanggal2"])."' ";
             }
             if(count($search_arr) > 0){ //gabung kondisi where
                 $searchQuery = implode(" and ",$search_arr);
@@ -278,8 +370,6 @@ class Model_Home extends CI_model
         
             ## Total record without filtering
             $this->db->select('count(*) as allcount');
-            $this->db->where("status!='Dibatalkan'");
-            $this->db->where("(parent_Jo_id='x' or parent_Jo_id='y')");
             $records = $this->db->get('skb_job_order')->result();
             $totalRecords = $records[0]->allcount;
         
@@ -290,6 +380,10 @@ class Model_Home extends CI_model
             }
             $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
             $this->db->join("skb_supir", "skb_supir.supir_id = skb_job_order.supir_id", 'left');
+            $this->db->join("skb_mobil", "skb_mobil.mobil_no = skb_job_order.mobil_no", 'left');
+            if($data["Jenis"]!=""){
+                $this->db->where("skb_mobil.mobil_jenis",$data["Jenis"]);
+            }
             $records = $this->db->get('skb_job_order')->result();
             $totalRecordwithFilter = $records[0]->allcount;
         
@@ -302,6 +396,10 @@ class Model_Home extends CI_model
             $this->db->limit($rowperpage, $start);
             $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
             $this->db->join("skb_supir", "skb_supir.supir_id = skb_job_order.supir_id", 'left');
+            $this->db->join("skb_mobil", "skb_mobil.mobil_no = skb_job_order.mobil_no", 'left');
+            if($data["Jenis"]!=""){
+                $this->db->where("skb_mobil.mobil_jenis",$data["Jenis"]);
+            }
             $records = $this->db->get('skb_job_order')->result();
         
             $data = array();
@@ -310,15 +408,18 @@ class Model_Home extends CI_model
                 $data[] = array( 
                     "no"=>$n,
                     "Jo_id"=>$record->Jo_id,
-                    "customer_name"=>$record->customer_name,
                     "supir_name"=>$record->supir_name,
                     "mobil_no"=>$record->mobil_no,
+                    "mobil_jenis"=>$record->mobil_jenis,
                     "customer_name"=>$record->customer_name,
-                    "uang_jalan_bayar"=>$record->uang_jalan_bayar,
-                    "paketan_id"=>$record->paketan_id,
-                    "kosongan_id"=>$record->kosongan_id,
+                    "asal"=>$record->asal,
+                    "tujuan"=>$record->tujuan,
+                    "muatan"=>$record->muatan,
                     "tanggal_surat"=>$record->tanggal_surat,
-                    "status"=>$record->status
+                    "status"=>$record->status,
+                    "uang_total"=>$record->uang_total,
+                    "biaya_lain"=>$record->biaya_lain,
+                    "sisa_uj"=>$record->sisa
                 ); 
                 $n++;
             }
@@ -332,7 +433,53 @@ class Model_Home extends CI_model
         
             return $response; 
         }
-    //akhir function-fiunction datatable JO laporan
+        function getDitemukanJo($data){
+            ## Search 
+            $search_arr = array();
+            $searchQuery = "";
+            if($data["Jo_id"]!=""){
+                $search_arr[] = " skb_job_order.Jo_id like '%".$data["Jo_id"]."%' ";
+            }
+            if($data["Supir"]!=""){
+                $search_arr[] = " skb_job_order.supir_id='".$data["Supir"]."' ";
+            }
+            if($data["Kendaraan"]!=""){
+                $search_arr[] = " skb_job_order.mobil_no='".$data["Kendaraan"]."' ";
+            }
+            if($data["Status"]!=""){
+                $search_arr[] = " skb_job_order.status='".$data["Status"]."' ";
+            }
+            if($data["Customer"]!=""){
+                $search_arr[] = " skb_job_order.customer_id='".$data["Customer"]."' ";
+            }
+            if($data["Tanggal1"]!="" && $data["Tanggal2"]==""){
+                $search_arr[] = " tanggal_surat BETWEEN '".$this->change_tanggal($data["Tanggal1"])."' AND '2022-10-10'";
+            }
+            if($data["Tanggal1"]=="" && $data["Tanggal2"]!=""){
+                $search_arr[] = " tanggal_surat BETWEEN '2000-10-10' AND '".$this->change_tanggal($data["Tanggal2"])."'";
+            }
+            if($data["Tanggal1"]!="" && $data["Tanggal2"]!=""){
+                $search_arr[] = " tanggal_surat BETWEEN '".$this->change_tanggal($data["Tanggal1"])."' AND '".$this->change_tanggal($data["Tanggal2"])."' ";
+            }
+            if(count($search_arr) > 0){ //gabung kondisi where
+                $searchQuery = implode(" and ",$search_arr);
+            }
+
+            ## Total record with filtering
+            $this->db->select('count(*) as allcount');
+            if($searchQuery != ''){
+                $this->db->where($searchQuery);
+            }
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
+            $this->db->join("skb_supir", "skb_supir.supir_id = skb_job_order.supir_id", 'left');
+            $this->db->join("skb_mobil", "skb_mobil.mobil_no = skb_job_order.mobil_no", 'left');
+            if($data["Jenis"]!=""){
+                $this->db->where("skb_mobil.mobil_jenis",$data["Jenis"]);
+            }
+            $records = $this->db->get('skb_job_order')->result();
+            return $records[0]->allcount;
+        }
+     //akhir function-fiunction datatable JO
 
      //function-fiunction datatable bon
         public function count_all_bon()
@@ -341,20 +488,132 @@ class Model_Home extends CI_model
             return $this->db->count_all_results("skb_bon");
         }
 
-        public function filter_bon($search, $limit, $start, $order_field, $order_ascdesc)
+        public function filter_bon($limit, $start, $order_field, $order_ascdesc,$data)
         {
-            $this->db->like('bon_id', $search);
-            $this->db->or_like('supir_name', $search);
+            $search_arr = array();
+            $searchQuery = "";
+            if($data["Supir"]!=""){
+                $search_arr[] = " skb_bon.supir_id='".$data["Supir"]."' ";
+            }
+            if($data["Status"]!=""){
+                $search_arr[] = " bon_jenis='".$data["Status"]."' ";
+            }
+            if($data["Tanggal1"]!="" && $data["Tanggal2"]==""){
+                $search_arr[] = " bon_tanggal BETWEEN '".$this->change_tanggal($data["Tanggal1"])."' AND '2022-10-10'";
+            }
+            if($data["Tanggal1"]=="" && $data["Tanggal2"]!=""){
+                $search_arr[] = " bon_tanggal BETWEEN '2000-10-10' AND '".$this->change_tanggal($data["Tanggal2"])."'";
+            }
+            if($data["Tanggal1"]!="" && $data["Tanggal2"]!=""){
+                $search_arr[] = " bon_tanggal BETWEEN '".$this->change_tanggal($data["Tanggal1"])."' AND '".$this->change_tanggal($data["Tanggal2"])."' ";
+            }
+
+            $no_bon = explode("-",$data["No_Bon"]);
+            $no_bon_fix = "";
+            for($i=0;$i<count($no_bon);$i++){
+                if($no_bon[$i]!="x"){
+                    if($i!=3){
+                        $no_bon_fix=$no_bon_fix.$no_bon[$i]."-";
+                    }else{
+                        $no_bon_fix.=$no_bon[$i];
+                    }
+                }
+            }
+            $search_arr[] = " bon_id like '%".$no_bon_fix."%'";
+            if(count($search_arr) > 0){ //gabung kondisi where
+                $searchQuery = implode(" and ",$search_arr);
+            }
+            if($searchQuery != ''){
+                $this->db->where($searchQuery);
+            }
+            $this->db->where("skb_bon.status_hapus","NO");
             $this->db->order_by($order_field, $order_ascdesc);
             $this->db->limit($limit, $start);
             $this->db->join("skb_supir", "skb_supir.supir_id = skb_bon.supir_id", 'left');
             return $this->db->get('skb_bon')->result_array();
         }
 
-        public function count_filter_bon($search)
+        public function count_filter_bon($data)
         {
-            $this->db->like('bon_id', $search);
-            $this->db->or_like('supir_name', $search);
+            $search_arr = array();
+            $searchQuery = "";
+            if($data["Supir"]!=""){
+                $search_arr[] = " skb_bon.supir_id='".$data["Supir"]."' ";
+            }
+            if($data["Status"]!=""){
+                $search_arr[] = " bon_jenis='".$data["Status"]."' ";
+            }
+            if($data["Tanggal1"]!="" && $data["Tanggal2"]==""){
+                $search_arr[] = " bon_tanggal BETWEEN '".$this->change_tanggal($data["Tanggal1"])."' AND '2022-10-10'";
+            }
+            if($data["Tanggal1"]=="" && $data["Tanggal2"]!=""){
+                $search_arr[] = " bon_tanggal BETWEEN '2000-10-10' AND '".$this->change_tanggal($data["Tanggal2"])."'";
+            }
+            if($data["Tanggal1"]!="" && $data["Tanggal2"]!=""){
+                $search_arr[] = " bon_tanggal BETWEEN '".$this->change_tanggal($data["Tanggal1"])."' AND '".$this->change_tanggal($data["Tanggal2"])."' ";
+            }
+
+            $no_bon = explode("-",$data["No_Bon"]);
+            $no_bon_fix = "";
+            for($i=0;$i<count($no_bon);$i++){
+                if($no_bon[$i]!="x"){
+                    if($i!=3){
+                        $no_bon_fix=$no_bon_fix.$no_bon[$i]."-";
+                    }else{
+                        $no_bon_fix.=$no_bon[$i];
+                    }
+                }
+            }
+            $search_arr[] = " bon_id like '%".$no_bon_fix."%'";
+            if(count($search_arr) > 0){ //gabung kondisi where
+                $searchQuery = implode(" and ",$search_arr);
+            }
+            if($searchQuery != ''){
+                $this->db->where($searchQuery);
+            }
+            $this->db->where("skb_bon.status_hapus","NO");
+            $this->db->join("skb_supir", "skb_supir.supir_id = skb_bon.supir_id", 'left');
+            return $this->db->get('skb_bon')->num_rows();
+        }
+
+        function getDitemukanBon($data){
+            $search_arr = array();
+            $searchQuery = "";
+            if($data["Supir"]!=""){
+                $search_arr[] = " skb_bon.supir_id='".$data["Supir"]."' ";
+            }
+            if($data["Status"]!=""){
+                $search_arr[] = " bon_jenis='".$data["Status"]."' ";
+            }
+            if($data["Tanggal1"]!="" && $data["Tanggal2"]==""){
+                $search_arr[] = " bon_tanggal BETWEEN '".$this->change_tanggal($data["Tanggal1"])."' AND '2022-10-10'";
+            }
+            if($data["Tanggal1"]=="" && $data["Tanggal2"]!=""){
+                $search_arr[] = " bon_tanggal BETWEEN '2000-10-10' AND '".$this->change_tanggal($data["Tanggal2"])."'";
+            }
+            if($data["Tanggal1"]!="" && $data["Tanggal2"]!=""){
+                $search_arr[] = " bon_tanggal BETWEEN '".$this->change_tanggal($data["Tanggal1"])."' AND '".$this->change_tanggal($data["Tanggal2"])."' ";
+            }
+
+            $no_bon = explode("-",$data["No_Bon"]);
+            $no_bon_fix = "";
+            for($i=0;$i<count($no_bon);$i++){
+                if($no_bon[$i]!="x"){
+                    if($i!=3){
+                        $no_bon_fix=$no_bon_fix.$no_bon[$i]."-";
+                    }else{
+                        $no_bon_fix.=$no_bon[$i];
+                    }
+                }
+            }
+            $search_arr[] = " bon_id like '%".$no_bon_fix."%'";
+            if(count($search_arr) > 0){ //gabung kondisi where
+                $searchQuery = implode(" and ",$search_arr);
+            }
+            if($searchQuery != ''){
+                $this->db->where($searchQuery);
+            }
+            $this->db->where("skb_bon.status_hapus","NO");
             $this->db->join("skb_supir", "skb_supir.supir_id = skb_bon.supir_id", 'left');
             return $this->db->get('skb_bon')->num_rows();
         }
@@ -372,11 +631,13 @@ class Model_Home extends CI_model
 
         public function filter_customer($asal,$search, $limit, $start, $order_field, $order_ascdesc)
         {
+            // $this->db->like('customer_id', $search);
             $this->db->where("status_hapus","NO");
             $this->db->like('customer_name', $search);
             if($asal=="viewcustomerinvoice"){
                 $this->db->where("validasi","ACC");
             }
+            $this->db->order_by("validasi DESC,validasi_edit DESC,validasi_delete DESC");
             $this->db->order_by($order_field, $order_ascdesc);
             $this->db->limit($limit, $start);
             return $this->db->get('skb_customer')->result_array();
@@ -384,6 +645,7 @@ class Model_Home extends CI_model
 
         public function count_filter_customer($asal,$search)
         {
+            // $this->db->like('customer_id', $search);
             $this->db->where("status_hapus","NO");
             $this->db->like('customer_name', $search);
             if($asal=="viewcustomerinvoice"){
@@ -405,11 +667,12 @@ class Model_Home extends CI_model
 
         public function filter_supir($asal,$search, $limit, $start, $order_field, $order_ascdesc)
         {
-            $this->db->like('supir_name', $search);
+            $this->db->where('(supir_name like "%'.$search.'%" or supir_panggilan like "%'.$search.'%")');
             $this->db->where("status_hapus","NO");
             if($asal!="viewsupir"){
                 $this->db->where("validasi","ACC");
             }
+            $this->db->order_by("validasi DESC,validasi_edit DESC,validasi_delete DESC");
             $this->db->order_by($order_field, $order_ascdesc);
             $this->db->limit($limit, $start);
             return $this->db->get('skb_supir')->result_array();
@@ -417,7 +680,7 @@ class Model_Home extends CI_model
 
         public function count_filter_supir($asal,$search)
         {
-            $this->db->like('supir_name', $search);
+            $this->db->where('(supir_name like "%'.$search.'%" or supir_panggilan like "%'.$search.'%")');
             $this->db->where("status_hapus","NO");
             if($asal!="viewsupir"){
                 $this->db->where("validasi","ACC");
@@ -498,74 +761,6 @@ class Model_Home extends CI_model
             }
         }
     // end Function Invoice
-    
-    // Function Invoice Belum Lunas
-        public function count_all_invoice_belum_lunas($customer_id)
-        {
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_invoice.customer_id", 'left');
-     
-            return $this->db->count_all_results("skb_invoice");
-        }
-    
-        public function filter_invoice_belum_lunas($search, $limit, $start, $order_field, $order_ascdesc,$customer_id)
-        {
-            if($customer_id!="x"){
-                $this->db->where("skb_invoice.customer_id",$customer_id);
-            }
-            $this->db->where("status_bayar","Belum Lunas");
-            $this->db->like('invoice_kode', $search);
-            $this->db->order_by($order_field, $order_ascdesc);
-            $this->db->limit($limit, $start);
-
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_invoice.customer_id", 'left');
-            return $this->db->get('skb_invoice')->result_array();
-        }
-    
-        public function count_filter_invoice_belum_lunas($search,$customer_id)
-        {
-            if($customer_id!="x"){
-                $this->db->where("skb_invoice.customer_id",$customer_id);
-            }
-            $this->db->where("status_bayar","Belum Lunas");
-            $this->db->like('invoice_kode', $search);
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_invoice.customer_id", 'left');
-            return $this->db->get('skb_invoice')->num_rows();
-        }
-    // end Function Invoice Belum Lunas
-
-    // Function InvoiceLunas
-        public function count_all_invoice_lunas($customer_id)
-        {
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_invoice.customer_id", 'left');
-     
-            return $this->db->count_all_results("skb_invoice");
-        }
-    
-        public function filter_invoice_lunas($search, $limit, $start, $order_field, $order_ascdesc,$customer_id)
-        {
-            if($customer_id!="x"){
-                $this->db->where("skb_invoice.customer_id",$customer_id);
-            }
-            $this->db->where("status_bayar","Lunas");
-            $this->db->like('invoice_kode', $search);
-            $this->db->order_by($order_field, $order_ascdesc);
-            $this->db->limit($limit, $start);
-
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_invoice.customer_id", 'left');
-            return $this->db->get('skb_invoice')->result_array();
-        }
-    
-        public function count_filter_invoice_lunas($search,$customer_id)
-        {
-            if($customer_id!="x"){
-                $this->db->where("skb_invoice.customer_id",$customer_id);
-            }
-            $this->db->where("status_bayar","Lunas");
-            $this->db->like('invoice_kode', $search);
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_invoice.customer_id", 'left');
-            return $this->db->get('skb_invoice')->num_rows();
-        }
-    // end Function InvoiceLunas
     
     //  Function Akun
         public function count_all_akun()
@@ -648,6 +843,7 @@ class Model_Home extends CI_model
             if($searchQuery != ''){
                 $this->db->where($searchQuery);
             }
+            $this->db->order_by("validasi_rute DESC,validasi_rute_edit DESC,validasi_rute_delete DESC");
             $this->db->order_by($columnName, $columnSortOrder);
             $this->db->limit($rowperpage, $start);
             $this->db->join("skb_customer", "skb_customer.customer_id = skb_rute.customer_id", 'left');
@@ -665,13 +861,11 @@ class Model_Home extends CI_model
                     "customer_name"=>$record->customer_name,
                     "rute_ke"=>$record->rute_ke,
                     "jenis_mobil"=>$record->jenis_mobil,
-                    "rute_tonase"=>$record->rute_tonase,
                     "rute_dari"=>$record->rute_dari,
                     "rute_tagihan"=>$record->rute_tagihan,
                     "rute_muatan"=>$record->rute_muatan,
                     "rute_uj_engkel"=>$record->rute_uj_engkel,
                     "rute_gaji_engkel"=>$record->rute_gaji_engkel,
-                    "rute_gaji_engkel_rumusan"=>$record->rute_gaji_engkel_rumusan,
                     "validasi_rute"=>$record->validasi_rute,
                     "validasi_rute_edit"=>$record->validasi_rute_edit,
                     "validasi_rute_delete"=>$record->validasi_rute_delete,
@@ -691,82 +885,51 @@ class Model_Home extends CI_model
     // end Function rute
 
     //function-fiunction datatable JO
-        function getJOKonfirmasiData($postData){
-            $response = array();
-        
-            ## Read value
-            $draw = $postData['draw'];
-            $start = $postData['start']; // mulai display per page
-            $rowperpage = $postData['length']; // Rows display per page
-            $columnIndex = $postData['order'][0]['column']; // Column index untuk sorting
-            $columnName = $postData['columns'][$columnIndex]['data']; // Column name untuk sorting
-            $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
-            $searchValue = $postData['search']['value']; // Search value
-        
-            ## Search 
-            $search_arr = array();
-            $searchQuery = "";
-            if($searchValue != ''){
-                $search_arr[] = " (Jo_id like '%".$searchValue."%' or 
-                    asal like '%".$searchValue."%' or 
-                    tujuan like '%".$searchValue."%' or 
-                    muatan like '%".$searchValue."%') ";
-            }
-            $search_arr[] = " status='Dalam Perjalanan' ";
-            $search_arr[] = " (parent_Jo_id='x' or parent_Jo_id='y')";
-            if(count($search_arr) > 0){ //gabung kondisi where
-                $searchQuery = implode(" and ",$search_arr);
-            }
-        
-            ## Total record without filtering
-            $this->db->select('count(*) as allcount');
+        public function count_all_konfirmasi_JO()
+        {
             $this->db->where("status","Dalam Perjalanan");
-            $this->db->where("(parent_Jo_id='x' or parent_Jo_id='y')");
-            $records = $this->db->get('skb_job_order')->result();
-            $totalRecords = $records[0]->allcount;
-        
-            ## Total record with filtering
-            $this->db->select('count(*) as allcount');
-            if($searchQuery != ''){
-                $this->db->where($searchQuery);
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
+            return $this->db->count_all_results("skb_job_order");
+        }
+
+        public function filter_konfirmasi_JO($search, $order_field, $order_ascdesc)
+        {
+            if($search!=""){
+                $this->db->like('JO_id', $search);
+                $this->db->or_like('muatan', $search);
+                $this->db->or_like('asal', $search);
+                $this->db->or_like('tujuan', $search);
+            }
+            $this->db->order_by($order_field, $order_ascdesc);
+            $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
+            $hasil = $this->db->get('skb_job_order')->result_array();
+            $hasil_fix = [];
+            for($i=0;$i<count($hasil);$i++){
+                if($hasil[$i]["status"]=="Dalam Perjalanan" && ($hasil[$i]["parent_Jo_id"]=="x" || $hasil[$i]["parent_Jo_id"]=="y")){
+                    $hasil_fix[] = $hasil[$i];
+                }
+            }
+            return $hasil_fix;
+        }
+
+        public function count_filter_konfirmasi_JO($search)
+        {   
+            if($search!=""){
+                $this->db->like('JO_id', $search);
+                $this->db->or_like('muatan', $search);
+                $this->db->or_like('asal', $search);
+                $this->db->or_like('tujuan', $search);
             }
             $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
-            $records = $this->db->get('skb_job_order')->result();
-            $totalRecordwithFilter = $records[0]->allcount;
-        
-            ## data hasil record
-            $this->db->select('*');
-            if($searchQuery != ''){
-                $this->db->where($searchQuery);
+            $hasil_data = $this->db->get('skb_job_order')->result_array();
+            $hasil_fix = 0;
+            for($i=0;$i<count($hasil_data);$i++){
+                if($hasil_data[$i]["status"]=="Dalam Perjalanan" && ($hasil_data[$i]["parent_Jo_id"]=="x" || $hasil_data[$i]["parent_Jo_id"]=="y")){
+                    $hasil_fix +=1;
+                }
             }
-            $this->db->order_by($columnName, $columnSortOrder);
-            $this->db->limit($rowperpage, $start);
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_job_order.customer_id", 'left');
-            $records = $this->db->get('skb_job_order')->result();
-        
-            $data = array();
-            $n = 1;
-            foreach($records as $record ){
-                $data[] = array( 
-                    "no"=>$n,
-                    "Jo_id"=>$record->Jo_id,
-                    "customer_name"=>$record->customer_name,
-                    "paketan_id"=>$record->paketan_id,
-                    "kosongan_id"=>$record->kosongan_id,
-                    "tanggal_surat"=>$record->tanggal_surat,
-                    "status"=>$record->status
-                ); 
-                $n++;
-            }
-            ## Response
-            $response = array(
-            "draw" => intval($draw),
-            "iTotalRecords" => $totalRecords,
-            "iTotalDisplayRecords" => $totalRecordwithFilter,
-            "aaData" => $data
-            );
-        
-            return $response; 
+            return $hasil_fix;
+
         }
     //akhir function-fiunction datatable JO
 
@@ -827,6 +990,7 @@ class Model_Home extends CI_model
             if($searchQuery != ''){
                 $this->db->where($searchQuery);
             }
+            $this->db->order_by("validasi DESC,validasi_edit DESC,validasi_delete DESC");
             $this->db->order_by($columnName, $columnSortOrder);
             $this->db->limit($rowperpage, $start);
             $records = $this->db->get('skb_merk_kendaraan')->result();
@@ -858,171 +1022,4 @@ class Model_Home extends CI_model
             return $response; 
         }
     //akhir function-fiunction datatable merk
-
-    //function-fiunction datatable kosongan
-        function getKosonganData($postData){
-            $tanggal_now = date("Y-m-d");
-            $response = array();
-        
-            ## Read value
-            $draw = $postData['draw'];
-            $start = $postData['start']; // mulai display per page
-            $rowperpage = $postData['length']; // Rows display per page
-            $columnIndex = $postData['order'][0]['column']; // Column index untuk sorting
-            $columnName = $postData['columns'][$columnIndex]['data']; // Column name untuk sorting
-            $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
-            $searchValue = $postData['search']['value']; // Search value
-        
-            ## Search 
-            $search_arr = array();
-            $searchQuery = "";
-            if($searchValue != ''){
-                $search_arr[] = " (kosongan_dari like '%".$searchValue."%' or 
-                    kosongan_ke like '%".$searchValue."%') ";
-            }
-            $search_arr[] = " status_hapus='NO' ";
-
-            if(count($search_arr) > 0){ //gabung kondisi where
-                $searchQuery = implode(" and ",$search_arr);
-            }
-        
-            ## Total record without filtering
-            $this->db->select('count(*) as allcount');
-            $this->db->where("status_hapus","NO");
-            $records = $this->db->get('skb_kosongan')->result();
-            $totalRecords = $records[0]->allcount;
-        
-            ## Total record with filtering
-            $this->db->select('count(*) as allcount');
-            if($searchQuery != ''){
-                $this->db->where($searchQuery);
-            }
-            $records = $this->db->get('skb_kosongan')->result();
-            $totalRecordwithFilter = $records[0]->allcount;
-        
-            ## data hasil record
-            $this->db->select('*');
-            if($searchQuery != ''){
-                $this->db->where($searchQuery);
-            }
-            $this->db->order_by($columnName, $columnSortOrder);
-            $this->db->limit($rowperpage, $start);
-            $records = $this->db->get('skb_kosongan')->result();
-        
-            $data = array();
-            $n = 1;
-            foreach($records as $record ){
-                $data[] = array( 
-                    "no"=>$n,
-                    "kosongan_id"=>$record->kosongan_id,
-                    "kosongan_dari"=>$record->kosongan_dari,
-                    "kosongan_ke"=>$record->kosongan_ke,
-                    "kosongan_uang"=>$record->kosongan_uang,
-                    "validasi"=>$record->validasi,
-                    "validasi_edit"=>$record->validasi_edit,
-                    "validasi_delete"=>$record->validasi_delete,
-                ); 
-                $n++;
-            }
-            ## Response
-            $response = array(
-            "draw" => intval($draw),
-            "iTotalRecords" => $totalRecords,
-            "iTotalDisplayRecords" => $totalRecordwithFilter,
-            "aaData" => $data
-            );
-        
-            return $response; 
-        }
-    //akhir function-fiunction datatable kosongan
-
-    //function-fiunction datatable paketan
-        function getPaketanData($postData,$asal,$customer){
-            $response = array();
-        
-            ## Read value
-            $draw = $postData['draw'];
-            $start = $postData['start']; // mulai display per page
-            $rowperpage = $postData['length']; // Rows display per page
-            $columnIndex = $postData['order'][0]['column']; // Column index untuk sorting
-            $columnName = $postData['columns'][$columnIndex]['data']; // Column name untuk sorting
-            $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
-            $searchValue = $postData['search']['value']; // Search value
-        
-            ## Search 
-            $search_arr = array();
-            $searchQuery = "";
-            if($searchValue != ''){
-                $search_arr[] = " (jenis_mobil like '%".$searchValue."%' or 
-                    ritase like '%".$searchValue."%') ";
-            }
-            $search_arr[] = " paketan_status_hapus='NO' ";
-            $search_arr[] = "validasi_paketan = 'ACC'";
-            if($asal=="addjo"){
-                $search_arr[] = "validasi_paketan_edit = 'ACC'";
-                $search_arr[] = "validasi_paketan_delete = 'ACC'";
-            }
-
-            if(count($search_arr) > 0){ //gabung kondisi where
-                $searchQuery = implode(" and ",$search_arr);
-            }
-        
-            ## Total record without filtering
-            $this->db->select('count(*) as allcount');
-            $this->db->where("paketan_status_hapus","NO");
-            $this->db->where("validasi_paketan","ACC");
-            $records = $this->db->get('skb_paketan')->result();
-            $totalRecords = $records[0]->allcount;
-        
-            ## Total record with filtering
-            $this->db->select('count(*) as allcount');
-            if($searchQuery != ''){
-                $this->db->where($searchQuery);
-            }
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_paketan.customer_id", 'left');
-            if($customer!="x"){
-                $this->db->where("skb_customer.customer_id",$customer);
-            }
-            $records = $this->db->get('skb_paketan')->result();
-            $totalRecordwithFilter = $records[0]->allcount;
-        
-            ## data hasil record
-            $this->db->select('*');
-            if($searchQuery != ''){
-                $this->db->where($searchQuery);
-            }
-            $this->db->order_by($columnName, $columnSortOrder);
-            $this->db->limit($rowperpage, $start);
-            $this->db->join("skb_customer", "skb_customer.customer_id = skb_paketan.customer_id", 'left');
-            if($customer!="x"){
-                $this->db->where("skb_customer.customer_id",$customer);
-            }
-            $records = $this->db->get('skb_paketan')->result();
-        
-            $data = array();
-            $n = 1;
-            foreach($records as $record ){
-                $data[] = array( 
-                    "no"=>$n,
-                    "paketan_id"=>$record->paketan_id,
-                    "jenis_mobil"=>$record->jenis_mobil,
-                    "ritase"=>$record->ritase,
-                    "paketan_uj"=>$record->paketan_uj,
-                    "validasi_paketan"=>$record->validasi_paketan,
-                    "validasi_paketan_edit"=>$record->validasi_paketan_edit,
-                    "validasi_paketan_delete"=>$record->validasi_paketan_delete,
-                ); 
-                $n++;
-            }
-            ## Response
-            $response = array(
-            "draw" => intval($draw),
-            "iTotalRecords" => $totalRecords,
-            "iTotalDisplayRecords" => $totalRecordwithFilter,
-            "aaData" => $data
-            );
-        
-            return $response; 
-        }
-    //akhir function-fiunction datatable paketan
 }

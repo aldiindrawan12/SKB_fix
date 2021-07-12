@@ -1,7 +1,8 @@
 <div class="container">
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Seluruh Data Customer</h1>
-        <a class="btn btn-primary btn-icon-split" data-toggle='modal' data-target='#popup-customer'>
+    <div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary float-left">Seluruh Data Customer</h6>
+        <a class="btn btn-primary btn-icon-split float-right btn-sm" data-toggle='modal' data-target='#popup-customer'>
             <span class="icon text-white-100">
                 <i class="fas fa-plus"></i> 
             </span>
@@ -9,10 +10,6 @@
                  Tambah Customer
             </span>
         </a>
-    </div> 
-    <div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Customer</h6>
     </div>
     <!-- tabel data cutomer -->
     <div class="card-body">
@@ -61,19 +58,19 @@
                             </div>
                             <div class="form-group">
                                 <label for="customer_alamat" class="form-label font-weight-bold">Alamat</label>
-                                <input autocomplete="off" type="text" class="form-control" id="customer_alamat" name="customer_alamat" required>
+                                <input autocomplete="off" type="text" class="form-control" id="customer_alamat" name="customer_alamat">
                             </div>
                             <div class="form-group">
                                 <label for="customer_kontak_person" class="form-label font-weight-bold">Contact Person</label>
-                                <input autocomplete="off" type="text" class="form-control" id="customer_kontak_person" name="customer_kontak_person" required>
+                                <input autocomplete="off" type="text" class="form-control" id="customer_kontak_person" name="customer_kontak_person">
                             </div>
                             <div class="form-group">
                                 <label for="customer_telp" class="form-label font-weight-bold">Telp./HP</label>
-                                <input autocomplete="off" type="text" class="form-control" id="customer_telp" name="customer_telp" required>
+                                <input autocomplete="off" type="text" class="form-control" id="customer_telp" name="customer_telp">
                             </div>
                             <div class="form-group">
                                 <label for="customer_keterangan" class="form-label font-weight-bold">Keterangan</label>
-                                <input autocomplete="off" type="text" class="form-control" id="customer_keterangan" name="customer_keterangan" required>
+                                <input autocomplete="off" type="text" class="form-control" id="customer_keterangan" name="customer_keterangan">
                             </div>
                         </div>
                         <!-- <div class="col table-bordered ml-2 rounded">
@@ -130,19 +127,19 @@
                             </div>
                             <div class="form-group">
                                 <label for="customer_alamat_update" class="form-label font-weight-bold">Alamat</label>
-                                <input autocomplete="off" type="text" class="form-control" id="customer_alamat_update" name="customer_alamat_update" required>
+                                <input autocomplete="off" type="text" class="form-control" id="customer_alamat_update" name="customer_alamat_update">
                             </div>
                             <div class="form-group">
                                 <label for="customer_kontak_person_update" class="form-label font-weight-bold">Contact Person</label>
-                                <input autocomplete="off" type="text" class="form-control" id="customer_kontak_person_update" name="customer_kontak_person_update" required>
+                                <input autocomplete="off" type="text" class="form-control" id="customer_kontak_person_update" name="customer_kontak_person_update">
                             </div>
                             <div class="form-group">
                                 <label for="customer_telp_update" class="form-label font-weight-bold">Telp./HP</label>
-                                <input autocomplete="off" type="text" class="form-control" id="customer_telp_update" name="customer_telp_update" required>
+                                <input autocomplete="off" type="text" class="form-control" id="customer_telp_update" name="customer_telp_update">
                             </div>
                             <div class="form-group">
                                 <label for="customer_keterangan_update" class="form-label font-weight-bold">Keterangan</label>
-                                <input autocomplete="off" type="text" class="form-control" id="customer_keterangan_update" name="customer_keterangan_update" required>
+                                <input autocomplete="off" type="text" class="form-control" id="customer_keterangan_update" name="customer_keterangan_update">
                             </div>
                     </div>
                     <!-- <div class="col table-bordered ml-2">
@@ -240,3 +237,48 @@
 </div>
 
 <!-- end pop up detail customer -->
+
+<div class="modal fade mt-5" id="popup-acc-edit-customer" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary-dark">
+                <h5 class="block-title">Data Edit Customer</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times</span>
+                </button>
+            </div>
+            <div class="font-size-sm m-3 text-justify">
+            <div class="">
+                <div class="">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="font-weight-bold" style="width: 20%;">Nama Customer</td>
+                                <td name="customer_name_edit"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" style="width: 20%;">Alamat</td>
+                                <td name="customer_alamat_edit"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" style="width: 20%;">Contact Person</td>
+                                <td name="customer_kontak_person_edit"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" style="width: 20%;">Telp/HP</td>
+                                <td name="customer_telp_edit"></td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold" style="width: 20%;">Keterangan</td>
+                                <td name="customer_keterangan_edit"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <a class="btn btn-success" id="ACC">ACC</a>
+                    <a class="btn btn-danger" id="Tolak">Tolak</a>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>

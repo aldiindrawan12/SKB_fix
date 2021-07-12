@@ -1,8 +1,9 @@
 <!-- MENGGUNAKAN NAMA KOLOM YANG ENGKEL AJA -->
-<div class="container">    
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Data Rute dan Muatan</h1>
-        <a class="btn btn-primary btn-icon-split" data-toggle='modal' data-target='#popup-rute' onclick="mobil()">
+<div class="container">
+    <div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary float-left">Seluruh Data Rute dan Muatan</h6>
+        <a class="btn btn-primary btn-icon-split float-right btn-sm" data-toggle='modal' data-target='#popup-rute' onclick="mobil()">
             <span class="icon text-white-100">
                 <i class="fas fa-plus"></i> 
             </span>
@@ -10,10 +11,6 @@
                  Tambah Rute & Muatan
             </span>
         </a>
-    </div>
-    <div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Rute dan Muatan</h6>
     </div>
     <div class="card-body small">
         <div class="table-responsive">
@@ -79,8 +76,17 @@
                         <div class="col border rounded mr-3 ml-3 mb-3 mt-3">
                             <div class="form-group">
                                 <label for="jenis_mobil" class="form-label font-weight-bold ">Jenis Mobil</label> 
-                                <select name="jenis_mobil" id="jenis_mobil" class="form-control mb-4" required>
+                                <select name="jenis_mobil" id="jenis_mobil" class="form-control mb-4 selectpicker" data-live-search="true" required>
                                     <option class="font-w700" disabled="disabled" selected value="">Jenis Mobil</option>
+                                    <?php $isi_jenis = array();
+                                        foreach($mobil as $value){
+                                        if(!in_array($value["mobil_jenis"],$isi_jenis)){
+                                            array_push($isi_jenis[] = $value["mobil_jenis"]);
+                                        }
+                                    }?>
+                                    <?php for($i=0;$i<count($isi_jenis);$i++){?>
+                                        <option value="<?= $isi_jenis[$i]?>"><?= $isi_jenis[$i]?></option>
+                                    <?php }?>
                                 </select>
                             </div>
                             <small class="font-weight-bold">Detail Uang Jalan (Uj)</small>
@@ -100,42 +106,22 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="rute_tagihan" class="form-label font-weight-bold">Inv./Tagihan</label>
+                                <label for="rute_tagihan" class="form-label font-weight-bold">Harga / Satuan</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_tagihan" name="rute_tagihan" required onkeyup="uang(this)">
                             </div>
                         </div>
                         <div class="col border rounded mr-3 ml-3 mb-3 mt-3">
                             <small class="font-weight-bold">Detail Gaji</small>
                             <hr>
-                            <div class="form-group">
-                                <label class="form-label font-weight-bold" for="Gaji">Gaji</label>
-                                <select name="Gaji" id="Gaji" class="form-control" required onchange="gaji()">
-                                    <option class="font-w700" disabled="disabled" selected value="">Tipe Gaji</option>
-                                    <option class="font-w700" value="Fix">Fix</option>
-                                    <option class="font-w700" value="Non-Fix">Non-Fix</option>
-                                </select>
-                            </div>
-                            <div class="Tonase" style="display:none">
+                            <div class="Fix">
                                 <div class="form-group">
-                                    <label for="Tonase" class="form-label font-weight-bold">Tonase</label>  
-                                    <input autocomplete="off" type="text" class="form-control" id="Tonase" name="Tonase">
-                                </div>
-                            </div>
-                            <div class="Fix" style="display:none">
-                                <div class="form-group">
-                                    <label for="rute_gaji_engkel" class="form-label font-weight-bold">Gaji(FIX)</label>
+                                    <label for="rute_gaji_engkel" class="form-label font-weight-bold">Gaji</label>
                                     <input autocomplete="off" type="text" class="form-control" id="rute_gaji_engkel" name="rute_gaji_engkel" onkeyup="uang(this)">
-                                </div>
-                            </div>
-                            <div class="Non-Fix" style="display:none">
-                                <div class="form-group">
-                                    <label for="rute_gaji_engkel_rumusan" class="form-label font-weight-bold">Gaji Rumusan(Non-FIX)</label>
-                                    <input autocomplete="off" type="text" class="form-control" id="rute_gaji_engkel_rumusan" name="rute_gaji_engkel_rumusan" onkeyup="uang(this)">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="rute_keterangan" class="form-label font-weight-bold">Keterangan</label>
-                                <input autocomplete="off" type="text" class="form-control" id="rute_keterangan" name="rute_keterangan" required>
+                                <textarea name="rute_keterangan" id="rute_keterangan" rows="5" class="form-control"></textarea>
                             </div>
                         </div>
                     </div>
@@ -183,12 +169,12 @@
                                 <label for="rute_muatan_update" class="form-label font-weight-bold ">Muatan</label> 
                                 <input autocomplete="off" type="text" class="form-control" id="rute_muatan_update" name="rute_muatan_update" required>
                             </div>
-                            <div class="rute_tonase_update">
+                            <!-- <div class="rute_tonase_update">
                                 <div class="form-group">
                                     <label for="rute_tonase_update" class="form-label font-weight-bold">Tonase</label>  
                                     <input autocomplete="off" type="text" class="form-control" id="rute_tonase_update" name="rute_tonase_update">
-                                </div>
-                            </div>
+                                </div> -->
+                            <!-- </div> -->
                         </div>
                         <div class="col border rounded mr-3 ml-3 mb-3 mt-3">
                             <div class="form-group">
@@ -208,7 +194,7 @@
                                 <input autocomplete="off" type="text" class="form-control" name="Ritase_update" id="Ritase_update" required readonly>
                             </div>
                             <div class="form-group">
-                                <label for="rute_tagihan_update" class="form-label font-weight-bold">Inv./Tagihan</label>
+                                <label for="rute_tagihan_update" class="form-label font-weight-bold">Harga / Satuan</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_tagihan_update" name="rute_tagihan_update" required onkeyup="uang(this)">
                             </div>
                         </div>
@@ -216,13 +202,13 @@
                             <small class="font-weight-bold">Detail Gaji Supir</small>
                             <hr>
                             <div class="form-group">
-                                <label for="rute_gaji_engkel_update" class="form-label font-weight-bold">Gaji(Fix)</label>
+                                <label for="rute_gaji_engkel_update" class="form-label font-weight-bold">Gaji</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_gaji_engkel_update" name="rute_gaji_engkel_update" required onkeyup="uang(this)">
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="rute_gaji_engkel_rumusan_update" class="form-label font-weight-bold">Gaji Rumusan(Non-Fix)</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_gaji_engkel_rumusan_update" name="rute_gaji_engkel_rumusan_update" required onkeyup="uang(this)">
-                            </div>
+                            </div> -->
                             <div class="form-group">
                                 <label for="rute_keterangan_update" class="form-label font-weight-bold">keterangan</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_keterangan_update" name="rute_keterangan_update">
@@ -269,12 +255,12 @@
                                 <label for="rute_muatan_detail" class="form-label font-weight-bold ">Muatan</label> 
                                 <input autocomplete="off" type="text" class="form-control" id="rute_muatan_detail" name="rute_muatan_detail" readonly>
                             </div>
-                            <div class="rute_tonase_detail">
+                            <!-- <div class="rute_tonase_detail">
                                 <div class="form-group">
                                     <label for="rute_tonase_detail" class="form-label font-weight-bold">Tonase</label>  
                                     <input autocomplete="off" type="text" class="form-control" id="rute_tonase_detail" name="rute_tonase_detail" readonly>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="col border rounded mr-3 ml-3 mb-3 mt-3">
                             <div class="form-group">
@@ -294,7 +280,7 @@
                                 <input autocomplete="off" type="text" class="form-control" id="Ritase_detail" name="Ritase_detail" readonly>
                             </div>
                             <div class="form-group">
-                                <label for="rute_tagihan_detail" class="form-label font-weight-bold">Inv./Tagihan</label>
+                                <label for="rute_tagihan_detail" class="form-label font-weight-bold">Harga / Satuan</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_tagihan_detail" name="rute_tagihan_detail" readonly>
                             </div>
                         </div>
@@ -302,13 +288,13 @@
                             <small class="font-weight-bold">Detail Gaji Supir</small>
                             <hr>
                             <div class="form-group">
-                                <label for="rute_gaji_engkel_detail" class="form-label font-weight-bold">Gaji(Fix)</label>
+                                <label for="rute_gaji_engkel_detail" class="form-label font-weight-bold">Gaji</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_gaji_engkel_detail" name="rute_gaji_engkel_detail" readonly>
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="rute_gaji_engkel_rumusan_detail" class="form-label font-weight-bold">Gaji Rumusan(Non-Fix)</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_gaji_engkel_rumusan_detail" name="rute_gaji_engkel_rumusan_detail" readonly>
-                            </div>
+                            </div> -->
                             <div class="form-group">
                                 <label for="rute_keterangan_detail" class="form-label font-weight-bold">keterangan</label>
                                 <input autocomplete="off" type="text" class="form-control" id="rute_keterangan_detail" name="rute_keterangan_detail" readonly>
@@ -323,6 +309,78 @@
 </div>
 
 <!-- end pop up detail rute -->
+
+<div class="modal fade" id="popup-acc-edit-rute" tabindex="0" role="dialog" aria-labelledby="modal-block-large" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary-dark">
+                <h5 class="block-title">Data Edit Rute</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times</span>
+                </button>
+            </div>
+            <div class="font-size-sm m-3 text-justify">
+                <div class="row ">
+                        <div class="col border rounded mr-3 ml-3 mb-3 mt-3">
+                            <div class="form-group">
+                                <label class="form-label font-weight-bold " for="customer_name_edit">Nama Customer</label>
+                                <input autocomplete="off" type="text" class="form-control" id="customer_name_edit" name="customer_name_edit" readonly>
+                            </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label font-weight-bold" for="rute_dari_edit">Dari</label>
+                                <input autocomplete="off" type="text" class="form-control" id="rute_dari_edit" name="rute_dari_edit" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label font-weight-bold" for="rute_ke_edit">Ke</label>
+                                <input autocomplete="off" type="text" class="form-control" id="rute_ke_edit" name="rute_ke_edit" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="rute_muatan_edit" class="form-label font-weight-bold ">Muatan</label> 
+                                <input autocomplete="off" type="text" class="form-control" id="rute_muatan_edit" name="rute_muatan_edit" readonly>
+                            </div>
+                        </div>
+                        <div class="col border rounded mr-3 ml-3 mb-3 mt-3">
+                            <div class="form-group">
+                                <label for="jenis_mobil_edit" class="form-label font-weight-bold">Jenis Mobil</label>  
+                                <input autocomplete="off" type="text" class="form-control" id="jenis_mobil_edit" name="jenis_mobil_edit" readonly>
+                            </div>
+                            <small class="font-weight-bold">Detail Uang Jalan (Uj)</small>
+                            <hr>
+                            <div class="form-group">
+                                <label for="rute_uj_engkel_edit" class="form-label font-weight-bold">Uang Jalan</label>
+                                <input autocomplete="off" type="text" class="form-control" id="rute_uj_engkel_edit" name="rute_uj_engkel_edit" readonly>
+                            </div>
+                            <small class="font-weight-bold">Detail Keuangan</small>
+                            <hr>
+                            <div class="form-group">
+                                <label class="form-label font-weight-bold" for="ritase_edit">Ritase/Tonase</label>
+                                <input autocomplete="off" type="text" class="form-control" id="ritase_edit" name="ritase_edit" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="rute_tagihan_edit" class="form-label font-weight-bold">Harga / Satuan</label>
+                                <input autocomplete="off" type="text" class="form-control" id="rute_tagihan_edit" name="rute_tagihan_edit" readonly>
+                            </div>
+                        </div>
+                        <div class="col border rounded mr-3 ml-3 mb-3 mt-3">
+                            <small class="font-weight-bold">Detail Gaji Supir</small>
+                            <hr>
+                            <div class="form-group">
+                                <label for="rute_gaji_engkel_edit" class="form-label font-weight-bold">Gaji</label>
+                                <input autocomplete="off" type="text" class="form-control" id="rute_gaji_engkel_edit" name="rute_gaji_engkel_edit" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="rute_keterangan_edit" class="form-label font-weight-bold">keterangan</label>
+                                <input autocomplete="off" type="text" class="form-control" id="rute_keterangan_edit" name="rute_keterangan_edit" readonly>
+                            </div>
+                        </div>
+                </div>
+                <a class="btn btn-success" id="ACC">ACC</a>
+                <a class="btn btn-danger" id="Tolak">Tolak</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     function uang(a){
@@ -340,26 +398,26 @@
     }
 </script>
 <script>
-    function mobil(){
-        $('#jenis_mobil').find('option').remove().end(); //reset option select
-        var isi_muatan = [];
-        $.ajax({
-            type: "GET",
-            url: "<?php echo base_url('index.php/form/getallmobil/') ?>",
-            dataType: "JSON",
-            success: function(data) {
-                if(data.length==0){
-                    $('#jenis_mobil').append('<option class="font-w700" disabled="disabled" selected value="">Kosong</option>'); 
-                }else{
-                    $('#jenis_mobil').append('<option class="font-w700" disabled="disabled" selected value="">Jenis Mobil</option>'); 
-                    for(i=0;i<data.length;i++){
-                        if(!isi_muatan.includes(data[i]["mobil_jenis"])){
-                            $('#jenis_mobil').append('<option value="'+data[i]["mobil_jenis"]+'">'+data[i]["mobil_jenis"]+'</option>'); 
-                            isi_muatan.push(data[i]["mobil_jenis"]);
-                        }
-                    }
-                }
-            }
-        });
-    }
+    // function mobil(){
+    //     $('#jenis_mobil').find('option').remove().end(); //reset option select
+    //     var isi_muatan = [];
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "<?php echo base_url('index.php/form/getallmobil/') ?>",
+    //         dataType: "JSON",
+    //         success: function(data) {
+    //             if(data.length==0){
+    //                 $('#jenis_mobil').append('<option class="font-w700" disabled="disabled" selected value="">Kosong</option>'); 
+    //             }else{
+    //                 $('#jenis_mobil').append('<option class="font-w700" disabled="disabled" selected value="">Jenis Mobil</option>'); 
+    //                 for(i=0;i<data.length;i++){
+    //                     if(!isi_muatan.includes(data[i]["mobil_jenis"])){
+    //                         $('#jenis_mobil').append('<option value="'+data[i]["mobil_jenis"]+'">'+data[i]["mobil_jenis"]+'</option>'); 
+    //                         isi_muatan.push(data[i]["mobil_jenis"]);
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     });
+    // }
 </script>

@@ -1,70 +1,124 @@
 <!-- tampilan detail penggajian supir -->
 <div class="container small">
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-center">Data Upah Supir</h6>
+        <div class="card-header py-3 mb-3">
+            <h6 class="m-0 font-weight-bold text-primary">Buat Slip Gaji</h6>
         </div>
-        <div class="card-body" id="identitas">
-            <table class="w-50">
-                <tbody>
-                    <tr>
-                        <td width="25%">Id Supir</td>
-                        <td width="5%">:</td>
-                        <td><?= $supir["supir_id"]?></td>
-                    </tr>
-                    <tr>
-                        <td width="25%">Nama Supir</td>
-                        <td width="5%">:</td>
-                        <td><?= $supir["supir_name"]?></td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="container m-auto" id="rincian">
+            <form action="<?= base_url("index.php/detail/insert_upah/").$supir["supir_id"]?>" method="POST" id="form-pilih-jo">
+                <input type="text" name="jo" id="jo" required hidden>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="tanggal_gaji" class="col-form-label col-sm-7 font-weight-bold">Tanggal</label>
+                            <input autocomplete="off" type="text" class="form-control col-md-5" id="tanggal_gaji" name="tanggal_gaji" onclick="tanggal_berlaku(this)" required>
+                        </div>
+                        <div class="form-group row">
+                            <label for="no_gaji" class="col-form-label col-sm-7 font-weight-bold">No Gaji</label>
+                            <input autocomplete="off" type="text" class="form-control col-md-5" id="no_gaji" name="no_gaji" value="<?= $no_slip_gaji?>" required readonly>
+                        </div>
+                        <div class="form-group row">
+                            <label for="nama_supir" class="col-form-label col-sm-7 font-weight-bold">Supir</label>
+                            <input autocomplete="off" type="text" class="form-control col-md-5" id="nama_supir" name="nama_supir" value="<?= $supir["supir_name"]?>" readonly>
+                        </div>
+                        <div class="form-group row">
+                            <label for="bulan_kerja" class="col-form-label col-sm-6 font-weight-bold">Bulan Kerja</label>
+                            <div class="col-sm-3">
+                                <select name="bulan_kerja" value="DESC" id="bulan_kerja" class="form-control selectpicker mb-4" data-live-search="true" required onchange="set_pilih_jo(this)">
+                                    <?php $bulan = ["Sadasd","Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+                                    if($bulan_index!=10){
+                                        $bulan_index=str_replace("0","",$bulan_index);
+                                    }
+                                    if($bulan_index=='x'){?>
+                                        <option class="font-w700" selected value="x">Bulan</option>
+                                    <?php }else{ ?>
+                                        <option class="font-w700" selected value="<?= $bulan_index?>"><?= $bulan[$bulan_index]?></option>
+                                    <?php } ?>
+                                    <option value="01"><?=$bulan[1]?></option>
+                                    <option value="02"><?=$bulan[2]?></option>
+                                    <option value="03"><?=$bulan[3]?></option>
+                                    <option value="04"><?=$bulan[4]?></option>
+                                    <option value="05"><?=$bulan[5]?></option>
+                                    <option value="06"><?=$bulan[6]?></option>
+                                    <option value="07"><?=$bulan[7]?></option>
+                                    <option value="08"><?=$bulan[8]?></option>
+                                    <option value="09"><?=$bulan[9]?></option>
+                                    <option value="10"><?=$bulan[10]?></option>
+                                    <option value="11"><?=$bulan[11]?></option>
+                                    <option value="12"><?=$bulan[12]?></option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <select name="tahun_kerja" value="DESC" id="tahun_kerja" class="form-control selectpicker mb-4" data-live-search="true" required onchange="set_pilih_jo(this)">
+                                    <option class="font-w700" selected value="x">Semua Tahun</option>
+                                    <?php if($tahun=='x'){?>
+                                        <option class="font-w700" selected value="x">Tahun</option>
+                                    <?php }else{ ?>
+                                        <option class="font-w700" selected value="<?= $tahun?>"><?= $tahun?></option>
+                                    <?php } ?>
+                                    <option value="2021">2021</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2024">2024</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="bon_supir" class="col-form-label col-sm-7 font-weight-bold">Bon Terhutang</label>
+                            <input autocomplete="off" type="text" class="form-control col-md-5" id="bon_supir" name="bon_supir" value="Rp.<?= number_format($supir["supir_kasbon"],2,",",".")?>" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="gaji_total" class="col-form-label col-sm-7 font-weight-bold">Total</label>
+                            <div class="col-sm-5">
+                                <input autocomplete="off" type="text" class="form-control" id="gaji_total" name="gaji_total" required readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="kasbon" class="col-form-label col-sm-7 font-weight-bold">Bayar Kasbon</label>
+                            <div class="col-sm-5">
+                                <input autocomplete="off" type="text" class="form-control" id="kasbon" name="kasbon" onkeyup="batas_kasbon(this)">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="bonus" class="col-form-label col-sm-7 font-weight-bold">Bonus</label>
+                            <div class="col-sm-5">
+                                <input autocomplete="off" type="text" class="form-control" id="bonus" name="bonus" onkeyup="bonus_nilai(this)">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="gaji_grand_total" class="col-form-label col-sm-7 font-weight-bold">Grand Total</label>
+                            <div class="col-sm-5">
+                                <input autocomplete="off" type="text" class="form-control" id="gaji_grand_total" name="gaji_grand_total" required readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="keterangan" class="col-form-label col-sm-7 font-weight-bold">Keterangan</label>
+                            <textarea name="Keterangan" id="Keterangan" class="form-control col-md-5" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid text-center px-0 mb-3">
+                    <button type="submit" class="btn btn-success" onclick="cek_jo()">Simpan</button>
+                    <button type="reset" class="btn btn-danger" onclick="reset_form()">Reset</button>
+                </div>
+            </form>
         </div>
-        <div class="card-body row" id="rincian">
-            <div class="col-md-5 ">
-                <form action="<?= base_url("index.php/detail/detail_penggajian/").$supir["supir_id"]?>" method="POST">
-                    <input type="text" name="jo" id="jo" required hidden>
-                    <div class="form-group row">
-                        <label for="gaji_total" class="col-form-label col-sm-7 font-weight-bold">Total</label>
-                        <div class="col-sm-5">
-                            <input autocomplete="off" type="text" class="form-control" id="gaji_total" name="gaji_total" required readonly>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="kasbon" class="col-form-label col-sm-7 font-weight-bold">Bayar Kasbon (Rp.<?= number_format($supir["supir_kasbon"],2,",",".")?>)</label>
-                        <div class="col-sm-5">
-                            <input autocomplete="off" type="text" class="form-control" id="kasbon" name="kasbon" onkeyup="batas_kasbon(this)">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="bonus" class="col-form-label col-sm-7 font-weight-bold">Bonus</label>
-                        <div class="col-sm-5">
-                            <input autocomplete="off" type="text" class="form-control" id="bonus" name="bonus" onkeyup="bonus_nilai(this)">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="gaji_grand_total" class="col-form-label col-sm-7 font-weight-bold">Grand Total</label>
-                        <div class="col-sm-5">
-                            <input autocomplete="off" type="text" class="form-control" id="gaji_grand_total" name="gaji_grand_total" required readonly>
-                        </div>
-                    </div>
-                    <div class="container-fluid px-0">
-                    <button type="submit" class="btn btn-success  float-right" onclick="cek_jo()">Selanjutnya</button>
-                    </div>
-                </form>
-            </div>
-            <div class="table-responsive col-md-7">
+        <div class="table-responsive">
                 <table class="table table-bordered table-striped" id="Table-Penggajian" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th class="text-center" width="10%" scope="col">JO ID</th>
-                            <th class="text-center" width="10%" scope="col">Tgl Keluar</th>
+                            <th class="text-center" width="10%" scope="col">Tgl Muat</th>
                             <th class="text-center" width="13%" scope="col">Tgl Bongkar</th>
-                            <!-- <th class="text-center" width="10%" scope="col">Muatan</th>
+                            <th class="text-center" width="13%" scope="col">Customer</th>
+                            <th class="text-center" width="10%" scope="col">Muatan</th>
                             <th class="text-center" width="10%" scope="col">Dari</th>
                             <th class="text-center" width="10%" scope="col">Ke</th>
-                            <th class="text-center" width="10%" scope="col">Uang Jalan</th> -->
+                            <th class="text-center" width="10%" scope="col">Tonase</th>
                             <th class="text-center" width="10%" scope="col">Upah</th>
+                            <th class="text-center" width="10%" scope="col">Detail</th>
                             <th class="text-center" width="10%" scope="col">Pilih</th>
                         </tr>
                     </thead>
@@ -72,25 +126,20 @@
                     <?php foreach($jo as $value){?>
                         <tr>
                             <td><?= $value["Jo_id"]?></td>
-                            <td><?= $value["tanggal_surat"]?></td>
+                            <td><?= $value["tanggal_muat"]?></td>
                             <td><?= $value["tanggal_bongkar"]?></td>
-                            <!-- <td><?= $value["muatan"]?></td>
+                            <td><?= $value["customer_name"]?></td>
+                            <td><?= $value["muatan"]?></td>
                             <td><?= $value["asal"]?></td>
-                            <td><?= $value["tujuan"]?></td> -->
-                            <!-- <?php
-                                if($value["uang_kosongan"]!=""){
-                                    echo "<td>Rp.".number_format($value["uang_jalan"]+$value["uang_kosongan"],2,',','.')."</td>";
-                                }else{
-                                    echo "<td>Rp.".number_format($value["uang_jalan"],2,',','.')."</td>";
-                                }
-                            ?> -->
-                            <td>Rp.<?= number_format($value["upah"]+$value["bonus"],2,',','.')?></td>
-                            <td><input class='' id="<?= $value["Jo_id"]?>" data-toggle='toggle' type='checkbox' data-size='medium' data-onstyle='success' data-offstyle='danger' onchange="pilih_gaji(this)"></td>
+                            <td><?= $value["tujuan"]?></td>
+                            <td><?= $value["tonase"]?></td>
+                            <td>Rp.<?= number_format($value["upah"],2,',','.')?></td>
+                            <td><a class='btn btn-light' target="_blank" href='<?= base_url('index.php/detail/detail_jo/'.$value["Jo_id"].'/JO')?>'><i class='fas fa-eye'></i></a></td>
+                            <td><input class='' id="<?= $value["Jo_id"]?>" type='checkbox' onchange="pilih_gaji(this)"></td>
                         </tr>
                     <?php } ?>
                     </tbody>
                 </table>
-            </div>
         </div>
     </div>
 </div>
@@ -99,10 +148,10 @@
    
   
         <!-- Footer -->
-        <footer class="sticky-footer bg-white">
+        <footer class="sticky-footer bg-dark">
             <div class="container my-auto">
                 <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; 2021 PT.Sumber Karya Berkah</span>
+                    <span class="text-light">Copyright &copy; 2021 PT.Sumber Karya Berkah</span>
                 </div>
             </div>
         </footer>
@@ -255,4 +304,71 @@
                 alert("silakan pilih perjalanan supir");
             }
         }
+    </script>
+    <script>
+        function set_pilih_jo(a){
+            // alert($("#tahun_kerja").val());
+            // alert($("#bulan_kerja").val());
+            // document.getElementById("form-pilih-jo").reset();
+            tahun = $("#tahun_kerja").val();
+            bulan = $("#bulan_kerja").val();
+            location.replace('<?= base_url("index.php/detail/pilih_gaji/").$supir["supir_id"]."/form/"?>'+tahun+"/"+bulan);
+        }
+    </script>
+    <script>
+        function reset_form(){
+            location.reload();
+        }
+    </script>
+    <script> //script set tanggal saat ini
+        $(function(){
+            var date = new Date();
+            if((date.getMonth()+1)<10){
+                $("#tanggal_gaji").val(date.getDate()+"-0"+(date.getMonth()+1)+"-"+date.getFullYear());
+            }else{
+                $("#tanggal_gaji").val(date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear());
+            }
+        });
+    </script>
+
+    <script> //script input tanggal
+        function tanggal_berlaku(a){
+            // alert(a.id);
+            Swal.fire({
+                title: "Loading",
+                icon: "success",
+                text: "Mohon Tunggu Sebentar",
+                type: "success",
+                timer: 500
+            });
+            $("#"+a.id).datepicker({
+                format: 'dd-mm-yyyy',
+                autoclose: true,
+                todayHighlight: true,
+            });
+        }
+    </script>
+     <!-- cek aktifitas pengguna -->
+     <script>
+        $(document).ready(function() {
+            const idleDurationSecs = 900;
+            const redirectUrl = '<?= base_url("index.php/login/logout")?>';
+            let idleTimeout;
+
+            const resetIdleTimeout = function() {
+                if(idleTimeout){
+                    clearTimeout(idleTimeout);
+                }
+                idleTimeout = setTimeout(() => location.href = redirectUrl, idleDurationSecs * 1000);
+            };
+            
+            // Key events for reset time
+            resetIdleTimeout();
+            window.onkeypress = resetIdleTimeout;
+            window.click = resetIdleTimeout;
+            window.onclick = resetIdleTimeout;
+            window.onmousemove = resetIdleTimeout;
+            window.onscroll = resetIdleTimeout;
+
+        });
     </script>

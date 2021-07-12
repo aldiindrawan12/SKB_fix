@@ -8,6 +8,7 @@ class Home extends CI_Controller {
             parent::__construct();
             $this->load->model('model_home');//load model
             $this->load->model('model_form');//load model
+            $this->load->model('model_detail');//load model
         }
     //end construck
 
@@ -18,8 +19,12 @@ class Home extends CI_Controller {
     			$this->session->set_flashdata('status-login', 'False');
                 redirect(base_url());
             }
+            $data["supir"] = $this->model_home->getallsupir();
+            $data["mobil"] = $this->model_home->gettruck();
+            $data["customer"] = $this->model_home->getallcustomer();
+            $data["jo"] = $this->model_home->getjo();
             $data["page"] = "JO_page";
-            $data["collapse_group"] = "Perintah_Kerja";
+            $data["collapse_group"] = "Job_Order";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             if(json_decode($data["akun_akses"]["akses"])[1]==0){
                 redirect(base_url());
@@ -37,7 +42,7 @@ class Home extends CI_Controller {
                 redirect(base_url());
             }
             $data["page"] = "Konfirmasi_JO_page";
-            $data["collapse_group"] = "Perintah_Kerja";
+            $data["collapse_group"] = "Job_Order";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             if(json_decode($data["akun_akses"]["akses"])[2]==0){
                 redirect(base_url());
@@ -49,25 +54,50 @@ class Home extends CI_Controller {
         }
 
         public function view_konfirmasi_JO(){
+            $status = "Dalam Perjalanan";
+            $data = array(
+                "Supir" => "",
+                "Kendaraan" => "",
+                "Jenis" => "",
+                "Customer" => "",
+                "Jo_id" => "",
+                "Tanggal1" => "",
+                "Tanggal2" => "",
+            );
             $postData = $this->input->post();
-            $data = $this->model_home->getJOKonfirmasiData($postData);
+            $data = $this->model_home->getJOData($postData,$status,$data);
             echo json_encode($data);
         }
 
         public function view_JO(){
-            $status = $this->input->post('status_JO');
+            $Status = $this->input->post('Status');
+            $data = array(
+                "Supir" => $this->input->post('Supir'),
+                "Kendaraan" => $this->input->post('Kendaraan'),
+                "Jenis" => $this->input->post('Jenis'),
+                "Customer" => $this->input->post('Customer'),
+                "Jo_id" => $this->input->post('Jo_id'),
+                "Tanggal1" => $this->input->post('Tanggal1'),
+                "Tanggal2" => $this->input->post('Tanggal2'),
+            );
             $postData = $this->input->post();
-            $data = $this->model_home->getJOData($postData,$status);
+            $data = $this->model_home->getJOData($postData,$Status,$data);
             echo json_encode($data);
         }
-        public function view_JO_report(){
-            $tanggal = $this->input->post('tanggal');
-            $bulan = $this->input->post('bulan');
-            $tahun = $this->input->post('tahun');
-            $status = $this->input->post('status_JO');
-            $postData = $this->input->post();
-            $data = $this->model_home->getJOReportData($postData,$status,$tanggal,$bulan,$tahun);
-            echo json_encode($data);
+
+        public function getditemukanjo(){
+            $data = array(
+                "Supir" => $this->input->post('Supir'),
+                "Kendaraan" => $this->input->post('Kendaraan'),
+                "Jenis" => $this->input->post('Jenis'),
+                "Customer" => $this->input->post('Customer'),
+                "Jo_id" => $this->input->post('Jo_id'),
+                "Tanggal1" => $this->input->post('Tanggal1'),
+                "Tanggal2" => $this->input->post('Tanggal2'),
+                "Status" => $this->input->post('Status')
+            );
+            $data_filter = $this->model_home->getDitemukanJo($data);
+            echo $data_filter;
         }
     //end fungsi untuk JO
 
@@ -185,7 +215,7 @@ class Home extends CI_Controller {
         }      
     //end supir
 
-    //gaji supir
+    //buat slip gaji
         public function gaji()
         {
             if(!$_SESSION["user"]){
@@ -203,29 +233,37 @@ class Home extends CI_Controller {
             $this->load->view('home/gaji');
             $this->load->view('footer');
         }      
-    //end gaji supir
+    //end buat slip gaji
 
-    //gaji report supir
+    //data slip gaji
         public function report_gaji()
         {
             if(!$_SESSION["user"]){
                 $this->session->set_flashdata('status-login', 'False');
                 redirect(base_url());
             }
+            $data["pembayaran_upah"] = $this->model_detail->getpembayaranupah();
+            $gaji = 0;
+            for($i=0;$i<count($data["pembayaran_upah"]);$i++){
+                if($data["pembayaran_upah"][$i]["pembayaran_upah_status"]=="Belum Lunas"){
+                    $gaji = $gaji + intval($data["pembayaran_upah"][$i]["sisa"]);
+                }
+            }
+            $data["gaji"]=$gaji;
+            $data["supir"] = $this->model_home->getallsupir();
             $data["page"] = "Laporan_Gaji_page";
-            $data["collapse_group"] = "Laporan";
+            $data["collapse_group"] = "Penggajian";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             if(json_decode($data["akun_akses"]["akses"])[9]==0){
                 redirect(base_url());
             }
             $this->load->view('header',$data);
             $this->load->view('sidebar');
-            $this->load->view('home/report_gaji');
-            $this->load->view('footer');
+            $this->load->view('detail/penggajian_report',$data);
         }      
-    //end gaji report supir
+    //end data slip gaji
 
-    //report bon supir
+    //Mutasi bon supir
         public function report_bon()
         {
             if(!$_SESSION["user"]){
@@ -233,7 +271,7 @@ class Home extends CI_Controller {
                 redirect(base_url());
             }
             $data["page"] = "Laporan_Bon_page";
-            $data["collapse_group"] = "Laporan";
+            $data["collapse_group"] = "Kasbon";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             if(json_decode($data["akun_akses"]["akses"])[10]==0){
                 redirect(base_url());
@@ -243,7 +281,28 @@ class Home extends CI_Controller {
             $this->load->view('home/report_bon');
             $this->load->view('footer');
         }
-    //report bon supir
+    //end Mutasi bon supir
+
+    //Saldo bon supir
+        public function saldo_bon()
+        {
+            if(!$_SESSION["user"]){
+                $this->session->set_flashdata('status-login', 'False');
+                redirect(base_url());
+            }
+            $data["supir"] = $this->model_home->getsupir();
+            $data["page"] = "Saldo_Bon_page";
+            $data["collapse_group"] = "Kasbon";
+            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
+            if(json_decode($data["akun_akses"]["akses"])[12]==0){
+                redirect(base_url());
+            }
+            $this->load->view('header',$data);
+            $this->load->view('sidebar');
+            $this->load->view('home/saldo_bon');
+            $this->load->view('footer');
+        }
+    //emd Saldo bon supir
 
     // bon
         public function bon()
@@ -252,8 +311,10 @@ class Home extends CI_Controller {
     			$this->session->set_flashdata('status-login', 'False');
                 redirect(base_url());
             }
+            $data["supir"] = $this->model_home->getallsupir();
+            $data["bon"]=$this->model_home->getbon();
             $data["page"] = "Bon_page";
-            $data["collapse_group"] = "Penggajian";
+            $data["collapse_group"] = "Kasbon";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             if(json_decode($data["akun_akses"]["akses"])[5]==0){
                 redirect(base_url());
@@ -263,8 +324,16 @@ class Home extends CI_Controller {
             $this->load->view('home/bon');
             $this->load->view('footer');
         }
+
         public function view_bon(){
-            $search = $_POST['search']['value'];
+            $No_Bon = $this->input->post('No_Bon1')."-".$this->input->post('No_Bon2')."-".$this->input->post('No_Bon3')."-".$this->input->post('No_Bon4');
+            $data = array(
+                "Supir" => $this->input->post('Supir'),
+                "Tanggal1" => $this->input->post('Tanggal1'),
+                "Tanggal2" => $this->input->post('Tanggal2'),
+                "Status" => $this->input->post('Status'),
+                "No_Bon" => $No_Bon,
+            );
             $limit = $_POST['length'];
             $start = $_POST['start'];
             // $status = $this->input->post('searchStatus');
@@ -272,8 +341,8 @@ class Home extends CI_Controller {
             $order_field = $_POST['columns'][$order_index]['data'];
             $order_ascdesc = $_POST['order'][0]['dir'];
             $sql_total = $this->model_home->count_all_bon();
-            $sql_data = $this->model_home->filter_bon($search, $limit, $start, $order_field, $order_ascdesc);
-            $sql_filter = $this->model_home->count_filter_bon($search);
+            $sql_data = $this->model_home->filter_bon( $limit, $start, $order_field, $order_ascdesc,$data);
+            $sql_filter = $this->model_home->count_filter_bon($data);
             $callback = array(
                 'draw' => $_POST['draw'],
                 'recordsTotal' => $sql_total,
@@ -283,6 +352,19 @@ class Home extends CI_Controller {
 
             header('Content-Type: application/json');
             echo json_encode($callback);
+        }
+
+        public function getditemukanbon(){
+            $No_Bon = $this->input->post('No_Bon1')."-".$this->input->post('No_Bon2')."-".$this->input->post('No_Bon3')."-".$this->input->post('No_Bon4');
+            $data = array(
+                "Supir" => $this->input->post('Supir'),
+                "Tanggal1" => $this->input->post('Tanggal1'),
+                "Tanggal2" => $this->input->post('Tanggal2'),
+                "Status" => $this->input->post('Status'),
+                "No_Bon" => $No_Bon,
+            );
+            $data_filter = $this->model_home->getDitemukanBon($data);
+            echo $data_filter;
         }
     //end bon
 
@@ -311,112 +393,41 @@ class Home extends CI_Controller {
             echo json_encode($data);
         }
     //end fungsi untuk truk
-    
-    // funngsi report 
-        public function report()
-        {
-            if(!$_SESSION["user"]){
-    			$this->session->set_flashdata('status-login', 'False');
-                redirect(base_url());
-            }
-            $data["page"] = "Laporan_page";
-            $data["collapse_group"] = "Laporan";
-            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
-            if(json_decode($data["akun_akses"]["akses"])[7]==0){
-                redirect(base_url());
-            }
-            $this->load->view('header',$data);
-            $this->load->view('sidebar');
-            $this->load->view('home/report');
-            $this->load->view('footer');
-        }
-    // end funngsi report 
-
-    // funngsi report uang jalan 
-        public function report_uang_jalan()
-        {
-            if(!$_SESSION["user"]){
-                $this->session->set_flashdata('status-login', 'False');
-                redirect(base_url());
-            }
-            $data["page"] = "Laporan_Uang_Jalan_page";
-            $data["collapse_group"] = "Laporan";
-            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
-            if(json_decode($data["akun_akses"]["akses"])[8]==0){
-                redirect(base_url());
-            }
-            $this->load->view('header',$data);
-            $this->load->view('sidebar');
-            $this->load->view('home/report_uang_jalan');
-            $this->load->view('footer');
-        }
-    // end funngsi report uang jalan 
 
     // Invoice
-        public function view_invoice(){
-            $search = $_POST['search']['value'];
-            // $limit = $_POST['length'];
-            // $start = $_POST['start'];
-            $status = $this->input->post('status_bayar');
-            $order_index = $_POST['order'][0]['column'];
-            $order_field = $_POST['columns'][$order_index]['data'];
-            $order_ascdesc = $_POST['order'][0]['dir'];
-            $sql_total = $this->model_home->count_all_invoice($status);
-            $sql_data = $this->model_home->filter_invoice($search,$order_field, $order_ascdesc,$status);
-            $sql_filter = $this->model_home->count_filter_invoice($search,$status);
-            $callback = array(
-                'draw' => $_POST['draw'],
-                'recordsTotal' => $sql_total,
-                'recordsFiltered' => $sql_filter,
-                'data' => $sql_data
+        public function view_seluruh_invoice(){
+            $No_Invoice = $this->input->post('No_Invoice1')."-".$this->input->post('No_Invoice2')."-".$this->input->post('No_Invoice3')."-".$this->input->post('No_Invoice4');
+            $data = array(
+                "Status" => $this->input->post('Status'),
+                "Customer" => $this->input->post('Customer'),
+                "Tanggal_Top" => $this->input->post('Tanggal_Top'),
+                "Tanggal1" => $this->input->post('Tanggal1'),
+                "Tanggal2" => $this->input->post('Tanggal2'),
+                "Ppn" => $this->input->post('Ppn'),
+                "No_Invoice" => $No_Invoice,
             );
-
-            header('Content-Type: application/json');
-            echo json_encode($callback);
+            $postData = $this->input->post();
+            $data = $this->model_home->getAllInvoiceData($postData,$data);
+            echo json_encode($data);
         }
 
-        public function view_invoice_belum_lunas(){
-            $search = $_POST['search']['value'];
-            $limit = $_POST['length'];
-            $start = $_POST['start'];
-            $customer_id = $this->input->post('customer_id');
-            $order_index = $_POST['order'][0]['column'];
-            $order_field = $_POST['columns'][$order_index]['data'];
-            $order_ascdesc = $_POST['order'][0]['dir'];
-            $sql_total = $this->model_home->count_all_invoice_belum_lunas($customer_id);
-            $sql_data = $this->model_home->filter_invoice_belum_lunas($search, $limit, $start, $order_field, $order_ascdesc,$customer_id);
-            $sql_filter = $this->model_home->count_filter_invoice_belum_lunas($search,$customer_id);
-            $callback = array(
-                'draw' => $_POST['draw'],
-                'recordsTotal' => $sql_total,
-                'recordsFiltered' => $sql_filter,
-                'data' => $sql_data
+        public function getditemukaninvoice(){
+            $No_Invoice = $this->input->post('No_Invoice1')."-".$this->input->post('No_Invoice2')."-".$this->input->post('No_Invoice3')."-".$this->input->post('No_Invoice4');
+            $data = array(
+                "Status" => $this->input->post('Status'),
+                "Customer" => $this->input->post('Customer'),
+                "Tanggal_Top" => $this->input->post('Tanggal_Top'),
+                "Tanggal1" => $this->input->post('Tanggal1'),
+                "Tanggal2" => $this->input->post('Tanggal2'),
+                "Ppn" => $this->input->post('Ppn'),
+                "No_Invoice" => $No_Invoice,
             );
-
-            header('Content-Type: application/json');
-            echo json_encode($callback);
-        }
-
-        public function view_invoice_lunas(){
-            $search = $_POST['search']['value'];
-            $limit = $_POST['length'];
-            $start = $_POST['start'];
-            $customer_id = $this->input->post('customer_id');
-            $order_index = $_POST['order'][0]['column'];
-            $order_field = $_POST['columns'][$order_index]['data'];
-            $order_ascdesc = $_POST['order'][0]['dir'];
-            $sql_total = $this->model_home->count_all_invoice_lunas($customer_id);
-            $sql_data = $this->model_home->filter_invoice_lunas($search, $limit, $start, $order_field, $order_ascdesc,$customer_id);
-            $sql_filter = $this->model_home->count_filter_invoice_lunas($search,$customer_id);
-            $callback = array(
-                'draw' => $_POST['draw'],
-                'recordsTotal' => $sql_total,
-                'recordsFiltered' => $sql_filter,
-                'data' => $sql_data
-            );
-
-            header('Content-Type: application/json');
-            echo json_encode($callback);
+            $data_filter = $this->model_home->getDitemukanInvoice($data);
+            $tagihan = 0;
+            for($i=0;$i<count($data_filter);$i++){
+                $tagihan = $tagihan + $data_filter[$i]["sisa"];
+            }
+            echo count($data_filter)."=".number_format($tagihan,2,",",".");
         }
         
         public function invoice()
@@ -426,7 +437,7 @@ class Home extends CI_Controller {
                 redirect(base_url());
             }
             $data["page"] = "Invoice_page";
-            $data["collapse_group"] = "Perintah_Kerja";
+            $data["collapse_group"] = "Invoice";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             $data["customer"] = $this->model_home->getcustomer();
             if(json_decode($data["akun_akses"]["akses"])[3]==0){
@@ -444,8 +455,14 @@ class Home extends CI_Controller {
     			$this->session->set_flashdata('status-login', 'False');
                 redirect(base_url());
             }
+            $data["invoice"] = $this->model_home->getinvoice();
+            $tagihan = 0;
+            for($i=0;$i<count($data["invoice"]);$i++){
+                $tagihan = $tagihan + $data["invoice"][$i]["sisa"];
+            }
+            $data["tagihan"] = $tagihan;
             $data["page"] = "Invoice_Customer_page";
-            $data["collapse_group"] = "Perintah_Kerja";
+            $data["collapse_group"] = "Invoice";
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             $data["customer"] = $this->model_home->getcustomer();
             if(json_decode($data["akun_akses"]["akses"])[4]==0){
@@ -455,6 +472,24 @@ class Home extends CI_Controller {
             $this->load->view('sidebar');
             $this->load->view('home/invoice_customer');
             $this->load->view('footer');
+        }
+
+        public function no_invoice(){
+            // $customer_name = $this->input->get("customer_name");
+            $invoice_id = $this->model_form->getinvoiceid();
+            $isi_invoice_id = [];
+            for($i=0;$i<count($invoice_id);$i++){
+                $explode_invoice = explode("-",$invoice_id[$i]["invoice_kode"]);
+                if(count($explode_invoice)>1){
+                    if($explode_invoice[2]==date("m") && $explode_invoice[3]==date('Y')){
+                        $isi_invoice_id[] = $explode_invoice[0];
+                    }
+                }
+            }
+            if(count($isi_invoice_id)==0){
+                $isi_invoice_id[]=0;
+            }
+            echo (max($isi_invoice_id)+1);
         }
     // end Invoice
 
@@ -510,7 +545,7 @@ class Home extends CI_Controller {
             }
             $data["page"] = "Satuan_page";
             $data["collapse_group"] = "Master_Data";
-            // $data["satuan"] = $this->model_home->getallsatuan();
+            $data["mobil"] = $this->model_form->getallmobil();
             $data["customer"] = $this->model_home->getcustomer();
             $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
             if(json_decode($data["akun_akses"]["akses"])[0]==0){
@@ -554,57 +589,4 @@ class Home extends CI_Controller {
             echo json_encode($data);
         }
     //end fungsi untuk merk
-
-    //fungsi untuk kosongan
-        public function kosongan()
-        {
-            if(!$_SESSION["user"]){
-                $this->session->set_flashdata('status-login', 'False');
-                redirect(base_url());
-            }
-            $data["page"] = "Kosongan_page";
-            $data["collapse_group"] = "Master_Data";
-            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
-            if(json_decode($data["akun_akses"]["akses"])[0]==0){
-                redirect(base_url());
-            }
-            $this->load->view('header',$data);
-            $this->load->view('sidebar');
-            $this->load->view('home/kosongan');
-            $this->load->view('footer');
-        }
-        public function view_kosongan(){
-            $postData = $this->input->post();
-            $data = $this->model_home->getKosonganData($postData);
-            echo json_encode($data);
-        }
-    //end fungsi untuk kosongan
-
-    //fungsi untuk paketan
-        public function paketan()
-        {
-            if(!$_SESSION["user"]){
-                $this->session->set_flashdata('status-login', 'False');
-                redirect(base_url());
-            }
-            $data["kosongan"] = $this->model_home->getkosongan();
-            $data["page"] = "Paketan_page";
-            $data["collapse_group"] = "Master_Data";
-            $data["customer"] = $this->model_home->getcustomer();
-            $data["akun_akses"] = $this->model_form->getakunbyid($_SESSION["user_id"]);
-            if(json_decode($data["akun_akses"]["akses"])[0]==0){
-                redirect(base_url());
-            }
-            $this->load->view('header',$data);
-            $this->load->view('sidebar');
-            $this->load->view('home/paketan');
-            $this->load->view('footer');
-        }
-        public function view_paketan($asal){
-            $customer = $this->input->post('customer');
-            $postData = $this->input->post();
-            $data = $this->model_home->getPaketanData($postData,$asal,$customer);
-            echo json_encode($data);
-        }
-    //end fungsi untuk paketan
 }

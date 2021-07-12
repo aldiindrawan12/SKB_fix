@@ -1,116 +1,44 @@
 <?php
     function change_tanggal($data){
-        $data_tanggal = explode('-', $data);
-        $tanggal = $data_tanggal[2].'-'.$data_tanggal[1].'-'.$data_tanggal[0];
-        return $tanggal;
+        if($data==""){
+            return "";
+        }else{
+            $data_tanggal = explode('-', $data);
+            $tanggal = $data_tanggal[2].'-'.$data_tanggal[1].'-'.$data_tanggal[0];
+            return $tanggal;
+        }
     }
 ?>
 <!-- Basic Card Example -->
 <div class="card shadow mb-4 ml-5 mr-5 py-2 px-2">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Detail Job Order</h6>
+        <h6 class="m-0 font-weight-bold text-primary float-left">Detail Job Order</h6>
+        <div class="float-right ml-3">
+                <a class='btn btn-primary btn-sm ' href='<?= base_url("index.php/print_berkas/uang_jalan/").$jo["Jo_id"]."/detail"?>' id="">
+                    <span>Print/PDF</span>
+                </a>
+        </div>
+        <div class="float-right">
+            <form method="POST" action="<?= base_url("index.php/print_berkas/jo_excel/")?>" id="convert_form">
+                <input type="hidden" name="file_content" id="file_content">
+                <button type="submit" name="convert" id="convert" class="btn btn-primary btn-sm">
+                    <span class="text">Excel</span>
+                </button>
+            </form>
+        </div>
     </div>
     <div class="card-body">
-            <div class="container ">
-                <div class="float-right mb-3">
-                    <?php if($jo["status"]=="Dalam Perjalanan"){?>                    
-                        <a class='btn btn-primary btn-sm ' href='<?= base_url("index.php/print_berkas/uang_jalan/").$jo["Jo_id"]?>' id="">
-                            <i class="fas fa-print"></i><span> Cetak Bukti Uang Jalan</span>
-                        </a>
-                        <?php if($_SESSION["role"]=="Supervisor" || $_SESSION["role"]=="Super User"){?>
-                            <a class='btn btn-danger btn-sm ' id="<?= $jo["Jo_id"]?>" onclick="hapus_jo(this)">
-                                <i class='fas fa-trash-alt'></i><span> Hapus</span>
-                            </a>
-                    <?php }
-                    }?>
-                </div>
-            </div>
         <!-- tampilan detail jo -->
         <div class="container" id="detail-jo">
-            <table class="table table-bordered">
-                <tbody>         
+            <table class="table table-bordered" id="Table-JO">
+                <tbody>     
                     <tr>
-                        <td class="d-none d-sm-table-cell text-center " rowspan="16" style="width: 15%;">
-                            <p class="badge badge-info">Customer</p>
-                            <?php if($customer){?>
-                            <p class="font-size-sm font-weight-bold"><?= $customer["customer_name"] ?></p>
-                            <?php }else{?>
-                                <p class="font-size-sm font-weight-bold">-</p>
-                            <?php }?>
-                            <hr>
-                            <p class="font-weight-bold badge badge-success">ID JO</p>
-                            <p class="font-size-sm font-weight-bold"><?= $jo["Jo_id"] ?></p>
-                            <hr>
-                            <p class="font-weight-bold badge badge-success">Tipe Job Order</p>
-                            <?php if($tipe_jo=="paketan"){?>
-                                <p class="font-size-sm font-weight-bold">Paketan</p>
-                            <?php }else{?>
-                                <p class="font-size-sm font-weight-bold">Reguler</p>
-                            <?php }?>
-                            <hr>
-                            <p class="font-weight-bold badge badge-primary">Operator</p>
-                            <p class="font-size-sm font-weight-bold"><?= $jo["user"] ?></p>
-                        </td>
-                        <td class="font-weight-bold" style="width: 25%;">Rute Muatan</td>
-                        <td colspan=3>
-                                    <table class="table table-bordered small">
-                                        <thead>
-                                            <tr>
-                                                <th>Keterangan</th>
-                                                <th>Dari</th>
-                                                <th>Ke</th>
-                                                <th>Muatan</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php if($tipe_jo=="paketan"){?>
-                                                <?php $data_rute = json_decode($paketan["paketan_data_rute"],true);?>
-                                                <?php for($i=0;$i<count($data_rute);$i++){?>
-                                                    <tr>
-                                                        <td><?= $data_rute[$i]["customer"]?></td>
-                                                        <td><?= $data_rute[$i]["dari"]?></td>
-                                                        <td><?= $data_rute[$i]["ke"]?></td>
-                                                        <td><?= $data_rute[$i]["muatan"]?></td>
-                                                    </tr>
-                                                <?php }?>
-                                            <?php }else{?>
-                                                <?php if($kosongan != null){?>
-                                                <tr>
-                                                    <td>Rute ke-1</td>
-                                                    <td><?= $kosongan["kosongan_dari"]?></td>
-                                                    <td><?= $kosongan["kosongan_ke"]?></td>
-                                                    <td>Kosongan</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Rute ke-2</td>
-                                                    <td><?= $jo["asal"]?></td>
-                                                    <td><?= $jo["tujuan"]?></td>
-                                                    <td><?= $jo["muatan"]?></td>
-                                                </tr>
-                                                <?php }else{?>
-                                                    <tr>
-                                                        <td>Rute ke-1</td>
-                                                        <td><?= $jo["asal"]?></td>
-                                                        <td><?= $jo["tujuan"]?></td>
-                                                        <td><?= $jo["muatan"]?></td>
-                                                    </tr>
-                                                <?php }?>
-                                            <?php }?>
-                                        </tbody>
-                                    </table>
-                        </td>
+                        <td class="font-weight-bold" style="width: 25%;">ID JO</td>
+                        <td colspan=3><?= $jo["Jo_id"] ?></td>
                     </tr>
                     <tr>
-                        <td class="font-weight-bold" style="width: 25%;">Tanggal Berangkat</td>
+                        <td class="font-weight-bold" style="width: 25%;">Tanggal JO</td>
                         <td colspan=3><?= change_tanggal($jo["tanggal_surat"]) ?></td>
-                    </tr>
-                    <tr>
-                        <td class="font-weight-bold" style="width: 25%;">Tanggal Bongkar</td>
-                        <td colspan=3><?= change_tanggal($jo["tanggal_bongkar"]) ?></td>
-                    </tr>
-                    <tr>
-                        <td class="font-weight-bold" style="width: 25%;">Status</td>
-                        <td colspan=3><?= $jo["status"] ?></td>
                     </tr>
                     <tr>
                         <td class="font-weight-bold" style="width: 25%;">Supir</td>                
@@ -118,9 +46,9 @@
                                 <td colspan=3>
                                     <div class="row ">
                                         <p class="col"><?= $supir["supir_name"] ?></p>
-                                        <a class='btn btn-primary btn-sm col-md-4' data-toggle="modal" data-target="#supir_update">
+                                        <!-- <a class='btn btn-primary btn-sm col-md-4' data-toggle="modal" data-target="#supir_update">
                                             <span>Ganti Supir</span>
-                                        </a>
+                                        </a> -->
                                     </div>                                    
                                 </td>
                             <?php }else{?>
@@ -133,9 +61,9 @@
                                 <td colspan=3>
                                     <div class="row ">
                                         <p class="col"><?= $mobil["mobil_no"]." == ".$mobil["mobil_jenis"] ?></p>
-                                        <a class='btn btn-primary btn-sm col-md-4' data-toggle="modal" data-target="#mobil_update">
+                                        <!-- <a class='btn btn-primary btn-sm col-md-4' data-toggle="modal" data-target="#mobil_update">
                                             <span>Ganti mobil</span>
-                                        </a>
+                                        </a> -->
                                     </div>                                    
                                 </td>
                             <?php }else{?>
@@ -143,60 +71,109 @@
                             <?php }?>
                     </tr>
                     <tr>
-                        <td class="font-weight-bold " style="width: 25%;">Uang Jalan</td>
-                        <td colspan=3><p>Rp.<?= number_format($jo["uang_jalan"],2,',','.')." (".$jo["terbilang"].")" ?></p></td>
+                        <td class="font-weight-bold" style="width: 25%;">Customer</td>
+                        <td colspan=3><?= $customer["customer_name"] ?></td>
                     </tr>
                     <tr>
-                        <td class="font-weight-bold " style="width: 25%;">Uang Jalan Kosongan</td>
-                        <?php if($jo["uang_kosongan"]==0){
-                            $jo["uang_kosongan"] = 0;?>
-                            <td colspan=3><p>Rp.0 (Tidak Ada Rute Kosongan)</p></td>
-                        <?php }else{?>
-                            <td colspan=3><p>Rp.<?= number_format($jo["uang_kosongan"],2,',','.') ?></p></td>
-                        <?php }?>
+                        <td class="font-weight-bold" style="width: 25%;">Rute Muatan</td>
+                        <td colspan=3>
+                            <table class="table table-bordered small">
+                                <thead>
+                                    <tr>
+                                        <th>Dari</th>
+                                        <th>Ke</th>
+                                        <th>Muatan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><?= $jo["asal"]?></td>
+                                        <td><?= $jo["tujuan"]?></td>
+                                        <td><?= $jo["muatan"]?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold " style="width: 25%;">Uang Jalan</td>
+                        <td colspan=3><p>Rp.<?= number_format($jo["uang_jalan"],2,',','.') ?></p></td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold " style="width: 25%;">Tambahan/Potongan Uang Jalan</td>
+                            <td colspan=3><p>Rp.<?= number_format($jo["nominal_tambahan"],2,',','.') ?> (<?= $jo["jenis_tambahan"]?>)</p></td>
                     </tr>
                     <tr>
                         <td class="font-weight-bold " style="width: 25%;">Total Uang Jalan</td>
-                        <td colspan=3><p>Rp.<?= number_format($jo["uang_jalan"]+$jo["uang_kosongan"],2,',','.')?></p></td>
+                        <td colspan=3><p>Rp.<?= number_format($jo["uang_total"],2,',','.')?></p></td>
                     </tr>
                     <tr>
-                        <td class="font-weight-bold " style="width: 25%;">Uang Jalan Terbayar</td>
-                        <?php if($jo["uang_jalan_bayar"]>=$jo["uang_jalan"]+$jo["uang_kosongan"] || $jo["status"]=="Dibatalkan"){?>
-                            <td colspan=3>
-                                <div class="row ">
-                                    <p class="col">Rp.<?= number_format($jo["uang_jalan_bayar"],2,',','.')?></p>
-                                    <div class="col ">
-                                        <a class='btn btn-sm btn-success col-md-12  active float-right'>
-                                            Pembayaran UJ Lunas atau Dibatalkan
-                                        </a>
-                                    </div>
-                                </div>
-                                
-                            </td>
-                        <?php }else{?>
-                            <td colspan=3>
-                                <div class="row ">
-                                    <p class="col">Rp.<?= number_format($jo["uang_jalan_bayar"],2,',','.')?></p>
-                                    <a class='btn btn-primary btn-sm col-md-4' data-toggle="modal" data-target="#update_ju" onclick="sisa_uj(<?= $jo['uang_jalan']+$jo['uang_kosongan']-$jo['uang_jalan_bayar']?>)">
-                                        <span>Konfirmasi Bayar UJ</span>
-                                    </a>
-                                </div>
-                            </td>
-                        <?php }?>
+                        <td class="font-weight-bold " style="width: 25%;">Sisa Uang Jalan</td>
+                        <td colspan=3>Rp.<?=number_format($jo["sisa"],2,',','.')?></td>
                     </tr>
                     <tr>
                         <td class="font-weight-bold" style="width: 20%;">Catatan/Keterangan</td>
                         <td colspan=3><?= $jo["keterangan"]?></td>
                     </tr>
-                    <tr>
-                        <td class="font-weight-bold " style="width: 25%;">Upah Supir</td>
-                        <td colspan=3><p>Rp.<?= number_format($jo["upah"],2,',','.')?></p></td>
-                    </tr>
-                    <tr class="text-center">
-                        <td colspan=3><strong>Detail Muatan</strong></td>
+                                        <tr>
+                        <td class="font-weight-bold" style="width: 25%;">Status</td>
+                        <td colspan=3><?= $jo["status"] ?></td>
                     </tr>
                     <tr>
-                        <td colspan=3>Muatan Tonase : <?= $jo["tonase"]?></td>
+                        <td class="font-weight-bold" style="width: 25%;">Tanggal Muat</td>
+                        <td colspan=3><?= change_tanggal($jo["tanggal_muat"]) ?></td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold" style="width: 25%;">Tanggal Bongkar</td>
+                        <td colspan=3><?= change_tanggal($jo["tanggal_bongkar"]) ?></td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold" style="width: 25%;">Berat Muatan</td>
+                        <td colspan=3><?= $jo["tonase"] ?></td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold" style="width: 25%;">Biaya Lain-lain</td>
+                        <td colspan=3>Rp.<?= number_format($jo["biaya_lain"],2,',','.')?></td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold" style="width: 25%;">No Slip Gaji</td>
+                        <td colspan=3><?= $slip_gaji[0]["pembayaran_upah_id"] ?></td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold" style="width: 25%;">Tanggal Slip Gaji</td>
+                        <td colspan=3><?= change_tanggal($slip_gaji[0]["pembayaran_upah_tanggal"]) ?></td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold" style="width: 25%;">Nominal Gaji</td>
+                        <td colspan=3>Rp.<?= number_format($jo["upah"],2,',','.')?></td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold" style="width: 25%;">No Invoice</td>
+                        <td colspan=3><?= $invoice[0]["invoice_id"]?></td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold" style="width: 25%;">Tanggal Invoice</td>
+                        <td colspan=3><?= change_tanggal($invoice[0]["tanggal_invoice"])?></td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold" style="width: 25%;">Nominal Invoice</td>
+                        <td colspan=3>Rp.<?= number_format($jo["total_tagihan"],2,',','.')?></td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold" style="width: 25%;">Pembuat JO</td>
+                        <td colspan=3><?= $jo["user"]?></td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold" style="width: 25%;">Penutup JO</td>
+                        <td colspan=3><?= $jo["user_closing"]?></td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold" style="width: 25%;">Pembuat Slip Gaji</td>
+                        <td colspan=3><?= $slip_gaji[0]["user_upah"]?></td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold" style="width: 25%;">Pembuat Invoice</td>
+                        <td colspan=3><?= $invoice[0]["user_invoice"]?></td>
                     </tr>
                 </tbody>
             </table>
@@ -309,11 +286,12 @@
     </div>
 </div>
 <!-- end pop up update mobil -->
+<script src="<?=base_url("assets/vendor/jquery/jquery.min.js")?>"></script>
 
 <script>
     function uang(a){
         $( '#'+a.id ).mask('000.000.000', {reverse: true});
-        var sisa = '<?= $jo['uang_jalan']+$jo['uang_kosongan']-$jo['uang_jalan_bayar']?>';
+        var sisa = '<?= $jo['uang_total']-$jo['uang_jalan_bayar']?>';
         var uang_bayar = $("#uang_jalan_bayar").val().split(".");
         var uang_bayar_fix = "";
         for(i=0;i<uang_bayar.length;i++){
@@ -327,21 +305,23 @@
     function sisa_uj(sisa){
         $("#sisa_uj").text(rupiah(sisa));
     }
-    function hapus_jo(a){
-        var jo_id = a.id;
-        Swal.fire({
-            title: 'Hapus Job Order',
-            text:'Yakin anda akan menghapus Job Order ini?',
-            showDenyButton: true,
-            denyButtonText: `Batal`,
-            confirmButtonText: 'Hapus',
-            denyButtonColor: '#808080',
-            confirmButtonColor: '#FF0000',
-            icon: "warning",
-        }).then((result) => {
-            if (result.isConfirmed) {   
-                window.location.replace("<?= base_url('index.php/detail/hapus_jo/')?>"+jo_id);
-            }
-        })
-    }
+</script>
+<script type="text/javascript">
+ $(document).ready(function() {
+  $('#convert').click(function() {
+   var table_content = '<table>';
+   table_content += $("head").html()+$('#Table-JO').html();
+   table_content += '</table>';
+   $('#file_content').val(table_content);
+   $('#convert_form').html();
+  });
+ });
+ function print_pdf(){
+     alert("ASdsa");
+    var restorepage = document.body.innerHTML;
+    var printcontent = document.getElementById('Table-Bon-Print').innerHTML;
+    document.body.innerHTML = printcontent;
+    window.print();
+    document.body.innerHTML = restorepage;
+  }
 </script>
